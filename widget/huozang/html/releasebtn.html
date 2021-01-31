@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>发布按钮</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        html,
+        body {
+            background: rgba(255, 255, 255, 0);
+        }
+
+        .btn {
+            width: 42px;
+            height: 42px;
+            background-size: 42px 42px;
+            /*background-image: url(../images/bottombtn0000.png);*/
+            background-repeat: no-repeat;
+        }
+
+        .active {
+            background-image: url(../images/bottombtn0000.png);
+        }
+
+        .close {
+            background-image: url(../images/bottombtn0001.png);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn active">
+    </div>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/jquery.min.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            $(".btn").click(function() {
+                api.closeFrame({
+                    name: 'squareSquare'
+                });
+                var userinfo = $api.getStorage('userid');
+                if (userinfo == null || userinfo == "") {
+                    api.toast({
+                        msg: '请先登录！',
+                        duration: 1000,
+                        location: 'middle'
+                    });
+                    api.openWin({
+                        name: 'login',
+                        url: '../login.html',
+                        bgColor: "rgba(255, 255, 255, 0)",
+                        animation: {
+                            type: "push", //动画类型（详见动画类型常量）
+                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                            duration: 300 //动画过渡时间，默认300毫秒
+                        }
+                    });
+                    return false;
+                }
+
+                // if ($(".btn").is(".active")) {
+                    api.sendEvent({
+                        name: "release"
+                    });
+                //     $(".btn").removeClass("active").addClass("close");
+                // } else {
+                //     api.sendEvent({
+                //         name: 'releaseresetnow'
+                //     });
+                //     $(".btn").removeClass("close").addClass("active");
+                // }
+                api.sendEvent({
+                    name: 'videopause'
+                });
+            });
+
+            api.addEventListener({
+                name: 'releasereset'
+            }, function(ret, err) {
+                setTimeout(function() { //解决IOS关闭Frame，Win打开无效的问题
+                    $(".btn").removeClass("close").addClass("active");
+                }, 1000);
+            });
+
+            api.addEventListener({
+                name: 'releaseresetnow'
+            }, function(ret, err) {
+                $(".btn").removeClass("close").addClass("active");
+            });
+        }
+    </script>
+</body>
+
+</html>

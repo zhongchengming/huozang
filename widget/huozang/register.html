@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="./css/mui.min.css" rel="stylesheet" />
+	<link href="./css/common.css" rel="stylesheet" />
+	<link href="./css/register.css" rel="stylesheet" />
+</head>
+
+<body>
+	<header>
+		<a class="app-back-icon"></a>
+		<h1>注册</h1>
+	</header>
+	<div class="mui-content register-data page-top page-bottom">
+		<section>
+			<p class="mui-clearfix bottom-line">
+				<i class="phone-icon"></i>
+				<input type="text" id="mobile" placeholder="请输入手机号码" />
+			</p>
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="text" id="checknum" placeholder="验证码" />
+				<!--请不要将下面的span标签换成button类型的，以免造成样式闪烁的问题 -->
+				<span class="msg-btn">发送验证码</span>
+			</p>
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="password" id="password" placeholder="请输入登录密码（6-16位数字字母组合）" />
+			</p>
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="text" id="spreadnum" placeholder="推荐码（可选）" onkeyup="value=value.replace(/[^\w\\/]/ig,'')" />
+			</p>
+			<p>
+				<input type="checkbox" id="check-input" />
+				<label for="check-input">我同意</label>
+				<a id="j-xy-a">《用户注册协议》</a>
+			</p>
+			<div class="submit-div">
+				<!--请不要将下面的span标签换成button类型的，以免造成样式闪烁的问题 -->
+				<span class="submit-btn register-btn" id="submit-btn">立即注册</span>
+			</div>
+			<div class="login-div">
+				已有账号？<a href="#" id="j-login-a">立即登录</a>
+			</div>
+		</section>
+	</div>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript" src="./script/config.js"></script>
+	<script type="text/javascript" src="./script/util.js"></script>
+	<script type="text/javascript" src="./script/jquery.min.js"></script>
+	<script type="text/javascript" src="./script/mui.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('body'));
+			$api.setStorage('openWin', "register");
+			//返回
+			$(".app-back-icon").click(function() {
+				api.closeWin({
+					name: 'register'
+				});
+			});
+
+			//登录
+			$("#j-login-a").click(function() {
+				api.closeWin({
+					name: 'register'
+				});
+			});
+			// 滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'register'
+				});
+			});
+
+			$("#j-xy-a").click(function() {
+				api.openWin({
+					name: 'agreement',
+					url: './html/agreement.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						title: "用户注册协议",
+						code: "yhzcxy"
+					}
+				});
+			});
+
+
+			$("#submit-btn").click(function() {
+				if (!$api.byId("check-input").checked) {
+					api.toast({
+						msg: "请先确认用户协议！",
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				var mobile = $api.val($api.byId('mobile'));
+				var checknum = $api.val($api.byId('checknum'));
+				var password = $api.val($api.byId('password'));
+				var spreadnum = $("#spreadnum").val()
+				if (!isPhoneAvailable(mobile)) {
+					api.toast({
+						msg: '手机号码格式不正确！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (mobile == null || mobile == "") {
+					api.toast({
+						msg: "手机号不能为空！",
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (checknum == null || checknum == "") {
+					api.toast({
+						msg: "验证码不能为空！",
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (password == null || password == "") {
+					api.toast({
+						msg: "密码不能为空！",
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (spreadnum != null && spreadnum != "" && spreadnum.length != 6) {
+					api.toast({
+						msg: "推荐码是6位哦！",
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.REGISTER,
+						method: 'post',
+						data: {
+							values: {
+								mobile: mobile,
+								checknum: checknum,
+								password: password,
+								reference: spreadnum
+							}
+						}
+					},
+					function(data, err) {
+						if (data.code == "200") {
+							api.toast({
+								msg: "注册成功，返回登录界面！",
+								duration: 1000,
+								location: 'middle'
+							});
+							setTimeout(function() {
+								api.closeWin({
+									name: 'register'
+								});
+							}, 1000);
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+			});
+
+			$(".msg-btn").click(function() {
+				if ($(this).text() != "发送验证码") {
+					return false;
+				}
+				var mobile = $api.val($api.byId('mobile'));
+				if (!isPhoneAvailable(mobile)) {
+					api.toast({
+						msg: '手机号码格式不正确！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				var getCodeUrl = CONFIG.ADDRURL + CONFIG.CHECKPHONE;
+				api.ajax({
+						url: getCodeUrl,
+						method: 'post',
+						data: {
+							values: {
+								mobile: mobile
+							}
+						}
+					},
+					function(data) {
+						if (data.code == "200") {
+							var time = 60;
+							$(".msg-btn").html(time + "秒后重试").attr("disabled", "disabled").css("background", "#EBEBEB");
+							var timer = setInterval(function() {
+								if (time > 0) {
+									time--;
+									$(".msg-btn").html(time + "秒后重试").attr("disabled", "disabled").css("background", "#EBEBEB");
+								} else {
+									$(".msg-btn").html("发送验证码").removeAttr("disabled");
+									clearInterval(timer);
+								}
+							}, 1000);
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.SENDCHECKNUM,
+									method: 'post',
+									data: {
+										values: {
+											mobile: mobile
+										}
+									}
+								},
+								function(phoneNumdata) {
+									if (phoneNumdata.code == "200") {
+
+									} else {
+										api.toast({
+											msg: phoneNumdata.msg,
+											duration: 1000,
+											location: 'middle'
+										});
+									}
+								});
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+			});
+		}
+	</script>
+</body>
+
+</html>

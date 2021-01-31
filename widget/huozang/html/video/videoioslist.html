@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>视频</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/videoioslist.css">
+</head>
+
+<body>
+    <div class="roofS">
+        <div class="roof">
+            <!-- <div class="roofReturn"></div> -->
+            <div class="roofSearch"></div>
+            <div class="roofMessage messageU"></div>
+            <div class="roofConter">
+                视频列表
+            </div>
+        </div>
+    </div>
+    <div class="roofSDiv"></div>
+    <!--视频-->
+    <ul id="video">
+
+    </ul>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<!--视屏  -->
+<script type="text/template" id="videotemplate">
+    {{~it:value:index}}
+    <li class="playvideo" userid="{{=value.userinfo.userid}}" videoid="{{=value.videoid}}">
+        <div class="videoTop">
+            <div class="videoTopW">
+                {{=value.comment}}
+            </div>
+            <ul class="videoTopU">
+                <li class="videoTopUL">
+                    <img src="{{?value.userinfo.avatar}}{{=value.userinfo.avatar}}{{??}}../../images/avatar.png{{?}}">
+                </li>
+                <li class="videoTopUCL">
+                    {{=value.userinfo.nickname}}
+                </li>
+                <li class="videoTopUCR"></li>
+                <li class="videoTopUR">
+                    {{=value.dianzancount}}
+                </li>
+            </ul>
+        </div>
+        <img src="{{=value.frontcover}}">
+    </li>
+    {{~}}
+</script>
+
+<script type="text/javascript">
+    var pageSize = 6, //获取个数
+        pageNum = 1, //当前页数
+        videohasNextPage = true;
+
+    apiready = function() {
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType = "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType = "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 25) + "px");
+        }
+        //未读消息
+        api.addEventListener({
+            name: 'unreadmessages'
+        }, function(ret, err) {
+            if (ret.value.unreadmessages * 1 > 0) {
+                $(".roofMessage").addClass("messageF").removeClass("messageU");
+            } else {
+                $(".roofMessage").addClass("messageU").removeClass("messageF");
+            }
+        });
+        //消息
+        $(".roofMessage").click(function() {
+            api.openWin({
+                name: 'message',
+                url: '../mine/message.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+        //搜索
+        $(".roofSearch").click(function() {
+            api.openWin({
+                name: 'search',
+                url: '../search.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+        getvideolist(pageSize, pageNum, true);
+        //视频播放
+        $("#video").on("click", "li.playvideo", function() {
+            var userid = $(this).attr("userid");
+            var videoid = $(this).attr("videoid");
+            api.openWin({
+                name: 'videoiosplay',
+                url: './videoiosplay.html',
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    userid: userid,
+                    videoid: videoid
+                }
+            });
+        });
+        //监听下拉加载数据
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 50 //距离底部距离
+            }
+        }, function(ret, err) {
+            if (videohasNextPage) {
+                getvideolist(pageSize, pageNum, false);
+            }
+        });
+        //默认显示最新动态
+        api.setRefreshHeaderInfo({
+            bgColor: '#fff'
+        }, function(ret, err) {
+            pageNum = 1;
+            getvideolist(pageSize, pageNum, true);
+            api.refreshHeaderLoadDone();
+        });
+    };
+    //获取视频列表
+    function getvideolist(pageSize, pageNum, isclear) {
+        if (isclear) {
+            $("#video").empty();
+        }
+        api.ajax({
+            url: CONFIG.ADDRURL + CONFIG.GETVIDEOS,
+            method: 'post',
+            data: {
+                values: {
+                    otheruserid: $api.getStorage('userid'),
+                    pagesize: pageSize,
+                    pagenum: pageNum,
+                    randomOperater: "Y"
+                }
+            }
+        }, function(data, ree) {
+            if (data.code == "200" && data.videos) {
+                videopageNum = data.videos.nextPage;
+                videohasNextPage = data.videos.hasNextPage;
+                if (data.videos.list && data.videos.list.length > 0) {
+                    var tempFn = doT.template($api.byId('videotemplate').innerHTML);
+                    var resultHTML = tempFn(data.videos.list);
+                    $("#video").append(resultHTML);
+                } else {
+                    $("#video").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+                }
+            }
+        });
+    };
+</script>

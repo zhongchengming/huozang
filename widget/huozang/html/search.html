@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>搜索结果</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../css/public.css">
+	<link rel="stylesheet" href="../css/SearchResults.css" />
+	<script src="../script/jquery-3.3.1.min.js"></script>
+	<script src="../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<div class="Search">
+				<div class="SearchBut"></div>
+				<input id="searchtext" type="text" placeholder="请输入" />
+			</div>
+		</div>
+		<!--导航-->
+		<div class="SearchNavS">
+			<ul class="SearchNav">
+				<li class="SearchNavL" data-SearchId="activity">
+					<span>兴趣</span>
+				</li>
+				<li data-SearchId="Invitation">
+					<span>邀请</span>
+				</li>
+				<li data-SearchId="Dynamic">
+					<span>动态</span>
+				</li>
+				<li data-SearchId="video">
+					<span>视频</span>
+				</li>
+				<li data-SearchId="User">
+					<span>用户</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!--活动-->
+	<ul id="activity" class="SearchW">
+
+	</ul>
+	<!--邀请-->
+	<ul id="Invitation" class="SearchW">
+
+	</ul>
+	<!--动态-->
+	<ul id="Dynamic" class="SearchW">
+
+	</ul>
+	<!--视频-->
+	<ul id="video" class="SearchW">
+
+	</ul>
+
+	<!--用户-->
+	<ul id="User" class="SearchW">
+
+	</ul>
+
+</body>
+<!--用户  -->
+<script type="text/template" id="usertemplate">
+	{{~it:value:index}}
+	<li>
+		<div class="ConcernFansAvatar AvatarId" userid="{{=value.userid}}">
+			<img src="{{?value.avatar}}{{=value.avatar}}{{??}}../images/avatar.png{{?}}">
+		</div>
+		<div class="ConcernFansCenter AvatarId" userid="{{=value.userid}}">
+			<ul class="ConcernFansCU">
+				<li class="ConcernFansCUL">{{=value.nickname}}</li>
+				<li class="ConcernFansCUR {{?1==value.gender}}woman{{??}}man{{?}}"></li>
+			</ul>
+			<div class="CFCSignature">
+				{{=value.bio}}
+			</div>
+		</div>
+		<div class="ConcernFansRight">
+			<div class="CFRMutual">
+				<img userid="{{=value.userid}}" follow="{{=value.fans}}" class="gz" src="{{?0==value.fans}}../images/add.png{{??}}../images/already.png{{?}}">
+			</div>
+		</div>
+	</li>
+	{{~}}
+</script>
+<!--视屏  -->
+<script type="text/template" id="videotemplate">
+	{{~it:value:index}}
+	<li class="playvideo" userid="{{=value.userinfo.userid}}" videoid="{{=value.videoid}}">
+		<div class="videoTop">
+			<div class="videoTopW">
+				{{=value.comment}}
+			</div>
+			<ul class="videoTopU">
+				<li class="videoTopUL">
+					<img src="{{?value.userinfo.avatar}}{{=value.userinfo.avatar}}{{??}}../images/avatar.png{{?}}">
+				</li>
+				<li class="videoTopUCL">
+					{{=value.userinfo.nickname}}
+				</li>
+				<li class="videoTopUCR"></li>
+				<li class="videoTopUR">
+					{{=value.dianzancount}}
+				</li>
+			</ul>
+		</div>
+		<img src="{{=value.frontcover}}">
+	</li>
+	{{~}}
+</script>
+<!--邀请  -->
+<script type="text/template" id="invitationtemplate">
+	{{~it:value:index}}
+	<li>
+		<!--头部信息-->
+		<div class="InviteW">
+			<div userid="{{=value.userid}}" class="InviteWL">
+				<img src="{{?value.avatar}}{{=value.avatar}}{{??}}../images/avatar.png{{?}}">
+			</div>
+			<div class="InviteWC">
+				<ul class="InviteWCT">
+					<li class="InviteWCTL">{{=value.nickname}}</li>
+					<!-- <li class="InviteWCTR"></li> -->
+				</ul>
+				<div class="InviteWCB">
+					<div class="InviteWCBL">
+						<p class="{{?1==value.gender}}p1{{??}}p3{{?}}"></p>
+						<p class="p2">{{=value.age}}</p>
+					</div>
+					<ul class="InviteWCBR">
+						{{?1==value.mobieauth}}
+						<li>
+							<img src="../images/Datashape10.png">
+						</li>
+						{{?}} {{?1==value.idcardauth}}
+						<li>
+							<img src="../images/Datashape11.png">
+						</li>
+						{{?}} {{?1==value.wxauth}}
+						<li>
+							<img src="../images/Datashape12.png">
+						</li>
+						{{?}} {{?1==value.emailauth}}
+						<li>
+							<img src="../images/Datashape13.png">
+						</li>
+						{{?}} {{?1==value.educationauth}}
+						<li>
+							<img src="../images/Datashape14.png">
+						</li>
+						{{?}}
+					</ul>
+				</div>
+			</div>
+			<ul class="InviteWR">
+				<li class="InviteWRL">距离我{{=value.distance}}KM</li>
+				<li class="InviteWRR">
+					<img src="../images/GPSD_03.png">
+				</li>
+			</ul>
+		</div>
+		<!--约会邀请-->
+		<ul class="RecommendConter">
+			<li>
+				标签
+			</li>
+			<li>
+				{{=value.servicetags}}
+			</li>
+		</ul>
+		<ul class="RecommendConter">
+			<li>
+				约会内容
+			</li>
+			<li>
+				{{=value.content}}
+			</li>
+		</ul>
+		<ul class="RecommendConter">
+			<li>
+				约会时间
+			</li>
+			<li>
+				{{=value.starttime}}
+			</li>
+		</ul>
+		<!-- <ul class="RecommendConter">
+			<li>
+				约会地点
+			</li>
+			<li>
+				{{=value.locationinvitation}}
+			</li>
+		</ul> -->
+		<!-- <ul class="RecommendConter">
+			<li>
+				诚意金
+			</li>
+			<li>
+				<span>{{=value.payment}}金币(已付)</span>
+			</li>
+		</ul> -->
+		<ul class="RecommendConter">
+			<li>
+				发布时间
+			</li>
+			<li>
+				{{=value.createtime}}
+			</li>
+		</ul>
+		<ul class="RecommendConter">
+			<li>
+				到期时间
+			</li>
+			<li>
+				{{=value.endtime}}
+			</li>
+		</ul>
+		<!--视频图片-->
+		{{?value.photos}} {{?value.photosList.length==1}}
+		<ul class="InviteVideoImgOne">
+			{{?value.photosList[0]}}
+			<li>
+				<img src="{{=value.photosList[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.photosList.length==2}}
+		<ul class="InviteVideoImgTwo">
+			{{?value.photosList[0]}}
+			<li>
+				<img src="{{=value.photosList[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}} {{?value.photosList[1]}}
+			<li>
+				<img src="{{=value.photosList[1]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.photosList.length>2}}
+		<ul class="InviteVideoImg">
+			{{ for(var j=0, len=value.photosList.length; j
+			<len; j++) { }} {{?value.photosList[j]}} <li>
+				<img src="{{=value.photosList[1]}}?imageView2/1/w/300/h/300">
+	</li>
+	{{?}} {{ } }}
+	</ul>
+	{{?}} {{?}}
+
+
+	<!--图片-->
+
+	<!-- {{?value.photographs}} -->
+	<!-- <ul class="InviteVideoImg">
+			{{?value.photosList}} {{ for(var j=0, len=value.photosList.length; j
+			<len; j++) { }} {{?value.photosList[j]}} <li>
+				<img src="{{=value.photosList[j]}}?imageView2/1/w/300/h/300" width="300" height="80">
+	</li>
+	{{?}} {{ } }} {{?}} -->
+
+	</ul>
+	<!-- {{?}} -->
+	<!--按钮-->
+	<ul class="InviteBut">
+		<li>
+			<div invitationid="{{=value.id}}" userid="{{=value.userid}}" avatar="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" class="InviteButD invitationshare">
+				<P class="p1">分享</P>
+				<P class="p2">
+					<img src="../images/InviteButDZZ_07.png" />
+				</P>
+			</div>
+		</li>
+		<!-- <li>
+			<div class="InviteButW collect" invitationid="{{=value.id}}">
+				收藏
+			</div>
+		</li> -->
+		<li>
+			<div class="InviteButW chat" userid="{{=value.userid}}" nickname="{{=value.nickname}}">
+				打招呼
+			</div>
+		</li>
+		<li class="receive" userid="{{=value.userid}}" invitationid="{{=value.id}}">
+			<div class="InviteButWA">
+				应邀
+			</div>
+		</li>
+	</ul>
+	</li>
+	{{~}}
+</script>
+<!-- 动态 -->
+<script type="text/template" id="momenttemplate">
+	{{~it:value:index}}
+	<li class="detail" userid="{{=value.userid}}" squreid="{{=value.id}}" momentid="{{=value.momentid}}">
+		<div class="SquareULT">
+			<div class="SquareULTL">
+				<img src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" />
+			</div>
+			<div class="SquareULTC">
+				<p class="p1">{{=value.nickname}}</p>
+				<p class="p2">{{=value.createtime}}</p>
+			</div>
+			<ul class="SquareULTR">
+				{{?1== value.wellchosen * 1}}
+				<li>精</li>{{??}} {{?}} {{?1== value.hot * 1}}
+				<li>热</li>{{??}} {{?}} {{?1== value.publishtype * 1}}
+				<li>官</li>{{??}} {{?}}
+			</ul>
+		</div>
+		<hr class="SquareHr" />
+		<!--文字-->
+		<div class="SquareULC_fontSize">
+			{{=value.momentcontent}}
+		</div>
+		<!--图片-->
+		{{?value.pics}} {{?value.pics.length==1}}
+		<ul class="SquareULC_imgOne">
+			{{?value.pics[0]}}
+			<li>
+				<img src="{{=value.pics[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.pics.length==2}}
+		<ul class="SquareULC_imgTwo">
+			{{?value.pics[0]}}
+			<li>
+				<img src="{{=value.pics[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}} {{?value.pics[1]}}
+			<li>
+				<img src="{{=value.pics[1]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.pics.length>2}}
+		<ul class="SquareULC_img">
+			{{ for(var j=0, len=value.pics.length; j
+			<len; j++) { }} {{?value.pics[j]}} <li>
+				<img src="{{=value.pics[j]}}?imageView2/1/w/300/h/300">
+	</li>
+	{{?}} {{ } }}
+	</ul>
+	{{?}} {{?}}
+	<!--视频-->
+	<!-- <div class="SquareULC_video">
+			<P><img src="../images/SquareBF_03.png"></P>
+			<img src="../images/imgT_03.png" />
+		</div> -->
+	<hr class="SquareHr2" />
+	<div class="SquareULB">
+		<!-- <div class="SquareULBW">
+			<div class="SquareULBWP">
+
+			</div>
+			<ul class="SquareULBWL">
+				<li class="SquareULBLL">
+					<img src="../images/SquarePL_03.png" />
+				</li>
+				<li class="SquareULBLR">{{=value.fenxiangcount}}</li>
+			</ul>
+		</div> -->
+		<div class="SquareULBW">
+			<ul class="SquareULBWC">
+				<li class="SquareULBLL">
+					<img src="../images/SquarePL_05.png" />
+				</li>
+				<li class="SquareULBLR">{{=value.pinluncount}}</li>
+			</ul>
+		</div>
+		<div class="SquareULBW" style="float:right">
+			<ul class="SquareULBWR">
+				<li class="SquareULBLL">
+					<img src="../images/SquarePL_07.png" />
+				</li>
+				<li class="SquareULBLR">{{=value.dianzancount}}</li>
+			</ul>
+		</div>
+	</div>
+	</li>
+	{{~}}
+</script>
+<!--活动  -->
+<script type="text/template" id="activitytemplate">
+	{{~it:value:index}}
+	<li>
+		<!--头部信息-->
+		<div class="InviteW">
+			<div class="InviteWL">
+				<img src="{{?value.avatar}}{{=value.avatar}}{{??}}../images/avatar.png{{?}}">
+			</div>
+			<div class="InviteWC">
+				<ul class="InviteWCT">
+					<li class="InviteWCTL">{{=value.nickname}}</li>
+				</ul>
+				<div class="InviteWCB">
+					<div class="InviteWCBL">
+						<p class="{{?1==value.gender}}p1{{??}}p3{{?}}"></p>
+						<p class="p2">{{=value.age}}</p>
+					</div>
+					<ul class="InviteWCBR">
+						{{?1==value.mobieauth}}
+						<li>
+							<img src="../images/Datashape10.png">
+						</li>
+						{{?}} {{?1==value.idcardauth}}
+						<li>
+							<img src="../images/Datashape11.png">
+						</li>
+						{{?}} {{?1==value.wxauth}}
+						<li>
+							<img src="../images/Datashape12.png">
+						</li>
+						{{?}} {{?1==value.emailauth}}
+						<li>
+							<img src="../images/Datashape13.png">
+						</li>
+						{{?}} {{?1==value.educationauth}}
+						<li>
+							<img src="../images/Datashape14.png">
+						</li>
+						{{?}}
+					</ul>
+				</div>
+			</div>
+			<ul class="InviteWR">
+				<li class="InviteWRL">距离我{{=value.distance}}KM</li>
+				<li class="InviteWRR">
+					<img src="../images/GPSD_03.png">
+				</li>
+			</ul>
+		</div>
+		<!--视频图片-->
+		{{?value.photos}} {{?value.photos.length==1}}
+		<ul class="InviteVideoImgOne">
+			{{?value.photos[0]}}
+			<li>
+				<img src="{{=value.photos[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.photos.length==2}}
+		<ul class="InviteVideoImgTwo">
+			{{?value.photos[0]}}
+			<li>
+				<img src="{{=value.photos[0]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}} {{?value.photos[1]}}
+			<li>
+				<img src="{{=value.photos[1]}}?imageView2/1/w/300/h/300">
+			</li>
+			{{?}}
+		</ul>
+		{{?}} {{?value.photos.length>2}}
+		<ul class="InviteVideoImg">
+			{{ for(var j=0, len=value.photos.length; j
+			<len; j++) { }} {{?value.photos[j]}} <li>
+				<img src="{{=value.photos[1]}}?imageView2/1/w/300/h/300">
+	</li>
+	{{?}} {{ } }}
+	</ul>
+	{{?}} {{?}}
+	<!--文字-->
+	{{?null!=value.bio}}
+	<div class="InviteText">
+		{{?value.tags}} {{ for(var j=0, len=value.tags.length; j
+		<len; j++) { }} {{?value.servicetags[j]}} <span>{{=value.tags[j]}}</span>
+			{{?}} {{ } }} {{?}} {{=value.bio}}
+	</div>
+	{{?}}
+	<!--按钮-->
+	<ul class="InviteBut">
+		<li>
+			<div userid="{{=value.userid}}" avatar="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" class="InviteButD recommendshare">
+				<P class="p1">分享</P>
+				<P class="p2">
+					<img src="../images/InviteButDZZ_07.png">
+				</P>
+			</div>
+		</li>
+		<!-- <li>
+				<div class="InviteButW like" userid="{{=value.userid}}">
+					暗恋TA
+				</div>
+			</li> -->
+		<li>
+			<div class="InviteButW chat" userid="{{=value.userid}}" nickname="{{=value.nickname}}">
+				打招呼
+			</div>
+		</li>
+		<li>
+			<div userid="{{=value.userid}}" class="InviteButWA appointment">
+				跟TA约会
+			</div>
+		</li>
+	</ul>
+	</li>
+	{{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/util.js"></script>
+<script>
+	var momentpageSize = 4,
+		momentpageNum = 1,
+		momenthasNextPage = true;
+	var activitypageSize = 4,
+		activitypageNum = 1,
+		activityhasNextPage = true;
+	var invitationPageSize = 4,
+		invitationPageNum = 1,
+		invitationHasNextPage = true;
+	var videopageNum = 1,
+		videopageSize = 6,
+		videohasNextPage = true;
+	var userpageNum = 1,
+		userpageSize = 8,
+		userhasNextPage = true;
+
+	var type = "activity";
+	apiready = function() {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType = "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType = "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 25) + "px");
+		}
+
+		$api.setStorage('openWin', "search");
+		//返回箭头事件
+		$(".roofReturn").click(function() {
+			api.closeWin({});
+		});
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({});
+		});
+
+		//搜索页面关闭视频
+		api.addEventListener({
+			name: 'keyback'
+		}, function(ret, err) {
+			if ($api.getStorage('openWin') == "play") {
+				api.sendEvent({
+					name: 'closevideobtn'
+				});
+
+				api.sendEvent({
+					name: 'closeplaywin'
+				});
+			} else {
+				api.closeWin({
+					name: 'search'
+				});
+			}
+		});
+
+		$(".SearchNav").on("click", "li", function() {
+			$(".SearchNav li").attr("class", "");
+			$(this).attr("class", "SearchNavL");
+			$(".SearchW").css("display", "none");
+			$("#" + $(this).attr("data-SearchId") + "").css("display", "block");
+			type = $(this).attr("data-SearchId");
+			if (type == "activity") {
+				activitypageNum = 1;
+				searchActivity($("#searchtext").val(), activitypageSize, activitypageNum, true);
+			} else if (type == "Dynamic") {
+				momentpageNum = 1;
+				searchMoment($("#searchtext").val(), momentpageSize, momentpageNum, true);
+			} else if (type == "Invitation") {
+				invitationPageNum = 1;
+				searchInvitation($("#searchtext").val(), invitationPageSize, invitationPageNum, true);
+			} else if (type == "video") {
+				videopageNum = 1;
+				searchVideo($("#searchtext").val(), videopageSize, videopageNum, true);
+			} else if (type == "User") {
+				userpageNum = 1;
+				searchUser($("#searchtext").val(), userpageSize, userpageNum, true);
+			}
+		});
+
+		var keywords = api.pageParam.keywords;
+		$("#searchtext").val(keywords);
+		//默认加载
+		type = $(".SearchNav").find("li[class='SearchNavL']").attr("data-SearchId");
+		if (type == "activity") {
+			activitypageNum = 1;
+			searchActivity($("#searchtext").val(), activitypageSize, activitypageNum, true);
+		} else if (type == "Dynamic") {
+			momentpageNum = 1;
+			searchMoment($("#searchtext").val(), momentpageSize, momentpageNum, true);
+		} else if (type == "Invitation") {
+			invitationPageNum = 1;
+			searchInvitation($("#searchtext").val(), invitationPageSize, invitationPageNum, true);
+		} else if (type == "video") {
+			videopageNum = 1;
+			searchVideo($("#searchtext").val(), videopageSize, videopageNum, true);
+		} else if (type == "User") {
+			userpageNum = 1;
+			searchUser($("#searchtext").val(), userpageSize, userpageNum, true);
+		}
+
+
+
+
+
+
+		listener();
+		photosListener();
+
+		$(".SearchBut").click(function() {
+			if (type == "activity") {
+				activitypageNum = 1;
+				searchActivity($("#searchtext").val(), activitypageSize, activitypageNum, true);
+			} else if (type == "Dynamic") {
+				invitationPageNum = 1;
+				searchMoment($("#searchtext").val(), invitationPageSize, invitationPageNum, true);
+			} else if (type == "Invitation") {
+				invitationPageNum = 1;
+				searchInvitation($("#searchtext").val(), invitationPageSize, invitationPageNum, true);
+			} else if (type == "video") {
+				videopageNum = 1;
+				searchVideo($("#searchtext").val(), videopageSize, videopageNum, true);
+			} else if (type == "User") {
+				userpageNum = 1;
+				searchUser($("#searchtext").val(), userpageSize, userpageNum, true);
+			}
+		});
+
+		api.addEventListener({
+			name: 'swipeup'
+		}, function(ret, err) {
+			if (type == "activity") {
+				if (activityhasNextPage) {
+					searchActivity($("#searchtext").val(), activitypageSize, activitypageNum, false);
+				}
+			} else if (type == "Dynamic") {
+				if (momenthasNextPage) {
+					searchMoment($("#searchtext").val(), momentpageSize, momentpageNum, false);
+				}
+			} else if (type == "Invitation") {
+				if (invitationHasNextPage) {
+					searchInvitation($("#searchtext").val(), invitationPageSize, invitationPageNum, false);
+				}
+			} else if (type == "video") {
+				if (videohasNextPage) {
+					searchVideo($("#searchtext").val(), videopageSize, videopageNum, false);
+				}
+			} else if (type == "User") {
+				if (userhasNextPage) {
+					searchUser($("#searchtext").val(), userpageSize, userpageNum, false);
+				}
+			}
+		});
+		//邀请分享
+		$('#Invitation').on('click', '.InviteButD.invitationshare', function() {
+			var userid = $(this).attr("userid");
+			var invitationid = $(this).attr("invitationid");
+			var avatar = $(this).attr("avatar");
+			api.openFrame({
+				name: 'share',
+				url: './DateInvitation/share.html',
+				rect: {
+					x: 0,
+					y: api.winHeight - 200,
+					w: api.winWidth,
+					h: 200
+				},
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_bottom", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid,
+					type: 1,
+					invitationid: invitationid,
+					avatar: avatar
+				}
+			});
+		});
+		//活动分享
+		$('#activity').on('click', '.InviteButD.recommendshare', function() {
+			var userid = $(this).attr("userid");
+			var avatar = $(this).attr("avatar");
+
+			api.openFrame({
+				name: 'share',
+				url: './DateInvitation/share.html',
+				rect: {
+					x: 0,
+					y: api.winHeight - 200,
+					w: api.winWidth,
+					h: 200
+				},
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_bottom", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid,
+					avatar: avatar,
+					type: 2
+				}
+			});
+		});
+		// 触发取消
+		$('body').on('touchstart', function(e) {
+			api.closeFrame({
+				name: 'share'
+			});
+		});
+
+		//打招呼
+		$("#Invitation,#activity").on("click", ".chat", function() {
+			if (!checklogin()) {
+				return false;
+			}
+			var touserid = $(this).attr("userid");
+			var tousername = $(this).attr("nickname");
+			api.openWin({
+				name: 'onetoone',
+				url: './mine/onetoone.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					touserid: touserid,
+					tousername: tousername,
+					latestMessageId: -1
+				}
+			});
+		});
+	}
+
+	function searchActivity(content, pageSize, pageNum, isclear) {
+		if (isclear) {
+			$("#activity").empty();
+		}
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETSERVICESPEOPLE,
+				method: 'post',
+				data: {
+					values: {
+						type: 1,
+						tags: content,
+						pagesize: pageSize,
+						pagenum: pageNum,
+						status: "2",
+						position: $api.getStorage('position')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200" && data.servicespeople) {
+					activityhasNextPage = data.servicespeople.hasNextPage;
+					activitypageNum = data.servicespeople.nextPage;
+					if (data.servicespeople.list && data.servicespeople.list.length > 0) {
+						$.each(data.servicespeople.list, function(i, n) {
+							if (n.photos.substr(n.photos.length - 1, 1) == ",") {
+								n.photos = n.photos.substr(0, n.photos.length - 1);
+							}
+							n.photos = n.photos.split(",");
+
+							if (n.tags.substr(n.tags.length - 1, 1) == ",") {
+								n.tags = n.tags.substr(0, n.tags.length - 1);
+							}
+							n.tags = n.tags.split(",");
+						});
+
+						var tempFn = doT.template($api.byId('activitytemplate').innerHTML);
+						var resultHTML = tempFn(data.servicespeople.list);
+						$("#activity").append(resultHTML);
+					} else {
+						$("#activity").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+					}
+				}
+			});
+	};
+
+	// 图片预览监听
+	function photosListener() {
+		$("#activity,#Invitation,#Dynamic").on("click", ".InviteVideoImgOne img,.InviteVideoImgTwo img ,.InviteVideoImg img,.SquareULC_img img,.SquareULC_imgOne img,.SquareULC_imgTwo img", function() {
+			var images = [];
+			var index = $(this).parent().index();
+			$(this).parent().parent().find("li").each(function() {
+				images.push($(this).find("img").attr("src").replace("?imageView2/1/w/300/h/300", ""));
+			});
+			var photoBrowser = api.require('photoBrowser');
+			photoBrowser.open({
+				images: images,
+				placeholderImg: "",
+				bgColor: '#000'
+			}, function(ret, err) {
+				if (ret.eventType == "show") {
+					api.toast({
+						msg: "长按可以保存图片哦!",
+						duration: 2000,
+						location: 'bottom'
+					});
+				} else if (ret.eventType == "click") {
+					photoBrowser.close();
+				} else if (ret.eventType == "longPress") {
+					api.download({
+						url: images[ret.index],
+						report: true,
+						cache: true,
+						allowResume: true
+					}, function(ret, err) {
+						if (ret.percent == 100) {
+							api.saveMediaToAlbum({
+								path: ret.savePath
+							}, function(albumret, albumreterr) {
+								if (albumret && albumret.status) {
+									api.toast({
+										msg: "保存成功!",
+										duration: 1000,
+										location: 'middle'
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+			photoBrowser.setIndex({
+				index: index
+			});
+		});
+	}
+
+	function searchInvitation(content, invitationpagesize, invitationpagenum, isclear) {
+		if (isclear) {
+			$("#Invitation").empty();
+		}
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETINVITATIONS,
+				method: 'post',
+				data: {
+					values: {
+						tags: content,
+						type: 1,
+						pagesize: invitationpagesize,
+						pagenum: invitationpagenum,
+						status: "2",
+						position: $api.getStorage('position')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200" && data.invitations) {
+					invitationHasNextPage = data.invitations.hasNextPage;
+					invitationPageNum = data.invitations.nextPage;
+					if (data.invitations.list && data.invitations.list.length > 0) {
+						$.each(data.invitations.list, function(i, n) {
+							n.starttime = timestampToTime(n.starttime);
+							n.endtime = timestampToTime(n.endtime);
+							n.createtime = timestampToTime(n.createtime);
+						});
+						var tempFn = doT.template($api.byId('invitationtemplate').innerHTML);
+						var resultHTML = tempFn(data.invitations.list);
+						$("#Invitation").append(resultHTML);
+					} else {
+						$("#Invitation").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+					}
+				}
+			});
+	};
+
+	function searchUser(content, pageSize, pageNum, isclear) {
+		if (isclear) {
+			$("#User").empty();
+		}
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETUSERVAGUE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid'),
+						searchinfo: content,
+						pagesize: pageSize,
+						pagenum: pageNum
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200" && data.userinfo) {
+					userhasNextPage = data.userinfo.hasNextPage;
+					userpageNum = data.userinfo.nextPage;
+					if (data.userinfo.list && data.userinfo.list.length > 0) {
+						var tempFn = doT.template($api.byId('usertemplate').innerHTML);
+						var resultHTML = tempFn(data.userinfo.list);
+						$("#User").append(resultHTML);
+					} else {
+						$("#User").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+					}
+				}
+			});
+	};
+
+	function searchVideo(content, pageSize, pageNum, isclear) {
+		if (isclear) {
+			$("#video").empty();
+		}
+		//随机获取video
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETVIDEOS,
+				method: 'post',
+				data: {
+					values: {
+						comment: content,
+						otheruserid: $api.getStorage('userid'),
+						pagesize: pageSize,
+						pagenum: pageNum,
+						randomOperater: "Y"
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200" && data.videos) {
+					videopageNum = data.videos.nextPage;
+					videohasNextPage = data.videos.hasNextPage;
+					if (data.videos.list && data.videos.list.length > 0) {
+						var tempFn = doT.template($api.byId('videotemplate').innerHTML);
+						var resultHTML = tempFn(data.videos.list);
+						$("#video").append(resultHTML);
+					} else {
+						$("#video").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+					}
+				}
+			});
+	};
+
+	function searchMoment(content, pageSize, pageNum, isclear) {
+		if (isclear) {
+			$("#Dynamic").empty();
+		}
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETUERNEWS,
+				method: 'post',
+				data: {
+					values: {
+						momentcontent: content,
+						type: 0,
+						pagesize: pageSize,
+						pagenum: pageNum
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200" && data.community) {
+					momenthasNextPage = data.community.hasNextPage;
+					momentpageNum = data.community.nextPage;
+					if (data.community.list && data.community.list.length > 0) {
+						var tempFn = doT.template($api.byId('momenttemplate').innerHTML);
+						var resultHTML = tempFn(data.community.list);
+						$("#Dynamic").append(resultHTML);
+					} else {
+						$("#Dynamic").append("<div id=\"no-conent\"><img src=\"../images/no-content.png\"/></div>");
+					}
+				}
+			});
+	};
+
+	function listener() {
+		//活动暗恋
+		$("#activity").on("click", ".like", function() {
+			var passivecommentuserid = $(this).attr("userid");
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.PEOPLECOMMENT,
+					method: 'post',
+					data: {
+						values: {
+							commentuserid: $api.getStorage('userid'),
+							passivecommentuserid: passivecommentuserid,
+							comment: "喜欢",
+							commenttype: 1
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200") {
+						api.toast({
+							msg: "暗恋成功，去和TA约会吧！",
+							duration: 1000,
+							location: 'middle'
+						});
+					} else {
+						api.toast({
+							msg: data.msg,
+							duration: 1000,
+							location: 'middle'
+						});
+					}
+				});
+		});
+
+		//活动邀约
+		$('#activity').on("click", ".appointment", function() {
+			var userid = $(this).attr("userid");
+			api.openWin({
+				name: 'appointmentdetail',
+				url: './DateInvitation/appointmentdetail.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid
+				}
+			});
+		});
+		//邀请应邀
+		$("#Invitation").on("click", ".receive", function() {
+			var invitationid = $(this).attr("invitationid");
+			var userid = $(this).attr("userid");
+			api.openWin({
+				name: 'invitationdetail',
+				url: './DateInvitation/invitationdetail.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					invitationid: invitationid,
+					userid: userid
+				}
+			});
+		});
+		//邀请收藏
+		$("#Invitation").on("click", ".collect", function() {
+			var invitationid = $(this).attr("invitationid");
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.ADDCOLLECT,
+					method: 'post',
+					data: {
+						values: {
+							userid: $api.getStorage('userid'), //当前登录人
+							orderid: invitationid,
+							ordertype: 1,
+							type: 1
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200") {
+						api.toast({
+							msg: "已收藏",
+							duration: 1000,
+							location: 'middle'
+						});
+						// $(".collect").addClass("Collection");
+					} else {
+						api.toast({
+							msg: data.msg,
+							duration: 1000,
+							location: 'middle'
+						});
+						// $(".collect").removeClass("Collection");
+					}
+				});
+		});
+
+		// 动态详情
+		$("#Dynamic").on("click", "li.detail", function() {
+			var squreid = $(this).attr("squreid");
+			var userid = $(this).attr("userid");
+			var momentid = $(this).attr("momentid");
+			api.openWin({
+				name: 'DynamicDetails',
+				url: './community/DynamicDetails.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				reload: true,
+				pageParam: {
+					squreid: squreid,
+					userid: userid,
+					momentid: momentid
+				}
+			});
+		});
+
+		//用户头像跳转
+		$("#User").on("click", ".AvatarId", function() {
+			var userid = $(this).attr("userid");
+			api.openWin({
+				name: 'otherspage',
+				url: './otherspage.html',
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid
+				}
+			});
+		});
+
+		//关注
+		$("#User").on("click", ".gz", function() {
+			if (!checklogin()) {
+				return false;
+			}
+			var gz = $(this);
+			var userid = $(gz).attr("userid");
+			var follow = $(gz).attr("follow");
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.FANS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							fansuserid: $api.getStorage('userid')
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						if (follow == "0") {
+							$(gz).attr("follow", "1");
+							$(gz).attr("src", "../images/already.png");
+							api.sendEvent({
+								name: "sendTextMessageListener",
+								extra: {
+									touserid: userid,
+									message: "系统提示：当前人关注你咯，快去看看吧！"
+								}
+							});
+						} else {
+							$(gz).attr("follow", "0");
+							$(gz).attr("src", "../images/add.png");
+						}
+					} else {
+						api.toast({
+							msg: data.msg,
+							duration: 1000,
+							location: 'middle'
+						});
+					}
+				});
+		});
+		//视频播放
+		$("#video").on("click", "li.playvideo", function() {
+			var userid = $(this).attr("userid");
+			var videoid = $(this).attr("videoid");
+			api.openFrame({
+				name: 'play',
+				url: './video/play.html',
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid,
+					videoid: videoid
+				}
+			});
+		});
+	}
+
+	function checklogin() {
+		var userinfo = $api.getStorage('userid');
+		if (userinfo == null || userinfo == "") {
+			api.toast({
+				msg: '请先登录！',
+				duration: 1000,
+				location: 'middle'
+			});
+			api.openWin({
+				name: 'login',
+				url: '../login.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+			return false;
+		}
+		return true;
+	}
+</script>
+
+</html>

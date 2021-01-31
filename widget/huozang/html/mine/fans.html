@@ -1,0 +1,377 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>关注粉丝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <!-- <link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="../../css/public.css">
+    <link href="../../css/mine.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- <header class="mui-bar mui-bar-nav mui-bar-top">
+		<a class="app-back-icon"></a>
+		<ul class="ul-bar">
+			<li id="concernslist" class="active">关注</li>
+			<li id="fanslist">粉丝</li>
+			<!-- <li class="add-friends">+添加好友</li> --
+		</ul>
+	</header> -->
+
+    <div class="roofS">
+        <div class="roof">
+            <div class="roofReturn"></div>
+            <!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+            <ul class="roofUL">
+                <li id="concernslist" class="Selected">
+                    <p class="roofULD"></p>
+                    <span>关注</span>
+                </li>
+                <li id="fanslist">
+                    <p class="roofULD"></p>
+                    <span>粉丝</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="roofSDiv"></div>
+    <!--搜索框-->
+    <div class="SearchBox">
+        <div class="SearchBoxP"></div>
+        <input id="nickname" class="SearchInput" type="text" placeholder="请输入要搜索昵称..." />
+    </div>
+    <div class="concerns">
+        <ul class="ConcernFans concernslist">
+            <!-- <li>
+                <div class="ConcernFansAvatar">
+                    <img src="../../images/imgT_03.png">
+                </div>
+                <div class="ConcernFansCenter">
+                    <ul class="ConcernFansCU">
+                        <li class="ConcernFansCUL">搜索框搜索框搜索框搜</li>
+                        <li class="ConcernFansCUR"></li>
+                    </ul>
+                    <div class="CFCSignature">
+                        他在文件上签了名。
+                    </div>
+                </div>
+                <div class="ConcernFansRight">
+                    <div class="CFRMutual">
+                        <img src="../../images/add.png">
+                    </div>
+                </div>
+            </li> -->
+        </ul>
+        <ul class="ConcernFans fanslist">
+            <li>
+                <div class="ConcernFansAvatar">
+                    <img src="../../images/imgT_03.png">
+                </div>
+                <div class="ConcernFansCenter">
+                    <ul class="ConcernFansCU">
+                        <li class="ConcernFansCUL">搜索框搜索框搜索框搜</li>
+                        <li class="ConcernFansCUR man"></li>
+                    </ul>
+                    <div class="CFCSignature">
+                        他在文件上签了名。
+                    </div>
+                </div>
+                <div class="ConcernFansRight">
+                    <div class="CFRMutual">
+                        <img src="../../images/add.png">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="mui-content personal-homepage-data concerns page-bottom">
+		<div class="search">
+			<input id="nickname" type="text" placeholder="请输入要搜索昵称..." />
+			<i id="j-search-i"></i>
+		</div>
+		<ul class="concernslist mui-table-view">
+
+		</ul>
+		<ul class="fanslist mui-table-view">
+
+		</ul>
+	</div> -->
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+    <script type="text/javascript" src="../../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript">
+        var pageSize = 8,
+            pageNum = 1,
+            hasNextPage = true,
+            userinfo = "",
+            listid = "";
+        apiready = function() {
+            $api.fixStatusBar($api.dom('.roofS'));
+            // 列表距顶部距离
+            var systemType = api.systemType;
+            if (systemType == "android") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+            }
+            if (systemType == "ios") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 50) + "px");
+            }
+
+            $api.setStorage('openWin', "fans");
+            //返回箭头事件
+            $(".roofReturn").click(function() {
+                api.closeWin({
+                    name: 'fans'
+                });
+                api.sendEvent({
+                    name: 'mine',
+                });
+            });
+
+            //滑动关闭
+            api.addEventListener({
+                name: 'swiperight'
+            }, function(ret, err) {
+                api.closeWin({
+                    name: 'fans'
+                });
+                api.sendEvent({
+                    name: 'mine',
+                });
+            });
+
+            userinfo = api.pageParam.userid;
+            listid = api.pageParam.listid;
+            //导航切换
+            $(".roofULD").css({
+                "width": "" + $(".roofUL span").width() + "px",
+                "left": "" + ($(".roofUL li").width() - $(".roofUL span").width()) / 2 + "px",
+            });
+            // 导航点击
+            $(".roofUL").on("click", "li", function() {
+                pageSize = 8;
+                pageNum = 1;
+                hasNextPage = true;
+                var id = $(this).prop("id");
+                // $(".roofUL li").removeClass("Selected");
+                // $(this).addClass("Selected");
+                $(this).addClass("Selected");
+                $(this).siblings().removeClass("Selected");
+                $(".ConcernFans").hide();
+                $("." + id).show();
+
+                if (id == "concernslist") {
+                    loadfans(id, "", userinfo, "", pageSize, pageNum);
+                } else if (id == "fanslist") {
+                    loadfans(id, userinfo, "", "", pageSize, pageNum);
+                }
+            });
+
+            //默认加载
+            if (listid == "concerns") {
+                $("#concernslist").addClass("Selected");
+                $("#concernslist").siblings().removeClass("Selected");
+                $(".concernslist").show();
+                $(".fanslist").hide();
+                loadfans("concernslist", "", userinfo, "", pageSize, pageNum);
+            } else {
+                $("#fanslist").addClass("Selected");
+                $("#fanslist").siblings().removeClass("Selected");
+                $(".fanslist").show();
+                $(".concernslist").hide();
+                loadfans("fanslist", userinfo, "", "", pageSize, pageNum);
+            }
+
+
+            //上拉刷新
+            api.addEventListener({
+                name: 'swipeup'
+            }, function(ret, err) {
+                var id = $(".active").prop("id");
+                var nickname = $("#nickname").val();
+                if (hasNextPage) {
+                    if (id == "concernslist") {
+                        loadfans(id, "", userinfo, nickname, pageSize, pageNum);
+                    } else if (id == "fanslist") {
+                        loadfans(id, userinfo, "", nickname, pageSize, pageNum);
+                    }
+                }
+            });
+
+            //搜索小图标的事件
+            $(".SearchBox").on("click", ".SearchBoxP", function() {
+                pageSize = 8;
+                pageNum = 1;
+                hasNextPage = true;
+                var id = $(".Selected").prop("id");
+                var nickname = $("#nickname").val();
+                if (id == "concernslist") {
+                    loadfans(id, "", userinfo, nickname, pageSize, pageNum);
+                } else if (id == "fanslist") {
+                    loadfans(id, userinfo, "", nickname, pageSize, pageNum);
+                }
+            });
+
+
+            $(".concernslist,.fanslist").on("click", ".otherspage", function() {
+                var userid = $(this).attr("userid");
+                var fansuserid = $(this).attr("fansuserid");
+                userid = (userid == userinfo ? fansuserid : userid);
+                api.openWin({
+                    name: 'otherspage',
+                    url: '../otherspage.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    pageParam: {
+                        userid: userid
+                    },
+                    reload: true,
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            });
+        }
+
+        //即时消息
+        $(".concernslist,.fanslist").on("click", ".hello-btn", function() {
+            var userid = $(this).attr("userid");
+            var fansuserid = $(this).attr("fansuserid");
+            var touserid = (userid == userinfo ? fansuserid : userid);
+            var tousername = $(this).attr("nickname");
+            api.openWin({
+                name: 'onetoone',
+                url: './onetoone.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    touserid: touserid,
+                    tousername: tousername,
+                    latestMessageId: -1
+                }
+            });
+        });
+
+        //关注按钮相互切换
+        $(".ConcernFans").on("click", ".gz", function() {
+            var gz = $(this);
+            var userid = $(gz).attr("userid");
+            var fansuserid = $(gz).attr("fansuserid");
+            var follow = $(gz).attr("follow");
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.FANS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: (userid == $api.getStorage('userid') ? fansuserid : userid),
+                            fansuserid: $api.getStorage('userid')
+                        }
+                    }
+                },
+                function(data, err) {
+                    if (data.code == "200") {
+                        if (follow == 1 || follow == 0) {
+                            $(gz).attr("follow", 2);
+                            $(gz).find("img").attr("src", "../../images/add.png");
+                        } else if (follow == 2) {
+                            $(gz).attr("follow", 0);
+                            $(gz).find("img").attr("src", "../../images/already.png");
+                        }
+                    } else {
+                        api.toast({
+                            msg: data.msg,
+                            duration: 1000,
+                            location: 'middle'
+                        });
+                    }
+                });
+        });
+        // 添加数据
+        function loadfans(div, userid, fansid, nickname, pagesize, pagenum) {
+            $("." + div).empty();
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETOWNERFOLLOW,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: userid,
+                            fansid: fansid,
+                            nickname: nickname,
+                            pagesize: pagesize,
+                            pagenum: pagenum
+                        }
+                    }
+                },
+                function(data, err) {
+                    $("#nickname").val("");
+                    if (data.code == "200") {
+                        if (data.ownerfollow && data.ownerfollow.list.length != 0) {
+                            $("#no-conent img").remove();
+                            $("#no-conent").remove();
+                            hasNextPage = data.ownerfollow.hasNextPage;
+                            pageNum = data.ownerfollow.nextPage;
+                            $.each(data.ownerfollow.list, function(i, n) {
+                                var html = "<li>" +
+                                    "<div class='ConcernFansAvatar'>" +
+                                    "<img userid='" + n.userid + "' fansuserid='" + n.fansuserid + "' class='otherspage' src='" + (n.avatar == null || n.avatar == "" ? "../../images/avatar.png" : n.avatar) + "'>" +
+                                    "</div>" +
+                                    "<div class='ConcernFansCenter hello-btn'  userid ='" + n.userid + "' fansuserid='" + n.fansuserid + "' nickname ='" + n.nickname + "'>" +
+                                    "<ul class='ConcernFansCU'>" +
+                                    "<li class='ConcernFansCUL'>" + n.nickname + "</li>" +
+                                    "<li class='ConcernFansCUR'>" +
+                                    "<p class='span1'>" + n.age + "</p>" +
+                                    "<p class='span2'>";
+                                if (n.gender == 0) {
+                                    html += "<img src='../../images/man-icon.png'>";
+                                } else {
+                                    html += "<img src='../../images/woman-icon.png'>";
+                                }
+                                html += "</p></li>" +
+                                    "</ul>" +
+                                    "<div class='CFCSignature'>" + n.bio + "</div>" +
+                                    "</div>";
+                                if (n.userid != $api.getStorage('userid') && n.fansuserid != $api.getStorage('userid')) {
+                                    html += "<div class='ConcernFansRight'>" +
+                                        "<div class='CFRMutual gz' follow='" + n.follow + "' userid='" + n.userid + "' fansuserid='" + n.fansuserid + "'>";
+                                    if (n.follow == 0) {
+                                        html += "<img src='../../images/already.png'>";
+                                    } else if (n.follow == 2) {
+                                        html += "<img src='../../images/add.png'>";
+                                    } else {
+                                        html += "<img src='../../images/mutual.png'>";
+                                    }
+                                    html += "</div></div>";
+                                }
+                                html += "</li>";
+                                $("." + div).append(html);
+                            });
+                        } else {
+                            $(".concerns").append("<div id=\"no-conent\"><img src=\"../../images/no-content.png\" width='100%'/></div>");
+                        }
+                    } else {
+                        api.toast({
+                            msg: data.msg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+        }
+    </script>
+</body>
+
+</html>

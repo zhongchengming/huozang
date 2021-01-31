@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>我的推广</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/MyPromotion.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<div class="roofButton">推广记录</div>
+			<div class="roofConter">
+				我的推广
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<div id="QRCode" class="PromotionList">
+		<div class="QRCodeD">
+			<div class="QRCodeDT">立即分享&nbsp;.&nbsp;跟TA约会</div>
+			<div id="QRCodeDM" class="QRCodeDM"></div>
+			<div class="QRCodeDB">
+				邀请码&nbsp;:&nbsp;<span id="spreadnum">0000</span>
+			</div>
+
+			<div class="QRCodeDTB">iPhone用户使用指导</div>
+		</div>
+		<img id="sharebgimg" />
+		<!-- <img  src="../../images/popularize.png" style="display:none"> -->
+
+	</div>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script>
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			var winname = api.pageParam.winname;
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "MyPromotion");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: (winname == null || winname == "") ? 'MyPromotion' : winname
+				});
+			});
+			var userInfo = $api.getStorage('userid');
+			//校验登录
+			if (userInfo == null || userInfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				setTimeout(function() {
+					api.openWin({
+						name: 'login',
+						url: '../../login.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+				}, 1000);
+				setTimeout(function() {
+					api.closeWin({
+						name: (winname == null || winname == "") ? 'MyPromotion' : winname
+					});
+				}, 2000);
+				return false;
+			}
+
+
+			//获取推荐码
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userInfo
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200" && data.userinfo) {
+						$("#spreadnum").html(data.userinfo.spreadnum);
+						$("#QRCode").attr("userid",data.userinfo.userid);
+						$("#QRCode").attr("avatar",data.userinfo.avatar);
+					}
+				});
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETQR,
+				method: 'post',
+				data: {
+					values: {
+						userId: $api.getStorage('userid')
+					}
+				}
+			}, function(data, err) {
+				if (data.code == "200" ) {
+					$("#QRCodeDM").append("<img src=\"" + data.QR + "\"/>");
+				}
+			});
+
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETDIC,
+				method: 'post',
+				data: {
+					values: {
+						type: "sharebgimg"
+					}
+				}
+			}, function(data, err) {
+				if (data.code == "200" && data.dict && data.dict.length > 0) {
+					$("#sharebgimg").attr("src", data.dict[0].value);
+					$("#sharebgimg").show()
+				}
+			});
+
+			api.toast({
+				msg: "长按页面可以分享哦!",
+				duration: 2000,
+				location: 'bottom'
+			});
+
+			//邀请分享
+			api.addEventListener({
+				name: 'longpress'
+			}, function(ret, err) {
+				var userid = $("#QRCode").attr("userid");
+				var avatar = $("#QRCode").attr("avatar");
+
+				api.openFrame({
+					name: 'share',
+					url: './share.html',
+					rect: {
+						x: 0,
+						y: api.winHeight - 200,
+						w: api.winWidth,
+						h: 200
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_bottom", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid,
+						avatar: avatar
+					}
+				});
+			});
+
+			// 触发关闭分享按钮
+			$('body').on('touchstart', function(e) {
+				api.closeFrame({
+					name: 'share'
+				});
+			});
+
+			// 打开推广记录
+			$(".roofButton").click(function() {
+				api.openWin({
+					name: 'PromotionRecord',
+					url: './PromotionRecord.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+
+			// IOS用户指导
+			$(".QRCodeDTB").click(function() {
+				api.openWin({
+					name: 'iosPromotion',
+					url: './iosPromotion.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+		}
+	</script>
+
+</body>
+
+</html>

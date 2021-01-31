@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>投诉页面</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+  <meta name="viewport" content="width=device-width">
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/common.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/public.css">
+  <link href="../../css/complain.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="../../css/invite_pay.css" />
+</head>
+<style media="screen">
+  html,
+  body {
+    background-color: #fff;
+  }
+
+  .roofSearch {
+    right: 20px;
+  }
+
+  /*.main{
+    margin-top: 35px;
+  }*/
+  .roofConter {
+    font-size: 17px;
+  }
+
+  .commit-hint>span:nth-child(1) {
+    display: block;
+  }
+</style>
+
+<body>
+  <header class="top-head flex-r">
+    <div class="roofS">
+      <div class="roof">
+        <div class="roofReturn"></div>
+        <div class="roofSearch"></div>
+        <div class="roofConter">
+          投诉
+        </div>
+      </div>
+    </div>
+    <div class="roofSDiv"></div>
+  </header>
+  <section class="main">
+    <!-- 投诉用户信息开始 -->
+    <div class="userinfo">
+      <p>投诉@<span data-user="nickname"></span>用户</p>
+      <div class="info flex-r">
+        <img data-user="avatar" src="../../images/avatar.png">
+        <div class="info-text">
+          <p data-user="nickname"></p>
+          <p data-user="bio"></p>
+        </div>
+      </div>
+    </div>
+    <!-- 投诉用户信息结束 -->
+    <!-- 投诉信息开始 -->
+    <div class="complain-content">
+      <!-- 投诉类型 -->
+      <div class="complainTypeList">
+        <h2 class="complain-title">请选择您要投诉的类型</h2>
+        <ul class="flex-wrap">
+          <li>垃圾经营</li>
+          <li>涉黄信息</li>
+          <li>人身攻击</li>
+          <li>有害信息</li>
+          <li>违法信息</li>
+          <li>诈骗信息</li>
+        </ul>
+      </div>
+      <!-- 投诉内容填写 -->
+      <div class="textarea-info">
+        <h2 class="complain-title">请填写具体原因(140字以内)</h2>
+        <div><textarea id="complaintContent" rows="4" cols="80"></textarea></div>
+        <!-- <span>还可以输入140字</span> -->
+      </div>
+      <!-- 上传凭证图片 -->
+      <!-- <div class="uplaodDiv">
+            <h2 class="complain-title">请上传相关图片凭证（10张图片以内）</h2>
+            <p>*长按可删除图片</p>
+            <ul class="flex-wrap">
+              <li><img src="../../images/focus1.png"></li>
+              <li><img src="../../images/headImg.png"></li>
+              <li><img src="../../images/uploadImg.png"></li>
+              <li><img src="../../images/headImg.png"></li>
+              <li><img src="../../images/tousu_upload.png"></li>
+            </ul>
+          </div> -->
+      <div class="ActivitiesU">
+        <div class="ActivitiesUL">上传照片</div>
+        <div class="ActivitiesURR">
+          <P class="p1">请上传相关图片凭证</P>
+          <ul id="PartnerUpload" class="ActivitiesURRU">
+            <li></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="clear:both"></div>
+    <!-- 投诉信息结束 -->
+    <!-- 投诉提交部分 -->
+    <div class="commitInfo">
+      <!-- <div class="commit-hint">
+          <span class="ProtocolL"></span><span>我已阅读</span><span>《XXX用户协议》</span><span>，确认此内容属于人身攻击</span>
+        </div> -->
+      <div class="commit-btn" onclick="submit()">提交</div>
+    </div>
+  </section>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/jquery.md5.js"></script>
+<script type="text/javascript">
+  apiready = function () {
+    $api.fixStatusBar($api.dom('.roofS'));
+    // 列表距顶部距离
+    var systemType = api.systemType;
+    if (systemType == "android") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+    }
+    if (systemType == "ios") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+    }
+    api.ajax({
+      url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+      method: 'post',
+      data: {
+        values: {
+          userid: api.pageParam.userid
+        }
+      }
+    }, function (res, err) {
+      if (res) {
+        console.log(JSON.stringify(res))
+        $('[data-user="nickname"]').text(res.userinfo.nickname)
+        $('[data-user="bio"]').text(res.userinfo.bio)
+        $('[data-user="avatar"]').attr('src', res.userinfo.avatar || '../../images/avatar.png')
+      }
+
+    })
+  }
+  //选择投诉类型
+  $('.complainTypeList ul li').click(function () {
+    $(this).addClass('active').siblings().removeClass('active')
+  })
+  //上传照片
+  $("#PartnerUpload li:last-of-type").click(function () {
+    //手机相册选图片
+    var UIMediaScanner = api.require('UIMediaScanner');
+    UIMediaScanner.open({
+      type: 'picture', //视频与图片,all（图片和视频）picture（图片）video（视频）
+      column: 4,
+      classify: true,
+      max: 10 - $("#PartnerUpload li").length,
+      sort: {
+        key: 'time',
+        order: 'desc'
+      },
+      texts: {
+        stateText: '已选择*项',
+        cancelText: '取消',
+        finishText: '完成'
+      },
+      styles: {
+        bg: '#fff',
+        mark: {
+          icon: '',
+          position: 'bottom_left',
+          size: 20
+        },
+        nav: {
+          bg: '#eee',
+          stateColor: '#000',
+          stateSize: 18,
+          cancelBg: 'rgba(0,0,0,0)',
+          cancelColor: '#000',
+          cancelSize: 18,
+          finishBg: 'rgba(0,0,0,0)',
+          finishColor: '#000',
+          finishSize: 18
+        }
+      },
+      scrollToBottom: {
+        intervalTime: -1
+      },
+      exchange: true,
+      rotation: true
+    }, function (ret) {
+      if (ret) {
+        if (ret.eventType == 'confirm') {
+          var imageFilter = api.require('imageFilter');
+          var path = api.cacheDir + "/upload/";
+          $.each(ret.list, function (i, n) {
+            if (api.systemType == "ios") {
+              UIMediaScanner.transPath({
+                path: n.path
+              }, function (transPathret, transPatherr) {
+                if (transPathret) {
+                  $("#PartnerUpload").prepend(
+                    "<li><P class=\"p1\"><img src=\"../../images/AClose.png\"></P><img src=\"" +
+                    transPathret.path + "\"></li>");
+                }
+              });
+            } else {
+              $("#PartnerUpload").prepend(
+                "<li><P class=\"p1\"><img src=\"../../images/AClose.png\"></P><img src=\"" + n.path +
+                "\"></li>");
+            }
+          });
+        }
+      }
+    });
+  });
+  //图片删除
+  $(".ActivitiesURRU").on("click", ".p1", function () {
+    var AId = $(this).parents(".ActivitiesURRU").attr("id");
+    var Aindex = $(this).parents("li").index();
+    $("#" + AId + "").find("li").eq(Aindex).remove();
+  })
+
+  function submit() {
+    // console.log(111)
+    //判断是否有图片
+    if ($("#PartnerUpload li>img").length > 0) {
+      //先上传图片
+      var pic = "",
+        piclist = [];
+      var qiniuUpfile = api.require('qiniuUpfile');
+      $.each($("#PartnerUpload li>img"), function (i, n) {
+        qiniuUpfile.upfile({
+          file: $(n).attr("src"),
+          name: $.md5($(n).attr("src")) + ".jpg"
+        }, function (upret, uperr) {
+          if (upret.status) {
+            if (upret.oper == "complete") {
+              pic += CONFIG.QINIUADDR + upret.info.key + ",";
+              piclist.push(upret.info.key);
+              if (piclist.length == $("#PartnerUpload li>img").length) {
+                console.log(pic)
+                submit2(pic);
+              }
+            }
+          }
+        });
+      });
+
+    } else {
+      submit2("")
+    }
+  }
+
+  function submit2(pic) {
+    console.log(api.pageParam.userid)
+    console.log(api.pageParam.type)
+    console.log(api.pageParam.id)
+    api.ajax({
+      url: CONFIG.ADDRURL + CONFIG.COMPLAINT,
+      method: 'post',
+      data: {
+        values: {
+          userId: $api.getStorage('userid'),
+          becomplaintedUserId: api.pageParam.userid,
+          complaintType: api.pageParam.type,
+          complaintId: api.pageParam.id,
+          classify: $('.complainTypeList ul li.active').text(),
+          complaintContent: $('#complaintContent').val(),
+          complaint_img: pic
+        }
+      }
+    }, function (res, err) {
+      console.log(JSON.stringify(res));
+      if (res) {
+        api.toast({
+          msg: res.msg,
+          duration: 1000,
+          location: 'middle'
+        })
+        setTimeout(function () {
+          api.closeWin({})
+        }, 1000)
+      } else {
+        api.toast({
+          msg: '投诉失败，请重试',
+          duration: 1000,
+          location: 'middle'
+        });
+      }
+    });
+  }
+
+  //返回箭头事件
+  $(".roofReturn").click(function () {
+    api.closeWin({});
+  });
+</script>
+
+</html>

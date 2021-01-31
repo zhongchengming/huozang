@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/SharePopUp.css" />
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+	<style>
+		.SharePopUpU>li {
+			width: 50%;
+			float: left;
+			margin-top: 10px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="SharePopUpS">
+		<div class="SharePopUpR">
+			<div class="SharePopUp">
+				<div class="ShareClose"></div>
+				<ul class="SharePopUpU">
+					<li>
+						<div class="SharePopUpULT Wechat"></div>
+						<div class="SharePopUpULB">
+							微信好友
+						</div>
+					</li>
+					<li>
+						<div class="SharePopUpULT CircleOfFriends"></div>
+						<div class="SharePopUpULB">
+							朋友圈
+						</div>
+					</li>
+					<!-- <li>
+						<div class="SharePopUpULT Weibo"></div>
+						<div class="SharePopUpULB">
+							微博
+						</div>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript">
+    var activityId = ""
+    var img = ""
+    var title = ""
+	apiready = function() {
+		activityId = api.pageParam.activityId;
+        img = api.pageParam.img;
+        title = api.pageParam.title;
+		$(".ShareClose").click(function() {
+			api.closeFrame({
+				name: "share"
+			});
+		});
+
+		// 微信朋友
+		$(".Wechat").click(function() {
+			var param = {
+				apiKey: '',
+				scene: 'session',
+				title: title,
+				description: "sasasa",
+				thumb: img,
+				contentUrl: CONFIG.SHAREADDR + "share3/GFHDDetails.html?activityId="+activityId
+			};
+			var wx = api.require('wx');
+
+			wx.shareWebpage(param, function(ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		// 朋友圈
+		$(".CircleOfFriends").click(function() {
+			var param = {
+				apiKey: '',
+				scene: 'timeline',
+				title: title,
+				description: "",
+				thumb: img,
+				contentUrl: CONFIG.SHAREADDR + "share3/GFHDDetails.html?activityId="+activityId
+			};
+
+			var wx = api.require('wx');
+			wx.shareWebpage(param, function(ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+	};
+</script>
+
+</html>

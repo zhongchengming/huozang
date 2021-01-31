@@ -1,0 +1,101 @@
+@charset "utf-8";
+body{
+	background:#fff;
+}
+.SharePopUpS{
+	width:100%;
+	height:100%;
+	background:rgba(255,255,255,0.5);
+	overflow:hidden;
+	position:fixed;
+	top:0;
+	left:0;
+}
+.SharePopUpR{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	background:rgba(255,255,255,0);
+	overflow:hidden;
+	position:relative;
+	left:0;
+	top:0;
+}
+.SharePopUp{
+	width:100%;
+	height:170px;
+	background:#fff;
+	overflow:hidden;
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.ShareClose{
+	width:20px;
+	height:20px;
+	margin:15px 0 0 91%;
+	background:url(../images/AClose.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.SharePopUpU{
+	width:97%;
+	margin:10px auto;
+	overflow:hidden;
+}
+.SharePopUpU > li{
+	width:33.33%;
+	float:left;
+	margin-top:10px;
+	overflow:hidden;
+}
+.SharePopUpULT{
+	width:60px;
+	height:60px;
+	margin:0 auto;
+	background:url(../images/SharePopUp_24.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.Tencent{
+	background:url(../images/SharePopUp_07.png) no-repeat;
+	background-size:100% 100%;
+}
+.TencentSpace{
+	background:url(../images/SharePopUp_09.png) no-repeat;
+	background-size:100% 100%;
+}
+.Wechat{
+	background:url(../images/SharePopUp_11.png) no-repeat;
+	background-size:100% 100%;
+}
+.CircleOfFriends{
+	background:url(../images/SharePopUp_13.png) no-repeat;
+	background-size:100% 100%;
+}
+.Weibo{
+	background:url(../images/SharePopUp_15.png) no-repeat;
+	background-size:100% 100%;
+}
+.Link{
+	background:url(../images/SharePopUp_21.png) no-repeat;
+	background-size:100% 100%;
+}
+.Download{
+	background:url(../images/SharePopUp_22.png) no-repeat;
+	background-size:100% 100%;
+}
+.NotInterested{
+	background:url(../images/SharePopUp_23.png) no-repeat;
+	background-size:100% 100%;
+}
+.SharePopUpULB{
+	width:100%;
+	height:30px;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	color:#333;
+	line-height:30px;
+	overflow:hidden;
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>会员中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <meta name="viewport" content="width=device-width">
+    <link href="../../css/member.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/public.css">
+<style media="screen">
+  html,body{background-color: #fff;}
+  .roofSearch{
+    right: 20px;
+  }
+  .main{
+    /*margin-top: 35px;*/
+  }
+  .roofConter{
+    font-size: 17px;
+  }
+</style>
+<body>
+    <header>
+      <div class="roofS">
+          <div class="roof">
+              <div class="roofReturn"></div>
+              <div class="roofSearch"></div>
+              <div class="roofConter">
+                  会员中心
+              </div>
+          </div>
+      </div>
+      <div class="roofSDiv"></div>
+    </header>
+    <section class="main">
+      <!-- 特权卡展示部分开始 -->
+      <div class="tequankaList">
+        <ul>
+          <li>
+            <img src="../../images/member/memberMgr_01.png">
+            <!-- 是会员的状态 -->
+            <div class="type1" onclick="goBuyMember()">
+                <div class="text-center">
+                  <p class="huiyuan"></p>
+                  <p><span class="huiyuan01"></span>享受更多会员权益。</p>
+                </div>
+                <div class="text-bot">
+                  <p><span class="daoqishijian"></span><span class="huiyuan02"></span></p>
+                </div>
+            </div>
+            <!-- 不是会员的状态 -->
+            <div class="type2" style="display:none;">
+                <p>十大超级专享服务</p>
+                <div class="kaitong-btn">
+                  <p onclick="goBuyMember()">立即开通</p>
+                </div>
+            </div>
+          </li>
+          <!-- <li>
+            <img src="../../images/member/memberMgr_02.png">
+            是会员的状态
+            <div class="type1" style="display:none;">
+                <div class="text-center">
+                  <p>您当前已是金卡会员，</p>
+                  <p><a href="#">升级为金卡会员</a>，享受更多会员权益。</p>
+                </div>
+                <div class="text-bot">
+                  <p>到期时间：2019年6月24日<a href="#">立即续费</a></p>
+                </div>
+            </div>
+            不是会员的状态
+            <div class="type2">
+                <p>十大超级专享服务</p>
+                <div class="kaitong-btn">
+                  <p>立即开通</p>
+                </div>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+      <!-- 特权卡展示部分结束 -->
+      <!-- 会员特权内容部分开始 -->
+      <div class="tequanList">
+        <!--<div class="list-title1">
+          <p><img src="../../images/member/title_img.png"></p>
+          <h2>蓝卡会员特权</h2>
+        </div>
+         <ul>
+          <li>
+            <img src="../../images/member/tequanList_01.png">
+            <p>语音聊天</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_02.png">
+            <p>赠送礼物</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_03.png">
+            <p>付费图片</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_04.png">
+            <p>互加好友</p>
+          </li>
+
+          <li>
+            <img src="../../images/member/tequanList_05.png">
+            <p>其他特权</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_06.png">
+            <p>语音聊天</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_07.png">
+            <p>付费视频</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_08.png">
+            <p>付费图片</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_09.png">
+            <p>互加好友</p>
+          </li>
+          <li>
+            <img src="../../images/member/tequanList_10.png">
+            <p>其他特权</p>
+          </li>
+        </ul> -->
+        <!-- 大图片链接部分 -->
+        <div class="tequan-maxImg">
+          <div class="maxImg-left" onclick="goBuyMember()">
+            <img src="../../images/member/tequan_img1.png">
+          </div>
+          <div class="maxImg-right">
+            <img src="../../images/member/tequan_img2.png">
+            <img src="../../images/member/tequan_img3.png">
+          </div>
+          <div class="myClear"></div>
+        </div>
+      </div>
+      <!-- 会员特权内容部分结束 -->
+      <!-- 会员推荐开始 -->
+      <!-- <div class="tuijainList">
+        <h2 class="list-title2"><img src="../../images/member/title_img.png">会员推荐</h2>
+        <ul>
+          <li><img src="../../images/member/memberTuiJianList_01.png"></li>
+          <li><img src="../../images/member/memberTuiJianList_01.png"></li>
+          <li><img src="../../images/member/memberTuiJianList_01.png"></li>
+        </ul>
+      </div> -->
+      <!-- 会员推荐结束 -->
+      <!-- 其他开通方式开始 -->
+      <!-- <div class="kaitongTypeList">
+        <h2 class="list-title2"><img src="../../images/member/title_img.png">其他方式开通会员</h2>
+        <ul class="flex-r">
+          <li class="flex-r">
+            <div class="kaitongTypeList-left">
+              <img src="../../images/member/botList_01.png">
+            </div>
+            <div class="kaitongTypeList-right">
+              <p>邀请好友有礼</p>
+              <span class="bg-span">赢现金</span>
+            </div>
+          </li>
+          <li class="flex-r">
+            <div class="kaitongTypeList-left">
+              <img src="../../images/member/botList_02.png">
+            </div>
+            <div class="kaitongTypeList-right">
+              <p>亲密付</p>
+              <span class="text-span">帮亲友开通VIP</span>
+            </div>
+          </li>
+          <li class="flex-r">
+            <div class="kaitongTypeList-left">
+              <img src="../../images/member/botList_03.png">
+            </div>
+            <div class="kaitongTypeList-right">
+              <p>积分兑换会员卡</p>
+              <span class="text-span">积分兑换</span>
+            </div>
+          </li>
+          <li class="flex-r">
+            <div class="kaitongTypeList-left">
+              <img src="../../images/member/botList_04.png">
+            </div>
+            <div class="kaitongTypeList-right">
+              <p>赠送好友</p>
+              <span class="bg-span">限时特惠</span>
+            </div>
+          </li>
+        </ul>
+      </div> -->
+      <!-- 其他开通方式结束 -->
+    </section>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+<script type="text/javascript" src="../../script/timeChange.js"></script>
+<script type="text/javascript">
+  apiready = function() {
+    $api.fixStatusBar($api.dom('.roofS'));
+    // 列表距顶部距离
+    var systemType = api.systemType;
+    if (systemType == "android") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+    }
+    if (systemType == "ios") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+    }
+    //判断是否是会员
+    api.ajax({
+        url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+        method: 'post',
+        data: {
+          values: {
+            userId: $api.getStorage('userid')
+          }
+        }
+      },
+      function(data, err) {
+        if (data.code == "200") {
+          if(data.userVipType.vipType == 1){
+            console.log(JSON.stringify(data));
+            var endTime = format01(data.userVipType.endTime)
+            $(".daoqishijian").text("到期时间："+endTime)
+              $(".huiyuan").text("您当前已是蓝卡会员，")
+              $(".huiyuan01").text("")
+              $(".huiyuan02").text("立即续费")
+          }else{
+            $(".huiyuan").text("您当前不是蓝卡会员，")
+              $(".huiyuan01").text("请升级蓝卡会员，")
+              $(".huiyuan02").text("立即充值")
+          }
+        }
+      });
+  }
+  //返回箭头事件
+  $(".roofReturn").click(function() {
+      api.closeWin({});
+  });
+  //搜索
+  $(".roofSearch").click(function() {
+      api.openWin({
+          name: 'search',
+          url: '../search.html',
+          bgColor: "rgba(255, 255, 255, 0)",
+          animation: {
+              type: "push", //动画类型（详见动画类型常量）
+              subType: "from_right", //动画子类型（详见动画子类型常量）
+              duration: 300 //动画过渡时间，默认300毫秒
+          }
+      });
+  });
+  //购买会员
+  function goBuyMember(){
+    if(!checklogin()){
+      return false
+    }
+    api.openWin({
+        name: 'buymember',
+        url: './buymember.html',
+        pageParam: {
+
+        }
+    });
+
+  }
+  function checklogin() {
+            var userinfo = $api.getStorage('userid');
+            if (userinfo == null || userinfo == "") {
+                api.toast({
+                    msg: '请先登录！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+</script>
+</html>

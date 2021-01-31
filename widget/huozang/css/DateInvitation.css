@@ -1,0 +1,762 @@
+@charset "utf-8";
+
+/*顶部*/
+
+body {
+    background: #fff;
+}
+.DIHead{
+	width:50.7%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.DIHead > li{
+	width:50%;
+	float:left;
+  font-size:1.3rem;
+	font-weight:bold;
+	text-align:center;
+	margin-top:4.5%;
+}
+#DIHeadLi >.DIHeadW{
+	width:35%;
+	height:2.2rem;
+	margin:0 auto 0;
+	border-bottom:0.25rem solid #ff9694;
+}
+/*导航*/
+
+.DateInvitationNvn {
+    width: 100%;
+    margin: 0 auto 3px;
+    background: #fff;
+    overflow: scroll;
+    box-shadow: 0px 0px 3px 3px #f5f5f5;
+}
+
+.DateInvitationNvnU {
+    height: 5.25rem;
+    overflow: hidden;
+}
+
+.DateInvitationNvnU>li {
+    width: 6.25rem;
+    height: 5.25rem;
+    float: left;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border-left: 0.05rem solid #fafafa;
+		color: #ff9694;
+}
+.DateInvitationNvnU>li.noactive{
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: gray;
+}
+
+.DateInvitationNvnU>li:first-of-type {
+    border-left: 0;
+}
+
+.DateInvitationNvn::-webkit-scrollbar {
+    display: none;
+}
+
+.DateInvitationNvnUD {
+    text-align: center;
+}
+
+.DateInvitationNvnUD .p1 {
+    width: 1.8rem;
+    height: 1.6rem;
+    margin: 1rem auto 0;
+    font-size: 1.1rem;
+    color: #999;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.DateInvitationNvnUD .p2 {
+    width: 100%;
+    margin-top: 0.25rem;
+    overflow: hidden;
+}
+
+.DateInvitationNvnUD .p1 img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+
+/*排序*/
+
+.DateInvitationOrder {
+    width: 100%;
+    margin: 3px auto;
+    box-shadow: 0px 0px 3px 3px #f5f5f5;
+    overflow: hidden;
+    display:none;
+}
+#RecommendOrder{
+  display:block;
+}
+.DateInvitationOrder li {
+    width: 25%;
+    height: 2rem;
+    float: left;
+    line-height: 2.4rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 400;
+}
+#DateInvitationOrderLi{
+  color:#ff9694;
+}
+.DateInvitationOrderR {
+  width: 25%;
+  height: 2rem;
+  float: left;
+  line-height: 2.4rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #999;
+  font-weight: 400;
+    position: relative;
+}
+.DateInvitationOrderR .p1 {
+    width: 0;
+    height: 0;
+    border-top: 0.25rem solid transparent;
+    border-left: 0.3rem solid #999;
+    border-bottom: 0.25rem solid transparent;
+    position: absolute;
+    right: 1.2rem;
+    top: 0.75rem;
+}
+
+.DateInvitationOrderR .p2 {
+    width: 0;
+    height: 0;
+    border-left: 0.25rem solid transparent;
+    border-top: 0.3rem solid #ff9694;
+    border-right: 0.25rem solid transparent;
+    position: absolute;
+    right: 1.2rem;
+    top: 0.9rem;
+}
+
+
+/*高级筛选*/
+
+.DateInvitationOrderDW {
+    width: 100%;
+    background: #FFF;
+    overflow:hidden;;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top:20px;
+    display: none;
+}
+.DateInvitationOrderDN{
+  overflow:auto;
+}
+.DateIOrderDWBT {
+    width: 81.33%;
+    margin: 1rem auto 0;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.DateIOrderDWUL {
+    width: 90%;
+    margin: 0.5rem auto 0;
+    overflow: hidden;
+}
+
+.DateIOrderDWUL li {
+    width: 6.2rem;
+    height: 2.5rem;
+    float: left;
+    border-radius: 2.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 2.7rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+.DateIODWUL{
+  color: #999;
+  border: 1px solid #ccc;
+}
+.DateActive{
+  color: #ff9694;
+  border:1px solid #ff9694;
+}
+.DateIOrderDWSub {
+    width: 88%;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+
+.DateIOrderDWSub li {
+    width: 45%;
+    height: 3.5rem;
+    float: left;
+    line-height: 3.5rem;
+    border-radius: 3.5rem;
+    font-size: 1.4rem;
+    color: #ff9694;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #ff9694;
+    overflow: hidden;
+}
+
+.DateIOrderDWSub li:last-of-type {
+    float: right;
+    color: #fff;
+    background: #ff9694;
+}
+
+
+/*分类*/
+
+.DateInvitationFL {
+    width: 100%;
+    margin: 0 auto 0;
+    overflow: hidden;
+}
+
+
+/*推荐展示*/
+
+.InviteRecommendation {
+  margin:5px auto;
+  overflow: hidden;
+    display: none;
+}
+
+#RecommendS {
+    display: block;
+}
+
+
+/*推荐*/
+
+#Invite>li {
+    width: 94.7%;
+    margin: 0.5rem auto 1rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 5px #f9f6f6;
+}
+
+.InviteW {
+    width: 90.4%;
+    margin: 1.5rem auto 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.InviteW .vioceImg {
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+.InviteW .vioceImg img {
+    height: 25px;
+    width: auto;
+}
+
+.InviteWL {
+    width: 4rem;
+    height: 4rem;
+    float: left;
+    border-radius: 4rem;
+    border: 1px solid #f9f6f6;
+    overflow: hidden;
+}
+
+.InviteWL img, .InviteWCBR li img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.InviteWC {
+  width:33%;
+    float: left;
+    margin-left: 1rem;
+}
+
+.InviteWCT {
+    margin-top: 0.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.InviteWCTL{
+    float: left;
+    line-height: 1.2;
+    font-size: 1.2rem;
+    color: #333;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.vioceImg {
+    position: absolute;
+
+    margin-left: 15px;
+}
+.vioceImg img {
+    width: 15px;
+}
+.InviteWCTR{
+    float: right;
+    position: relative;
+}
+.InviteWCB {
+    height: 1.2rem;
+    margin-top: 0.6rem;
+    overflow: hidden;
+}
+
+.InviteWCBL {
+    width: 2.3rem;
+    height: 1.2rem;
+    float: left;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.4rem;
+    color: #fff;
+    background: #ff9694;
+    border-radius: 1.2rem;
+    position: relative;
+}
+
+.InviteWCBL .p1 {
+    width: 1rem;
+    height: 1rem;
+    background: url(../images/woman-icon.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0.1rem;
+    top:1px;
+}
+
+.InviteWCBL .p3 {
+    width: 1rem;
+    height: 1rem;
+    background: url(../images/man-icon.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0.1rem;
+    top:1px;
+}
+
+.InviteWCBL .p2 {
+    position: absolute;
+    right: 0.35rem;
+}
+
+.InviteWCBR {
+    float: left;
+}
+
+.InviteWCBR li {
+    width:13px;
+    height:13px;
+    float: left;
+    margin-left: 0.5rem;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.clearfix {
+    clear: both;
+}
+.InviteWR {
+    /* float: rightright; */
+    /* margin-top: 2.5rem; */
+    overflow: hidden;
+}
+.InviteWR .vioceImg {
+    display: block;
+    width: 100px;
+}
+
+.InviteWRL {
+    /* float: left; */
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    color: #b2b2b2;
+}
+
+.InviteWRR {
+    width: 0.75rem;
+    height: 1.1rem;
+    float: left;
+    margin-top: 0.55rem;
+    margin-right: 0.5rem;
+    overflow: hidden;
+}
+
+.InviteWRR img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+/*视频图片*/
+.InviteVideoImg,.InviteVideoImgOne,.InviteVideoImgTwo{
+	width:91.5%;
+	margin:10px auto;
+	overflow:hidden;
+}
+.InviteVideoImgOne img{
+	width:70%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.InviteVideoImgTwo > li{
+	width:49%;
+	float:left;
+	margin-right:2%;
+}
+.InviteVideoImgTwo > li:last-of-type{
+	margin-right:0;
+}
+.InviteVideoImgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.InviteVideoImg > li{
+	width:33.33%;
+  height:100px;
+	float:left;
+	margin-bottom:5px;
+}
+.InviteVideoImg > li img{
+	width:95%;
+  height:95%;
+	margin:2.5% auto 0;
+	overflow:hidden;
+}
+
+
+
+
+/*.InviteVideoImg,.InviteVideoImgOne,.InviteVideoImgTwo{
+	width:90.4%;
+	margin:1.2rem auto 0;
+	overflow:hidden;
+}
+
+.InviteVideoImgOne > li{
+	width:70%;
+	margin:5px auto;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.InviteVideoImgTwo > li{
+	width:45%;
+	float:left;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:2%;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.InviteVideoImgTwo > li:first-of-type{
+	margin-left:4%;
+}
+.InviteVideoImg > li{
+	width:23.5%;
+	float:left;
+	margin-left:2%;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.InviteVideoImg > li:first-of-type{
+	margin-left:0;
+}
+.InviteVideoImg > li > img,.InviteVideoImgOne > li img,.InviteVideoImgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+
+.InviteVideoImg>li .p1 {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    top:35%;
+    left:35%;
+}
+
+.InviteVideoImg>li .p1 img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}*/
+
+
+/*文字*/
+
+.InviteText {
+    width: 90.4%;
+    margin: 1rem auto 0;
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.5;
+    overflow: hidden;
+}
+.InviteText span{
+	margin-right:0.3rem;
+	background:#e6e6e6;
+	font-size:1.1rem;
+	color:#fff;
+	line-height:1;
+	padding:0.3rem 0.3rem 0.01rem;
+	border-radius:0.3rem;
+}
+
+/*标记*/
+
+.InviteSign {
+    width: 90.4%;
+    margin: 1rem auto 0;
+    font-size: 1.1rem;
+    color: #fff;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+.InviteSign li {
+    float: left;
+    margin-right: 0.3rem;
+    background: #e6e6e6;
+    line-height: 1;
+    padding: 0.3rem 0.3rem 0.01rem;
+    border-radius: 0.3rem;
+}
+
+
+/*按钮*/
+
+.InviteBut,.RecommenBut{
+	width:94%;
+	margin:1rem auto;
+	overflow:hidden;
+}
+.RecommenBut > li{
+	width:33.33%;
+	float:right;
+  overflow:hidden;
+}
+/*.RecommenBut > li div{
+	width:94%;
+  float:left;
+}
+.RecommenBut > li:first-of-type div{
+	width:33.3%;
+  float:right;
+}*/
+
+.InviteBut>li {
+    width:33.33%;
+    float: right;
+}
+
+.InviteButW, .InviteButWA {
+    width: 85%;
+    height: 2.5rem;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff9694;
+    line-height:2.8rem;
+    border-radius:2.5rem;
+    overflow: hidden;
+    border: 1px solid #ff9694;
+}
+
+#InviteButW {
+    color: #fff;
+    font-weight: 400;
+    background: #ff9694;
+}
+.Collection{
+  color:#999;
+  background:#eee;
+  border: 1px solid #eee;
+}
+.InviteButWA {
+    color: #fff;
+    font-weight: 400;
+    background: #ff9694;
+}
+
+.InviteButD {
+    width: 85%;
+    height:2.5rem;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff9694;
+    line-height:2.8rem;
+    border-radius:2.5rem;
+    overflow: hidden;
+    border: 1px solid #ff9694;
+    position: relative;
+}
+
+.InviteButD .p1 {
+    position: absolute;
+    left: 1.9rem;
+}
+
+.InviteButD .p2 {
+    width: 1.45rem;
+    height: 1.25rem;
+    position: absolute;
+    right: 1.9rem;
+    top: 0.5rem;
+}
+
+.InviteButD .p2 img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+/*邀请*/
+
+#Invitation > li {
+    width: 94.7%;
+    margin: 0.5rem auto 1rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 5px #f9f6f6;
+}
+
+.RecommendConter {
+    width: 90.4%;
+    margin: 0.8rem auto 0;
+    overflow: hidden;
+}
+
+.RecommendConter>li:first-of-type {
+    width: 22%;
+    height: 2rem;
+    float: left;
+    color: #b2b2b2;
+    line-height: 2.3rem;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 400;
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    border-radius: 2rem;
+}
+
+.RecommendConter>li:last-of-type {
+    width: 75%;
+    float: left;
+    margin-left: 2%;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.RecommendConter>li:last-of-type span {
+    font-weight: bold;
+    color: #ff9694;
+}
+
+
+/*按钮*/
+.RecommendNextStep{
+  width:45%;
+  height: 3.2rem;
+  margin: 1.2rem auto;
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 3.2rem;
+  border-radius: 3.2rem;
+  color: #fff;
+  font-weight: 400;
+  background: #ff9694;
+  overflow: hidden;
+}
+.RecommendBut {
+    width: 90.4%;
+    margin: 1.2rem auto;
+    overflow: hidden;
+}
+
+.RecommendBut>li {
+    width: 33.33%;
+    height: 3.2rem;
+    float: left;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #ff9694;
+    line-height: 3.2rem;
+    border-radius: 3.2rem;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ff9694;
+}
+
+.RecommendBut>li:last-of-type {
+    float: right;
+    color: #fff;
+    font-weight: 400;
+    background: #ff9694;
+}
+
+.RecommendBut>li:first-of-type .p1 {
+    position: absolute;
+    left: 2.3rem;
+}
+
+.RecommendBut>li:first-of-type .p2 {
+    width: 1.45rem;
+    height: 1.25rem;
+    position: absolute;
+    right: 2.3rem;
+    top: 0.9rem;
+}
+
+.RecommendBut>li:first-of-type .p2 img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}

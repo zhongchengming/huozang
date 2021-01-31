@@ -1,0 +1,350 @@
+@charset "utf-8";
+/* body{
+	background:#f2f2f2;
+} */
+.roofS{
+	background:rgba(255,255,255,0);
+}
+.roof{
+	box-shadow: 0 0 0 0 #f2f2f2;
+}
+.roofReturnB{
+	background:url(../images/returnB.png) no-repeat;
+		background-size:100% 100%;
+}
+.roofSearchB{
+	background:url(../images/searchB.png) no-repeat;
+		background-size:100% 100%;
+}
+
+.banner{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.banner img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.Portrait{
+	width:80px;
+	height:80px;
+	border-radius:100%;
+	margin:-61px auto 0;
+	overflow:hidden;
+}
+.Portrait img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+/*名称*/
+.merchantName{
+	width:94.7%;
+	margin:12px auto 0;
+	overflow:hidden;
+}
+.merchantNameL{
+	width:68%;
+	float:left;
+	overflow:hidden;
+}
+.merchantNameLText{
+	width:95%;
+	line-height:25px;
+	font-size:18px;
+	font-weight:bold;
+	color:#000;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.merchantNameLTextT{
+	width:95%;
+	line-height:25px;
+	font-size:14px;
+	font-weight:400;
+	color:#ff9694;
+	overflow:hidden;
+}
+.merchantNameLTextT span{
+	margin-right:5px;
+	margin-left:5px;
+}
+.merchantNameLTextT span:first-of-type{
+	margin-left:0;
+}
+.merchantNameR{
+	width:31%;
+	float:left;
+	border-left:1px solid #f0f0f0;
+	overflow:hidden;
+}
+.merchantNameRText{
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	font-size:14px;
+	font-weight:400;
+	color:#ff9694;
+	overflow:hidden;
+}
+.merchantNameRImg{
+	width:70px;
+	margin:0 auto 10px;
+	overflow:hidden;
+}
+.merchantNameRImg li{
+	width:10px;
+	height:10px;
+	float:left;
+	margin-left:2px;
+	margin-right:2px;
+	background:url(../images/StyleRImg_26.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.merchantNameRImg li.SelectAll{
+	background:url(../images/StyleRImg_22.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.merchantNameRImg li.SemiSelective{
+	background:url(../images/StyleRImg_24.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.merchantLocation{
+	width:94.7%;
+	height:45px;
+	margin:10px auto 0;
+	border-top:1px solid #f0f0f0;
+	border-bottom:1px solid #f0f0f0;
+	overflow:hidden;
+}
+.merchantLocationL{
+	width:20px;
+	height:20px;
+	float:left;
+	margin-top:12.5px;
+	margin-right:5px;
+	background:url(../images/Location.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.merchantLocationR{
+	width:90%;
+	line-height:20px;
+	margin-top:12.5px;
+	font-size:14px;
+	font-weight:400;
+	color:#333;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+/* 标题 */
+.merchantBt{
+	width:94.7%;
+	line-height:1.5;
+	margin:20px auto 0;
+	font-size:18px;
+	font-weight:bold;
+	color:#000;
+	overflow:hidden;
+}
+/* 小标题 */
+.merchantXBt{
+	width:94.7%;
+	line-height:1.5;
+	margin:15px auto 0;
+	font-size:14px;
+	font-weight:bold;
+	color:#333;
+	text-indent:5px;
+	border-left:5px solid #FF9694;
+	overflow:hidden;
+}
+.merchantCent{
+	width:94.7%;
+	line-height:1.8;
+	margin:10px auto 0;
+	font-size:13px;
+	color:#666;
+	overflow:hidden;
+}
+/* 提示 */
+.merchantPrompt{
+	width:94.7%;
+	line-height:1.5;
+	margin:10px auto 0;
+	font-size:11px;
+	color:#ff9694;
+	overflow:hidden;
+}
+.merchantHr{
+	width:94.7%;
+	margin:20px auto 0;
+	border-top:1px solid #f0f0f0;
+	overflow:hidden;
+}
+.merchantHotel{
+	width:96%;
+	margin:20px auto;
+	overflow:hidden;
+}
+.merchantHotel > li{
+	width:32%;
+	float:left;
+	margin-left:0.65%;
+	margin-right:0.65%;
+	margin-bottom:15px;
+	background:#fff;
+	overflow:hidden;
+}
+.merchantHotelImg{
+	width:100%;
+	height:100px;
+	border-radius:5px;
+	overflow:hidden;
+	position:relative;
+}
+.merchantHotelImg > img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.merchantHotelImgD{
+	width:100%;
+	height:25px;
+	line-height:25px;
+	font-size:12px;
+	color:#FF9694;
+	text-align:right;
+	text-indent:10px;
+	background:rgba(0,0,0,0.5);
+	overflow:hidden;
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.merchantHotelName{
+	width:100%;
+	line-height:1.5;
+	margin-top:5px;
+	font-size:16px;
+	font-weight:400;
+	color:#333;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.merchantHotelPrice{
+	width:100%;
+	margin-top:3px;
+	font-size:10px;
+	font-weight:bold;
+	color:#ff9694;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.merchantHotelPrice span{
+	font-size:15px;
+}
+.merchantHoteL{
+	width:100%;
+	margin:5 auto 0;
+	overflow:hidden;
+}
+.merchantHoteLL{
+	width:7.5px;
+	height:11px;
+	float:left;
+	margin-top: 5.5px;
+	margin-right:5px;
+	background:url(../images/address_icon.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.merchantHoteLR{
+	width:85%;
+	line-height:22px;
+	font-size:12px;
+	color:#999;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

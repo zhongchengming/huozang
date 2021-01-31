@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <link href="../../css/swiper.min.css" rel="stylesheet" />
+    <link href="../../css/public.css" rel="stylesheet" />
+    <link href="../../css/soul_main.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+</head>
+<style media="screen">
+    html,
+    body {
+        background-color: #fff;
+    }
+
+    .roofConter {
+        height: 50px;
+        line-height: 50px;
+        box-sizing: border-box;
+        padding: 0 10px;
+    }
+
+    .main {
+        padding-bottom: 50px;
+    }
+
+    .sexImg {
+        width: 15px;
+        height: 15px;
+        float: left;
+        margin: 0 2px 0 2px
+    }
+    .toutiaoCon{
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="roofS">
+            <!-- 搜索 -->
+            <div class="roofConter index-search">
+                <img src="../../images/search_icon.png" />
+                <input id="search" type="text" placeholder="请输入您要搜索的内容" />
+            </div>
+        </div>
+        <div class="roofSDiv"></div>
+    </header>
+    <section class="main">
+        <!--  轮播 -->
+        <div class="focus-bg">
+            <!-- <div class="focus-imgList">
+                <img src="../../images/focus1.png">
+            </div> -->
+
+            <div class="swiper-container">
+                <div class="swiper-wrapper lunboImg">
+
+                </div>
+            </div>
+        </div>
+        <script type="text/template" id="bannerImg">
+            {{~it:value:index}} {{? value.type=="lunbo_pic"}}
+            <div class="swiper-slide bannerImg swiper-no-swiping" urlPath="{{= value.remark}}">
+                <div class="focus-imgList">
+                    <img src=" {{= value.value}}">
+                </div>
+            </div>
+            {{?}} {{~}}
+        </script>
+        <!-- 图标菜单 -->
+        <div class="iconList">
+            <ul class="flex-r">
+                <li onclick="tuanti()">
+                    <div class="model">
+                        <img src="../../images/img01.png">
+                        <p class="modelText">团体活动</p>
+                    </div>
+                </li>
+                <li onclick="goMemberCenter()">
+                    <div class="model">
+                        <img src="../../images/img02.png">
+                        <p class="modelText">升级会员</p>
+                    </div>
+                </li>
+                <li onclick="findFriend()">
+                    <div class="model">
+                        <img src="../../images/img03.png">
+                        <p class="modelText">一键匹配</p>
+                    </div>
+                </li>
+                <li onclick="getMoney()">
+                    <div class="model">
+                        <img src="../../images/img04.png">
+                        <p class="modelText">赚取金币</p>
+                    </div>
+                </li>
+                <li onclick="myPay()">
+                    <div class="model">
+                        <img src="../../images/img05.png">
+                        <p class="modelText">我的钱包</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- 头条 -->
+        <div class="toutiao">
+            <span class="toutList">头条</span>
+            <div class="toutiaolist" style="height:15px;width:80%;overflow:hidden">
+              <div class="swiper-container">
+                  <div class="swiper-wrapper toutiaoswiper">
+
+                  </div>
+              </div>
+            </div>
+        </div>
+        <script type="text/template" id="toutiaocontent">
+            {{~it:value:index}}
+            <div class="swiper-slide bannerImg swiper-no-swiping" >
+                <div class="toutiaoCon" toutiaoid="{{= value.id}}">
+                    {{= value.title}}
+                </div>
+            </div>
+          {{~}}
+        </script>
+        <!-- 热门推荐 -->
+        <!-- 标题 -->
+        <div class="title" id="recuser">
+            <img src="../../images/huiyuan.png">
+            <h2 style="font-size:12px !important">会员推荐</h2>
+            <!-- <img src="../../images/gengduo_icon2.png"> -->
+            <div class="myClear"></div>
+        </div>
+        <div class="palerList">
+            <div class="list">
+                <ul id="recommend">
+
+                        <!-- <li>
+                                <div class="recommend-img">
+                                    <img src="" alt="" class="img">
+                                    <div class="profession">职业：护士</div>
+                                    <div class="music" data-id="{{=value.userid}}">
+                                        <img src="../../images/paler_music.png">
+                                    </div>
+                                    <div class="gift" onclick="sendgift('{{=value.userid}}')">
+                                        <img src="../../images/paler_gift.png">
+                                    </div>
+                                    <div class="bio">阿斯顿撒大大大</div>
+                                    <div class="tip"><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p><p class="tipName">吃饭</p></div>
+                                </div>
+                                <div class="info">
+                                    <div class="info-top">
+                                        <div class="avatar">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="info-top-right">
+                                            <div class="user-name">
+                                                    userName
+                                                    <img src="../../images/sex_woman.png"/>
+                                                    <span>20</span>
+                                            </div>
+                                            <p class="address"><img src="../../images/paler_juli.png">距离我1.2KM 在上上国际附近</p>
+                                        </div>
+                                        <div class="wh">
+
+                                                身高173/体重64kg/文化修养：研究生
+                                        </div>
+                                    </div>
+                                    <div class="info-botom">
+                                        123ABC
+                                    </div>
+                                </div>
+                            </li> -->
+                </ul>
+                <script type="text/template" id="recommendtemplate">
+                    {{~it:value:index}}
+                    <li>
+                            <div class="recommend-img" >
+                                <img src="{{=value.personbgpic}}" alt="" class="img" onclick="own('{{=value.userid}}')">
+                                <div class="profession" style="{{=color()}}">职业：{{=value.profession}}</div>
+                                {{? value.voiceurl != null && value.voiceurl != ""}}
+                                <div class="music" data-id="{{=value.userid}}">
+                                    <img src="../../images/paler_music.png">
+                                </div>
+                                {{?}}
+                                <div class="gift" onclick="sendgift('{{=value.userid}}')">
+                                    <img src="../../images/paler_gift.png">
+                                </div>
+                                <div class="tipContent">
+                                <div class="bio">{{=value.bio}}</div>
+                                <div class="tip">{{=tags(value.tags)}}</div>
+                                </div>
+                            </div>
+                            <div class="info" onclick="ownInfor('{{=value.userid}}')">
+                                <div class="info-top">
+                                    <div class="avatar">
+                                        <img src="{{=value.avatar}}" >
+                                    </div>
+                                    <div class="info-top-right">
+                                        <div class="user-name">
+                                                {{=value.nickname}}
+                                                {{? value.gender ==1}}
+                                                <!-- <img src="../../images/sex_woman2.png"/> -->
+                                                <svg t="1563185333727" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2053" width="16" height="16"><path d="M692 692H557v-94c127.6-21.5 225-132.2 225-266 0-149.1-120.9-270-270-270S242 182.9 242 332c0 133.7 97.4 244.5 225 266v94H332c-24.9 0-45 20.1-45 45s20.1 45 45 45h135v135c0 24.9 20.1 45 45 45s45-20.1 45-45V782h135c24.9 0 45-20.1 45-45s-20.1-45-45-45zM332 332c0-99.4 80.6-180 180-180s180 80.6 180 180-80.6 180-180 180-180-80.6-180-180z" fill="#ff9694" p-id="2054"></path></svg>
+                                                {{?? value.gender ==0}}
+                                                <!-- <img src="../../images/sex_man2.png" /> -->
+                                                <svg t="1563185456182" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3774" width="16" height="16"><path d="M811 189.4H558.1c-15.5 0-28 12.5-28 28s12.5 28 28 28h187.3l-191 191c-47.2-39-106-60.3-168.1-60.3-70.6 0-137 27.5-186.9 77.4-49.9 49.9-77.4 116.3-77.4 186.9s27.5 137 77.4 186.9c49.9 49.9 116.3 77.4 186.9 77.4s137-27.5 186.9-77.4 77.4-116.3 77.4-186.9c0-60.3-20.1-117.6-57.1-164.1L783 286.9v183.4c0 15.5 12.5 28 28 28s28-12.5 28-28V217.4c0-15.5-12.5-28-28-28zM533.6 787.9c-81.2 81.2-213.5 81.2-294.7 0-81.2-81.2-81.2-213.5 0-294.7 40.6-40.6 94-60.9 147.3-60.9s106.7 20.3 147.3 60.9c81.3 81.2 81.3 213.4 0.1 294.7z" p-id="3775" fill="#ff9694"></path></svg>
+                                                {{??}}
+                                                {{?}}
+
+                                                <span>{{=value.age}}岁</span>
+                                        </div>
+                                        <p class="address">
+                                          <!-- <img src="../../images/paler_juli2.png"> -->
+                                          <svg t="1563185636301" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4700" width="11" height="11"><path d="M499.40123 910.011132l11.998829 10.598965 12.098818-10.498975c13.698662-11.998828 336.267161-296.571038 336.267161-562.645054C859.766038 155.984767 703.881262 0.19998 512.299971 0.19998S164.733913 155.884777 164.733913 347.366078c0 266.074016 321.068646 550.646226 334.667317 562.645054z m12.79875-873.314716c171.483254 0 310.869642 139.386388 310.869642 310.669662 0 221.578361-252.875305 469.554145-311.669563 524.148813C453.005761 816.920223 201.330339 569.144419 201.330339 347.366078c0-171.283273 139.486378-310.669661 310.869641-310.669662z" fill="#999999" p-id="4701"></path><path d="M676.883898 358.065033c0-90.791134-73.792794-164.583927-164.583927-164.583928s-164.583927 73.792794-164.583928 164.583928 73.792794 164.583927 164.583928 164.583927 164.583927-73.792794 164.583927-164.583927z m-292.671419 0c0-70.593106 57.394395-127.987501 127.987501-127.987502s127.987501 57.394395 127.987502 127.987502-57.394395 127.987501-127.987502 127.987501-127.987501-57.394395-127.987501-127.987501zM693.082316 785.523289c-9.799043-2.099795-19.598086 4.19959-21.697881 14.098623-2.099795 9.899033 4.19959 19.598086 14.098623 21.697881 95.090714 20.298018 137.686554 52.094913 137.686554 74.692706 0 38.19627-118.288448 91.491065-310.869641 91.491065s-310.869642-53.294795-310.869642-91.491065c0-22.097842 43.895713-54.994629 140.08632-75.192657 9.899033-2.099795 16.198418-11.798848 14.198613-21.597891-2.099795-9.899033-11.898838-16.298408-21.597891-14.198613-107.489503 22.497803-169.183478 62.893858-169.183478 110.989161 0 83.191876 179.082511 127.987501 347.466068 127.987501s347.466068-44.895616 347.466068-127.987501c-0.09999-47.595352-60.894053-87.891417-166.783713-110.48921z" fill="#999999" p-id="4702"></path></svg>
+                                          距离我{{=value.distance}}KM {{=value.locationuser}}
+                                        </p>
+                                    </div>
+                                    <div class="wh">
+
+                                            身高{{=value.height}}cm/体重{{=value.weight}}kg/文化修养：{{=value.education}}
+                                    </div>
+                                </div>
+                                <div class="info-botom">
+                                    {{=value.bio}}
+                                </div>
+                            </div>
+                        </li>
+                    {{~}}
+                </script>
+            </div>
+        </div>
+        <!--热门推荐结束 -->
+        <!--热门邀请开始 -->
+        <!-- 标题 -->
+        <!-- <div class="title" id="travel">
+            <h2>会员邀请</h2>
+            <img class="travel" src="../../images/gengduo_icon2.png">
+            <div class="myClear"></div>
+        </div> -->
+        <!-- <div class="yaoqingList"> -->
+        <!-- <div class="hortList" id="invitor">
+
+        </div> -->
+        <script type="text/template" id="invitationtemplate">
+            {{~it:value:index}}
+            {{? value.avatar != null}}
+            <div class="hortListModel">
+                <div class="hortListModelTop" userid="{{=value.userid}}">
+                    <div class="hortListModeTopImg">
+                        <img class="hortListModeTopHeader" src="{{=value.avatar}}" />
+                    </div>
+                    <div class="hortListModeTopContent">
+                        <div class="hortListModeTopContentTop">
+                            <span class="hortListModelName">{{=value.nickname}}</span>
+                            <!-- <span class="sexText"> -->
+                                {{? value.gender ==1}}
+                                  <img class="sexImg" src="../../images/sex_woman2.png"/>
+                                  <!-- {{=value.age}} -->
+                              <!-- </span>  -->
+                              {{?? value.gender ==0}}
+                            <!-- <span class="sexText"> -->
+                                  <img class="sexImg" src="../../images/sex_man2.png" />
+                                  <!-- {{=value.age}} -->
+                                  {{??}} {{?}}
+                                <!-- </span>  -->
+
+                            <!-- 判断学历 -->
+                            <!-- <span> -->
+                         {{? value.educationauth ==1 }}
+                             <img class="sexImg" src="../../images/Datashape14.png"/>
+                           <!-- </span>  -->
+                           {{?}}
+                            <!-- 判断邮箱 -->
+                            <!-- <span> -->
+                       {{? value.emailauth == 1 }}
+                       <img class="sexImg" src="../../images/Datashape13.png"/>
+                     <!-- </span>  -->
+                     {{?}}
+                            <!-- 判断微信 -->
+                            <!-- <span> -->
+                       {{? value.wxauth == 1 }}
+                       <img class="sexImg" src="../../images/Datashape12.png"/>
+                     <!-- </span> -->
+                     {{?}}
+                            <!-- 判断手机号 -->
+                            <!-- <span> -->
+                      {{? value.mobieauth == 1 }}
+                      <img class="sexImg" src="../../images/Datashape10.png"/>
+                    <!-- </span> -->
+                    {{?}}
+                            <!-- 判断身份 -->
+                            <!-- <span> -->
+                      {{? value.idcardauth == 1 }}
+                      <img class="sexImg" src="../../images/Datashape11.png"/>
+                    <!-- </span> -->
+                    {{?}}
+                        </div>
+                        <div class="hortListModeTopContentBottom">
+                            <img class="hortListModeTopContentBottomImg" src="../../images/address_icon.png" /><span class="distance">距离我{{=value.distance}}KM&nbsp;&nbsp;{{=value.locationuser}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hortListModelTopBottom" invitationid="{{=value.id}}" userid="{{=value.userid}}">
+                    <div class="hortListModelTopBottomLeft">
+                        <img src="{{=value.img}}" />
+                    </div>
+                    <div class="hortListModelTopBottomRight">
+                        <div class="hortListModelTopBottomRightTitle">{{=value.content}}</div>
+                        <div class="hortListModelTopBottomRightContent">{{=value.bio}}</div>
+                        <div class="hortListModelTopBottomRightTime">
+                                <p class="go">约会地点</p>
+                                <p class="goTime">{{=value.locationinvitation}}</p>
+                            </div>
+                        <div class="hortListModelTopBottomRightTime">
+                            <p class="go">发布时间</p>
+                            <p class="goTime">{{=value.createtime}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{?}}
+            {{~}}
+        </script>
+        <!-- </div> -->
+        <!--热门邀请结束 -->
+        <!-- 底部大图片展示 -->
+        <!-- <div class="bot-img">
+            <div class="swiper-container">
+                <div class="swiper-wrapper bottomLunbo">
+
+                </div>
+            </div>
+        </div> -->
+        <script type="text/template" id="bannerPicture">
+            {{~it:value:index}} {{? value.type=="merchant_pic"}}
+            <div class="swiper-slide urlImg swiper-no-swiping" urlPath="{{= value.remark}}">
+                <div class="focus-imgList">
+                    <img class="bot-imgImg" src=" {{= value.value}}">
+                </div>
+            </div>
+            {{?}} {{~}}
+        </script>
+    </section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/PublicCss.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+<script type="text/javascript" src="../../script/timeChange.js"></script>
+<script type="text/javascript" src="../../script/swiper.min.js"></script>
+<script type="text/javascript">
+
+    // 播放音频
+    $('#recommend').on('click', ".music", function () {
+        var audioStreamer = api.require('audioStreamer')
+        var status = $(this).attr('data-status')
+
+        if (status == "play") {
+            audioStreamer.stop()
+            $(this).find('img').attr('src', '../../images/paler_music.png')
+            $('#recommend .music').attr('data-status', "stop")
+            $(this).attr('data-status', "stop")
+        } else {
+            $('#recommend .music').attr('data-status', "stop")
+            $(this).attr('data-status', "play")
+            audioStreamer.stop()
+            $('#recommend .music').find('img').attr('src', '../../images/paler_music.png')
+            $(this).find('img').attr('src', '../../images/paler_music_play.gif')
+            var id = $(this).attr('data-id')
+            api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+                method: 'post',
+                data: {
+                    values: {
+                        userid: id
+                    }
+                }
+            }, function (res, err) {
+                if (res) {
+                    // console.log(JSON.stringify(res))
+                    if (res.userinfo.voiceurl || res.userinfo.voiceurl != "") {
+                        audioStreamer.openPlayer({
+                            path: res.userinfo.voiceurl,
+                        });
+                    }
+                } else {
+                    // console.log(JSON.stringify(err))
+                }
+            });
+        }
+    })
+    //会员中心
+    function goMemberCenter() {
+      var userid = $api.getStorage('userid');
+      if (userid == null || userid == "") {
+          api.toast({
+              msg: '请先登录！',
+              duration: 1000,
+              location: 'middle'
+          });
+          // setTimeout(function () {
+              api.openWin({
+                  name: 'login',
+                  url: '../../login.html',
+                  bgColor: "rgba(255, 255, 255, 0)",
+                  animation: {
+                      type: "push", //动画类型（详见动画类型常量）
+                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                      duration: 300 //动画过渡时间，默认300毫秒
+                  }
+              });
+          // }, 1000);
+          return false;
+      }else{
+        api.openWin({
+            name: 'membercenter',
+            url: '../member/membercenter.html',
+            pageParam: {
+
+            }
+        });
+
+      }
+
+
+    }
+    //团体活动
+    function tuanti() {
+      var userid = $api.getStorage('userid');
+      if (userid == null || userid == "") {
+          api.toast({
+              msg: '请先登录！',
+              duration: 1000,
+              location: 'middle'
+          });
+          // setTimeout(function () {
+              api.openWin({
+                  name: 'login',
+                  url: '../../login.html',
+                  bgColor: "rgba(255, 255, 255, 0)",
+                  animation: {
+                      type: "push", //动画类型（详见动画类型常量）
+                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                      duration: 300 //动画过渡时间，默认300毫秒
+                  }
+              });
+          // }, 1000);
+          return false;
+      }else{
+        api.openWin({
+            name: 'squareSquare',
+            url: '../community/Square.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight - 48
+            },
+            pageParam: {
+                id: "1"
+            }
+        });
+
+      }
+
+        // api.openFrame({
+        //     name: 'teamGroup',
+        //     url: '../community/Square.html',
+        //     rect: {
+        //         x: 0,
+        //         y: 0,
+        //         w: api.winWidth,
+        //         h: api.winHeight-50
+        //     },
+        //     pageParam: {
+        //       id:4
+        //     }
+        // });
+
+    }
+    //一键匹配
+    function findFriend() {
+      var userid = $api.getStorage('userid');
+      if (userid == null || userid == "") {
+          api.toast({
+              msg: '请先登录！',
+              duration: 1000,
+              location: 'middle'
+          });
+          // setTimeout(function () {
+              api.openWin({
+                  name: 'login',
+                  url: '../../login.html',
+                  bgColor: "rgba(255, 255, 255, 0)",
+                  animation: {
+                      type: "push", //动画类型（详见动画类型常量）
+                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                      duration: 300 //动画过渡时间，默认300毫秒
+                  }
+              });
+          // }, 1000);
+          return false;
+      }else{
+        api.openWin({
+            name: 'radar',
+            url: '../radar.html',
+            pageParam: {
+
+            }
+        });
+
+      }
+
+    }
+
+    // 赚取金币
+    function getMoney() {
+        var userid = $api.getStorage('userid');
+        if (userid == null || userid == "") {
+            api.toast({
+                msg: '请先登录！',
+                duration: 1000,
+                location: 'middle'
+            });
+            // setTimeout(function () {
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            // }, 1000);
+            return false;
+        }else{
+          api.openWin({
+              name: 'MyPromotion',
+              url: '../mine/MyPromotion.html',
+              pageParam: {
+
+              }
+          });
+
+        }
+
+    }
+    function myPay() {
+        var userid = $api.getStorage('userid');
+        if (userid == null || userid == "") {
+            api.toast({
+                msg: '请先登录！',
+                duration: 1000,
+                location: 'middle'
+            });
+            // setTimeout(function () {
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            // }, 1000);
+            return false;
+        }else{
+          api.openWin({
+              name: 'MyGoldCoin',
+              url: '../mine/MyGoldCoin.html',
+              pageParam: {
+
+              }
+          });
+        }
+
+    }
+    //约她
+    function goYueTa() {
+        api.openWin({
+            name: 'appointment',
+            url: '../DateInvitation/appointment.html',
+            pageParam: {
+
+            }
+        });
+    }
+    $('body').on('touchstart', '.mask', function () {
+        api.closeFrame({
+            name: 'gift'
+        })
+        $('.mask').remove()
+    })
+    //打开个人主页
+    function own(id){
+      var userid = $api.getStorage('userid');
+      if (userid == null || userid == "") {
+          api.toast({
+              msg: '请先登录！',
+              duration: 1000,
+              location: 'middle'
+          });
+          // setTimeout(function () {
+              api.openWin({
+                  name: 'login',
+                  url: '../../login.html',
+                  bgColor: "rgba(255, 255, 255, 0)",
+                  animation: {
+                      type: "push", //动画类型（详见动画类型常量）
+                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                      duration: 300 //动画过渡时间，默认300毫秒
+                  }
+              });
+          // }, 1000);
+          return false;
+      }else{
+        api.openWin({
+            name: 'personalpage',
+            url: '../otherspage.html',
+            bgColor: "rgba(255, 255, 255, 0)",
+            animation: {
+                type: "push", //动画类型（详见动画类型常量）
+                subType: "from_right", //动画子类型（详见动画子类型常量）
+                duration: 300 //动画过渡时间，默认300毫秒
+            },
+            pageParam: {
+                userid: id
+            }
+        });
+      }
+
+
+    }
+    //打开个人详情
+    function ownInfor(id){
+      var userid = $api.getStorage('userid');
+      if (userid == null || userid == "") {
+          api.toast({
+              msg: '请先登录！',
+              duration: 1000,
+              location: 'middle'
+          });
+          // setTimeout(function () {
+              api.openWin({
+                  name: 'login',
+                  url: '../../login.html',
+                  bgColor: "rgba(255, 255, 255, 0)",
+                  animation: {
+                      type: "push", //动画类型（详见动画类型常量）
+                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                      duration: 300 //动画过渡时间，默认300毫秒
+                  }
+              });
+          // }, 1000);
+          return false;
+      }else{
+        api.openWin({
+            name: 'personalpage',
+            url: '../DateInvitation/appointmentdetail.html',
+            bgColor: "rgba(255, 255, 255, 0)",
+            animation: {
+                type: "push", //动画类型（详见动画类型常量）
+                subType: "from_right", //动画子类型（详见动画子类型常量）
+                duration: 300 //动画过渡时间，默认300毫秒
+            },
+            pageParam: {
+                userid: id
+            }
+        });
+      }
+
+
+    }
+
+    //赠送礼物
+    function sendgift(id) {
+        if ($api.getStorage('userid') == null || $api.getStorage('userid') == "") {
+            api.toast({
+                msg: '请先登录！',
+                duration: 1000,
+                location: 'middle'
+            });
+            setTimeout(function () {
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            }, 1000);
+            return false;
+        }else{
+          api.openFrame({
+              name: 'gift',
+              url: '../gift.html',
+              rect: {
+                  w: 'auto',
+                  h: 'auto',
+                  marginLeft: 0, //相对父页面左外边距的距离，数字类型
+                  // marginTop: 0,     //相对父页面上外边距的距离，数字类型
+                  marginBottom: 0, //相对父页面下外边距的距离，数字类型
+                  marginRight: 0 //相对父页面右外边距的距离，数字类型
+              },
+              pageParam: {
+                  userid: id
+              },
+              animation: {
+                  type: "push",
+                  subType: "from_bottom",
+                  duration: 300
+              }
+          });
+        }
+
+    }
+    apiready = function () {
+      $('body').on('click', function () {
+        var userid = $api.getStorage('userid');
+        if (userid == null || userid == "") {
+            api.toast({
+                msg: '请先登录！',
+                duration: 1000,
+                location: 'middle'
+            });
+            setTimeout(function () {
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            }, 1000);
+            return false;
+        }
+      })
+        var audioStreamer = api.require('audioStreamer');
+        audioStreamer.addEventListener({}, function (ret) {
+            if (ret.state == "finished") {
+                $('#recommend .music').find('img').attr('src', '../../images/paler_music.png')
+                $('#recommend .music').attr('data-status', "stop")
+            }
+        });
+
+        api.addEventListener({
+            name: 'viewdisappear'
+        }, function (ret, err) {
+            $('#recommend .music').find('img').attr('src', '../../images/paler_music.png')
+            $('#recommend .music').attr('data-status', "stop")
+            var audioStreamer = api.require('audioStreamer')
+            audioStreamer.stop()
+        });
+        api.addEventListener({
+            name: 'stopmusic'
+        }, function (ret, err) {
+            $('#recommend .music').find('img').attr('src', '../../images/paler_music.png')
+            $('#recommend .music').attr('data-status', "stop")
+            var audioStreamer = api.require('audioStreamer')
+            audioStreamer.stop()
+        });
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType == "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType == "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+            $(".mains").css("height", "1px");
+        }
+
+
+        // $('.palerList').on('touchstart', function (e) {
+        //     api.setFrameGroupAttr({
+        //         name: 'group',
+        //         scrollEnabled: false
+        //     });
+        // });
+        // $('.palerList').on('touchend', function (e) {
+        //     api.setFrameGroupAttr({
+        //         name: 'group',
+        //         scrollEnabled: true
+        //     });
+        // });
+
+        //加载轮播图
+        banner()
+
+        function banner() {
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.BANNER,
+                    method: 'post',
+                    data: {
+                        values: {
+
+                        }
+                    }
+                },
+                function (data) {
+                    // console.log(JSON.stringify(data))
+                    if (data.code == "200") {
+                        var tempFn = doT.template($api.byId('bannerImg').innerHTML);
+                        var resultHTML = tempFn(data.headimg);
+                        $(".lunboImg").html(resultHTML);
+                        var banner = new Swiper('.focus-bg .swiper-container', {
+                            autoplay: 3000
+                        });
+                    }
+                });
+            //加载底部广告图
+            // api.ajax({
+            //         url: CONFIG.ADDRURL + CONFIG.BANNER,
+            //         method: 'post',
+            //         data: {
+            //             values: {
+
+            //             }
+            //         }
+            //     },
+            //     function (data) {
+            //         if (data.code == "200") {
+            //             var tempFn = doT.template($api.byId('bannerPicture').innerHTML);
+            //             var resultHTML = tempFn(data.headimg);
+            //             $(".bottomLunbo").html(resultHTML);
+            //             var banner = new Swiper('.bot-img .swiper-container', {
+            //                 autoplay: 3000
+            //             });
+            //         }
+            //     });
+        }
+        getExpressList()
+        //头条
+        function getExpressList() {
+          var pagesize = 10
+          var pagenum = 1
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETEXPRESSLIST,
+                    method: 'post',
+                    data: {
+                        values: {
+                            pagesize:pagesize,
+                            pagenum:pagenum
+                        }
+                    }
+                },
+                function (data) {
+                    console.log(JSON.stringify(data))
+                    if (data.code == "200") {
+                        var tempFn = doT.template($api.byId('toutiaocontent').innerHTML);
+                          console.log(JSON.stringify(data.expressList.list))
+                        var resultHTML = tempFn(data.expressList.list);
+                        $(".toutiaoswiper").html(resultHTML);
+                        var toutiao = new Swiper('.toutiaolist .swiper-container', {
+                            direction : 'vertical',
+                            autoplay: 3000
+                        });
+                    }
+                });
+        }
+        // 点击头条进入详情
+        $('.toutiaolist').on('click', ".toutiaoCon", function () {
+          var toutiaoid = $(this).attr("toutiaoid")
+          api.openWin({
+              name: 'newsListDetail',
+              url: '../news/newsListDetail.html',
+              bgColor: "rgba(255, 255, 255, 0)",
+              animation: {
+                  type: "push", //动画类型（详见动画类型常量）
+                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                  duration: 300 //动画过渡时间，默认300毫秒
+              },
+              pageParam: {
+                expressId:toutiaoid
+              },
+              reload: true
+          });
+        })
+        //头条列表页
+        $('.toutiao').on('click', ".toutList", function () {
+          var toutiaoid = $(this).attr("toutiaoid")
+          api.openWin({
+              name: 'newsList',
+              url: '../news/newsList.html',
+              bgColor: "rgba(255, 255, 255, 0)",
+              animation: {
+                  type: "push", //动画类型（详见动画类型常量）
+                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                  duration: 300 //动画过渡时间，默认300毫秒
+              },
+              pageParam: {
+                expressId:toutiaoid
+              },
+              reload: true
+          });
+        })
+        //底部轮播跳转
+        $('body').on('click', '.urlImg', function () {
+            var url = $(this).attr("urlPath")
+            if (url != "null") {
+                api.openWin({
+                    name: 'baidu',
+                    url: url
+                });
+            } else {
+                return false
+            }
+        })
+        $('body').on('click', '.bannerImg', function () {
+            var url = $(this).attr("urlPath")
+            if (url != "null") {
+                api.openWin({
+                    name: 'baidu',
+                    url: url
+                });
+            } else {
+                return false
+            }
+        })
+        var pageNum = 1;
+        var hasNextPage = true;
+        getservicespeople(pageNum,false)
+
+            //上拉加载更多
+             api.addEventListener({
+                name: 'scrolltobottom',
+                extra: {
+                    threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function (ret, err) {
+              var userid = $api.getStorage('userid');
+              if (userid == null || userid == "") {
+                  api.toast({
+                      msg: '请先登录！',
+                      duration: 1000,
+                      location: 'middle'
+                  });
+                  setTimeout(function () {
+                      api.openWin({
+                          name: 'login',
+                          url: '../../login.html',
+                          bgColor: "rgba(255, 255, 255, 0)",
+                          animation: {
+                              type: "push", //动画类型（详见动画类型常量）
+                              subType: "from_right", //动画子类型（详见动画子类型常量）
+                              duration: 300 //动画过渡时间，默认300毫秒
+                          }
+                      });
+                  }, 1000);
+                  return false;
+              }else{
+                //判断是否是会员
+                api.ajax({
+                        url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                        method: 'post',
+                        data: {
+                            values: {
+                                userId: $api.getStorage('userid')
+                            }
+                        }
+                    },
+                    function (data, err) {
+                    console.log(JSON.stringify(data))
+                        if (data.code == "200") {
+                            if (data.userVipType.vipType == 1) {
+                                    api.openWin({
+                                        name: 'DateInvitation',
+                                        url: '../DateInvitation/DateInvitation.html',
+                                        bgColor: "rgba(255, 255, 255, 0)",
+                                        animation: {
+                                            type: "push", //动画类型（详见动画类型常量）
+                                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                                            duration: 300 //动画过渡时间，默认300毫秒
+                                        },
+                                        pageParam: {
+                                            name: 'main',
+                                            tap: 1
+                                        },
+                                        reload: true
+                                    });
+                            } else {
+                                api.confirm({
+                      title: '是否充值会员',
+                      msg: '是否充值会员获得更多信息？',
+                      buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                      var index = ret.buttonIndex;
+                      if(index==1){
+                        api.openWin({
+                        name: 'buymember',
+                        url: '../member/buymember.html',
+
+                        });
+                      }
+                    });
+                            }
+                        }
+                    });
+              }
+            }
+          );
+
+
+        function getservicespeople(pagenum,isclear) {
+            if (isclear) {
+                $("#recommend").empty();
+            }
+            api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETSERVICESPEOPLE,
+                method: 'post',
+                data: {
+                    values: {
+                        randomOperater: 'Y',
+                        type: 1,
+                        pagesize: 30,
+                        pagenum: 1,
+                        status: "2",
+                        position: $api.getStorage('position')
+                        // position: "108.9534750000,34.2675560000"
+                    },
+                },
+            }, function (data, err) {
+                if (data) {
+                    // console.log(JSON.stringify(data));
+                    pageNum = data.servicespeople.nextPage
+                    if(data.servicespeople.hasNextPage && pageNum==3){
+                        hasNextPage = false
+                    }else {
+                        hasNextPage = data.servicespeople.hasNextPage
+                    }
+                    $.each(data.servicespeople.list, function (i, n) {
+                        if (n.photos == null) {
+                            return false;
+                        }
+                        if (n.photos.substr(n.photos.length - 1, 1) == ",") {
+                            n.photos = n.photos.substr(0, n.photos.length - 1);
+                        }
+                        n.photos = n.photos.split(",");
+                        if (n.servicetags.substr(n.servicetags.length - 1, 1) == ",") {
+                            n.servicetags = n.servicetags.substr(0, n.servicetags.length - 1);
+                        }
+                        n.servicetags = n.servicetags.split(",");
+                    });
+                    var tempFn = doT.template($api.byId('recommendtemplate').innerHTML);
+                    var resultHTML = tempFn(data.servicespeople.list);
+                    $("#recommend").append(resultHTML);
+                } else {
+                    // console.log(JSON.stringifty(err));
+                }
+            });
+        }
+        //获取邀请列表
+        var ivfilter = {
+            type: 1,
+            pagesize: 5,
+            pagenum: 1,
+            status: "2",
+            imgfilter: 1,
+            position: $api.getStorage('position'),
+            filter: "Y"
+        };
+        // getinvitations()
+
+        function getinvitations() {
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETINVITATIONS,
+                    method: 'post',
+                    data: {
+                        values: ivfilter
+                    }
+                },
+                function (data, err) {
+                    console.log(JSON.stringify(data));
+                    if (data.code == "200" && data.invitations && data.invitations.list) {
+                        invitationHasNextPage = data.invitations.hasNextPage;
+                        invitationPageNum = data.invitations.nextPage;
+                        $.each(data.invitations.list, function (i, n) {
+                            n.starttime = timestampToTime(n.starttime);
+                            n.endtime = timestampToTime(n.endtime);
+                            n.createtime = timestampToTime(n.createtime);
+                        });
+
+                        for (var i = 0; i < data.invitations.list.length; i++) {
+                            var str = data.invitations.list[i].photos
+                            var arr = str.split(",")
+                            data.invitations.list[i].img = arr[0]
+                            // console.log(arr)
+                        }
+                        var tempFn = doT.template($api.byId('invitationtemplate').innerHTML);
+                        var resultHTML = tempFn(data.invitations.list);
+                        $("#invitor").html(resultHTML);
+                    }
+                });
+        }
+        //推荐更多
+        // $("#recuser").click(function () {
+        //     api.openWin({
+        //         name: 'DateInvitation',
+        //         url: '../DateInvitation/DateInvitation.html',
+        //         bgColor: "rgba(255, 255, 255, 0)",
+        //         animation: {
+        //             type: "push", //动画类型（详见动画类型常量）
+        //             subType: "from_right", //动画子类型（详见动画子类型常量）
+        //             duration: 300 //动画过渡时间，默认300毫秒
+        //         },
+        //         pageParam: {
+        //             name: 'main',
+        //             tap: 1
+        //         },
+        //         reload: true
+        //     });
+        // });
+        //邀请更多列表
+        $("#travel").click(function () {
+            api.openWin({
+                name: 'DateInvitation',
+                url: '../DateInvitation/DateInvitation.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    name: 'main',
+                    tap: 2
+                },
+                reload: true
+            });
+        });
+
+        //会员跳转
+        $("#recommend").on("click", ".userdetail", function () {
+            var userid = $(this).attr("userid");
+            api.openWin({
+                name: 'otherspage',
+                url: '../otherspage.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                pageParam: {
+                    userid: userid
+                },
+                reload: true,
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+        //搜索框
+        if (systemType == "ios") {
+            $("#search").blur('keypress', function (e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var searchContent = $(this).val();
+                api.openWin({
+                    name: 'search',
+                    url: '../search.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    },
+                    pageParam: {
+                        keywords: searchContent
+                    }
+                });
+
+            });
+        } else {
+            $("#search").on('keypress', function (e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var searchContent = $(this).val();
+                api.openWin({
+                    name: 'search',
+                    url: '../search.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    },
+                    pageParam: {
+                        keywords: searchContent
+                    }
+                });
+
+            });
+        }
+
+
+
+        //打开详情
+        $("#recommend").on("click", ".userdetailIn", function () {
+            var userid = $(this).attr("userid");
+            api.openWin({
+                name: 'appointmentdetail',
+                url: '../DateInvitation/appointmentdetail.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    userid: userid
+                }
+            });
+        });
+
+        //打开详情
+        $("#invitor").on("click", ".hortListModelTop", function () {
+            var userid = $(this).attr("userid");
+            api.openWin({
+                name: 'appointmentdetail',
+                url: '../DateInvitation/appointmentdetail.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    userid: userid
+                }
+            });
+        });
+
+        //打开详情2
+        $('#invitor').on("click", ".hortListModelTopBottom", function () {
+            var userid = $(this).attr("userid");
+            var invitationid = $(this).attr("invitationid");
+            api.openWin({
+                name: 'invitationdetail',
+                url: '../DateInvitation/invitationdetail.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                pageParam: {
+                    userid: userid,
+                    invitationid: invitationid
+                }
+            });
+        });
+        //监听下拉加载数据
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: '../image/timg.gif',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function (ret, err) {
+            getinvitations()
+            getservicespeople(pageNum,true)
+            banner()
+            //根据不同的框架，我这里是用vue渲染数据的
+            //想办法帮上面这个方法在这里调用就行taskListWait（）
+            api.refreshHeaderLoadDone()
+        });
+    }
+    function color(str){
+        var color = ["rgba(255,174,82,.8)","rgba(240,102,122,.8)","rgba(244,116,186,.8)","rgba(74,208,135,.8)","rgba(93,228,202,.8)","rgba(69,122,255,.8)"]
+        return "background:" + color[Math.floor(Math.random() * 6)]
+    }
+
+    function tags(str){
+  // console.log(JSON.stringify(str))
+  // var str = JSON.stringify(str);
+  var str = str.replace(/,/g,"")
+  str = str.replace(/##/g,",")
+  str = str.replace(/#/g,"")
+  str = str.replace(/"/g,"")
+  str = str.split(",")
+  html = ''
+  for(var i=0;i<str.length;i++){
+    html +='<p class="tipName">'+str[i]+'</p>'
+  }
+  str = html
+  return str
+    }
+</script>
+
+</html>

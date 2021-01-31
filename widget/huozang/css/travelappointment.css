@@ -1,0 +1,278 @@
+@charset "utf-8";
+
+/*--S下订单--*/
+
+.order-data {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 15px;
+	color: #999999;
+}
+
+.order-data .order-type {
+	height: 70px;
+	line-height: 70px;
+}
+
+.order-data .order-type label {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 4%;
+}
+
+.order-data .order-type span {
+	position: relative;
+	float: right;
+	width: 72%;
+	height: 35px;
+	margin-top: 17px;
+	padding-left: 21px;
+	line-height: 35px;
+	border-radius: 35px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+	color: #333333;
+}
+
+.order-data .order-type span i {
+	position: absolute;
+	right: 15px;
+	top: 12px;
+	width: 15px;
+	height: 13px;
+	background-image: url(../images/bg-icon.png);
+	background-size: 300px 300px;
+	background-repeat: no-repeat;
+	background-position: -221px -5px;
+}
+
+.order-data .order-info-details {
+	width: 90%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+
+.appointment-con {
+	width: 75%;
+	float: left;
+}
+
+.order-info-details .details-item {
+	margin-top: 15px;
+}
+
+.order-info-details .details-item-time {
+	margin-top: 0 !important;
+}
+
+.order-data .order-info-details label {
+	display: block;
+	float: left;
+	width: 25%;
+	margin-top: 7px;
+}
+
+.order-data .order-info-details span,
+.order-data .order-info-details input[type=text] {
+	position: relative;
+	display: block;
+	width: 59%;
+	height: 32px;
+	line-height: 30px;
+	padding-left: 13px;
+	border: 1px solid rgba(245, 245, 245, 0.91);
+	border-radius: 35px;
+	float: left;
+	font-size: 14px;
+	color: #333333;
+}
+
+.order-data .order-info-details input[type=text],
+.order-data .order-info-details .appointment-time {
+	border-radius: 32px !important;
+}
+
+.order-info-details input[type=text] {
+	margin-bottom: 0;
+}
+
+.order-data .order-info-details span i {
+	position: absolute;
+	right: 15px;
+	top: 9px;
+	width: 14px;
+	height: 11px;
+	background-image: url(../images/bg-icon.png);
+	background-size: 300px 300px;
+	background-repeat: no-repeat;
+	background-position: -114px -53px;
+	background-position: -252px -5px;
+}
+
+.details-item em {
+	display: block;
+	float: left;
+	padding-top: 5px;
+	padding-left: 6px;
+	font-size: 13px;
+	font-style: normal;
+}
+
+.details-item span.appointment-time {
+	display: block;
+	width: 51%;
+	font-size: 13px;
+}
+
+.order-data .price {
+	margin-top: 48px;
+	margin-bottom: 27px;
+	font-size: 18px;
+	text-align: center;
+	color: #ff9694;
+}
+
+p.agreement input {
+	vertical-align: middle;
+	margin-right: -25px;
+	visibility: hidden;
+}
+
+p.agreement {
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	font-size: 12px;
+	color: #999999;
+}
+p.agreement label {
+    position: relative;
+    padding-left: 26px;
+}
+p.agreement input[type=checkbox]:checked+label::after {
+    background-position: -85px -103px;
+}
+p.agreement label::after {
+    position: absolute;
+    content: "";
+    left: 5px;
+    top: -4px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/bg-icon3.png);
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+    background-position: -4px -130px;
+}
+p.agreement a {
+	color: #ff9694;
+}
+
+.order-payment-btn {
+	display: block;
+	width: 251px;
+	height: 102px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	border: none;
+	background-image: url(../images/payment-bg-icon.png);
+	background-size: 300px 300px;
+	background-repeat: no-repeat;
+	background-size: 251px 102px;
+}
+
+.recommend {
+	width: 95%;
+	height: auto;
+	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.recommend span {
+	position: relative;
+	display: block;
+	float: left;
+	padding-left: 10px;
+	padding-right: 20px;
+	font-size: 15px;
+	color: #999999;
+}
+
+.recommend i {
+	position: absolute;
+	top: 2px;
+	right: 0;
+	width: 17px;
+	height: 16px;
+	float: left;
+	background-image: url(../images/bg-icon.png);
+	background-size: 300px 300px;
+	background-repeat: no-repeat;
+	background-position: -242px -257px;
+}
+
+.recommend-route-wrap {
+	text-align: left;
+}
+
+.recommend-route-wrap p {
+	border-radius: 8px;
+	font-size: 12px;
+	line-height: 17px;
+	color: #333333;
+}
+
+.recommend-route-wrap img {
+	height: auto;
+	max-width: 100%;
+	border-radius: 10px;
+}
+
+.recommend-route-wrap span {
+	font-size: 12px;
+	color: #ff9694;
+}
+
+.order-data .mui-table-view:before,
+.order-data .mui-table-view:after {
+	height: 0px !important;
+}
+
+.order-data .mui-table-view-cell:last-child:after,
+.order-data .mui-table-view-cell:last-child:before {
+	height: 0px !important;
+}
+
+.appointment-con b {
+	display: block;
+	float: left;
+	min-width: 52px;
+	height: 17px;
+	margin-right: 5px;
+	margin-bottom: 15px;
+	line-height: 17px;
+	border-radius: 17px;
+	font-size: 12px;
+	color: #cccccc;
+	background-color: #f5f5f5;
+	text-align: center;
+}
+
+.mui-btn-blue{
+    color: #fff;
+    border: 1px solid #ff9694 !important;
+    background-color: #ff9694 !important;
+}
+
+#order-form b{
+	font-weight: normal;
+}
+.recommend-p p{
+	height:21px;
+	margin-bottom: 0;
+}

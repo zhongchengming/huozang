@@ -1,0 +1,340 @@
+*{
+  margin:0;
+  padding:0;
+  border:0;
+}
+#open-con {
+    width: 100%;
+    height: 100%;
+    /*background: rgba(0, 0, 0, 0.7);*/
+    position:relative;
+    /*position: absolute;*/
+    display: block;
+    left:0;
+    bottom: 0;
+    z-index: 101;
+    /*margin-left: -50%;*/
+    overflow: hidden;
+}
+
+#open-bg {
+    width:300px;
+    /*height:100%;*/
+    margin:50% auto 0 auto;
+    padding: 0;
+    overflow:hidden;
+}
+#open-bg div {
+  /*width:33%;*/
+    width:50%;
+    height: 98px;
+    float: left;
+    float: left;
+    text-align: center;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    z-index: 101;
+    margin-top:40px
+}
+#service{
+  margin-top:15px;
+  margin-left:16.5%;
+}
+#invitation{
+    /*margin-top:15px;*/
+}
+#open-bg i {
+    display: block;
+    /*float: left;*/
+    width: 64px;
+    height:64px;
+    margin:0 auto 10px;
+    /*background-image: url(../images/bg-icon2.png);
+    background-size: 250px 250px;*/
+    background-repeat: no-repeat;
+    /*background-position: 0 0;
+    background-position: 2px -29px;*/
+}
+#open-bg span{
+  display:block;
+  /*border:1px solid red*/
+}
+
+
+#open-bg .photographs {
+    background-image: url(../images/PublishPop_05.png);
+    background-size: 100% 100%;
+}
+
+#open-bg .txt {
+    background-image: url(../images/PublishPop_03.png);
+    background-size: 100% 100%;
+}
+
+#open-bg .pic {
+    background-image: url(../images/PublishPop_05.png);
+    background-size: 100% 100%;
+}
+
+#open-bg .video {
+  background-image: url(../images/PublishPop_07.png);
+  background-size: 100% 100%;
+}
+
+#open-bg .invitation {
+    background-image: url(../images/PublishPop_13.png);
+    background-size: 100% 100%;
+}
+
+#open-bg .service {
+    background-image: url(../images/PublishPop_15.png);
+    background-size: 100% 100%;
+}
+#openClose{
+  width:45px;
+  height:45px;
+  background-image: url(../images/ReleaseClose.png);
+  background-size: 100% 100%;
+  overflow:hidden;
+  position: absolute;
+  left:41%;
+  bottom:5%;
+}
+
+
+
+
+
+
+
+
+
+
+.ul-label-shadow {
+    position: relative;
+}
+
+.ul-label-shadow::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 4px;
+    bottom: -6px;
+    left: 1%;
+    box-shadow: 0 0 11px rgba(0, 0, 0, .10);
+}
+
+.release-data {
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.release-data textarea {
+    border: none;
+}
+
+.release-data .release-video-btn {
+    width: 104px;
+    height: 104px;
+    background-image: url(../images/release-bg-icon.png);
+    background-repeat: no-repeat;
+    background-size: 104px 104px;
+    background-position: 0 0;
+    border: none;
+}
+
+.release-data img {
+    width: 104px;
+    height: 104px;
+    border: none;
+}
+
+.release-div {
+    padding: 0 10px;
+}
+
+.release-where {
+    display: block;
+    float: right;
+    width: 99px;
+    height: 30px;
+    background-image: url(../images/release-where-icon.png);
+    background-repeat: no-repeat;
+    background-size: 99px 30px;
+    margin-top: 69px;
+}
+
+
+/*视频上传进度*/
+
+.circle {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+    background: #f689c6;
+    left: 20%;
+    top: 20%;
+    right: 20%;
+    bottom: 20%;
+    display: none;
+    z-index: 102;
+}
+
+.pie_left, .pie_right {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*background-color: black;//#00aacc*/
+}
+
+.left, .right {
+    width: 200px;
+    height: 200px;
+    background: gainsboro;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*transform: rotate(180deg);*/
+}
+
+.pie_right, .right {
+    clip: rect(0, auto, auto, 100px);
+}
+
+.pie_left, .left {
+    clip: rect(0, 100px, auto, 0);
+}
+
+.mask {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    left: 15px;
+    top: 15px;
+    background: #ae8ad7;
+    position: absolute;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #b2b4b9;
+    z-index: 10;
+}
+
+
+/*动态提交按钮*/
+.app-submit-icon {
+    /*display: block;*/
+    float: right;
+    width: 60px;
+    height: 26px;
+    line-height: 26px;
+    border: solid 1px #fff;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+    z-index: 101;
+}
+
+/*动态，写真
+*------------------------------------------------------------------------------------------------------
+*/
+body{
+  background: rgba(255, 255, 255, 1);
+  width: 100%;
+  height: 100%;
+}
+
+.save-btn {
+width:5rem;
+height:2.5rem;
+line-height:2.5rem;
+font-size:1.2rem;
+color:#fff;
+background:#ff9694;
+border-radius:0.25rem;
+overflow:hidden;
+position:absolute;
+top:0.25rem;
+right:1.5rem;
+}
+.modifyBox{
+width:auto;
+margin:1rem 1rem;
+overflow:hidden;
+border-radius:0.25rem;
+border:1px solid #CCC;
+position:relative;
+}
+.modifyBox textarea{
+  width:90%;
+  height:13rem;
+  margin:5% 5% 2%;
+  line-height:1.5;
+  font-size:1.2rem;
+  color:#666;
+  outline:none;
+  resize:none;
+  border:0;
+}
+.modifyBoxW,.modifyBoxWT{
+width:100%;
+margin:0.5rem auto;
+overflow:hidden;
+}
+.modifyBoxWp{
+  width:95%;
+  margin:0 auto;
+  color:#666;
+  text-align:right;
+  margin-right:15px;
+  overflow:hidden;
+}
+.release-video-btn{
+width:9.3rem;
+height:9.3rem;
+margin:0.5rem 0.25rem;
+overflow:hidden;
+}
+.modifyBoxWT > img{
+width:9.3rem;
+height:9.3rem;
+float:left;
+margin:0.25rem;
+overflow:hidden;
+}
+.release-video-btn img{
+width:100%;
+margin:0 auto;
+overflow:hidden;
+}
+
+.modifyBoxWT > li{
+  width:9.3rem;
+  height:9.3rem;
+  float:left;
+  margin:0.25rem;
+  overflow:hidden;
+  position:relative;
+}
+.modifyBoxWT > li img{
+  width:100%;
+  height:100%;
+  margin:0 auto;
+  overflow:hidden;
+}
+.modifyBoxWT > li p{
+  width:15px;
+  height:15px;
+  background:url(../images/ACloseS.png) no-repeat;
+  background-size:15px 15px;
+  overflow:hidden;
+  position:absolute;
+  top:0.25rem;
+  right:0.25rem;
+}

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ch" manifest="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>视频评论</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .vc {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            /*background: #fff;*/
+            overflow: hidden;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            position: relative;
+        }
+
+        .vc1 {
+            width: 100%;
+            height: 30px;
+            line-height: 32px;
+            background: #f2f2f2;
+            color: #666;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            position: relative;
+        }
+
+        .vc2 {
+            width: 100%;
+            height: 84%;
+            overflow: scroll;
+        }
+
+        .vc3 {
+            width: 100%;
+            height: 30px;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .vc1 div {
+            position: absolute;
+            right: 10px;
+        }
+
+        .vc2 .vcTW {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .vc2 .vcTW>li {
+            width: 90%;
+            /*height:30px;*/
+            margin: 10px auto 0;
+            /*border:1px solid #ccc;*/
+            overflow: hidden;
+        }
+
+        .vcTL {
+            width: 30px;
+            height: 30px;
+            float: left;
+            /*margin-left:10px;*/
+            border-radius: 100%;
+            background: #526385;
+            overflow: hidden;
+        }
+
+        .vcTL>img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .vcTR {
+            width: 85%;
+            float: left;
+            margin-left: 10px;
+            /*margin-right:10px;*/
+            /*border:1px solid red;*/
+            overflow: hidden;
+        }
+
+        .vcTRL {
+            width: 85%;
+            float: left;
+        }
+
+        .vcTRR {
+            width: 15%;
+            font-size: 8px;
+            float: right;
+            text-align: right;
+            /*border:1px solid red;*/
+        }
+
+        .vcTRL .p1 {
+            width: 100%;
+            height: 20px;
+            font-size: 12px;
+            line-height: 20px;
+            color: #333;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+
+        .vcTRL .p1 span {
+            margin-left: 5px;
+            margin-right: 5px;
+            color: #ccc
+        }
+
+        .vcTRL .p2 {
+            font-size: 11px;
+            line-height: 20px;
+        }
+
+        .vcTRL .p2 span {
+            display: block;
+            /*margin-left: 10px;*/
+            color: #ccc
+        }
+
+        .vcTRR .p1 {
+            width: 20px;
+            height: 20px;
+            background: url(../../images/SquarePL_09.png) no-repeat;
+            background-size: 20px 20px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .vcTRR .p1.Hollow {
+            background: url(../../images/SquarePL_07.png) no-repeat;
+            background-size: 20px 20px;
+        }
+
+        .vcTRR .p1.StoneCore {
+            background: url(../../images/SquarePL_09.png) no-repeat;
+            background-size: 20px 20px;
+        }
+
+        .vcTRR .p2 {
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            /*border:1px solid red;*/
+        }
+
+        .vcTRB {
+            width: 100%;
+            /*border:1px solid red;*/
+            overflow: hidden;
+        }
+
+        .vc2 .vcTRB>li {
+            width: 100%;
+            /*height:30px;*/
+            margin: 10px auto 0;
+            /*border-bottom:1px solid #ccc;*/
+            overflow: hidden;
+        }
+
+        .vcTRBS {
+            color: #ccc;
+            font-size: 10px;
+        }
+
+        .vc3 {
+            width: 100%;
+            height: 40px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: absolute;
+            z-index: 99;
+            left: 0;
+            bottom: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .vc3 .vcL1 {
+            width: 70%;
+            height: 30px;
+            float: left;
+            margin-top: 5px;
+            margin-left: 15px;
+            border-radius: 5px;
+            border: 0px;
+            border: 1px solid #ccc;
+        }
+
+        .vc3 .vcL1 input {
+            width: 100%;
+            height: 28px;
+            line-height: 28px;
+            text-indent: 5px;
+            font-size: 12px;
+            color: #333;
+            border: 0;
+            outline: none;
+        }
+        /*.vc3 .vcL2,*/
+
+        .vc3 .vcL3 {
+            width: 70px;
+            height: 30px;
+            float: left;
+            margin-top: 5px;
+            margin-left: 10px;
+            background: #f2f2f2;
+            font-size: 16px;
+            font-weight: 400;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+            color: #999;
+            overflow: hidden;
+        }
+
+        .vcClose {
+            background: url(../../images/AClose.png) no-repeat;
+            width: 20px;
+            height: 20px;
+            margin-top: 5px;
+            background-size: 100% 100%;
+        }
+    </style>
+    <div class="vc">
+        <ul class="vc3">
+            <li class="vcL1">
+                <input id="videocomment" type="text" placeholder="留下你的精彩评论">
+            </li>
+            <!-- <li class="vcL2"></li> -->
+            <li class="vcL3">发表</li>
+        </ul>
+        <div class="vc1">
+            <div class="vcClose"></div>
+            <span id="commentcount"></span>条评论
+        </div>
+        <div class="vc2">
+            <ul class="vcTW">
+
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/template" id="videocommenttemplate">
+    {{~it:value:index}}
+    <li>
+        <div class="vcTL" userid="{{=value.replyuserid}}"><img src="{{?value.replyavatar}}{{=value.replyavatar}}{{??}}../../images/avatar.png{{?}}"></div>
+        <div class="vcTR">
+            <div class="vcTRL">
+                <p class="p1"><span>{{=value.replynickname}}</span></p>
+                <!-- <span>{{=value.createtime}}</span> -->
+                <p class="p2">{{=value.replyvideocontent}}<span>{{=value.replycreatetime}}</span></p>
+            </div>
+            <!-- <div class="vcTRR">
+                <p class="p1"></p>
+                <p class="p2">12345</p>
+            </div> -->
+            {{?value.userid}}
+            <ul class="vcTRB" id="{{=value.id}}">
+                <li>
+                    <div class="vcTL" userid="{{=value.userid}}"><img src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}"></div>
+                    <div class="vcTR">
+                        <div class="vcTRL">
+                            <p class="p1"><span>{{=value.nickname}}</span></p>
+                            <p class="p2">{{=value.videocontent}}<span>{{=value.createtime}}</span></p>
+                        </div>
+                        <!-- <div class="vcTRR">
+                            <p class="p1"></p>
+                            <p class="p2">12345</p>
+                        </div> -->
+                    </div>
+                </li>
+                <!-- <div class="vcTRBS">展开剩余回复</div> -->
+            </ul>
+            {{?}}
+        </div>
+    </li>
+    {{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/mui.min.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+
+<script>
+    var videopageSize = 5,
+        videopageNum = 1,
+        videohasNext = true;
+    var videoid = "",
+        videouserid = "";
+    apiready = function() {
+        videoid = api.pageParam.videoid; //videoid
+        videouserid = api.pageParam.videouserid; //videoid
+        getvideocomment(videoid, videopageSize, videopageNum, true);
+
+        $(".vcClose").click(function() {
+            api.closeFrame({
+                name: "videocomment"
+            });
+        });
+
+        api.addEventListener({
+            name: 'closevideocomment'
+        }, function(ret, err) {
+          api.closeFrame({
+              name: "videocomment"
+          });
+        });
+
+        $(".vcTW").on("click", ".vcTL", function() {
+            api.sendEvent({
+                name: 'videopause'
+            });
+            var userid = $(this).attr("userid");
+            api.openWin({
+                name: 'otherspage',
+                url: '../otherspage.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                pageParam: {
+                    userid: userid
+                },
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+        $(".vc3 > .vcL3").click(function() {
+            var videocomment = $("#videocomment").val();
+            if (videocomment == null || videocomment == "") {
+                api.toast({
+                    msg: '说点什么吧！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+            } else {
+                api.ajax({
+                        url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+                        method: 'post',
+                        data: {
+                            values: {
+                                videoid: videoid,
+                                passiveuserid: videouserid,
+                                userid: $api.getStorage('userid'),
+                                videotype: 2,
+                                videocontent: videocomment
+                            }
+                        }
+                    },
+                    function(data, err) {
+                        if (data.code == "200") {
+                            $("#videocomment").val("");
+                            videopageNum = 1;
+                            getvideocomment(videoid, videopageSize, videopageNum, true);
+
+                            api.sendEvent({
+                                name: "videoaddcomment"
+                            });
+
+                            api.sendEvent({
+                                name: "sendTextMessageListener",
+                                extra: {
+                                    touserid: videouserid,
+                                    message: "系统提示：当前人对你的视频进行评论了，快去看看吧！"
+                                }
+                            });
+                        }
+                    });
+            }
+        });
+
+        //上拉刷新
+        api.addEventListener({
+            name: 'swipeup'
+        }, function(ret, err) {
+            if (videohasNext) {
+                getvideocomment(videoid, videopageSize, videopageNum, false);
+            } else {
+                api.toast({
+                    msg: '没有更多了！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+            }
+        });
+    }
+
+    function getvideocomment(videoid, pageSize, pageNum, isclear) {
+        if (isclear) {
+            $(".vcTW").empty();
+        }
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETVIDEOCOMMENTS,
+                method: 'post',
+                data: {
+                    values: {
+                        videoid: videoid,
+                        videotype: 2,
+                        pagesize: pageSize,
+                        pagenum: pageNum
+                    }
+                }
+            },
+            function(data, err) {
+                if (data.code == "200") {
+                    $.each(data.comments.list, function(i, n) {
+                        n.createtime = timestampToTime(n.createtime);
+                        n.replycreatetime = timestampToTime(n.replycreatetime);
+                    });
+                    $("#commentcount").text(data.comments.total);
+                    var tempFn = doT.template($api.byId('videocommenttemplate').innerHTML);
+                    var resultHTML = tempFn(data.comments.list);
+                    $(".vcTW").append(resultHTML);
+                    videohasNext = data.comments.hasNextPage;
+                    videopageNum = data.comments.nextPage;
+                }
+            });
+    }
+</script>
+
+</html>

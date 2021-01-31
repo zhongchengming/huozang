@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>应邀列表</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mine.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-nav mui-bar-top">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">应邀列表</h1>
+	</header> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				应邀列表
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<div class="mui-content personal-homepage-data concerns page-bottom">
+		<ul class="visitorslist mui-table-view">
+
+		</ul>
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript">
+		var pageSize = 8,
+			pageNum = 1,
+			hasNextPage = true,
+			invitationid = "";
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "recivers");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'recivers'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'recivers'
+				});
+			});
+
+			invitationid = api.pageParam.invitationid;
+
+			//默认加载关注列表
+			loadreceivers(invitationid, pageSize, pageNum);
+
+			//上拉刷新
+			api.setRefreshHeaderInfo({
+				bgColor: '#fff'
+			},function(ret, err) {
+				api.refreshHeaderLoadDone();
+			});
+			api.addEventListener({
+				name: 'scrolltobottom',
+				extra: {
+					threshold: 50 //距离底部距离
+				}
+			}, function(ret, err) {
+				var id = $(".active").prop("id");
+				var nickname = $("#nickname").val();
+				if (hasNextPage) {
+					loadreceivers(invitationid, pageSize, pageNum);
+				}
+			});
+
+
+			$("body").on("click", ".otherspage", function() {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid
+					}
+				});
+			});
+		}
+
+		function loadreceivers(id, pagesize, pagenum) {
+			$(".visitorslist").empty();
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETRECEIVERS,
+					method: 'post',
+					data: {
+						values: {
+							invitationid: id,
+							pagesize: pagesize,
+							pagenum: pagenum
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200") {
+						if (data.receivers && data.receivers.list.length != 0) {
+							$("#no-conent img").remove();
+							$("#no-conent").remove();
+							hasNextPage = data.receivers.hasNextPage;
+							pageNum = data.receivers.nextPage;
+							$.each(data.receivers.list, function(i, n) {
+								$(".visitorslist").append("<li>" +
+									"<a href=\"javascript:;\" userid=\"" + n.entity.userid + "\" class=\"otherspage mui-table-view-cell mui-media mui-table concerns-list\">" +
+									"<div class=\"mui-table-cell mui-col-xs-7\">" +
+									"<img class=\"mui-media-object mui-pull-left\" src=\"" + (n.entity.avatar==null||n.entity.avatar==""?"../../images/avatar.png":n.entity.avatar) + "\" />" +
+									"<div userid =\"" + n.entity.userid + "\" nickname =\"" + n.entity.nickname + "\" class=\"hello-btn mui-media-body\">" +
+									"<span>" +
+									"<em>" + n.entity.nickname + "</em>" +
+									"<i style=\"background-image: url(" + (n.entity.gender == 0 ? "../../images/man-icon.png" : "../../images/woman-icon.png") + ")\"></i>" +
+									"</span>" +
+									"<p class=\"mui-ellipsis\">" + n.entity.bio + "</p>" +
+									"</div>" +
+									"</div>" +
+									"</a>" +
+									"</li>");
+							});
+						} else {
+							$(".concerns").append("<div id=\"no-conent\"><img src=\"../../images/no-content.png\"/></div>");
+						}
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

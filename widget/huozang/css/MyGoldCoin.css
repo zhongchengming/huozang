@@ -1,0 +1,128 @@
+@charset "utf-8";
+.SquareHeader{
+	background:#ff9494;
+}
+.SquareHeader .p2{
+  width:1rem;
+  height:1.8rem;
+  position:absolute;
+  left:1.4rem;
+  top:0.675rem;
+  background:url(../images/right-icon.png) no-repeat;
+  background-size:100% 100%;
+}
+.SquareHeaderDIV{
+	color:#fff;
+}
+/*金币顶部*/
+.GoldCoinTop{
+	width:100%;
+	background:#ff9494;
+	overflow:hidden;
+}
+.GoldCoinTImg{
+	width:4.95rem;
+	height:4.85rem;
+	margin:4rem auto 0;
+	background:url(../images/GoldCoin_03.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.GoldCoinFontSize{
+	margin-top:1rem;
+	text-align:center;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#ffdede;
+	overflow:hidden;
+}
+.GoldCoinFontSizeS{
+	text-align:center;
+	line-height:1;
+	font-size:3rem;
+	font-weight:bold;
+	color:#fff;
+	overflow:hidden;
+}
+.GoldCoinXX{
+	width:94.7%;
+	margin:5rem auto 1.25rem;
+	overflow:hidden;
+}
+.GoldCoinXX li:first-of-type{
+	width:1.8rem;
+	height:1.5rem;
+	float:left;
+	margin-left:0.5rem;
+	background:url(../images/GoldCoin_07.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.GoldCoinXX li:last-of-type{
+	width:85%;
+	height:1.5rem;
+	float:left;
+	font-size:1.3rem;
+	color:#fff;
+	line-height:1.5rem;
+	font-weight:400;
+	margin-left:0.5rem;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp:1;
+	overflow: hidden;
+}
+.GoldCoinList{
+	width:100%;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.GoldCoinListU{
+	width:94.7%;
+	height:4.5rem;
+	margin:0 auto;
+	overflow:hidden;
+	border-bottom:1px solid #f0f0f0;
+}
+.GoldCoinListU li{
+	float:left;
+	line-height:4.5rem;
+	font-size:16px;
+	font-weight:400;
+	color:#666;
+	overflow:hidden;
+}
+.GoldCoinListU li:first-of-type{
+	width:1.26rem;
+	height:1.2rem;
+	float:left;
+	margin-top:1.6rem;
+	margin-left:1.7rem;
+	margin-right:1.25rem;
+	overflow:hidden;
+}
+.GoldCoinListU li:first-of-type img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.GoldCoinListU li:last-of-type{
+	width:0.8rem;
+	height:1.8rem;
+	float:right;
+	margin-top:1.5rem;
+	margin-right:1.25rem;
+	background:url(../images/GoldCoinR_14.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.GoldCoinP{
+	width:100%;
+	margin:2.5rem auto;
+	text-align:center;
+	font-size:1.2rem;
+	font-weight:400;
+	color:#b2b2b2;
+	overflow:hidden;
+}

@@ -1,0 +1,637 @@
+@charset "utf-8";
+
+/*顶部导航*/
+.index-head {
+  width: 100%;
+  height: 55px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #ff9694;
+  line-height: 55px;
+  z-index: 99;
+  padding: 0 10px;
+}
+
+.index-search {
+  width: 100%;
+  position: relative;
+}
+
+.index-search>img {
+  position: absolute;
+  left: 8%;
+  bottom: 16px;
+  width: 20px;
+}
+
+.index-search>input {
+  background-color: rgba(245, 245, 245, .7);
+  border-radius: 40px;
+  height: 35px;
+  line-height: 35px;
+  border: none;
+  outline: none;
+  padding-left: 40px;
+  width: 85%;
+}
+
+.index-search>input::-webkit-input-placeholder {
+  color: rgba(153, 153, 153, 1);
+  font-size: 14px;
+}
+
+/*主体内容*/
+.main {
+  /*padding: 0 10px;*/
+}
+
+/*轮播 */
+.focus-bg {
+  width: 100%;
+  /*height: 130px;*/
+  /*background: url(../images/focus_bg.png) no-repeat;*/
+  background-size: cover;
+}
+
+.focus-imgList {
+  margin: 0 10px;
+}
+
+.focus-imgList img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+/*图标菜单*/
+.iconList {
+  /*height: 110px;*/
+  /*margin-top: 20px;*/
+  padding: 0 10px;
+  text-align: center;
+  z-index: 999;
+  position: relative;
+}
+
+.iconList>ul {
+  /*width:100%;*/
+  margin: 0 auto;
+  padding: 0 2%;
+}
+
+.iconList>ul>li {
+  width:20%;
+  text-align: center;
+}
+
+.iconList>ul>li:last-child {
+  margin-right: 0;
+}
+
+.iconList>ul>li>img {
+  width: 100%;
+  /*height: 61px;*/
+}
+
+.iconList>ul>li>p {
+  font-size: 14px;
+  color: #808080;
+  line-height: 20px;
+}
+
+/*头条*/
+.toutiao {
+  padding: 20px 20px 0;
+  display: flex;
+  /*margin: 8px 0;*/
+  /*margin-top: 16px;*/
+}
+
+.toutiao>span:nth-child(1) {
+  color: #fff;
+  background-color: #ff9b99;
+  border-radius: 16px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.toutiao>span:nth-child(2) {
+  font-size: 12px;
+  color: #606060;
+}
+
+/*热门推荐*/
+.palerList {
+  margin-bottom: 5px;
+}
+
+.title {
+  padding: 12px 10px 12px 17px;
+  display: flex;
+
+}
+
+.title>h2 {
+  width: 80%;
+  float: left;
+  font-size: 16px;
+  font-family: PingFang-SC-Bold;
+  font-weight: bold;
+  color: rgba(51, 51, 51, 1);
+}
+
+.title>h2>img {
+  display: inline;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -2px;
+}
+
+.title>img {
+  float: right;
+  width: 18px;
+  height: 15px
+}
+
+.list {
+  padding: 0 10px;
+}
+
+/*横向滑动*/
+.list>ul {
+  /* display: -webkit-box; */
+  /* overflow-x: scroll; */
+  padding: 0.3125rem;
+}
+
+/*不显示滚动条*/
+.list>ul::-webkit-scrollbar {
+  display: none;
+}
+
+.list>ul>li {
+  width: 100%;
+  /* margin-right: 10px; */
+  border-radius: 10px;
+  box-shadow: #e0dddd 0 0 10px;
+  margin-bottom: 10px;
+}
+
+.list>ul>li>.img-bg {
+  width: 100%;
+  height: 180px;
+  color: #fff;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #000;
+}
+
+.list>ul>li>.img-bg>img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  opacity: 0.8;
+}
+
+/*玩家信息*/
+.userinfo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.userinfo .headImg>img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userName {
+  margin-left: 6.4px;
+  padding-top: 8px;
+}
+
+.userName>span:nth-child(1) {
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.userName>span:nth-child(2) {
+  font-size: 0.68rem;
+  background-color: #ff9b99;
+  border-radius: 10px;
+  height: 12px;
+  line-height: 12px;
+  padding: 0px 3px;
+  position: relative;
+  top: 3px;
+}
+
+.userName>span:nth-child(2)>img {
+  width: 12px;
+  height: 12px;
+  /*position: relative;
+  top: 2px;*/
+}
+
+.juliinfo {
+  padding: 0 10px;
+  position: absolute;
+  left: 0;
+  top: 130px;
+  z-index: 1000;
+}
+
+.juliinfo>img {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 5px;
+}
+
+.juliinfo>span {
+  font-size: 12px;
+  padding-top: 5px;
+}
+
+.taginfo {
+  padding: 0 10px;
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+}
+
+.taginfo>span {
+  font-size: 13px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 1px 3px;
+  margin-right: 2px;
+  z-index: 1000;
+}
+
+.music {
+  position: absolute;
+  top: 10%;
+  right: 60px;
+  z-index: 1000;
+}
+
+.music>img {
+  width: 40px;
+  height: 40px;
+}
+
+.gift {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  z-index: 1000;
+}
+
+.gift>img {
+  width: 40px;
+  height: 40px;
+}
+
+.text-bg {
+  padding: 0 10px 10px 10px;
+}
+
+.text-bg>p:nth-child(1) {
+  font-size: 12px;
+  padding-top: 12px;
+}
+
+.text-bg>p:nth-child(2) {
+  font-size: 12px;
+  text-align: right;
+  color: #ff9b99;
+  margin-top: 6px;
+}
+
+.text-bg>p:nth-child(2)>img {
+  display: inline;
+  width: 16px;
+  margin-left: 5px;
+  margin-bottom: 4px;
+}
+
+/*热门邀请*/
+.yaoqingList {
+  /*margin:10px 0;*/
+}
+
+.yaoqingList>ul {
+  padding: 0 10px;
+}
+
+.yaoqingList>ul>li {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: #e0dddd 0 0 10px;
+}
+
+.palerinfo-p1 {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #363636;
+}
+
+.palerinfo-p2 {
+  font-size: 12px;
+  color: #b3b3b3;
+  line-height: 12px;
+}
+
+.yaoqing-palerinfo>img {
+  width: 41px;
+  height: 41px;
+  object-fit: cover;
+  border-radius: 50%;
+  float: left;
+}
+
+.yaoqing-palerinfo .info {
+  float: left;
+  margin-left: 10px;
+}
+
+.info-p1 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 16px;
+  display: inline-block;
+}
+
+.yaoqing-palerinfo-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+  top: 3px;
+}
+
+.sex-icon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+  background: url(../images/sex_woman2.png) no-repeat;
+  background-size: 12px 12px;
+  position: relative;
+  top: 3px;
+}
+
+.phone-icon {
+  background: url(../images/yaoqing_phone.png) no-repeat;
+  background-size: 14px 14px;
+}
+
+.info-icon {
+  background: url(../images/yaoqing_info.png) no-repeat;
+  background-size: 14px 14px;
+}
+
+.info-p2 {
+  color: #b3b3b3;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.juliIcon {
+  background: url(../images/paler_juli2.png) no-repeat;
+  background-size: 14px 14px;
+}
+
+.yaoqing-palerinfo-collectIcon {
+  float: right;
+  width: 13px;
+  height: 13px;
+  overflow: hidden;
+  background: url(../images/yaoqing_shoucang.png) no-repeat;
+  background-size: 13px 13px;
+  position: relative;
+  top: 2px;
+}
+
+.yaoqing-palerinfo>span {
+  float: right;
+  font-size: 13px;
+  color: #999;
+}
+
+.yaoqing-date {
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+.title-span {
+  color: #c6c6c6;
+  font-size: 13px;
+  border: 1px solid #c6c6c6 !important;
+  border-radius: 10px;
+  padding: 2px 5px;
+  margin-right: 5px;
+}
+
+.text-span {
+  color: #6c6c6c;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.bot-img {
+  width: 100%;
+  height: 128px;
+  margin: 20px auto;
+}
+
+.bot-imgImg {
+  width: 100%;
+  height: 128px !important;
+  border-radius: 10px;
+}
+
+#recommend {}
+
+#recommend li {}
+
+.recommend-img {
+  width: 100%;
+  padding-top: 50%;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.recommend-img .img {
+
+  border-radius: 10px;
+  width: 100%;
+
+  height: auto;
+
+  position: absolute;
+
+  left: 0;
+
+  top: 0;
+
+  background: #000;
+}
+
+.recommend-img .profession {
+
+  padding: 5px 10px;
+
+  background: #FF9694;
+
+  position: absolute;
+
+  left: 0;
+
+  top: 20px;
+
+  color: #fff;
+
+  border-top-right-radius: 50px;
+
+  border-bottom-right-radius: 50px;
+  font-size: 14px;
+}
+
+.recommend-img .music {}
+
+.recommend-img .gift {}
+
+.recommend-img .bio {
+
+  color: #fff;
+
+  /*position: absolute;
+
+  bottom: 40px;
+
+  left: 0;*/
+
+  padding:0 10px;
+  font-size: 12px;
+  text-shadow: 1px 1px 0px rgba(0,0,0,.5);
+}
+.recommend-img .tipContent{
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+
+  left: 0;
+}
+.recommend-img .tip {
+
+  color: #fff;
+  display: flex;
+
+  flex-wrap: wrap;
+
+  padding: 5px;
+  font-size: 12px;
+}
+.recommend-img .tipName{
+  line-height: 20px;
+  padding: 0 10px;
+  border-radius: 5px;
+  background:rgba(0,0,0,.3) ;
+  color: #fff;
+  margin: 5px 0 0 5px;
+}
+#recommend li .info {
+  padding-bottom: 10px;
+}
+
+#recommend li .info-top {
+  padding: 10px 10px 0 10px;
+}
+
+#recommend li .avatar {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-right: 10px;
+}
+
+#recommend li .avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #000;
+  overflow: hidden;
+}
+
+#recommend li .info-top-right { margin-top:5px;}
+
+#recommend li .user-name {
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/*#recommend li .user-name img {
+  height: 16px;
+}*/
+
+#recommend li .user-name span {
+  padding: 0px 10px;
+  border-radius: 50px;
+  background: #FF9694;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  color: #fff;
+  margin-top: -3px;
+}
+.info-top-right .address{
+  font-size: 12px;
+  overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+}
+#recommend li .info-top-right p {
+  /*padding: 5px 0;*/
+  color: #999;
+}
+
+#recommend li .info-top-right p img {
+
+  display: inline-block;
+
+  height: 15px;
+}
+
+#recommend li .wh {
+
+  padding: 20px 0 0;
+
+  font-size: 13px
+}
+
+#recommend li .info-botom {
+  padding: 0 10px;
+  color: #666;
+  font-size: 13px;
+}

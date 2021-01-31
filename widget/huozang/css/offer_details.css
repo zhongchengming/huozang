@@ -1,0 +1,462 @@
+header {
+    background-color: #fff;
+    position: fixed;
+    right: 0;
+    left: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.05);
+    z-index: 888;
+}
+
+header h1 {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 44px;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #222;
+}
+
+.section-main {
+	padding: 4px 10px 55px;
+}
+.section-hd {
+	padding: 16px 4px;
+	align-items: center;
+}
+.img_wrap {
+	position: relative;
+	width: 40px;
+	height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.img_wrap img{
+	width: 100%;
+	height: 100%;
+	border: 50%;
+}
+.section-main .name {
+	margin-left: 12px;
+	font-size: 14px;
+	color: #333333;
+	float: left;
+}
+.userinfo{
+  width: 67%;
+}
+.distance {
+	line-height: 16px;
+	color: #b3b3b3;
+	font-size: 12px;
+  padding-left: 10px;
+}
+
+.distance-icon {
+  display: inline-block;
+  vertical-align: top;
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/bg-icon2.png);
+	background-repeat: no-repeat;
+	background-size: 250px 250px;
+	background-position: -55px -2px;
+}
+.report {
+	padding-top: 10px;
+	line-height: 16px;
+	color: #b3b3b3;
+	font-size: 12px;
+}
+
+.report-icon {
+	display: inline-block;
+	vertical-align: top;
+  position: relative;
+  top: 1px;
+  margin-right: 2px;
+	width: 14px;
+	height: 14px;
+	background-image: url(../images/ComplaintsNew.png);
+	background-repeat: no-repeat;
+	background-size: 14px 14px;
+}
+
+.cell-list .cell-item {
+	border-top: 1px solid #f5f5f5;
+	font-size: 15px;
+}
+.cell-list .cell-item .cell-hd {
+	align-items: center;
+	line-height: 45px;
+	position: relative;
+}
+ .cell-item-title {
+	font-size: 0.37rem;
+	color: #333;
+	width: 2rem;
+  letter-spacing:0.3px;
+	/*text-align: right;*/
+	margin-right:6px;
+	/*padding-right: 8px;
+	font-weight: 600;*/
+}
+ .data-shape {
+	display: inline-block;
+	vertical-align: top;
+	width:15px;
+	height:15px;
+	margin-top: 14px;
+  margin-right:5px;
+	background-size: 100% 100%;
+  overflow:hidden;
+}
+ .data-shape.tel {
+	background-image: url(../images/Datashape10.png);
+}
+.data-shape.person {
+	background-image: url(../images/Datashape11.png);
+}
+.data-shape.wx {
+	background-image: url(../images/Datashape12.png);
+}
+.data-shape.email {
+ background-image: url(../images/Datashape13.png);
+}
+.data-shape.education {
+ background-image: url(../images/Datashape14.png);
+}
+.arrow {
+	background-size: 100% 100%;
+    position: absolute;
+    display: block;
+    width: 13px;
+    height: 24px;
+    right: 8px;
+    top: 11px;
+    background-image: url(../images/arrow-right.png);
+    background-repeat: no-repeat;
+    background-size: 13px 24px;
+    background-position: 0px 0px;
+}
+.cell-list .cell-item .cell-hd .tip {
+	color: #ff9694;
+	line-height: 1.5;
+}
+.tip,.con {
+	font-size:0.35rem;
+}
+.appoint-list li{
+	line-height: 0.5rem;
+	padding:0.35rem 0 0.25rem;
+	border-bottom:1px solid #f5f5f5;
+}
+.appoint-list li .lab {
+	width: 1.9rem;
+	font-size:0.37rem;
+	color: #b2b2b2;
+	text-align: right;
+	margin-right: 6px;
+}
+.appoint-list li .con {
+	color: #333;
+}
+
+.invited {
+    padding:0.416666rem;
+    box-shadow: 0 0 1em #e4dede;
+    border-radius: 0.216666rem;
+}
+.invited .invited-title {
+	height: 1.066666rem;
+	padding: 0.266666rem 0;
+	font-size: 14px;
+	color: #333333;
+	border-bottom: 1px solid #fafafa;
+}
+
+.invited .invited_list {
+	padding: 8px 0 0;
+
+}
+.invited .invited_list li {
+	margin-top: 11px;
+	line-height: 0.533333rem;
+
+}
+
+.invited .invited_list li .avatar {
+	width: 1rem;
+	height: 1rem;
+	margin-right: 0.2rem;
+  border-radius: 50%;
+}
+.nick-name {
+	color: #333333;
+	font-size: 0.36rem;
+}
+.invite-time {
+	color: #999999;
+	font-size: 0.34rem;
+}
+
+.make-appointment-body-head{
+	font-size:0.37rem;
+	color: #333;
+	line-height: 0.4rem;
+	padding-bottom:0.416666rem;
+}
+.line-box{
+	height: 0.4rem;;
+	line-height: 0.4rem;
+	width: 3px;
+	background:#ff9a98;
+	display: inline-block;
+	margin-right: 0.216666rem;
+	vertical-align: -2px;
+}
+.person{
+	color: #ff9a98;
+}
+.sex-box{
+    background: #ff9a98;
+    position: initial;
+    display: inline-block;
+    float: left;
+    margin-left: 0.13rem;
+    padding: 0 5px;
+    height:17px;
+    line-height:15px;
+    border-radius: 30px;
+    color: #fff;
+    margin-right:5px;
+}
+.sex{
+    display: inline-block;
+    width: 10px;
+    height: 11px;
+    background-image: url(../images/sex.png);
+    background-repeat: no-repeat;
+    background-size: 20.7px 10px;
+    margin-top:3px;
+    vertical-align: middle;
+}
+.sex.woman{
+	background-position: 1px 0px;
+}
+.sex.man{
+	background-position: -11px -1px;
+}
+.age{
+	vertical-align:-1px;
+	font-size:10px;
+}
+.invited_list .data-shape{
+	margin-top:1px;
+	width:15px;
+	height: 15px;
+}
+.span-text {
+	float: right;
+	margin-right: 0.8rem;
+	font-size:11px;
+	color: #b2b2b2;
+}
+.co_b2{
+	font-size:0.35rem;
+	color: #B2B2B2;
+}
+.more{
+	text-align: right;
+    position: absolute;
+    right: 0;
+}
+.visitor-box{
+	padding-bottom: 15px;
+	position: relative;
+}
+.visitor-box a{
+
+}
+.visitor-box .visitor-box-list{
+	width: 1.1rem;
+	height: 1.1rem;
+	display: inline-block;
+	float: left;
+	margin-left: 5px;
+}
+.visitor-box .visitor-box-list>img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+.invited .list-more{
+	position: relative;
+	display: block;
+}
+.visitor-box .more{
+	top: 16px;
+}
+.invited .list-more .arrow{
+	top: -26px;
+}
+.invited .list-more .more{
+	top: -24px;
+}
+/*评论区*/
+.comment-wrapper{
+	width: 95%;
+    margin:0.555555rem auto;
+}
+.comment-wrapper .cell-item-title{
+	width: auto;
+}
+.comment-wrapper .comment-head{
+	background: #f7f7f7;
+	padding: 0.277777rem 0.277777rem 0;
+}
+.comment-box li{
+	padding: 0.277777rem ;
+}
+.comment-box li:nth-of-type(odd){
+	background: #f7f7f7;
+}
+.comment-box li .user-intro{
+
+}
+.comment-box li .user-intro .user-img{
+	width: 0.972222rem;
+	height:0.972222rem;
+	overflow: hidden;
+	object-fit: cover;
+	border-radius: 50%;
+	margin-right: 0.277777rem;
+}
+ .comment-box li .user-intro .name{
+	font-size:0.35rem;
+	color: #222;
+	text-align: left;
+	font-weight: 500;
+	margin-left: 0;
+}
+ .comment-box li .comment-con{
+	font-size:0.35rem;
+	color: #666;
+	padding-top:0.23rem;
+	padding-bottom: 0.23rem;
+}
+ .comment-box li .com-user{
+    position: initial;
+    display: inline-block;
+    float: left;
+    margin-left: 0.138888rem;
+}
+.comment-footer{
+	color: #666;
+	font-size:0.375rem;
+	padding-top: 0.277777rem;
+}
+.comment-footer .comfirm-comment{
+	margin-left: 0.816666rem;
+}
+.comment-footer .comment-img{
+	height:16px;
+	display: inline-block;
+	margin-right: 0.138888rem;
+	vertical-align: -3px;
+}
+.comment-footer .comfirm-comment .love-icon{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/SquarePL_07.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    vertical-align: -3px;
+    background-position: -1px 0;
+	 margin-right: 0.138888rem;
+
+}
+.comment-footer .comfirm-comment.active .love-icon{
+    background-image: url(../images/SquarePL_09.png);
+
+}
+
+footer{
+	background-color: #fff;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0px -3px 8px 0px rgba(0, 0, 0, 0.05);
+
+}
+footer .comfirm-comment{
+	font-size: 15px;
+    height: 55px;
+    line-height: 50px;
+    margin-left:1.666666rem;
+}
+footer .comment-img{
+	height:24px;
+	display: inline-block;
+	margin-right:0.277777rem;
+	vertical-align: middle;
+}
+.Submission {
+	position: relative;
+}
+
+.btnSummit {
+    background: url(../images/btn-bg3.png) no-repeat;
+    background-size: 120px 55px;
+    width: 100%;
+    border: none;
+    height: 55px;
+    line-height: 36px;
+    color: #fff;
+    padding: 0;
+    background-position: center;
+}
+/*视频图片*/
+.InviteVideoImg,.InviteVideoImgOne,.InviteVideoImgTwo{
+	width:91.5%;
+	margin:10px auto;
+	overflow:hidden;
+}
+.InviteVideoImgOne img{
+	width:70%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.InviteVideoImgTwo > li{
+	width:49%;
+	float:left;
+	margin-right:2%;
+}
+.InviteVideoImgTwo > li:last-of-type{
+	margin-right:0;
+}
+.InviteVideoImgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.InviteVideoImg > li{
+	width:33.33%;
+  height:100px;
+	float:left;
+	margin-bottom:5px;
+}
+.InviteVideoImg > li img{
+	width:95%;
+  height:95%;
+	margin:2.5% auto 0;
+	overflow:hidden;
+}

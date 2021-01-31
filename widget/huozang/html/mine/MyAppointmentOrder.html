@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>我的订单</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/MyOrder.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<!-- <p class="p3"></p> --
+		<p class="p2"></p>
+		<ul class="DIHead">
+			<li id="DIHeadLi" data-OrderId="InviteS">
+				<div class="DIHeadW">邀请订单</div>
+			</li>
+			<li data-OrderId="RecommendS">
+				<div class="DIHeadW">活动订单</div>
+			</li>
+		</ul>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<ul class="roofUL">
+				<li class="Selected" data-OrderId="InviteS">
+					<p class="roofULD"></p>
+					<span>邀请列表</span>
+				</li>
+				<li data-OrderId="RecommendS">
+					<p class="roofULD"></p>
+					<span>活动列表</span>
+				</li>
+			</ul>
+		</div>
+		<!--状态导航-->
+		<div class="StateNavigationS">
+			<ul class="StateNavigation">
+				<li value-data="2" id="StateNavigationL">
+					<div>
+						邀约中
+					</div>
+				</li>
+				<li value-data="3">
+					<div>
+						进行中
+					</div>
+				</li>
+				<li value-data="4">
+					<div>
+						已完成
+					</div>
+				</li>
+				<li value-data="1">
+					<div>
+						已取消
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+
+	<div id="order" class="OrderActivity">
+		<ul id="orderlist" class="OrderActivityU">
+		</ul>
+	</div>
+	<script type="text/template" id="servicetemplate">
+		{{~it:value:index}} {{?value.userid==value.owner}}
+		<li style="background:#f2f2f2;" id="serviceappointment{{=value.id}}">
+			<div class="ShouldDeS">
+				约
+			</div>
+			<div class="ShouldDe"></div>
+			{{??}}
+			<li id="serviceappointment{{=value.id}}">
+				<div class="InviteS">
+				应
+				</div>
+				<div class="Invite"></div>
+				{{?}}
+
+				<!--顶部-->
+				<ul class="OrderAU">
+					<li class="OrderAUL">订单编号：{{=value.orderid}}</li>
+					<li class="OrderAUC">{{=value.statusStr}}</li>
+					<!--<li class="OrderAUR">订单已完成</li>-->
+				</ul>
+				<!--内容-->
+				<div class="OrderACenter">
+					<div class="OrderACenterU">
+						<div class="OrderACenterUL">邀约人</div>
+						<ul class="OrderACenterUC">
+							<li class="otherspage" userid="{{=value.userinfo.userid}}">{{=value.userinfo.nickname}}</li>
+							<li>
+								<p class="{{?1==value.userinfo.gender}}p1{{??}}p3{{?}}"></p>
+								<p class="p2">{{=value.userinfo.age}}</p>
+							</li>
+						</ul>
+					</div>
+					<!-- <ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会标签</li>
+						<li class="OrderACenterUR">{{=value.userinfo.tags}}</li>
+					</ul> -->
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">诚意金</li>
+						<li class="OrderACenterUR">{{=value.payment}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会内容</li>
+						<li class="OrderACenterUR">{{=value.content}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会地点</li>
+						<li class="OrderACenterUR">{{=value.location}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">被约人</li>
+						<ul class="OrderACenterUC">
+							<li class="otherspage" userid="{{=value.serviceuserinfo.userid}}">{{=value.serviceuserinfo.nickname}}</li>
+							<li>
+								<p class="{{?1==value.serviceuserinfo.gender}}p1{{??}}p3{{?}}"></p>
+								<p class="p2">{{=value.serviceuserinfo.age}}</p>
+							</li>
+						</ul>
+					</ul>
+
+					<!-- <ul class="OrderACenterU">
+					<li class="OrderACenterUL">手续费</li>
+					<li class="OrderACenterUR">￥128</li>
+				</ul>
+				<ul class="OrderACenterU">
+					<li class="OrderACenterUL">预计收入</li>
+					<li class="OrderACenterUR">
+						<span>￥1020
+											<span>(邀约发起所付诚意金减去手续费)</span>
+						</span>
+					</li>
+				</ul> -->
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">邀约时间</li>
+						<li class="OrderACenterUR">{{=value.starttime}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">到期时间</li>
+						<li class="OrderACenterUR">{{=value.endtime}}</li>
+					</ul>
+					{{?value.userid==value.owner}}
+					{{?value.serviceuserinfo}}
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">TA的联系方式</li>
+						<li class="OrderACenterUR">{{=value.serviceuserinfo.mobile}}</li>
+					</ul>
+					{{?}}
+					{{?}}
+					{{?value.serviceuserid==value.owner}}
+					{{?value.userinfo}}
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">TA的联系方式</li>
+						<li class="OrderACenterUR">{{=value.userinfo.mobile}}</li>
+					</ul>
+					{{?}}
+					{{?}}
+				</div>
+
+
+				<!--点击按钮-->
+				<ul class="OrderABut">
+					{{?2==value.status}} {{?value.userid==value.owner}}
+					<li>
+						<div data-type="service" appointmentid="{{=value.id}}" userid="{{=value.userinfo.userid}}" tzuserid="{{=value.serviceuserid}}" class="OrderAButRL cancelorder">
+							取消邀约
+						</div>
+					</li>
+					{{?}} {{?value.serviceuserid==value.owner}}
+					<li>
+						<div data-type="service" appointmentid="{{=value.id}}" userid="{{=value.serviceuserinfo.userid}}" tzuserid="{{=value.userinfo.userid}}" class="OrderAButRL reciveorder">
+							接受邀约
+						</div>
+					</li>
+					{{?}} {{?}} {{?value.serviceuserid==value.owner}}
+					<li>
+						<div userid="{{=value.userinfo.userid}}" nickname="{{=value.userinfo.nickname}}" class="OrderAButC onetoone">
+							<P class="p1"></P>
+							联系TA
+						</div>
+					</li>
+					{{?}} {{?value.userid==value.owner}}
+					<li>
+						<div userid="{{=value.serviceuserinfo.userid}}" nickname="{{=value.serviceuserinfo.nickname}}" class="OrderAButC onetoone">
+							<P class="p1"></P>
+							联系TA
+						</div>
+					</li>
+					{{?}} {{?3==value.status}} {{?value.userinfo.userid==value.owner}}
+					<li>
+						<div data-type="service" appointmentid="{{=value.id}}" userid="{{=value.serviceuserinfo.userid}}" tzuserid="{{=value.serviceuserinfo.userid}}" class="OrderAButRL okorder">
+							已完成
+						</div>
+					</li>
+					{{?}} {{?}}
+
+					<li>
+						<!--查看详情-->
+						<!-- <div data-type="service" appointmentid="{{=value.id}}" class="OrderAButL">查看详情</div> -->
+					</li>
+				</ul>
+			</li>
+			{{~}}
+	</script>
+
+
+	<script type="text/template" id="invitationtemplate">
+		{{~it:value:index}} {{?value.userid==value.owner}}
+		<li style="background:#f2f2f2;" id="invitationappointment{{=value.id}}">
+			<div class="ShouldDeS">
+				邀
+			</div>
+			<div class="ShouldDe"></div>
+			{{??}}
+			<li id="invitationappointment{{=value.id}}">
+				<div class="InviteS">
+					应
+				</div>
+				<div class="Invite"></div>
+				{{?}}
+				<!--顶部-->
+				<ul class="OrderAU">
+					<li class="OrderAUL">订单编号：{{=value.orderid}}</li>
+					<li class="OrderAUC">{{=value.statusStr}}</li>
+					<!--<li class="OrderAUR">订单已完成</li>-->
+				</ul>
+				<!--内容-->
+				<div class="OrderACenter">
+					<div class="OrderACenterU">
+						<div class="OrderACenterUL">邀请发起人</div>
+						<ul class="OrderACenterUC">
+							<li class="otherspage" userid="{{=value.userinfo.userid}}">{{=value.userinfo.nickname}}</li>
+							<li>
+								<p class="{{?1==value.userinfo.gender}}p1{{??}}p3{{?}}"></p>
+								<p class="p2">{{=value.userinfo.age}}</p>
+							</li>
+						</ul>
+					</div>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会标签</li>
+						<li class="OrderACenterUR">{{=value.tags}}</li>
+					</ul>
+					<!-- <ul class="OrderACenterU">
+						<li class="OrderACenterUL">诚意金</li>
+						<li class="OrderACenterUR">{{=value.payment}}</li>
+					</ul> -->
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会内容</li>
+						<li class="OrderACenterUR">{{=value.content}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">约会地点</li>
+						<li class="OrderACenterUR">{{=value.location}}</li>
+					</ul>
+					{{?3==value.status}}
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">已选应邀人</li>
+						<ul class="OrderACenterUC">
+							<li class="otherspage" userid="{{=value.serviceuserinfo.userid}}">{{=value.serviceuserinfo.nickname}}</li>
+							<li>
+								<p class="{{?1==value.serviceuserinfo.gender}}p1{{??}}p3{{?}}"></p>
+								<p class="p2">{{=value.serviceuserinfo.age}}</p>
+							</li>
+						</ul>
+					</ul>
+					{{?}}
+
+					<!-- <ul class="OrderACenterU">
+					<li class="OrderACenterUL">手续费</li>
+					<li class="OrderACenterUR">￥128</li>
+				</ul>
+				<ul class="OrderACenterU">
+					<li class="OrderACenterUL">预计收入</li>
+					<li class="OrderACenterUR">
+						<span>￥1020
+											<span>(邀约发起所付诚意金减去手续费)</span>
+						</span>
+					</li>
+				</ul> -->
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">邀约时间</li>
+						<li class="OrderACenterUR">{{=value.starttime}}</li>
+					</ul>
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">到期时间</li>
+						<li class="OrderACenterUR">{{=value.endtime}}</li>
+					</ul>
+					{{?value.userid==value.owner}}
+					{{?value.serviceuserinfo}}
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">TA的联系方式</li>
+						<li class="OrderACenterUR">{{=value.serviceuserinfo.mobile}}</li>
+					</ul>
+					{{?}}
+					{{?}}
+					{{?value.serviceuserid==value.owner}}
+					{{?value.userinfo}}
+					<ul class="OrderACenterU">
+						<li class="OrderACenterUL">TA的联系方式</li>
+						<li class="OrderACenterUR">{{=value.userinfo.mobile}}</li>
+					</ul>
+					{{?}}
+					{{?}}
+				</div>
+
+
+				<!--点击按钮-->
+				<ul class="OrderABut">
+					{{?2==value.status}} {{?value.userid==value.owner}}
+					<li>
+						<div invitationid="{{=value.id}}" userid="{{=value.userinfo.userid}}" class="OrderAButC invitationlist">
+							<P></P>
+							应邀列表
+						</div>
+					</li>
+					<li>
+						<div data-type="invitation" invitationid="{{=value.id}}" userid="{{=value.userinfo.userid}}" tzuserid="{{=value.serviceuserid}}" class="OrderAButRL cancelorder">
+							取消邀请
+						</div>
+					</li>
+					{{?}} {{?value.serviceuserid==value.owner}}
+					<li>
+						<div userid="{{=value.userinfo.userid}}" nickname="{{=value.userinfo.nickname}}" class="OrderAButC onetoone">
+							<P class="p1"></P>
+							联系TA
+						</div>
+					</li>
+					{{?}} {{?}} {{?3==value.status}} {{?value.userid==value.owner}}
+					<li>
+						<div userid="{{=value.serviceuserinfo.userid}}" nickname="{{=value.serviceuserinfo.nickname}}" class="OrderAButC onetoone">
+							<P class="p1"></P>
+							联系TA
+						</div>
+					</li>
+					{{?}} {{?value.userinfo.userid==value.owner}}
+					<li>
+						<div data-type="invitation" invitationid="{{=value.id}}" userid="{{=value.serviceuserinfo.userid}}" tzuserid="{{=value.serviceuserinfo.userid}}" class="OrderAButRL okorder">
+							已完成
+						</div>
+					</li>
+					{{?}} {{?}}
+
+					<li>
+						<!--查看详情-->
+						<div invitationid="{{=value.id}}" userid="{{=value.userinfo.userid}}" class="OrderAButL invitationdetail">查看详情</div>
+					</li>
+				</ul>
+			</li>
+			{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script>
+		var operatorType = "invitation"; //service
+		var pageSize = 4,
+			pageNum = 1,
+			hasNextPage = true,
+			userinfo = "";
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "MyAppointmentOrder");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'MyAppointmentOrder'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'MyAppointmentOrder'
+				});
+			});
+
+			api.addEventListener({
+				name: 'loadappointmentorder'
+			}, function(ret, err) {
+				var status = $("#StateNavigationL").attr("value-data");
+				if ($(".Selected").attr("data-OrderId") == "InviteS") {
+					operatorType = "invitation";
+					pageNum = 1;
+					loadorder("invitationtemplate", userinfo, status, pageSize, pageNum, "invitation", true);
+				} else if ($(".Selected").attr("data-OrderId") == "RecommendS") {
+					operatorType = "service";
+					pageNum = 1;
+					loadorder("servicetemplate", userinfo, status, pageSize, pageNum, "service", true);
+				}
+			});
+
+			//上拉刷新
+			api.addEventListener({
+				name: 'swipeup'
+			}, function(ret, err) {
+				if(hasNextPage){
+					var status = $("#StateNavigationL").attr("value-data");
+					if ($(".Selected").attr("data-OrderId") == "InviteS") {
+						operatorType = "invitation";
+						loadorder("invitationtemplate", userinfo, status, pageSize, pageNum, "invitation", false);
+					} else if ($(".Selected").attr("data-OrderId") == "RecommendS") {
+						operatorType = "service";
+						loadorder("servicetemplate", userinfo, status, pageSize, pageNum, "service", false);
+					}
+				}
+			});
+
+
+			//导航切换
+			$(".roofULD").css({
+				"width": "" + $(".roofUL span").width() + "px",
+				"left": "" + ($(".roofUL li").width() - $(".roofUL span").width()) / 2 + "px",
+			});
+			//分类导航
+			$(".roofUL").on("click", "li", function() {
+				$(this).addClass("Selected");
+				$(this).siblings().removeClass("Selected");
+				var status = $("#StateNavigationL").attr("value-data");
+				if ($(".Selected").attr("data-OrderId") == "InviteS") {
+					operatorType = "invitation";
+					pageNum = 1;
+					loadorder("invitationtemplate", userinfo, status, pageSize, pageNum, "invitation", true);
+				} else if ($(".Selected").attr("data-OrderId") == "RecommendS") {
+					operatorType = "service";
+					pageNum = 1;
+					loadorder("servicetemplate", userinfo, status, pageSize, pageNum, "service", true);
+				}
+			})
+
+			// $(".DIHead").on("click", "li", function() {
+			// 	$(".DIHead li").attr("id", "");
+			// 	$(this).attr("id", "DIHeadLi");
+			// 	var status = $("#StateNavigationL").attr("value-data");
+			// 	if ($("#DIHeadLi").attr("data-OrderId") == "InviteS") {
+			// 		operatorType = "invitation";
+			// 		pageNum = 1;
+			// 		loadorder("invitationtemplate", userinfo, status, pageSize, pageNum, "invitation", true);
+			// 	} else if ($("#DIHeadLi").attr("data-OrderId") == "RecommendS") {
+			// 		operatorType = "service";
+			// 		pageNum = 1;
+			// 		loadorder("servicetemplate", userinfo, status, pageSize, pageNum, "service", true);
+			// 	}
+			// });
+
+			//状态导航
+			$(".StateNavigation").on("click", "li", function() {
+				$(".StateNavigation li").attr("id", "");
+				$(this).attr("id", "StateNavigationL");
+				var status = $("#StateNavigationL").attr("value-data");
+				if (operatorType == "invitation") {
+					pageNum = 1;
+					loadorder("invitationtemplate", userinfo, status, pageSize, pageNum, "invitation", true);
+				} else if (operatorType == "service") {
+					pageNum = 1;
+					loadorder("servicetemplate", userinfo, status, pageSize, pageNum, "service", true);
+				}
+			});
+
+			userinfo = $api.getStorage("userid");
+			//默认invitation
+			loadorder("invitationtemplate", userinfo, "2", pageSize, pageNum, "invitation", true);
+			appointmentListener();
+
+		}
+
+		function loadorder(template, userid, status, pagesize, pagenum, operatortype, isclear) {
+			if (isclear) {
+				$("#orderlist").empty();
+			}
+			var json = {
+				iscreate:api.pageParam.iscreate,
+				userid: userid,
+				statusstr: status,
+				type: "1",
+				operatortype: operatortype,
+				pagesize: pagesize,
+				pagenum: pagenum,
+				filter:"Y"
+			}
+			console.log(JSON.stringify(json))
+
+	  		api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETOWNERAPPOINTMENT,
+					method: 'post',
+					data: {
+						values: json
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						$("#no-conent img").remove();
+						$("#no-conent").remove();
+						if (data.ownerappointments && data.ownerappointments.list.length != 0) {
+							pageNum = data.ownerappointments.nextPage;
+							hasNextPage = data.ownerappointments.hasNextPage;
+							$.each(data.ownerappointments.list, function(i, n) {
+								n.statusStr = CONFIG.ORDERTYPE[n.status];
+								n.starttime = timestampToTime(n.starttime);
+								n.endtime = timestampToTime(n.endtime);
+								n.owner = $api.getStorage("userid");
+							});
+							var tempFn = doT.template($api.byId(template).innerHTML);
+							var resultHTML = tempFn(data.ownerappointments.list);
+							console.log(resultHTML);
+							$("#orderlist").html(resultHTML);
+						} else {
+							$("#orderlist").html("<div id=\"no-conent\"><img src=\"../../images/no-content.png\"/></div>");
+						}
+					}
+				});
+		};
+
+		function appointmentListener() {
+			//点击昵称跳转到个人主页
+			$("#orderlist").on("click", "li.otherspage", function() {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: 'auto'
+					},
+					pageParam: {
+						userid: userid
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			//联系TA
+			$("#orderlist").on("click", ".onetoone", function() {
+				var touserid = $(this).attr("userid");
+				var tousername = $(this).attr("nickname");
+				api.openWin({
+					name: 'onetoone',
+					url: './onetoone.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						touserid: touserid,
+						tousername: tousername,
+						latestMessageId: -1
+					}
+				});
+			});
+
+			// 取消邀约
+			$("#orderlist").on("click", ".cancelorder", function() {
+				var type = $(this).attr("data-type");
+				var userid = $(this).attr("userid");
+				var tzuserid = $(this).attr("tzuserid");
+				if (type == "service") { //取消约会
+					var appointmentid = $(this).attr("appointmentid");
+					var btnArray = ['取消', '确认'];
+					mui.confirm('确认取消吗？', '', btnArray, function(e) {
+						if (e.index == 1) { //确认
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.UPDATEAPPOINTMENT,
+									method: 'post',
+									data: {
+										values: {
+											userid: userid,
+											appointmentid: appointmentid,
+											status: 1
+										}
+									}
+								},
+								function(data, err) {
+									if (data.code == "200") {
+										$("#serviceappointment" + appointmentid).slideUp(300, function() {
+											$(this).remove();
+										});
+										api.sendEvent({
+											name: "sendTextMessageListener",
+											extra: {
+												touserid: tzuserid,
+												message: "系统提示：当前人已经取消了与你的约会！"
+											}
+										});
+										api.sendEvent({
+											name: "mine"
+										});
+									}
+								});
+						}
+					});
+				} else if (type == "invitation") { //取消邀请
+					var invitationid = $(this).attr("invitationid");
+					var btnArray = ['取消', '确认'];
+					mui.confirm('确认取消吗？', '', btnArray, function(e) {
+						if (e.index == 1) { //确认
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.CANCELINVITATION,
+									method: 'post',
+									data: {
+										values: {
+											userid: userid,
+											id: invitationid,
+											status: 1
+										}
+									}
+								},
+								function(data, err) {
+									if (data.code == "200") {
+										$("#invitationappointment" + invitationid).slideUp(300, function() {
+											$(this).remove();
+										});
+										api.sendEvent({
+											name: "sendTextMessageListener",
+											extra: {
+												touserid: tzuserid,
+												message: "系统提示：当前人已经取消了与你的约会！"
+											}
+										});
+										api.sendEvent({
+											name: "mine"
+										});
+									}
+								});
+						}
+					});
+				}
+			});
+
+			//接受邀约
+			$("#orderlist").on("click", ".reciveorder", function() {
+				var appointmentid = $(this).attr("appointmentid");
+				var userid = $(this).attr("userid");
+				var tzuserid = $(this).attr("tzuserid");
+				var btnArray = ['取消', '确认'];
+				mui.confirm('确认接受吗？', '', btnArray, function(e) {
+					if (e.index == 1) { //确认
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.UPDATEAPPOINTMENT,
+								method: 'post',
+								data: {
+									values: {
+										userid: userid,
+										appointmentid: appointmentid,
+										status: 3
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									$("#serviceappointment" + appointmentid).slideUp(300, function() {
+										$(this).remove();
+									});
+									api.sendEvent({
+										name: "sendTextMessageListener",
+										extra: {
+											touserid: tzuserid,
+											message: "系统提示：当前人已经接受了你的约会邀请，快去看看吧！"
+										}
+									});
+								} else {
+									api.toast({
+										msg: data.msg,
+										duration: 1000,
+										location: 'middle'
+									});
+								}
+							});
+					}
+				});
+			});
+			//完成约会
+			$("#orderlist").on("click", ".okorder", function() {
+				var type = $(this).attr("data-type");
+				if (type == "service") {
+					var appointmentid = $(this).attr("appointmentid");
+					var userid = $(this).attr("userid");
+					var tzuserid = $(this).attr("tzuserid");
+					var btnArray = ['取消', '确认'];
+					mui.confirm('确认已完成？', '', btnArray, function(e) {
+						if (e.index == 1) { //确认
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.ENDAPPOINTMENT,
+									method: 'post',
+									data: {
+										values: {
+											userid: userid,
+											appointmentid: appointmentid,
+											remark: "活动结束"
+										}
+									}
+								},
+								function(data, err) {
+									if (data.code == "200") {
+										$("#serviceappointment" + appointmentid).slideUp(300, function() {
+											$(this).remove();
+										});
+										api.sendEvent({
+											name: "sendTextMessageListener",
+											extra: {
+												touserid: tzuserid,
+												message: "系统提示：当前人已经确认与你的约会已完成！"
+											}
+										});
+										api.sendEvent({
+											name: "mine"
+										});
+									}
+								});
+						}
+					});
+				} else if (type == "invitation") {
+					var invitationid = $(this).attr("invitationid");
+					var userid = $(this).attr("userid");
+					var tzuserid = $(this).attr("tzuserid");
+					var btnArray = ['取消', '确认'];
+					mui.confirm('确认已完成？', '', btnArray, function(e) {
+						if (e.index == 1) { //确认
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.ENDINVITATION,
+									method: 'post',
+									data: {
+										values: {
+											userid: userid,
+											invitationid: invitationid,
+											remark: "邀请结束"
+										}
+									}
+								},
+								function(data, err) {
+									if (data.code == "200") {
+										$("#invitationappointment" + invitationid).slideUp(300, function() {
+											$(this).remove();
+										});
+										api.sendEvent({
+											name: "sendTextMessageListener",
+											extra: {
+												touserid: tzuserid,
+												message: "系统提示：当前人已经确认与你的约会已完成！"
+											}
+										});
+										api.sendEvent({
+											name: "mine"
+										});
+									}
+								});
+						}
+					});
+				}
+			});
+			//应邀列表
+			$("#orderlist").on("click", ".invitationlist", function() {
+				var invitationid = $(this).attr("invitationid");
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'receivers',
+					url: './receivers.html',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: 'auto'
+					},
+					pageParam: {
+						userid: userid,
+						invitationid: invitationid,
+						type: "1" //约会
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+			//邀请详情
+			$("#orderlist").on("click", ".invitationdetail", function() {
+				var invitationid = $(this).attr("invitationid");
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'invitationdetail',
+					url: '../DateInvitation/invitationdetail.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						invitationid: invitationid,
+						userid: userid
+					}
+				});
+			});
+		};
+	</script>
+</body>
+
+</html>

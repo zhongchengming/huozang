@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			background: #fff
+		}
+
+		.bigBox {
+			width: 100%;
+			height: 100%;
+		}
+
+		.roofS {
+			width: 100%;
+			background: #fff;
+			overflow: hidden;
+			position: fixed;
+			z-index: 1001;
+			top: 0;
+			left: 0;
+		}
+
+		.roof {
+			width: 100%;
+			height: 50px;
+			margin: 0 auto 1px;
+			overflow: hidden;
+			position: relative;
+			box-shadow: 0 5px 3px 1px #f2f2f2;
+		}
+
+		.roofReturn {
+			width: 20px;
+			height: 20px;
+			background: url(../../images/return.png) no-repeat;
+			background-size: 100% 100%;
+			position: absolute;
+			top: 20px;
+			left: 15px;
+		}
+
+		.roofConter {
+			width: 100%;
+			height: 50px;
+			text-align: center;
+			line-height: 65px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			overflow: hidden;
+		}
+
+		.one {
+			width: 118px;
+			height: 116px;
+			margin: 100px auto 20px auto;
+		}
+
+		.grounpImg {
+			width: 100%;
+			height: 100%;
+		}
+
+		.two,
+		.three {
+			font-size: 15px;
+			font-family: PingFang-SC-Medium;
+			font-weight: 500;
+			color: #333333;
+			line-height: 30px;
+			text-align: center;
+		}
+
+		.two {
+			margin-top: 100px;
+		}
+
+		.three {
+			color: #999999;
+			padding: 0 20px
+		}
+
+		.five {
+			width: 300px;
+			height: 44px;
+			background: rgba(245, 245, 245, 1);
+			border-radius: 22px;
+			position: relative;
+			margin: 26px auto 0 auto;
+		}
+
+		.seachBtn {
+			position: absolute;
+			right: 22px;
+			top: 16px;
+			width: 15px;
+			height: 15px;
+		}
+
+		.grounpNum {
+			width: 90% !important;
+			height: 100% !important;
+			border: none !important;
+			padding-left: 5% !important;
+			background: rgba(245, 245, 245, 1) !important;
+			border-radius: 22px !important;
+			font-size: 12px;
+			font-family: PingFang-SC-Regular;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+		}
+
+		.six {
+			text-align: center;
+			font-size: 14px;
+			color: #ffffff;
+			background: rgba(0, 0, 0, .3);
+			width: 50%;
+			margin: 20px auto;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 20px;
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="bigBox">
+		<div class="roofS">
+			<div class="roof">
+				<div class="roofReturn"></div>
+				<!-- <div class="roofSearch"></div>
+				<div class="roofMessage messageU"></div> -->
+				<div class="roofConter">
+					群组
+				</div>
+			</div>
+		</div>
+		<div class="one"><img class="grounpImg" src="../../images/grounpImg01.png" /></div>
+		<div class="two">您还没有加入群组！</div>
+		<div class="three">请输入运营商提供的群组号，加入群组，享受更多特权！</div>
+		<div class="five"><input class="grounpNum" type="text" placeholder="请输入群组号..." /> <img class="seachBtn"
+				src="../../images/seach.png" /></div>
+		<div class="six">未找到该群组</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/mui.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+<script type="text/javascript" src="../../script/messageUtil.js"></script>
+<script>
+	apiready = function () {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType == "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType == "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+		}
+
+		//返回箭头事件
+		$(".roofReturn").click(function () {
+			api.closeWin({
+			});
+			api.sendEvent({
+				name: 'mine'
+			});
+		});
+		//查询事件
+		// $(".seachBtn").click(function () {
+		// 	var SoulGroup = $(".grounpNum").val();
+		// 	if (SoulGroup == "") {
+		// 		setTimeout(function () {
+		// 			$(".six").css("display", "block")
+		// 			$(".six").text("请输入群组号")
+		// 		}, 3000);
+		// 	} else {
+		// 		findGrounp(SoulGroup)
+		// 	}
+		// });
+        if (systemType == "ios") {
+            $(".grounpNum").blur('keypress', function (e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var SoulGroup = $(".grounpNum").val();
+                findGrounp(SoulGroup)
+
+            });
+        } else {
+            $(".grounpNum").on('keypress', function (e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var SoulGroup = $(".grounpNum").val();
+                findGrounp(SoulGroup)
+
+            });
+        }
+	}
+
+	function findGrounp(SoulGroup) {
+		api.showProgress({
+			title: '正在搜索群组...',
+			modal: false
+		});
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.FINDGROUNP,
+				method: 'post',
+				data: {
+					values: {
+						groupName: SoulGroup
+					}
+				}
+			},
+			function (data) {
+				console.log(JSON.stringify(data))
+				if (data.code == "200") {
+					api.openWin({
+						name: 'groupIntroduce',
+						url: 'groupIntroduce.html',
+						pageParam: {
+							SoulGroup: SoulGroup
+						}
+					});
+					api.hideProgress()
+				} else {
+					api.hideProgress()
+					setTimeout(function () {
+						$(".six").css("display", "block")
+						$(".six").text(data.msg)
+					}, 3000);
+				}
+			});
+	}
+</script>
+
+</html>

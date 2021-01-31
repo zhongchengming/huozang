@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>购买会员</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <meta name="viewport" content="width=device-width">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/public.css">
+</head>
+<style media="screen">
+    html,
+    body {
+        background-color: #fff;
+    }
+
+    .roofSearch {
+        right: 20px;
+    }
+
+    .main {
+        padding-bottom: 24px;
+    }
+
+    .roofConter {
+        font-size: 17px;
+    }
+    .toutiaoContent{
+      padding: 20px;
+    }
+    .toutiaoContent img,
+    .toutiaoContent embed {
+      width: 100%
+    }
+</style>
+
+<body>
+    <header>
+        <div class="roofS">
+            <div class="roof">
+                <div class="roofReturn"></div>
+                <div class="roofConter">
+                  头条详情
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="main">
+      <div class="toutiaoTitle"></div>
+      <div class="toutiaoContent"></div>
+    </section>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+
+    apiready = function () {
+        var userid = $api.getStorage('userid');
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType == "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType == "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+        }
+        api.ajax({
+                url:  CONFIG.ADDRURL + CONFIG.GETEXPRESSINFO,
+                method: 'post',
+                data: {
+                    values: {
+                        expressId:api.pageParam.expressId
+                    }
+                }
+            },
+            function (data) {
+                console.log(JSON.stringify(data))
+                if (data.code == "200") {
+                    $("toutiaoTitle").html(data.expressInfo.title)
+                    $(".toutiaoContent").html(data.expressInfo.content)
+                }
+            });
+    }
+
+    //返回箭头事件
+    $(".roofReturn").click(function () {
+        api.closeWin({});
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>新手任务</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link href="../../css/api.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/NoviceTask.css" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<div id="friend" class="roofConter">
+				新手任务
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv" style="height:50px;"></div>
+
+	<div class="TaskBanner">
+		<div class="TaskBannerP">
+			获取金币奖励
+		</div>
+		<img src="../../images/taskBan_02.png" width="100%">
+	</div>
+	<div class="NoviceTaskS">
+		<div class="NoviceTask">
+			<div class="NoviceTaskT">
+				<div id="data" class="NoviceTaskTUS">
+					<div class="NTaskTUImg data"></div>
+					<ul class="NoviceTaskTU">
+						<li class="NoviceTaskTUL">完成资料</li>
+						<li class="NoviceTaskTUR"></li>
+						<li class="NoviceTaskTUC">去完成</li>
+					</ul>
+				</div>
+				<div id="certify" class="NoviceTaskTUS">
+					<div class="NTaskTUImg certify"></div>
+					<ul class="NoviceTaskTU">
+						<li class="NoviceTaskTUL">完成认证</li>
+						<li class="NoviceTaskTUR Complete"></li>
+						<li class="NoviceTaskTUC">已完成</li>
+					</ul>
+				</div>
+				<div id="trends" class="NoviceTaskTUS">
+					<div class="NTaskTUImg trends"></div>
+					<ul class="NoviceTaskTU">
+						<li class="NoviceTaskTUL">发布动态</li>
+						<li class="NoviceTaskTUR"></li>
+						<li class="NoviceTaskTUC">去完成</li>
+					</ul>
+				</div>
+				<div id="Release" class="NoviceTaskTUS">
+					<div class="NTaskTUImg Release"></div>
+					<ul class="NoviceTaskTU">
+						<li class="NoviceTaskTUL">发布活动</li>
+						<li class="NoviceTaskTUR Complete"></li>
+						<li class="NoviceTaskTUC">已完成</li>
+					</ul>
+				</div>
+				<div id="participate" class="NoviceTaskTUS">
+					<div class="NTaskTUImg participate"></div>
+					<ul class="NoviceTaskTU">
+						<li class="NoviceTaskTUL">参与活动</li>
+						<li class="NoviceTaskTUR Complete"></li>
+						<li class="NoviceTaskTUC">已完成</li>
+					</ul>
+				</div>
+			</div>
+			<div class="NoviceTaskB"></div>
+		</div>
+		<div class="NoviceTaskBT">
+			任务规则
+		</div>
+		<div id="taskrules">
+
+		</div>
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script>
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			var winname = api.pageParam.winname;
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "NoviceTask");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({});
+			});
+
+			checktask();
+			taskrules();
+
+			// 完成资料
+			$("#data").click(function() {
+				if ($(this).find("li.NoviceTaskTUR").hasClass("Complete")) {
+					return false;
+				}
+				if (!checklogin()) {
+					return false;
+				}
+				api.openWin({
+					name: 'infosetting',
+					url: './infosetting.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+			// 完成认证
+			$("#certify").click(function() {
+				if ($(this).find("li.NoviceTaskTUR").hasClass("Complete")) {
+					return false;
+				}
+				if (!checklogin()) {
+					return false;
+				}
+				api.openWin({
+					name: 'authsetting',
+					url: './authsetting.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+			// 发布动态
+			$("#trends").click(function() {
+				if ($(this).find("li.NoviceTaskTUR").hasClass("Complete")) {
+					return false;
+				}
+				if (!checklogin()) {
+					return false;
+				}
+				api.openWin({
+					name: 'releasedynamic',
+					url: './../releasedynamic.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+			// 发布活动
+			$("#Release").click(function() {
+				if ($(this).find("li.NoviceTaskTUR").hasClass("Complete")) {
+					return false;
+				}
+				if (!checklogin()) {
+					return false;
+				}
+				api.openWin({
+					name: 'releaseservice',
+					url: './../releaseservice.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+			// 参与活动
+			$("#participate").click(function() {
+				if ($(this).find("li.NoviceTaskTUR").hasClass("Complete")) {
+					return false;
+				}
+				if (!checklogin()) {
+					return false;
+				}
+				api.openWin({
+					name: 'DateInvitation',
+					url: './../DateInvitation/DateInvitation.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+				});
+			});
+		}
+
+		function checktask() {
+
+
+		}
+
+		function taskrules() {
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETDIC,
+				method: 'post',
+				data: {
+					values: {
+						type: "taskrules"
+					}
+				}
+			}, function(data, err) {
+				if (data.code == "200" && data.dict && data.dict.length > 0) {
+					$("#taskrules").append("<ul class=\"NoviceTaskList\">" +
+						"<li>●</li>" +
+						"<li>" + data.dict[0].remark + "</li>" +
+						"</ul>");
+				}
+			});
+		}
+
+		function checklogin() {
+			var userinfo = $api.getStorage('userid');
+			if (userinfo == null || userinfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/SharePopUp.css" />
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<div class="SharePopUpS">
+		<div class="SharePopUpR">
+			<div class="SharePopUp">
+				<div class="ShareClose"></div>
+				<ul class="SharePopUpU">
+					<li>
+						<div class="SharePopUpULT Wechat"></div>
+						<div class="SharePopUpULB">
+							微信好友
+						</div>
+					</li>
+					<li>
+						<div class="SharePopUpULT CircleOfFriends"></div>
+						<div class="SharePopUpULB">
+							朋友圈
+						</div>
+					</li>
+					<!-- <li>
+						<div class="SharePopUpULT Weibo"></div>
+						<div class="SharePopUpULB">
+							微博
+						</div>
+					</li> -->
+					<li>
+						<div class="SharePopUpULT Download"></div>
+						<div class="SharePopUpULB">
+							下载视频
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript">
+	var userid = "",
+		avatar = "",
+		videoid = "",
+		videofrontcover = "",
+		videourl = "",
+		comment = "",
+		nickname = "";
+	apiready = function () {
+		userid = api.pageParam.userid;
+		avatar = api.pageParam.avatar;
+		videofrontcover = api.pageParam.videofrontcover;
+		videourl = api.pageParam.videourl;
+		videoid = api.pageParam.videoid;
+		comment = api.pageParam.comment;
+		nickname = api.pageParam.nickname;
+		$(".ShareClose").click(function () {
+			api.closeFrame({
+				name: "share"
+			});
+		});
+
+		api.addEventListener({
+			name: 'closevideoshare'
+		}, function (ret, err) {
+			api.closeFrame({
+				name: "share"
+			});
+		});
+
+		// 微信朋友
+		$(".Wechat").click(function () {
+			//增加数量统计
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+					method: 'post',
+					data: {
+						values: {
+							videoid: videoid,
+							passiveuserid: userid,
+							userid: $api.getStorage('userid'),
+							videotype: 3,
+							videocontent: "分享"
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						api.sendEvent({
+							name: 'videoaddshare'
+						});
+					}
+				});
+			var wx = api.require('wx');
+			wx.shareWebpage({
+				apiKey: '',
+				scene: 'session',
+				title: nickname,
+				description: comment,
+				thumb: videofrontcover,
+				contentUrl: CONFIG.SHAREADDR + "share/ShareVideo.html?videoid=" + videoid
+			}, function (ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		// 朋友圈
+		$(".CircleOfFriends").click(function () {
+			var wx = api.require('wx');
+			wx.shareWebpage({
+				apiKey: '',
+				scene: 'timeline',
+				title: nickname,
+				description: comment,
+				thumb: videofrontcover,
+				contentUrl: CONFIG.SHAREADDR + "share/ShareVideo.html?videoid=" + videoid
+			}, function (ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+					//增加数量统计
+					//增加数量统计
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+							method: 'post',
+							data: {
+								values: {
+									videoid: videoid,
+									passiveuserid: userid,
+									userid: $api.getStorage('userid'),
+									videotype: 3,
+									videocontent: "分享"
+								}
+							}
+						},
+						function (data, err) {
+							if (data.code == "200") {
+								api.sendEvent({
+									name: 'videoaddshare'
+								});
+							}
+						});
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		// 微博
+		$(".Weibo").click(function () {
+			var weiboPlus = api.require('weiboPlus');
+			weiboPlus.isInstalled(function (ret) {
+				// alert(JSON.stringify(ret))
+				if (ret.status) {
+					weiboPlus.shareWebPage({
+						text: '来看看这个视频吧！',
+						title: '来看看这个视频吧！',
+						description: '来看看这个视频吧！',
+						thumb: videofrontcover,
+						contentUrl: CONFIG.SHAREADDR + "share/ShareVideo.html?videoid=" +
+							videoid
+					}, function (shareret, shareerr) {
+						// alert(JSON.stringify(shareret))
+						// alert(JSON.stringify(shareerr))
+						if (shareret.status) {
+							api.closeFrame({
+								name: "share"
+							});
+							api.toast({
+								msg: "分享成功！",
+								duration: 1000,
+								location: 'middle'
+							});
+						} else {
+							api.toast({
+								msg: JSON.stringify(shareerr),
+								duration: 1000,
+								location: 'middle'
+							});
+							api.toast({
+								msg: "分享失败！",
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+				} else {
+					api.toast({
+						msg: "未安装新浪微博客户端!",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		$(".Download").click(function () {
+			api.download({
+				url: videourl,
+				report: true,
+				cache: true,
+				allowResume: true
+			}, function (ret, err) {
+				if (ret.percent == 100) {
+					api.saveMediaToAlbum({
+						path: ret.savePath
+					}, function (albumret, albumreterr) {
+						if (albumret && albumret.status) {
+							api.toast({
+								msg: "保存成功!",
+								duration: 1000,
+								location: 'middle'
+							});
+							//增加数量统计
+						} else {
+							api.toast({
+								msg: "下载进度：" + ret.percent + "%",
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+				} else {
+					api.toast({
+						msg: "下载进度：" + ret.percent + "%",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+	};
+</script>
+
+</html>

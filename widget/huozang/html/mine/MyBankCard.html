@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>我的银行卡</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link href="../../css/api.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/AddBank.css" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<!-- <div class="roofButton">开始认证</div> -->
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+		<div class="roofMessage messageU"></div> page-bottom-->
+			<div id="friend" class="roofConter">
+				我的银行卡
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv" style="height:65px;"></div>
+	<div class="BankList">
+		<div class="BankListP" id="deletecard">删除此卡</div>
+		<div class="BankListL">
+			<div class="BankListLTop">
+				<span id="banktype">工商银行</span>储蓄卡
+			</div>
+			<div class="BankListLTopT"></div>
+			<div class="BankListLTopB"></div>
+			<div class="BankListLCenter">
+				<span class="span1">1234</span>
+				<span class="span2">****</span>
+				<span class="span2">****</span>
+				<span class="span3">1234</span>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="BankBut">
+		添加银行卡
+	</div>
+
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+
+	<script>
+		apiready = function() {
+			$("body").css("height", "" + $(document).height() + "px");
+			$api.fixStatusBar($api.dom('.roofS'));
+			$api.setStorage('openWin', "MyBankCard");
+
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'MyBankCard'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'MyBankCard'
+				});
+			});
+
+			$(".BankBut").click(function() {
+				api.openWin({
+					name: 'AddBankCard',
+					url: './AddBankCard.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					bounce: false,
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			$("#deletecard").click(function() {
+				var cardnumber = $(this).attr("cardnumber");
+				var btnArray = ['取消', '确认'];
+				mui.confirm('确认要删除银行卡吗？', '', btnArray, function(e) {
+					if (e.index == 1) { //确认
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.DELSOULBANKCARD,
+								method: 'post',
+								data: {
+									values: {
+										userid: $api.getStorage('userid'),
+										cardnumber: cardnumber
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									getbankcards();
+								} else {
+									api.toast({
+										msg: data.msg,
+										duration: 2000,
+										location: 'bottom'
+									});
+								}
+							});
+					}
+				});
+			});
+
+			api.addEventListener({
+				name: 'getbankcards'
+			}, function(ret, err) {
+				getbankcards();
+			});
+
+			getbankcards();
+
+		}
+
+		function getbankcards() {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETSOULBANKCARDS,
+					method: 'post',
+					data: {
+						values: {
+							userid: $api.getStorage('userid')
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						if (data.bankinfo && data.bankinfo.length > 0) {
+							var card = data.bankinfo[0];
+							$("#banktype").html(card.banktype);
+							$(".BankListLCenter .span1").html(card.cardnumber.substring(0, 4));
+							$(".BankListLCenter .span3").html(card.cardnumber.substring(card.cardnumber.length - 4));
+							$("#deletecard").attr("cardnumber", card.cardnumber);
+							$(".BankList").show();
+							$(".BankBut").hide();
+						} else {
+							$(".BankList").hide();
+							$(".BankBut").show();
+						}
+					} else {
+						api.toast({
+							msg: data.msg,
+							duration: 2000,
+							location: 'bottom'
+						});
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>充值</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/Withdrawals.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<p class="p2"></p>
+		<div class="SquareHeaderDIV">充值</div>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				充值
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+
+	<div class="Withdrawals">
+		<!-- <ul class="WithdrawalsT">
+			<li class="WithdrawalsTL">储蓄卡</li>
+			<li class="WithdrawalsTC">
+				<img src="../../images/Identification_03.png">
+			</li>
+			<li class="WithdrawalsTR">
+				<P class="p1"><span>中国工商银行</span>(尾号8699)</P>
+				<P class="p2">单日交易限额￥20000.00</P>
+			</li>
+		</ul> -->
+		<P class="WithdrawalsFS">充值金额</P>
+		<div class="TopUpsK">
+			<P class="p2">￥</P>
+			<P class="p1">
+				<input type="number" id="topup" />
+			</P>
+		</div>
+		<P class="WithdrawalsFSW"></P>
+		<P class="WithdrawalsFSS"></P>
+		<div class="WithdrawalsFSWSub">确认</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+
+<script type="text/javascript">
+	var exchange = 0;
+	apiready = function() {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType == "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType == "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+		}
+
+		$api.setStorage('openWin', "topUps");
+		//返回箭头事件
+		$(".roofReturn").click(function() {
+			api.closeWin({});
+		});
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({});
+		});
+
+
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETBALANCE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					$('.WithdrawalsFSS').text('金币余额:' + (data.user.currency == null ? 0 : data.user.currency) + '个');
+				}
+			});
+
+		//获取兑换比例
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETDIC,
+				method: 'post',
+				data: {
+					values: {
+						type: 'amount_transfer_gold'
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					exchange = data.dict[0]['value'];
+					$('.WithdrawalsFSW').text('1元=' + exchange + '金币');
+				}
+			});
+
+		$("#topup").keyup(function() {
+			var money = $(this).val();
+			money = money.replace(/^0*(0\.|[1-9])/, '$1'); //解决 粘贴不生效
+			money = money.replace(/[^\d]/g, '');
+			if (money != "") { //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+				if (money.substr(0, 1) == '0' && money.length == 2) {
+					money = money.substr(1, money.length);
+				}
+			}
+			$(this).val(money);
+		});
+
+		$(".WithdrawalsFSWSub").click(function() {
+			var topup = $("#topup").val();
+			if (topup * 1 <= 0) {
+				api.toast({
+					msg: "请输入正确的金额",
+					duration: 1000,
+					location: 'bottom'
+				});
+			} else {
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.WXPREPAYMENT,
+						method: 'post',
+						data: {
+							values: {
+								userid: $api.getStorage('userid'),
+								amount: topup
+							}
+						}
+					},
+					function(data) {
+						if (data.code == "200") {
+							var wxPay = api.require('wxPay');
+							wxPay.config({
+								apiKey: "wxc7c08b65a6d1df06",
+								mchId: "1508221791",
+								partnerKey: "TkVOr4zdDowHxqHPV2MPm0arHfQetRyT",
+								notifyUrl: CONFIG.ADDRURL + CONFIG.WXPAYCALLBACK
+							}, function(ret, err) {
+								if (ret.status) {
+									wxPay.pay({
+										description: "充值",
+										totalFee: topup * 100,
+										tradeNo: 'XIXIU_' + tradeNo(),
+										deviceInfo: api.deviceId,
+										feeType: 'CNY',
+										attach: "WXPREPAYMENT" + data.prepayorderid
+									}, function(payret, payerr) {
+										if (payret.status) {
+											api.showProgress({
+												title: '支付结果确认中...',
+												modal: true
+											});
+											setTimeout(function() {
+												api.closeWin({
+													name: 'topUps'
+												});
+												api.sendEvent({
+													name: 'getblance'
+												});
+												api.hideProgress();
+											}, 3000);
+										} else {
+											api.toast({
+												msg: CONFIG.WXPAYCODE[payerr.code],
+												duration: 1000,
+												location: 'bottom'
+											});
+										}
+									});
+								} else {
+									api.toast({
+										msg: CONFIG.WXPAYCODE[err.code],
+										duration: 1000,
+										location: 'bottom'
+									});
+								}
+							});
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'bottom'
+							});
+						}
+					});
+			}
+		});
+	}
+</script>
+
+</html>

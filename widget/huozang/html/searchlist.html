@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>搜索列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/search.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav mui-bar-top">
+			<a class="app-back-icon"></a>
+			<a class="app-search-icon" id="search-a"></a>
+			<div id="search-div">
+				<span id="search-span">
+					<em></em>
+					<i>x</i>
+				</span>
+			</div>
+		</header>
+		<div class="mui-content page-top page-bottom">
+			<!-- S 暂无内容  -->
+			<div id="no-conent">
+				<img src="../images/no-content.png"  />
+			</div>
+			<!-- E 暂无内容  -->
+		</div>
+		<script type="text/javascript">
+			window.onload = function(){
+				//返回箭头事件
+				var objBackA = document.querySelectorAll(".mui-bar-top a.app-back-icon")[0];
+				objBackA.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				objBackA.addEventListener("touchmove", function(e) {
+					this.isMove = true; //判断标识：防止误触
+				}, false);
+				objBackA.addEventListener("touchend", function(e) {
+					e.preventDefault();
+					if(!this.isMove) {
+						window.location.href = ""; //返回的页面
+					}
+					this.isMove = false;
+				}, false);
+				//搜索页面传来的搜索文字
+				var searchVal = getParams("searchVal");
+				var objSpan = document.querySelector("#search-span");
+				var objSearch = document.querySelector("#search-span em");
+				if(searchVal == ""){
+					objSpan.style.display = "none";
+				}else{
+					objSpan.style.display = "";
+				}
+				objSearch.innerText = searchVal;
+				//搜索按钮回传的内容
+				var searchSpan = document.querySelector("#search-span");
+				searchSpan.addEventListener("touchstart",function(e){
+					e.preventDefault();
+					e.stopPropagation();
+				},false);
+				searchSpan.addEventListener("touchend",function(e){
+					window.location.href = "search.html?searchVal=";//跳转到搜索页面，清除搜索条件
+				},false);
+
+				var searchDiv = document.querySelector("#search-div");
+				searchDiv.addEventListener("touchstart",function(e){
+					var searchVal = document.querySelector("#search-span em").innerText;
+					window.location.href = "search.html?searchVal="+searchVal;//跳转到搜索页面，清除搜索条件
+				},false);
+			}
+			//获取地址栏的参数
+			function getParams(key) {
+			    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+			   //如果地址栏中出现中文则进行编码
+			    var r = encodeURI(window.location.search).substr(1).match(reg);
+			    if (r != null) {
+			        //将中文编码的字符重新变成中文
+			        return decodeURI(unescape(r[2]));
+			    }
+			    return "";
+			};
+
+		</script>
+	</body>
+</html>

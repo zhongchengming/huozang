@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+.PriceSetting p{
+	color:#FF9694;
+}
+/*邀约到期*/
+.InvitationExpire{
+	width:85.3%;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.InvitationExpireL{
+	width:40%;
+	height:3rem;
+	float:left;
+	line-height:3rem;
+	font-size:1.4rem;
+	color:#333;
+	font-weight:400;
+	overflow:hidden;
+}
+.InvitationExpireR{
+	width:58%;
+	float:left;
+	border-radius:3rem;
+	overflow:hidden;
+	position:relative;
+	border:1px solid #f0f0f0;
+}

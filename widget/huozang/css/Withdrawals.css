@@ -1,0 +1,220 @@
+@charset "utf-8";
+.Withdrawals{
+	width:92%;
+	margin:2.5rem auto 0;
+	border-radius:0.5rem;
+	background:#fff;
+	overflow:hidden;
+	box-shadow:0 0 0.25rem 0.25rem #f2f2f3;
+}
+.WithdrawalsT{
+	width:100%;
+	height:9.5rem;
+	margin:0 auto;
+	border-top-left-radius:0.25rem;
+	border-top-right-radius:0.25rem;
+	background:#f7f7f7;
+	overflow:hidden;
+}
+.WithdrawalsTL{
+	float:left;
+	margin-left:2.5rem;
+	margin-top:2.5rem;
+	font-size:1.5rem;
+	font-weight:bold;
+	color:#333;
+	overflow:hidden;
+}
+.WithdrawalsTC{
+	width:1.8rem;
+	height:1.8rem;
+	float:left;
+	margin-left:3.5rem;
+	margin-top:2.5rem;
+	overflow:hidden;
+}
+.WithdrawalsTC img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.WithdrawalsTR{
+	float:left;
+	margin-left:0.5rem;
+	margin-top:2.5rem;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#999;
+	overflow:hidden;
+}
+.WithdrawalsTR .p1 span{
+	font-size:1.3rem;
+	color:#333;
+}
+.WithdrawalsTR .p2{
+	margin-top:0.4rem;
+}
+.WithdrawalsFS{
+	width:85.9%;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#333;
+	margin:2.5rem auto 0;
+	overflow:hidden;
+}
+.WFSU{
+	width:85.9%;
+	font-size:1.3rem;
+	color:#b2b2b2;
+	line-height:3.5rem;
+	margin:2.5rem auto 0;
+	overflow:hidden;
+}
+.WFSUL{
+	width:60%;
+	height:3.5rem;
+	float:left;
+	border-bottom:1px solid #e6e6e6;
+	overflow:hidden;
+}
+.WFSUC{
+	width:5%;
+	float:left;
+	margin-left:1rem;
+	font-size:2rem;
+	font-weight:400;
+	color:#333;
+	overflow:hidden;
+}
+.WFSUR{
+	width:27%;
+	height:3.5rem;
+	float:left;
+	margin-left:1rem;
+	border-bottom:1px solid #e6e6e6;
+	overflow:hidden;
+	position:relative;
+}
+.WFSUR p{
+	position:absolute;
+	right:0.5rem;
+}
+.WFSU input{
+	width:95%;
+	height:3.5rem;
+	line-height:3.5rem;
+	font-size:1.3rem;
+	color:#b2b2b2;
+	overflow:hidden;
+	outline:none;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+　color: #b2b2b2;
+　}
+　input:-moz-placeholder, textarea:-moz-placeholder {
+　color:#b2b2b2;
+　}
+　input::-moz-placeholder, textarea::-moz-placeholder {
+　color:#b2b2b2;
+　}
+　input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+　color:#b2b2b2;
+}
+
+.WithdrawalsFSW{
+	width:85.9%;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#FF9694;
+	margin:1.5rem auto 0;
+	overflow:hidden;
+}
+.WithdrawalsFSS{
+	width:85.9%;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#999;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.WithdrawalsFSWSub{
+	width:50%;
+	height:3.5rem;
+	text-align:center;
+	font-size:1.5rem;
+	font-weight:400;
+	color:#fff;
+	background:#FF9694;
+	margin:3rem auto 4rem;
+	line-height:3.8rem;
+	border-radius:3.5rem;
+	overflow:hidden;
+	/*box-shadow:0 0 0.05rem 0.05rem #FF9694;*/
+}
+.WithdrawalsFSWSubF{
+	width:70%;
+	height:3.5rem;
+	text-align:center;
+	font-size:1.5rem;
+	font-weight:400;
+	color:#fff;
+	background:#CCC;
+	margin:3rem auto 4rem;
+	line-height:3.8rem;
+	border-radius:3.5rem;
+	overflow:hidden;
+}
+.WFSWTable{
+	width:94.7%;
+	margin:20px auto 30px;
+	border-radius:5px;
+	overflow:hidden;
+	box-shadow:0 0 5px 2px #ccc;
+}
+.WFSWTable thead{
+	background:#f2f2f2;
+}
+.WFSWTable td{
+	text-align:center;
+	height:40px;
+	line-height:40px;
+	font-weight:500;
+	font-size:14px;
+	color:#333;
+	overflow:hidden;
+}
+/*充值*/
+.TopUpsK{
+	width:85.9%;
+	height:4rem;
+	margin:1.5rem auto 0;
+	overflow:hidden;
+	position:relative;
+	border-bottom:1px solid #e6e6e6;
+}
+.TopUpsK .p1{
+	width:85%;
+	height:4rem;
+	font-size:1.5rem;
+	color:#333;
+	text-indent:20px;
+	margin-left:15%;
+	overflow:hidden;
+}
+.TopUpsK .p1 > input{
+	width:80%;
+	height:4rem;
+	font-size:1.5rem;
+	color:#333;
+	overflow:hidden;
+	outline:none;
+}
+.TopUpsK .p2{
+	line-height:4rem;
+	font-size:3.5rem;
+	font-weight:400;
+	color:#333;
+	position:absolute;
+}

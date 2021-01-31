@@ -1,0 +1,749 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mine.css" rel="stylesheet" />
+	<style>
+		.userName {
+			font-size: 17px;
+			font-family: PingFang-SC-Bold;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 1);
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<h1 class="mui-title">个人中心</h1>
+	</header> -->
+	<div class="mui-content personal-homepage-data page-bottom">
+		<div class="homepage-top" id="banner">
+			<div class="homepage-top-info">
+				<div class="head-photo personalHomepage" id="avatar">
+					<div class="photo">
+						<img src="../../images/avatar.png" />
+						<i></i>
+					</div>
+				</div>
+				<p class="homepage-name"><b class="userName info"></b><img class="changeImg info"
+						src="../../images/change.png" /></p>
+			</div>
+		</div>
+		<div class="home-info">
+			<div class="info-item mui-table-view-cell fans">
+				<span>关注</span>
+				<label id="concerns">0</label>
+			</div>
+			<div class="info-item mui-table-view-cell fans">
+				<span>粉丝</span>
+				<label id="fans">0</label>
+			</div>
+			<div class="info-item mui-table-view-cell currency">
+				<span>金币</span>
+				<label id="currency">0</label>
+			</div>
+		</div>
+		<ul class="mui-table-view homepage-ul homepage-ul-line">
+			<!-- <li class="mui-table-view-cell home-icon home">
+				<a>
+					<span class="icon"></span>
+					<label>我的主页</label>
+					<i></i>
+				</a>
+			</li> -->
+			<!-- <li ordertype="1" class="mui-table-view-cell order-icon">
+				<a>
+					<span class="icon"></span>
+					<label>我的约会</label>
+					<e id="MyAppointmentOrder" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+			<li ordertype="2" class="mui-table-view-cell order-icon">
+				<a>
+					<span class="icon"></span>
+					<label>我的伴游</label>
+					<e id="MyTravelOrder" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li> -->
+			<li class="mui-table-view-cell interest">
+				<a>
+					<span class="interestImg"><img class="newImg" src="../../images/interest.png" /></span>
+					<label>发布服务项目</label>
+					<span class="mui-pull-right span-text" style="font-size:12px">发布服务项目获得订单</span>
+					<e id="MyTravelOrder" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+
+			<li class="mui-table-view-cell ownsend">
+				<a>
+					<span class="sendImg"><img class="newImg" src="../../images/send.png" /></span>
+					<label>我发布的</label>
+					<e id="Myf" class="mui-badge news-badge">0</e>
+					<i></i>
+				</a>
+			</li>
+			<li class="mui-table-view-cell ownenjoy">
+				<a>
+					<span class="enjoyImg"><img class="newImg" src="../../images/enjoy.png" /></span>
+					<label>我参与的</label>
+					<e id="Myc" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+
+			<li class="mui-table-view-cell message-icon message">
+				<a>
+					<span class="icon"></span>
+					<label>我的消息</label>
+					<e id="unreadmessages" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+			<li class="mui-table-view-cell ownsend auth">
+				<a>
+					<span class="sendImg"><img class="newImg" src="../../images/trueName.png" /></span>
+					<label>实名认证</label>
+					<span class="mui-pull-right span-text" style="font-size:12px">远离社交风险</span>
+					<e class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+			<li class="mui-table-view-cell message-icon gift">
+				<a>
+					<span class="giftImg"><img class="newImg" src="../../images/gift.png" /></span>
+					<label>我的礼物</label>
+					<i></i>
+				</a>
+			</li>
+			<!-- <li class="mui-table-view-cell userinfo-icon info">
+				<a>
+					<span class="icon"></span>
+					<label>个人资料</label>
+					<b></b>
+					<i></i>
+				</a>
+			</li> -->
+
+			<!-- <li class="mui-table-view-cell friend-icon">
+				<a>
+					<span class="icon"></span>
+					<label>分享赚钱</label>
+					<span class="mui-pull-right span-text">邀请好友得金币</span>
+					<i></i>
+				</a>
+			</li> -->
+			<!-- <li class="mui-table-view-cell InvitationCode">
+				<a>
+					<span class="icon"></span>
+					<label>邀请码</label>
+					<span class="mui-pull-right span-text">填写邀请码得金币</span>
+					<i></i>
+				</a>
+			</li> -->
+			<!-- <li class="mui-table-view-cell NoviceTask">
+				<a>
+					<span class="icon"></span>
+					<label>新手任务</label>
+					<span class="mui-pull-right span-text">完成任务得金币</span>
+					<i></i>
+				</a>
+			</li> -->
+			<li class="mui-table-view-cell grounp">
+				<a>
+					<span class="grounpImg"><img class="newImg" src="../../images/grounp.png" /></span>
+					<label>我的群组</label>
+					<e id="MyTravelOrder" class="mui-badge news-badge"></e>
+					<i></i>
+				</a>
+			</li>
+			<li class="mui-table-view-cell wx-icon">
+				<a>
+					<span class="icon"></span>
+					<label>联系客服</label>
+					<span class="mui-pull-right span-text">关注客服答疑解惑</span>
+					<i></i>
+				</a>
+			</li>
+
+		</ul>
+		<button type="button" id="logout" class="homepage-btn">退出</button>
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script type="text/javascript" src="../../script/messageUtil.js"></script>
+	<script type="text/javascript">
+		apiready = function () {
+
+			$api.fixStatusBar($api.dom('body'));
+
+			loadmine();
+			mineListener();
+
+			//增加监听刷新页面
+			api.addEventListener({
+				name: 'mine'
+			}, function (ret, err) {
+				loadmine();
+				mineListener();
+			});
+
+			//增加未读消息
+			api.addEventListener({
+				name: 'mineloadmessage'
+			}, function (ret, err) {
+				loadmessage();
+			});
+			//增加待处理单子监听
+			api.addEventListener({
+				name: 'mineloadorders'
+			}, function (ret, err) {
+				loadorders();
+			});
+
+			api.addEventListener({
+				name: 'closeGroup'
+			}, function (ret, err) {
+				api.closeWin({
+					name: 'group'
+				});
+				api.closeWin({
+					name: 'groupIntroduce'
+				});
+				loadmine();
+				mineListener();
+			});
+
+
+		};
+
+		function loadmine() {
+			var userid = $api.getStorage('userid');
+			//校验登录
+			if (userid == null || userid == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			$(".personal-homepage-data").on("click", "#banner", function () {
+				// console.log( $api.getStorage('userid') +"userid1")
+				api.openWin({
+					name: 'appointmentdetail',
+					url: '../DateInvitation/appointmentdetail.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			})
+			//获取个人资料
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					$(".grounp").attr("isjoingroup", data.userinfo.isjoingroup)
+					$(".grounp").attr("groupName", data.userinfo.groupName)
+					$(".grounp").attr("groupState", data.userinfo.groupState)
+					if (data.code == "200") {
+						console.log(JSON.stringify(data))
+						if (data.userinfo.personbgpic) {
+							$("#banner").css("background-image", "url(" + data.userinfo.personbgpic + ")");
+						} else {
+							$("#banner").css("background-image", "url(../../images/banner.png)");
+						}
+						if (data.userinfo.avatar != null && data.userinfo.avatar != "") {
+							$("#avatar img").attr("src", data.userinfo.avatar);
+						} else {
+							$("#avatar img").attr("src", "../../images/avatar.png");
+						}
+
+						$(".userName").text(data.userinfo.nickname);
+
+						if (data.userinfo.gender == "1") {
+							$(".photo i").css("background-image", "url(../../images/woman-icon.png)");
+						} else if (data.userinfo.gender == "0") {
+							$(".photo i").css("background-image", "url(../../images/man-icon.png)");
+						}
+
+						if (data.userinfo.reference != null && data.userinfo.reference != "") {
+							$(".InvitationCode").hide();
+						} else {
+							$(".InvitationCode").show();
+						}
+					}
+				});
+			//3.关注、粉丝数
+			var userid = $api.getStorage('userid');
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETMINE,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						$("#concerns").text(data.mine.concerns);
+						$("#fans").text(data.mine.fans);
+						$("#currency").text(data.mine.currency);
+					}
+				});
+
+			//获取我参与的
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.APPOINTMENTCOUNT,
+					method: 'post',
+					data: {
+						values: {
+							userid: $api.getStorage('userid'),
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						console.log(JSON.stringify(data))
+						if (data.getownerappointmentcount.createcount > 0) {
+							$('#Myf').text(data.getownerappointmentcount.createcount).show()
+						} else {
+							$('#Myf').hide()
+						}
+						if (data.getownerappointmentcount.count > 0) {
+							$('#Myc').text(data.getownerappointmentcount.count).show()
+						} else {
+							$('#Myc').hide()
+						}
+
+
+					}
+				});
+
+
+			loadmessage();
+			loadorders();
+		}
+
+		function loadmessage() {
+			//未读消息
+			var msg = new messageUtil();
+			var unReadMessages = msg.unReadMessages($api.getStorage('userid'));
+			if (unReadMessages && unReadMessages.length > 0 && unReadMessages[0].unreadmessages * 1 > 0) {
+				$("#unreadmessages").text(unReadMessages[0].unreadmessages).show();
+			} else {
+				$("#unreadmessages").hide();
+			}
+		};
+
+		//邀约中、进行中的单子
+		function loadorders() {
+			var userid = $api.getStorage('userid');
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.STATISTICSORDERINGCOUNT,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						if (data.statistics && data.statistics.length > 0) {
+							var appointcount = 0;
+							var travelcount = 0;
+							$.each(data.statistics, function (i, n) {
+								appointcount += n.appointcount * 1;
+								travelcount += n.travelcount * 1;
+							});
+							if (appointcount > 0) {
+								$("#MyAppointmentOrder").text(appointcount).show();
+							} else {
+								$("#MyAppointmentOrder").hide();
+							}
+							if (travelcount > 0) {
+								$("#MyTravelOrder").text(travelcount).show();
+							} else {
+								$("#MyTravelOrder").hide();
+							}
+						}
+					}
+				});
+		};
+
+		function mineListener() {
+			//关注，粉丝
+			$(".fans").unbind().click(function () {
+				var id = $(this).find("label").attr("id");
+				api.openWin({
+					name: 'fans',
+					url: './fans.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					reload: true,
+					pageParam: {
+						userid: $api.getStorage('userid'),
+						listid: id
+					}
+				});
+			});
+
+
+			//群组
+			$(".grounp").unbind().click(function () {
+				var grounp = $(".grounp").attr("isjoingroup")
+				var groupName = $(".grounp").attr("groupName")
+				var groupState = $(".grounp").attr("groupState")
+				if (grounp == 1) {
+					api.openWin({
+						name: 'groupIntroduceSuccess',
+						url: 'groupIntroduceSuccess.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							grounp: grounp,
+							groupName: groupName,
+							groupState: groupState
+						}
+					});
+				} else {
+					api.openWin({
+						name: 'group',
+						url: 'group.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+				}
+			});
+			//兴趣活动
+			$(".interest").unbind().click(function () {
+				api.openWin({
+					name: 'releaseservice',
+					url: '../releaseservice.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					reload: true
+				});
+			});
+			//我发布的
+			$(".ownsend").unbind().click(function () {
+				api.openWin({
+					name: 'MyAppointmentOrder',
+					url: 'MyAppointmentOrder.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						iscreate: 1,
+					}
+				});
+			});
+			//我参与的
+			$(".ownenjoy").unbind().click(function () {
+				api.openWin({
+					name: 'MyAppointmentOrder',
+					url: 'MyAppointmentOrder.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						iscreate: 2
+					}
+				});
+			});
+			//我的消息
+			$(".message").unbind().click(function () {
+				api.openWin({
+					name: 'message',
+					url: './message.html',
+					bgColor: "rgba(255, 255, 255, 1)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			//我收到的礼物
+			$(".gift").unbind().click(function () {
+				api.openWin({
+					name: 'mygift',
+					url: './mygift.html',
+					bgColor: "rgba(255, 255, 255, 1)",
+					bounces: true,
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+			//我的主页
+			$("#avatar").click(function () {
+				api.openWin({
+					name: 'personalpage',
+					url: './personalpage.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+			//我的钱包
+			$(".currency").unbind().click(function () {
+				api.openWin({
+					name: 'MyGoldCoin',
+					url: './MyGoldCoin.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					bounce: false,
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+			//设置资料
+			$(".info").unbind().click(function () {
+				api.openWin({
+					name: 'infosetting',
+					url: './infosetting.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+
+			//个人认证
+			$(".auth").unbind().click(function () {
+				api.openWin({
+					name: 'authsetting',
+					url: './authsetting.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+
+			//推荐好友
+			$(".friend-icon").unbind().click(function () {
+				api.openWin({
+					name: 'MyPromotion',
+					url: './MyPromotion.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+			//邀请码
+			$(".InvitationCode").unbind().click(function () {
+				api.openWin({
+					name: 'InvitationCode',
+					url: './InvitationCode.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+			//新手任务
+			$(".NoviceTask").unbind().click(function () {
+				api.openWin({
+					name: 'NoviceTask',
+					url: './NoviceTask.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+			//我的客服
+			$(".wx-icon").unbind().click(function () {
+				api.openWin({
+					name: 'attentionwx',
+					url: './attentionwx.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			//我的约会,伴游
+			$(".order-icon").unbind().click(function () {
+				var type = $(this).attr("ordertype");
+				if (type == "1") {
+					api.openWin({
+						name: 'MyAppointmentOrder',
+						url: './MyAppointmentOrder.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: $api.getStorage('userid')
+						}
+					});
+				} else if (type == "2") {
+					api.openWin({
+						name: 'MyTravelOrder',
+						url: './MyTravelOrder.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: $api.getStorage('userid')
+						}
+					});
+				}
+			});
+
+			$("#logout").unbind().click(function () {
+				var userid = $api.getStorage('userid');
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.LOGOUT,
+						method: 'post',
+						data: {
+							values: {
+								userid: userid
+							}
+						}
+					},
+					function (data, err) {
+						if (data.code == "200") {
+							api.toast({
+								msg: '退出成功！',
+								duration: 1000,
+								location: 'middle'
+							});
+							$api.clearStorage();
+							console.log($api.getStorage('userid'))
+							api.openWin({
+								name: 'login',
+								url: '../../login.html',
+								bgColor: "rgba(255, 255, 255, 0)",
+								animation: {
+									type: "push", //动画类型（详见动画类型常量）
+									subType: "from_right", //动画子类型（详见动画子类型常量）
+									duration: 300 //动画过渡时间，默认300毫秒
+								}
+							});
+							api.sendEvent({
+								name: 'openapplocation'
+							});
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+			});
+		}
+	</script>
+</body>
+
+</html>

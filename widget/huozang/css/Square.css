@@ -1,0 +1,468 @@
+@charset "UTF-8";
+*{border:0 ; margin: 0; padding: 0;}
+img { border: 0; vertical-align:middle; display:table-cell;}
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, font { padding: 0; margin: 0;}
+ul,li{ list-style-type:none; margin:0px; padding:0px;}
+body{ padding: 0; margin:0 auto; font-family: "微软雅黑";font-size:12px;line-height:1.4;z-index:1;}
+.otw{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.cb{
+	clear:both;
+}
+
+/*.SquareHeader{
+  width:100%;
+  height:3.15rem;
+  background:#fff;
+  text-align:center;
+  margin:0 auto;
+  overflow:hidden;
+  position:relative;
+}
+.SquareHeader div{
+	height: 3.15rem;
+	line-height: 3.15rem;
+	font-size: 1.2rem;
+	color: #333;
+	font-weight: bold;
+	text-shadow: #bebcb6 1px 1px 5px;
+}
+.SquareHeader p{
+  width:1.8rem;
+  height:1.8rem;
+  position:absolute;
+  right:1.35rem;
+  top:0.65rem;
+  background:url(../images/search.png) no-repeat;
+  background-size:100% 100%;
+}
+.SquareImg{
+	width:100%;
+}*/
+.SquareGD{
+	width:94.7%;
+	height:7.5rem;
+	margin:0.8rem auto 0;
+	overflow:hidden;
+}
+.SquareGD img,.SquareULTL img,.SquareULC_video > img,.SquareULC_video p img,.SquareULBLL img,.SquareRelayWFTL img,.SquareRelayWFTR img{
+	width:100%;
+	height:100%  ;
+	margin:0 auto;
+}
+/*展示导航*/
+.ShowNavigate{
+	width: 94.7%;
+	height: 4rem;
+	margin: 1.25rem auto 0;
+	color: #413e3e;
+	font-size: 1.1rem;
+	font-weight: 800;
+	text-align: center;
+	overflow: hidden;
+	border-radius: 1rem;
+	box-shadow: 0 0 2px #ebebeb;
+}
+.ShowNavigate li{
+	width:25%;
+	float:left;
+	line-height:4.3rem;
+}
+.ShowNavigate li p{
+	height:100%;
+	border-right:1px solid #f6f6f6;
+}
+.ShowNavigate li:last-of-type p{
+	border-right:0;
+}
+.choose{
+	color:#fff;
+	background:#ff9694;
+}
+/*展示列表*/
+.SquareUl{
+	margin:1.5rem auto 50px;
+	overflow:hidden;
+	display: none;
+}
+.SquareUl > li{
+	width:94.4%;
+	margin:0.1rem auto 1rem;
+	border-radius:10px;
+	background:#fff;
+	overflow:auto;
+	border:1px solid #fff;
+	box-shadow: 0 0 2px #ebebeb;
+}
+
+.SquareULT{
+	width:91.5%;
+	height:3.3rem;
+	margin:0.6rem auto 0;
+	overflow:hidden;
+}
+.SquareULTL{
+	width:3rem;
+	height:3rem;
+	float:left;
+	border-radius:100%;
+	background:#333;
+	margin-top:0.1rem;
+	overflow:hidden;
+}
+.SquareULTC{
+	width:50%;
+	height:3rem;
+	float:left;
+	margin-left:1.15rem;
+	overflow:hidden;
+}
+.SquareULTC .p1{
+	font-size:1.2rem;
+	color:#333;
+	line-height:1.1;
+	margin-top:0.3rem;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.SquareULTC .p2{
+	font-size:1rem;
+	color:#999;
+	line-height:1;
+	margin-top:0.4rem;
+}
+.SquareULTR{
+	width:30%;
+	height:2.8rem;
+	float:right;
+	overflow:hidden;
+}
+.SquareULTR > li{
+	width:1.5rem;
+	height:1.5rem;
+	border-radius:0.25rem;
+	float:right;
+	margin:0.65rem 0.25rem;
+	text-align:center;
+	line-height:1.8rem;
+	font-size:1.1rem;
+	border:1px solid #ff9694;
+	color:#ff9694;
+}
+/*.SquareHr,.SquareHr2{
+	width:90.7%;
+	margin:0.75rem auto 0;
+	border-top:1px solid #f5f5f5;
+}*/
+.SquareHr2{
+	width:90.7%;
+	margin:1rem auto 0;
+	border-top:1px solid #f2f2f2;
+}
+/*文字*/
+.SquareULC_fontSize{
+	width:88.7%;
+	font-size:1.2rem;
+	color:#333;
+	line-height:1.5;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+/*图片*/
+.SquareULC_img,.SquareULC_imgOne,.SquareULC_imgTwo{
+	width:91.5%;
+	margin:10px auto;
+	overflow:hidden;
+}
+.SquareULC_imgOne img{
+	width:70%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.SquareULC_imgTwo > li{
+	width:49%;
+	float:left;
+	margin-right:2%;
+}
+.SquareULC_imgTwo > li:last-of-type{
+	margin-right:0;
+}
+.SquareULC_imgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.SquareULC_img > li{
+	width:33.33%;
+	height:100px;
+	float:left;
+	margin-bottom:5px;
+}
+.SquareULC_img > li img{
+	width:95%;
+	margin:2.5% auto 0;
+	overflow:hidden;
+}
+
+
+
+/*.SquareULC_img,.SquareULC_imgOne,.SquareULC_imgTwo{
+	width:88.7%;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.SquareULC_imgOne > li{
+	width:90%;
+	margin:5px auto;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.SquareULC_imgTwo > li{
+	width:45%;
+	float:left;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:2%;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.SquareULC_imgTwo > li:first-of-type{
+	margin-left:4%;
+}
+
+.SquareULC_img > li{
+	width:23.5%;
+	float:left;
+	margin-left:2%;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.SquareULC_img > li:first-of-type{
+	margin-left:0;
+}
+.SquareULC_img> li > img,.SquareULC_imgOne > li img,.SquareULC_imgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}*/
+/*视频*/
+.SquareULC_video{
+	width:15.25rem;
+	height:15.25rem;
+	background:#333;
+	border-radius:0.5rem;
+	margin-left:5.6%;
+	margin-top:1rem;
+	overflow:hidden;
+	position:relative;
+}
+.SquareULC_video p{
+	width:3.9rem;
+	height:3.9rem;
+	position:absolute;
+	top:5.675rem;
+	left:5.675rem;
+}
+.SquareULB{
+	width:90.7%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.SquareULBW{
+	width:50%;
+	float:left;
+	margin-top:1rem;
+	margin-bottom:1rem;
+	overflow:hidden;
+	position:relative;
+}
+.SquareULBWL,.SquareULBWC,.SquareULBWR{
+	width:56%;
+	float:left;
+	margin-left:5%;
+	overflow:hidden;
+}
+.SquareULBWC{
+	margin-left:28%;
+}
+.SquareULBWR{
+	float:right;
+	margin-right:10%;
+}
+.SquareULBLL{
+	width:1.5rem;
+	height:1.5rem;
+	float:left;
+}
+.SquareULBLR{
+	width:1.5rem;
+	height:1.5rem;
+	float:left;
+	line-height:1.6rem;
+	margin-left:0.25rem;
+	font-size:1.2rem;
+	color:#999;
+}
+/*转发*/
+.SquareRelay{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.5);
+	position:fixed;
+	z-index:5;
+	top:0;
+	left:0;
+	display:none;
+}
+.SquareRelayW{
+	width:94.7%;
+	height:11.65rem;
+	margin:230px auto;
+	/*background:#fff;*/
+	/*border:1px solid red;*/
+}
+.SquareRelayWSJS{
+	 width: 0;
+    height: 0;
+    border-left:0.25rem solid transparent;
+    border-right:0.25rem  solid transparent;
+    border-bottom:0.5rem  solid #fff;
+    margin-left:2.5rem;
+}
+.SquareRelayWSJX{
+	 width: 0;
+    height: 0;
+    border-left:0.25rem solid transparent;
+    border-right:0.25rem solid transparent;
+    border-top:0.5rem solid #fff;
+    margin-left:2.5rem;
+}
+.SquareRelayWF{
+	width:100%;
+	height:11rem;
+	background:#fff;
+	border-radius:0.5rem;
+	overflow:hidden;
+}
+.SquareRelayWFT{
+	width:89%;
+	height:5.45rem;
+	margin:0 auto;
+	background:#fff;
+}
+.SquareRelayWFThHr{
+	width:89%;
+	margin:0 auto;
+	border-top:1px solid #f5f5f5;;
+}
+.SquareRelayWFTL{
+	width:1.4rem;
+	height:1.4rem;
+	float:left;
+	margin-top:2.025rem;
+}
+.SquareRelayWFTC{
+	float:left;
+	font-size:1.5rem;
+	color:#333;
+	line-height:1.4rem;
+	margin-left:0.85rem;
+	margin-top:2.025rem;
+}
+.SquareRelayWFTR{
+	width:2.5rem;
+	height:2.5rem;
+	float:right;
+	margin-right:0.5rem;
+	margin-top:1.475rem;
+}
+.SquareRelayGFDT{
+	width:355px;
+	height:170px;
+	background:rgba(255,255,255,1);
+	box-shadow:0px 0px 4px 0px rgba(0, 0, 0, 0.08);
+	border-radius:10px;
+	margin: 0 auto;
+	display: flex;
+}
+.SquareRelayGFDTLeft{
+	width:100px;
+	height:140px;
+	border-radius:5px;
+	margin: 15px;
+}
+.gfhdImg{
+	width: 100%;
+	height: 100%;
+	border-radius:5px;
+}
+.SquareRelayGFDTRight{
+	flex: 1
+}
+.SquareRelayGFDTRightOne{
+	font-size:14px;
+font-family:PingFang-SC-Bold;
+font-weight:bold;
+color:rgba(51,51,51,1);
+margin-right: 7px;
+margin: 15px 0 5px 0;
+}
+.tipBtn{
+	display: inline-block;
+	width:15px;
+height:15px;
+background:rgba(255,255,255,1);
+border:1px solid rgba(255,150,148,1);
+border-radius:3px;
+font-size:11px;
+font-family:PingFang-SC-Regular;
+font-weight:400;
+color:rgba(255,150,148,1);
+line-height:15px;
+text-align: center;
+margin: 0 5px
+}
+.SquareRelayGFDTRightTwo{
+	font-size:11px;
+font-family:PingFang-SC-Regular;
+font-weight:400;
+color:rgba(153,153,153,1);
+margin-bottom: 9px;
+}
+.SquareRelayGFDTRightThree{
+	font-size:12px;
+font-family:PingFang-SC-Medium;
+font-weight:500;
+line-height:20px;
+margin-top: 10px
+}
+.textColor1{
+	color: #333333
+}
+.textColor2{
+	color: #999999
+}
+.textColor3{
+	color: #FF9694
+}
+.SquareRelayGFDTRightFour{
+	font-size:12px;
+font-family:PingFang-SC-Regular;
+font-weight:400;
+line-height:18px;
+margin-top: 10px
+}
+.textShadow{
+	width:21px;
+height:21px;
+background:rgba(255,255,255,1);
+box-shadow:0px 0px 4px 0px rgba(0, 0, 0, 0.08);
+border-radius:3px;
+margin: 0 5px
+}

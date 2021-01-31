@@ -1,0 +1,804 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>一对一聊天</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/api.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/mui.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/common.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/onetoone.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 id="friend" class="mui-title"></h1>
+	</header> -->
+	<img src="../../images/video_gift.png" alt="" onclick="sendgift()" style="width: 50px;position: absolute;right: 0;bottom: 60px;z-index: 9999999999;">
+	<div class="roofS">
+		<div class="roof">
+			<!-- <div class="roofButton">开始认证</div> -->
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> page-bottom-->
+			<div id="friend" class="roofConter">
+				一对一聊天
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<div class="ChatBox">
+		<div class="ChatBoxUS">
+			<ul id="messages" class="ChatBoxU" style="padding-bottom:50px;">
+				<!-- <li class="ChatBoxUL">
+					<div class="ChatBoxAvatar">
+						<img src="../../images/imgT_03.png" />
+					</div>
+					<div class="ChatBoxUBox">
+						<div class="ChatBoxUBoxSJ"></div>
+						<div class="ChatBoxUBoxFXL">
+							<span>发送发<img class="Expression" src="../../img/face1.png"><img class="Expression" src="../../img/face1.png">送发送<img class="Expression" src="../../img/face1.png">发送发<img class="Expression" src="../../img/face1.png">送发送发送发送发送发送</span>
+						</div>
+					</div>
+				</li>
+				<li class="ChatBoxUL">
+					<div class="ChatBoxAvatar">
+						<img src="../../images/imgT_03.png" />
+					</div>
+					<div class="ChatBoxUBox">
+						<div class="ChatBoxUBoxSJ"></div>
+						<div class="ChatBoxUBoxFXL">
+							<span>
+								<img class="Photos" src="../../img/face1.png">
+								<img class="Photos" src="../../images/banner.png">
+								<img class="Photos" src="../../images/imgT_03.png">
+							</span>
+						</div>
+					</div>
+				</li>
+				<li class="ChatBoxUR">
+					<div class="ChatBoxAvatar">
+						<img src="../../images/imgT_03.png" />
+					</div>
+					<div class="ChatBoxUBox">
+						<div class="ChatBoxUBoxSJR"></div>
+						<div class="ChatBoxUBoxFXR">
+							<span>
+								<img class="Photos" src="../../img/face1.png">
+								<img class="Photos" src="../../images/banner.png">
+								<img class="Photos" src="../../images/imgT_03.png">
+							</span>
+						</div>
+					</div>
+				</li>
+				<li class="ChatBoxUL">
+					<div class="ChatBoxAvatar">
+						<img src="../../images/imgT_03.png" />
+					</div>
+					<div class="ChatBoxUBox">
+						<ul class="ChatBoxUBoxLU">
+							<li>
+								<img src="../../images/banner.png">
+							</li>
+							<li>
+								<img src="../../images/imgT_03.png">
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li class="ChatBoxUR">
+					<div class="ChatBoxAvatar">
+						<img src="../../images/imgT_03.png" />
+					</div>
+					<div class="ChatBoxUBox">
+						<ul class="ChatBoxUBoxRU">
+							<li>
+								<img src="../../images/banner.png">
+							</li>
+							<li>
+								<img src="../../images/imgT_03.png">
+							</li>
+						</ul>
+					</div>
+				</li> -->
+			</ul>
+		</div>
+	</div>
+
+	<!-- <div class="mui-content private-letter-data">
+		<ul id="messages">
+			<li class="li-left mui-clearfix">
+				<img src="images/letter01.png" class="head-portrait"/>
+				<span>那你明天把笔记本拿给我，好吗？</span>
+			</li>
+			<li class="li-right mui-clearfix">
+				<img src="images/letter02.png" class="head-portrait"/>
+				<span>没问题！</span>
+			</li>
+		</ul>
+	</div> -->
+	<!-- <div class="OneToOneBot"></div> -->
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/messageUtil.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript">
+		var emotionData; //存储表情
+		var touserid, tousername, touseravatar, ismymember = false,
+			sendcount = 0;
+		var CBBCount = 1;
+
+		//赠送礼物
+		function sendgift() {
+				if ($api.getStorage('userid') == null || $api.getStorage('userid') == "") {
+						api.toast({
+								msg: '请先登录！',
+								duration: 1000,
+								location: 'middle'
+						});
+						setTimeout(function () {
+								api.openWin({
+										name: 'login',
+										url: '../../login.html',
+										bgColor: "rgba(255, 255, 255, 0)",
+										animation: {
+												type: "push", //动画类型（详见动画类型常量）
+												subType: "from_right", //动画子类型（详见动画子类型常量）
+												duration: 300 //动画过渡时间，默认300毫秒
+										}
+								});
+						}, 1000);
+						return false;
+				}else{
+					api.openFrame({
+							name: 'gift',
+							url: '../gift.html',
+							rect: {
+									w: 'auto',
+									h: 'auto',
+									marginLeft: 0, //相对父页面左外边距的距离，数字类型
+									// marginTop: 0,     //相对父页面上外边距的距离，数字类型
+									marginBottom: 0, //相对父页面下外边距的距离，数字类型
+									marginRight: 0 //相对父页面右外边距的距离，数字类型
+							},
+							pageParam: {
+									userid: api.pageParam.touserid
+							},
+							animation: {
+									type: "push",
+									subType: "from_bottom",
+									duration: 300
+							}
+					});
+				}
+		}
+
+		apiready = function () {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "onetoone");
+
+			touserid = api.pageParam.touserid; //好友用户ID
+			tousername = api.pageParam.tousername; //好友昵称
+			touseravatar = api.pageParam.touseravatar; //好友头像
+
+
+
+			$("#friend").html(tousername);
+			ismymemberfunction(touserid);
+			gethismessages();
+			initUIChatBox();
+
+			api.addEventListener({
+				name: 'appendsendmsg'
+			}, function (ret, err) {
+				appendsendmsg(ret.value.message);
+			});
+			api.addEventListener({
+				name: 'appendrecivemsg'
+			}, function (ret, err) {
+				appendrecivemsg(ret.value.message);
+			});
+
+			api.addEventListener({
+				name: 'sendTextMessageListener'
+			}, function (ret, err) {
+				// alert(ret.value.message);
+			});
+
+			//返回箭头事件
+			$(".roofReturn").click(function () {
+				var UIChatBox = api.require('UIChatBox');
+				UIChatBox.hide();
+				api.closeWin({});
+				api.sendEvent({
+					name: 'loadmessage'
+				});
+				api.sendEvent({
+					name: 'mineloadmessage'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function (ret, err) {
+				var UIChatBox = api.require('UIChatBox');
+				UIChatBox.hide();
+				api.closeWin({});
+				api.sendEvent({
+					name: 'loadmessage'
+				});
+				api.sendEvent({
+					name: 'mineloadmessage'
+				});
+			});
+
+			// 语音消息播放监听
+			$("#messages").on("click", ".voice", function () {
+				var path = $(this).attr("voicepath");
+				var voice = $(this);
+				if ($(voice).find(".CBUBVoiceUL").hasClass("VoiceLF")) {
+					$(voice).find(".CBUBVoiceUL").removeClass("VoiceLF").addClass("VoiceLD");
+				} else if ($(voice).find(".CBUBVoiceUL").hasClass("VoiceRF")) {
+					$(voice).find(".CBUBVoiceUL").removeClass("VoiceRF").addClass("VoiceRD");
+				}
+
+				api.startPlay({
+					path: path
+				}, function (ret, err) {
+					if (ret) {
+						if ($(voice).find(".CBUBVoiceUL").hasClass("VoiceLD")) {
+							$(voice).find(".CBUBVoiceUL").removeClass("VoiceLD").addClass("VoiceLF");
+						} else if ($(voice).find(".CBUBVoiceUL").hasClass("VoiceRD")) {
+							$(voice).find(".CBUBVoiceUL").removeClass("VoiceRD").addClass("VoiceRF");
+						}
+					}
+				});
+			});
+
+			$("#messages").on("click", ".otherspage", function () {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: touserid
+					}
+				});
+			});
+
+			$("#messages").on("click", ".owner", function () {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'personalpage',
+					url: './personalpage.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: $api.getStorage('userid')
+					}
+				});
+			});
+		};
+
+		function initUIChatBox() {
+			//引入UIChatBox输入框
+			getImgsPaths("widget://res/image/emotion", function (emotion) {
+				emotionData = emotion;
+			})
+			var UIChatBox = api.require('UIChatBox');
+			UIChatBox.open({
+				autoFocus: true,
+				emotionPath: "widget://res/image/emotion",
+				texts: {
+					recordBtn: {
+						normalTitle: '按住说话',
+						activeTitle: '松开结束'
+					},
+					sendBtn: {
+						title: '发送'
+					}
+				},
+				styles: {
+					inputBar: {
+						borderColor: '#d9d9d9',
+						bgColor: '#f2f2f2'
+					},
+					inputBox: {
+						borderColor: '#B3B3B3',
+						bgColor: '#FFFFFF'
+					},
+					emotionBtn: {
+						normalImg: 'widget://res/image/face1.png'
+					},
+					keyboardBtn: {
+						normalImg: 'widget://res/image/key1.png'
+					},
+					speechBtn: {
+						normalImg: 'widget://res/image/key1.png'
+					},
+					recordBtn: {
+						normalBg: '#c4c4c4',
+						activeBg: '#999999',
+						color: '#000',
+						size: 14
+					},
+					indicator: {
+						target: 'both',
+						color: '#c4c4c4',
+						activeColor: '#9e9e9e'
+					},
+					sendBtn: {
+						bg: '#4cc518',
+						titleColor: '#ffffff',
+						activeBg: '#46a91e',
+						titleSize: 13
+					}
+				}
+			}, function (ret, err) {
+				if (ret.eventType == "show") {
+					// $(".private-letter-data").css({
+					// 	"height": "" + ($("body").height() - $(".roofSDiv").height() - ret.inputBarHeight) + "px",
+					// });
+					// $(".private-letter-data").scrollTo(0,$(".private-letter-data").scrollHeight);
+					// $("#messages").css("margin-top", "-" + ($("#messages").height() - $(".private-letter-data").height() + 30) + "px");
+					$(".ChatBox").css("height", "" + $(document).height() - ret.inputBarHeight - 20 + "px");
+				} else if (ret.eventType == "send") { //文本表情
+					if (ismymember == false && sendcount >= 3) {
+						api.confirm({
+							title: '是否充值会员',
+							msg: '你还不是会员，只能给对方发送三条消息哦！\n 是否使用赠送的金币购买会员？',
+							buttons: ['确定', '取消']
+						}, function (ret, err) {
+							var index = ret.buttonIndex;
+							if (index == 1) {
+								api.openWin({
+									name: 'buymember',
+									url: '../member/buymember.html',
+
+								});
+							}
+						});
+						return false;
+					}
+
+					var sendMsg = transText(ret.msg);
+					//发送消息
+					api.sendEvent({
+						name: "sendTextMessageListener",
+						extra: {
+							touserid: touserid,
+							message: sendMsg
+						}
+					});
+					setTimeout(function () {
+						$(".ChatBox").css("height", "" + $(document).height() - ret.inputBarHeight - 20 +
+							"px");
+						$(".ChatBox").scrollTop($(".ChatBox").get(0).scrollHeight);
+					}, 500);
+				} else if (ret.eventType == "clickExtras" && ret.index == 0) { //相册
+
+				} else if (ret.eventType == "clickExtras" && ret.index == 1) { //拍照
+
+				} else if (ret.eventType == "clickExtras" && ret.index == 2) { //语音
+
+				} else if (ret.eventType == "clickExtras" && ret.index == 3) { //视频
+
+				}
+			});
+			//按下录音按钮
+			UIChatBox.addEventListener({
+				target: 'recordBtn',
+				name: 'press'
+			}, function (ret, err) {
+				if (ret) {
+					//打开录音
+					api.startRecord();
+					api.toast({
+						msg: '开始录音',
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+			// 松开录音按钮
+			UIChatBox.addEventListener({
+				target: 'recordBtn',
+				name: 'press_cancel'
+			}, function (ret, err) {
+				if (ret) {
+					if (ismymember == false && sendcount >= 3) {
+						api.confirm({
+							title: '是否充值会员',
+							msg: '你还不是会员，只能给对方发送三条消息哦！\n 是否使用赠送的金币购买会员？',
+							buttons: ['确定', '取消']
+						}, function (ret, err) {
+							var index = ret.buttonIndex;
+							if (index == 1) {
+								api.openWin({
+									name: 'buymember',
+									url: '../member/buymember.html',
+
+								});
+							}
+						});
+						return false;
+					}
+					//发送录音
+					api.stopRecord(function (recordRet, recordErr) {
+						if (recordRet) {
+							api.sendEvent({
+								name: "sendVoiceMessageListener",
+								extra: {
+									touserid: touserid,
+									message: recordRet
+								}
+							});
+
+							setTimeout(function () {
+								$(".ChatBox").css("height", "" + $(document).height() - ret
+									.inputBarHeight - 20 + "px");
+								$(".ChatBox").scrollTop($(".ChatBox").get(0).scrollHeight);
+							}, 500);
+
+						}
+					});
+				}
+			});
+
+			var moveCount = 0;
+			UIChatBox.addEventListener({
+				target: 'inputBar',
+				name: 'move'
+			}, function (ret, err) {
+				if (ret) {
+					// setTimeout(function () {
+
+					// 	if (CBBCount == 1) {
+					// 		$(".ChatBoxBut").css("height", "200px");
+					// 		$(".ChatBox").css("height", "" + $(document).height() - ret.inputBarHeight - 20 +
+					// 			"px");
+					// 		CBBCount = 2;
+					// 	} else if (CBBCount == 2) {
+					// 		$(".ChatBoxBut").css("height", "50px");
+					// 		$(".ChatBox").css("height", "" + $(document).height() - ret.inputBarHeight - 20 +
+					// 			"px");
+					// 		CBBCount = 1;
+					// 	}
+					// 	$(".ChatBox").scrollTop($(".ChatBox").get(0).scrollHeight);
+					// 	api.pageDown({
+					// 		bottom: true,
+					// 		animate: true
+					// 	}, function (ret) {});
+					// }, 400);
+
+				}
+			});
+		}
+
+		function gethismessages() {
+			//获取消息列表,读取本地数据库
+			var msg = new messageUtil();
+			var list = msg.showMessages($api.getStorage('userid'), touserid);
+			for (var i = list.length - 1; i >= 0; i--) {
+				if (list[i].direction == "SEND" && $api.getStorage('userid') == list[i].userid) {
+					switch (list[i].msgtype) {
+						case "RC:TxtMsg":
+							// $("#messages").append("<li class=\"li-right mui-clearfix\">" +
+							// 	"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner head-portrait\"/>" +
+							// 	"<span>" + list[i].content + "</span></li>");
+
+
+							$("#messages").append("<li class=\"ChatBoxUR\">" +
+								"<div class=\"ChatBoxAvatar\">" +
+								"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner\"/>" +
+								"</div>" +
+								"<div class=\"ChatBoxUBox\">" +
+								"<div class=\"ChatBoxUBoxSJR\"></div>" +
+								"<div class=\"ChatBoxUBoxFXR\">" +
+								"<span>" + list[i].content + "</span>" +
+								"</div>" +
+								"</div>" +
+								"</li>");
+							break;
+						case "RC:ImgMsg":
+
+							break;
+						case "RC:VcMsg":
+							// $("#messages").append("<li class=\"li-right mui-clearfix\">" +
+							// 	"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner head-portrait\"/>" +
+							// 	"<span class=\"voice\" voicepath=\"" + list[i].voice + "\">" + list[i].duration + "s语音,点击播放</span></li>");
+
+							$("#messages").append("<li class=\"ChatBoxUR\">" +
+								"<div class=\"ChatBoxAvatar\">" +
+								"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner\"/>" +
+								"</div>" +
+								"<div class=\"ChatBoxUBox\">" +
+								"<div class=\"ChatBoxUBoxSJR\"></div>" +
+								"<div class=\"ChatBoxUBoxFXR\">" +
+								"<span class=\"voice\" voicepath=\"" + list[i].voice + "\">" +
+								"<ul class=\"CBUBVoiceU\">" +
+								"<li class=\"CBUBVoiceUR\">" + list[i].duration + "s语音,点击播放</li>" +
+								"<li class=\"CBUBVoiceUL VoiceRF \"></li>" +
+								"</ul>" +
+								"</span>" +
+								"</div>" +
+								"</div>" +
+								"</li>");
+
+
+							break;
+					}
+					sendcount++;
+				} else if (list[i].direction == "RECEIVE" && $api.getStorage('userid') == list[i].userid) {
+					switch (list[i].msgtype) {
+						case "RC:TxtMsg":
+							// $("#messages").append("<li class=\"li-left mui-clearfix\">" +
+							// 	"<img src=\"" + (list[i].avatar) + "\" class=\"otherspage head-portrait\"/>" +
+							// 	"<span>" + list[i].content + "</span></li>");
+
+							$("#messages").append("<li class=\"ChatBoxUL\">" +
+								"<div class=\"ChatBoxAvatar\">" +
+								"<img src=\"" + (list[i].avatar) + "\" class=\"otherspage\"/>" +
+								"</div>" +
+								"<div class=\"ChatBoxUBox\">" +
+								"<div class=\"ChatBoxUBoxSJ\"></div>" +
+								"<div class=\"ChatBoxUBoxFXL\">" +
+								"<span>" + list[i].content + "</span>" +
+								"</div>" +
+								"</div>" +
+								"</li>");
+							break;
+						case "RC:ImgMsg":
+
+							break;
+						case "RC:VcMsg":
+							// $("#messages").append("<li class=\"li-left mui-clearfix\">" +
+							// 	"<img src=\"" + (list[i].avatar) + "\" class=\"otherspage head-portrait\"/>" +
+							// 	"<span class=\"voice\" voicepath=\"" + list[i].voice + "\">" + list[i].duration + "s语音,点击播放</span></li>");
+
+							$("#messages").append("<li class=\"ChatBoxUL\">" +
+								"<div class=\"ChatBoxAvatar\">" +
+								"<img src=\"" + (list[i].avatar) + "\" class=\"otherspage\"/>" +
+								"</div>" +
+								"<div class=\"ChatBoxUBox\">" +
+								"<div class=\"ChatBoxUBoxSJ\"></div>" +
+								"<div class=\"ChatBoxUBoxFXL\">" +
+								"<span class=\"voice\" voicepath=\"" + list[i].voice + "\">" +
+								"<ul class=\"CBUBVoiceU\">" +
+								"<li class=\"CBUBVoiceUL VoiceLF\"></li>" +
+								"<li class=\"CBUBVoiceUR\">" + list[i].duration + "s语音,点击播放</li>" +
+								"</ul>" +
+								"</span>" +
+								"</div>" +
+								"</div>" +
+								"</li>");
+							break;
+					}
+				}
+			}
+
+			//消息设置为已读
+			var msg = new messageUtil();
+			msg.updateRead(touserid);
+			//刷新未读消息
+			var unReadMessages = msg.unReadMessages($api.getStorage('userid'));
+			if (unReadMessages.length > 0) {
+				api.sendEvent({
+					name: "unreadmessages",
+					extra: {
+						unreadmessages: unReadMessages[0].unreadmessages
+					}
+				});
+			}
+			//刷新消息列表页面
+			api.sendEvent({
+				name: "initmessage"
+			});
+		}
+
+		function getImgsPaths(sourcePathOfChatBox, callback) {
+			var jsonPath = sourcePathOfChatBox + "/emotion.json"; //表情的JSON数组
+			api.readFile({
+				path: jsonPath
+			}, function (ret, err) {
+				if (ret.status) {
+					var emotionArray = JSON.parse(ret.data);
+					var emotion = {};
+					for (var idx in emotionArray) {
+						var emotionItem = emotionArray[idx];
+						var emotionText = emotionItem["text"];
+						var emotionUrl = "../../res/image/emotion/" + emotionItem["name"] + ".png";
+						emotion[emotionText] = emotionUrl;
+					}
+					/*把emotion对象 回调出去*/
+					if ("function" === typeof (callback)) {
+						callback(emotion);
+					}
+				}
+			});
+		};
+		/*将文字中的表情符号翻译成图片，并可自定义图片尺寸*/
+		function transText(text, imgWidth, imgHeight) {
+			var textTransed = "";
+			if (text != null && text != "") {
+				var imgWidth = imgWidth || 15;
+				var imgHeight = imgHeight || 15;
+				var regx = /\[(.*?)\]/gm;
+				textTransed = text.replace(regx, function (match) {
+					var imgSrc = emotionData[match];
+					if (!imgSrc) {
+						return match;
+					}
+					var img = "<img src=" + imgSrc + " width=" + imgWidth + " height=" + imgHeight + ">";
+					return img;
+				});
+			}
+			return textTransed;
+		};
+
+
+		function appendsendmsg(msg) {
+			switch (msg.objectName) {
+				case "RC:TxtMsg":
+					// $("#messages").append("<li class=\"li-right mui-clearfix\">" +
+					// 	"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"head-portrait owner\"/>" +
+					// 	"<span>" + msg.content.text + "</span></li>");
+
+					$("#messages").append("<li class=\"ChatBoxUR\">" +
+						"<div class=\"ChatBoxAvatar\">" +
+						"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner\"/>" +
+						"</div>" +
+						"<div class=\"ChatBoxUBox\">" +
+						"<div class=\"ChatBoxUBoxSJR\"></div>" +
+						"<div class=\"ChatBoxUBoxFXR\">" +
+						"<span>" + msg.content.text + "</span>" +
+						"</div>" +
+						"</div>" +
+						"</li>");
+					break;
+				case "RC:ImgMsg":
+
+					break;
+				case "RC:VcMsg":
+					// $("#messages").append("<li class=\"li-right mui-clearfix\">" +
+					// 	"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"head-portrait owner\"/>" +
+					// 	"<span class=\"voice\" voicepath=\"" + msg.content.voicePath + "\">" + msg.content.duration + "s语音,点击播放</span></li>");
+
+					$("#messages").append("<li class=\"ChatBoxUR\">" +
+						"<div class=\"ChatBoxAvatar\">" +
+						"<img src=\"" + ($api.getStorage('avatar')) + "\" class=\"owner\"/>" +
+						"</div>" +
+						"<div class=\"ChatBoxUBox\">" +
+						"<div class=\"ChatBoxUBoxSJR\"></div>" +
+						"<div class=\"ChatBoxUBoxFXR\">" +
+						"<span class=\"voice\" voicepath=\"" + msg.content.voicePath + "\">" +
+						"<ul class=\"CBUBVoiceU\">" +
+						"<li class=\"CBUBVoiceUR\">" + msg.content.duration + "s语音,点击播放</li>" +
+						"<li class=\"CBUBVoiceUL VoiceRF \"></li>" +
+						"</ul>" +
+						"</span>" +
+						"</div>" +
+						"</div>" +
+						"</li>");
+					break;
+			}
+			sendcount++;
+		};
+
+		function appendrecivemsg(msg) {
+			if (touserid == msg.targetId) {
+				switch (msg.objectName) {
+					case "RC:TxtMsg":
+						// $("#messages").append("<li class=\"li-left mui-clearfix\">" +
+						// 	"<img src=\"" + msg.avatar + "\" class=\"head-portrait otherspage\"/>" +
+						// 	"<span>" + msg.content.text + "</span></li>");
+
+						$("#messages").append("<li class=\"ChatBoxUL\">" +
+							"<div class=\"ChatBoxAvatar\">" +
+							"<img src=\"" + msg.avatar + "\" class=\"otherspage\"/>" +
+							"</div>" +
+							"<div class=\"ChatBoxUBox\">" +
+							"<div class=\"ChatBoxUBoxSJ\"></div>" +
+							"<div class=\"ChatBoxUBoxFXL\">" +
+							"<span>" + msg.content.text + "</span>" +
+							"</div>" +
+							"</div>" +
+							"</li>");
+						break;
+					case "RC:ImgMsg":
+
+						break;
+					case "RC:VcMsg":
+						// $("#messages").append("<li class=\"li-left mui-clearfix\">" +
+						// 	"<img src=\"" + msg.avatar + "\" class=\"head-portrait otherspage\"/>" +
+						// 	"<span class=\"voice\" voicepath=\"" + msg.content.voicePath + "\">" + msg.content.duration + "s语音,点击播放</span></li>");
+
+
+						$("#messages").append("<li class=\"ChatBoxUL\">" +
+							"<div class=\"ChatBoxAvatar\">" +
+							"<img src=\"" + msg.avatar + "\" class=\"otherspage\"/>" +
+							"</div>" +
+							"<div class=\"ChatBoxUBox\">" +
+							"<div class=\"ChatBoxUBoxSJ\"></div>" +
+							"<div class=\"ChatBoxUBoxFXL\">" +
+							"<span class=\"voice\" voicepath=\"" + msg.content.voicePath + "\">" +
+							"<ul class=\"CBUBVoiceU\">" +
+							"<li class=\"CBUBVoiceUL VoiceLF\"></li>" +
+							"<li class=\"CBUBVoiceUR\">" + msg.content.duration + "s语音,点击播放</li>" +
+							"</ul>" +
+							"</span>" +
+							"</div>" +
+							"</div>" +
+							"</li>");
+						break;
+				}
+			}
+		};
+		//判断是否是会员
+		function ismymemberfunction(userid) {
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+				method: 'post',
+				data: {
+					values: {
+						userId: $api.getStorage('userid')
+					}
+				}
+			},
+				function (data, err) {
+					if (data.code == "200") {
+						console.log(JSON.stringify(data));
+
+						if (data.userVipType.vipType == 1) {
+							ismymember = true
+						} else {
+							ismymember = false
+						}
+					}
+
+				});
+		}
+
+
+		//判断是否关注
+		// function ismyfansfunction(userid) {
+		// 	api.ajax({
+		// 			url: CONFIG.ADDRURL + CONFIG.ISFANS,
+		// 			method: 'post',
+		// 			data: {
+		// 				values: {
+		// 					userid: $api.getStorage('userid'),
+		// 					fansid: userid
+		// 				}
+		// 			}
+		// 		},
+		// 		function(isfans, err) {
+		// 			console.log(isfans)
+		// 			ismyfans = isfans.isfans;
+		// 		});
+		// }
+	</script>
+</body>
+
+</html>

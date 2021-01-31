@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="mui-bar mui-bar-tab">
+        <div class="bar-tab">
+            <a href="#" id="ok">
+                <label>确定</label>
+            </a>
+            <a href="#" id="cancel">
+                <label>取消</label>
+            </a>
+        </div>
+    </nav>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../../script/jquery.md5.js"></script>
+    <script type="text/javascript" src="../../script/mui.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript">
+        var data = "";
+        apiready = function() {            
+            var FNImageClip = api.require('FNImageClip');
+            $api.setStorage('openWin', "uploadpersonbgpic");
+            var userid = api.pageParam.userid;
+            api.getPicture({
+                sourceType: 'album',
+                encodingType: 'jpg',
+                mediaValue: 'pic',
+                destinationType: 'url',
+                allowEdit: true,
+                quality: 50,
+                saveToPhotoAlbum: false
+            }, function(ret, err) {
+                if (ret && ret.data) {
+                    if (api.systemType == "ios") {
+                      var qiniuUpfile = api.require('qiniuUpfile');
+                      qiniuUpfile.upfile({
+                          file: ret.data,
+                          name: $.md5(ret.data)+".jpg"
+                      }, function(upret, uperr) {
+                          if (upret.status) {
+                              if (upret.oper == "complete") {
+                                  var personbgpic = CONFIG.QINIUADDR + upret.info.key;
+                                  api.ajax({
+                                      url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+                                      method: 'post',
+                                      data: {
+                                          values: {
+                                              userid: userid,
+                                              personbgpic: personbgpic
+                                          }
+                                      }
+                                  }, function(data) {
+                                      if (data.code == "200") {
+                                          api.hideProgress();
+                                          FNImageClip.close();
+                                          api.closeWin({
+                                              name: 'uploadpersonbgpic'
+                                          });
+                                          api.sendEvent({
+                                              name: 'loadpersonal'
+                                          });
+                                      } else {
+                                          api.hideProgress();
+                                          api.toast({
+                                              msg: data.msg,
+                                              duration: 1000,
+                                              location: 'bottom'
+                                          });
+                                      }
+                                  });
+                              }
+                          }
+                      });
+                    }else {
+                      FNImageClip.open({
+                          rect: {
+                              x: 0,
+                              y: 0,
+                              w: api.winWidth,
+                              h: api.winHeight - 60
+                          },
+                          srcPath: ret.data,
+                          style: {
+                              mask: 'rgba(0,0,0,0.75)',
+                              clip: {
+                                  w: api.frameWidth - 20,
+                                  h: api.frameHeight / 3,
+                                  x: 10,
+                                  y: api.frameHeight / 3,
+                                  borderColor: '#ff9694',
+                                  borderWidth: 0,
+                                  appearance: 'rectangle'
+                              }
+                          },
+                          fixedOn: api.frameName,
+                          mode: "image"
+                      }, function(ret, err) {
+
+                      });
+                    }
+                } else {
+                    api.closeWin({
+                        name: 'uploadpersonbgpic'
+                    });
+                }
+            });
+            $("#cancel").click(function() {
+                api.closeWin({
+                    name: 'uploadpersonbgpic'
+                });
+            });
+
+            $("#ok").click(function() {
+                api.showProgress({
+                    title: '正在修改...',
+                    modal: true
+                });
+                FNImageClip.save({
+                    destPath: 'fs://images//personbgpic' + (new Date().getTime() / 1000) + '.jpg',
+                    copyToAlbum: false,
+                    quality: 1
+                }, function(ret, err) {
+                    if (ret) {
+                        var tx = ret.destPath;
+                        var qiniuUpfile = api.require('qiniuUpfile');
+                        qiniuUpfile.upfile({
+                            file: ret.destPath,
+                            name: $.md5(ret.destPath)+".jpg"
+                        }, function(upret, uperr) {
+                            if (upret.status) {
+                                if (upret.oper == "complete") {
+                                    var personbgpic = CONFIG.QINIUADDR + upret.info.key;
+                                    api.ajax({
+                                        url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+                                        method: 'post',
+                                        data: {
+                                            values: {
+                                                userid: userid,
+                                                personbgpic: personbgpic
+                                            }
+                                        }
+                                    }, function(data) {
+                                        if (data.code == "200") {
+                                            api.hideProgress();
+                                            FNImageClip.close();
+                                            api.closeWin({
+                                                name: 'uploadpersonbgpic'
+                                            });
+                                            api.sendEvent({
+                                                name: 'loadpersonal'
+                                            });
+                                        } else {
+                                            api.hideProgress();
+                                            api.toast({
+                                                msg: data.msg,
+                                                duration: 1000,
+                                                location: 'bottom'
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

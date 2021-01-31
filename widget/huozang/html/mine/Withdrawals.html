@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>提现</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/Withdrawals.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+	<script src="../../script/config.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/util.js"></script>
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<p class="p2"></p>
+		<div class="SquareHeaderDIV">提现</div>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				提现
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+
+	<div class="Withdrawals">
+		<ul class="WithdrawalsT">
+			<li class="WithdrawalsTL">储蓄卡</li>
+			<!-- <li class="WithdrawalsTC">
+				<img src="../../images/Identification_03.png">
+			</li> -->
+			<li class="WithdrawalsTR">
+				<P class="p1"><span id="banktype">中国工商银行</span></P>
+				<P class="p2">24小时内到账</P>
+			</li>
+		</ul>
+		<P class="WithdrawalsFS">提现金币数量</P>
+		<ul class="WFSU">
+			<li class="WFSUL">
+				<input type="number" id="amount" placeholder="请输入要提现的金币数量" />
+			</li>
+			<li class="WFSUC">=</li>
+			<li class="WFSUR">
+				<P>元</P>
+				<input type="text" id='cash' disabled="disabled" />
+			</li>
+		</ul>
+		<P class="WithdrawalsFSW"></P>
+		<P class="WithdrawalsFSS"></P>
+		<div class="WithdrawalsFSWSub">确认</div>
+		<div class="WithdrawalsFSWSubF">您有一笔款正在提现</div>
+	</div>
+	<table class="WFSWTable" cellspacing="0">
+		<thead>
+			<tr>
+				<td>申请提现时间</td>
+				<td>提现金额</td>
+				<td>提现进度</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td id="withdrawtime"></td>
+				<td id="withdraw"></td>
+				<td id="withdrawstatus"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<script>
+	apiready = function() {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType == "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType == "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+		}
+
+		$api.setStorage('openWin', "Withdrawals");
+		//返回箭头事件
+		$(".roofReturn").click(function() {
+			api.closeWin({});
+		});
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({});
+		});
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'getbankcards'
+		}, function(ret, err) {
+			getbankcards();
+		});
+
+		//获取提现记录
+		withdrawrecord();
+		//获取银行卡
+		getbankcards();
+
+		var balance = '';
+		var exchange = '';
+		//获取余额
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETBALANCE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					$('.WithdrawalsFSS').text('剩余金币:' + data.user.currency + '个');
+					balance = data.user.currency;
+				}
+			});
+
+		//输入操作
+		$('#amount').keyup(function() {
+			var amount = $('#amount').val();
+			//获取兑换比例
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETDIC,
+					method: 'post',
+					data: {
+						values: {
+							type: 'amount_transfer_gold'
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						exchange = data.dict[0]['value'];
+						$('#cash').val(amount * exchange);
+						$('.WithdrawalsFSW').text('1元=' + exchange + '金币');
+					}
+				});
+		});
+		//提现操作
+		$('.WithdrawalsFSWSub').click(function() {
+			if($('#amount').val()<100){
+				api.toast({
+					msg: "提现金额不能小于100",
+					duration: 2000,
+					location: 'bottom'
+				});
+				return false
+			}
+			var cardnumber = $(".WithdrawalsTR .p1").attr("cardnumber");
+			if (cardnumber == null || cardnumber == '') {
+				api.toast({
+					msg: "请先去绑定银行卡！",
+					duration: 2000,
+					location: 'bottom'
+				});
+				//我的银行卡
+				api.openWin({
+					name: 'MyBankCard',
+					url: './MyBankCard.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					bounce: false,
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+
+			var amount = $('#amount').val();
+			if (amount == null || amount == '') {
+				api.toast({
+					msg: "请填写提现数目",
+					duration: 2000,
+					location: 'bottom'
+				});
+				return false;
+			}
+			var cash = $('#cash').val();
+			var cardnumber = $(".WithdrawalsTR .p1").attr("cardnumber");
+			if (amount <= balance) {
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.WITHDRAW,
+						method: 'post',
+						data: {
+							values: {
+								userid: $api.getStorage('userid'),
+								amount: cash, // 金额
+								type: 2, // 1充值2提现
+								currency: amount, // 金币个数
+								cardnumber: cardnumber, // 卡号
+								status: 0, //默认审核中
+								remark: "申请提现：金币" + amount
+							}
+						}
+					},
+					function(data, err) {
+						if (data.code == "200") {
+							api.toast({
+								msg: "提现申请成功,请等待平台审核",
+								duration: 2000,
+								location: 'bottom'
+							});
+							withdrawrecord();
+						}
+					});
+			} else {
+				api.toast({
+					msg: "提现金额不足请修改",
+					duration: 2000,
+					location: 'bottom'
+				});
+				return false;
+			}
+		});
+	}
+
+	function getbankcards() {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETSOULBANKCARDS,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					if (data.bankinfo && data.bankinfo.length > 0) {
+						var card = data.bankinfo[0];
+						$("#banktype").html(card.banktype);
+						$(".WithdrawalsTR .p1").attr("cardnumber", card.cardnumber);
+						$(".WithdrawalsTR .p1").append("尾号(" + card.cardnumber.substring(card.cardnumber.length - 4) + ")");
+					} else {
+						$(".WithdrawalsT").empty().html("暂无银行卡,请先去绑定！");
+					}
+				} else {
+					api.toast({
+						msg: data.msg,
+						duration: 2000,
+						location: 'bottom'
+					});
+				}
+			});
+	}
+
+	function withdrawrecord() {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.WITHDRAWRECORD,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid'),
+						status: 0
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					if (data.amounts && data.amounts.length > 0) {
+						var withdraw = data.amounts[0];
+						$("#withdrawtime").html(timestampToTime(withdraw.createtime));
+						$("#withdraw").html(withdraw.amount + "元");
+						$("#withdrawstatus").html(CONFIG.WITHDRAWSTATUS[withdraw.status]);
+
+						$(".WithdrawalsFSWSub").hide();
+						$(".WithdrawalsFSWSubF").show();
+						$(".WFSWTable").show();
+					} else {
+						$(".WithdrawalsFSWSub").show();
+						$(".WithdrawalsFSWSubF").hide();
+						$(".WFSWTable").hide();
+					}
+				} else {
+					api.toast({
+						msg: data.msg,
+						duration: 2000,
+						location: 'bottom'
+					});
+				}
+			});
+	}
+</script>
+
+</html>

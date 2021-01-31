@@ -1,0 +1,200 @@
+@charset "utf-8";
+body{
+	background:#f7f7f7;
+}
+.CommentTopic{
+	width:100%;
+	margin:0 auto;
+	background:#fff;
+	overflow:hidden;
+}
+.CommentPersonal{
+	width:94.7%;
+	margin:1.5rem auto 0;
+	overflow:hidden;
+}
+.CommentPersonalL{
+	width:4rem;
+	height:4rem;
+	float:left;
+	border-radius:100%;
+	overflow:hidden;
+}
+.CommentPersonalL img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.CommentPersonalC{
+	float:left;
+	margin-left:0.5rem;
+	overflow:hidden;
+}
+.CommentPersonalCU{
+	margin:0.5rem auto 0;
+	overflow:hidden;
+}
+.CommentPersonalCUL{
+	float:left;
+	line-height:1.7rem;
+	font-size:1.4rem;
+	font-weight:bold;
+	color:#333;
+}
+.CommentPersonalCUR{
+	width:2.3rem;
+	height:1.2rem;
+	float:left;
+	margin-top:0.25rem;
+	margin-left:0.5rem;
+	border-radius:1.2rem;
+	text-align:center;
+	font-size:0.85rem;
+	line-height:1.4rem;
+	color:#fff;
+	background:#ff9694;
+	overflow:hidden;
+	position:relative;
+}
+.CommentPersonalCUR > .p1{
+	width:1rem;
+	height:1rem;
+	background:url(../images/woman-icon.png);
+	background-size:100% 100%;
+	position:absolute;
+	left:0.1rem;
+	top:0.12rem;
+}
+.CommentPersonalCUR > .p3{
+	width:1rem;
+	height:1rem;
+	background:url(../images/man-icon.png);
+	background-size:100% 100%;
+	position:absolute;
+	left:0.1rem;
+	top:0.12rem;
+}
+.CommentPersonalCUR > .p2{
+	position:absolute;
+	right:0.35rem;
+}
+.CommentPersonalCP{
+	margin-top:0.5rem;
+	line-height:1.2rem;
+	font-size:1.1rem;
+	color:#666;
+	font-weight:400;
+}
+.CommentPersonalR{
+	float:right;
+	overflow:hidden;
+}
+.CPersonalRU{
+	float:right;
+	margin-top:0.7rem;
+	margin-left:1.5rem;
+	overflow:hidden;
+}
+.CPersonalRU > li{
+	float:right;
+	line-height:1.2rem;
+	font-size:1.2rem;
+	color:#666;
+	overflow:hidden;
+}
+.CPersonalRU > li:first-of-type{
+	margin-right:0.5rem;
+}
+.CPersonalRU > li:last-of-type{
+	width: 1.45rem;
+    height: 1.25rem;
+    float: right;
+    margin-right:0.5rem;
+}
+.CPersonalRU > li:last-of-type img{
+	width:100%;
+    height:100%;
+    margin:0 auto;
+    overflow:hidden;
+}
+/*文字*/
+.CommentFontSize{
+	width:80%;
+	margin-left:17%;
+	margin-top:0.5rem;
+	margin-bottom:2rem;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#333;
+	line-height:1.5;
+	overflow:hidden;
+}
+.CommentFontSizeF{
+	width:80%;
+	margin-left:17%;
+	margin-top:0.5rem;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#333;
+	line-height:1.5;
+	padding-bottom:1.5rem;
+	border-bottom:1px solid #e6e6e6;
+	overflow:hidden;
+}
+.CommentFontSizeF .p2{
+	margin-top:0.5rem;
+}
+.CommentFontSizeF .p2 span{
+	margin-left:0.3rem;
+	margin-right:0.3rem;
+	color:#007AFF;
+}
+.CommentPDS{
+	margin-bottom:4rem;
+	overflow:hidden;
+}
+.CommentPD{
+	width:91.6%;
+	margin-top:1.5rem;
+	margin-left:5.8%;
+	overflow:hidden;
+}
+.CommentPDL{
+	width:2.8rem;
+	height:2.8rem;
+	float:left;
+	margin-top:0.7rem;
+	border-radius:100%;
+	overflow:hidden;
+}
+.CommentPDL img{
+	width:100%;
+	height:100%;
+}
+.CommentPDS li:last-of-type .CommentFontSizeF{
+	border-bottom:0;
+}
+/*回复框*/
+.ReplyBox{
+	width:100%;
+	height:4rem;
+	background:#fff;
+	overflow:hidden;
+	position:fixed;
+	bottom:0;
+	left:0;
+}
+.ReplyBox > input{
+	width:94.7%;
+	height:2.5rem;
+	margin:0.75rem auto 0;
+	border-radius:3rem;
+	text-indent:1em;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#999;
+	background:#f7f7f7;
+	display:block;
+	overflow:hidden;
+}

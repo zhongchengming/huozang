@@ -1,0 +1,130 @@
+@charset "utf-8";
+body {
+	background-color: #f7f7f7;
+}
+
+.soul-data{
+	height: 100%;
+}
+
+.soul-term {
+	margin: 15px auto;
+	padding-bottom: 40px;
+	width: 94%;
+	background-color: #fff;
+}
+
+.soul-term p {
+	padding: 20px 0 15px 20px;
+	font-size: 16px;
+	color: #fea443;
+	margin-bottom: 0;
+
+}
+.soul-term p.black-color{
+	color:#333;
+	padding: 30px 0 15px 0;
+	    letter-spacing: 1.4px;
+}
+
+.soul-term p.load-limit-p {
+	margin-top: 15px;
+	padding: 0 0 25px 18px;
+	font-size: 12px;
+}
+
+.soul-term p.load-limit-p i {
+	font-style: normal;
+}
+.soul-term .identity-card li{
+	margin: 0 20px;
+	font-size: 15px;
+	color: #333333;
+}
+.identity-card li input {
+	margin-bottom: 0;
+	padding-left: 0;
+	border: none;
+}
+
+.identity-card li input::-moz-placeholder {
+	font-size: 15px;
+	color: #999999;
+}
+
+.identity-card li input:-ms-input-placeholder {
+	font-size: 15px;
+	color: #999999;
+}
+
+.identity-card li input::-webkit-input-placeholder {
+	font-size: 15px;
+	color: #999999;
+}
+.upload-card-box{
+	margin: 0 20px;
+	font-size: 15px;
+	color: #333333;
+}
+.upload-card{
+	width:8rem ;
+	height:3.6rem ;
+}
+.upload-card>img{
+	width:100% ;
+	height:100% ;
+	object-fit: cover;
+}
+
+
+.agreement-div {
+	margin-top: 30px;
+	margin-bottom: 14px;
+	font-size: 11px;
+}
+
+.agreement-div input[type=checkbox] {
+	visibility: hidden;
+}
+
+.agreement-div label {
+	position: relative;
+	padding-left: 26px;
+	color: #999;
+}
+
+.agreement-div label::after {
+    position: absolute;
+    content: "";
+    left: 5px;
+    top: -4px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/bg-icon.png);
+    background-repeat: no-repeat;
+    background-size: 250px 250px;
+    background-position: -173px -36px;
+}
+
+.agreement-div input[type=checkbox]:checked+label::after {
+    background-position: -201px -36px;
+}
+
+.soul-btn {
+	display: block;
+	width: 80px;
+	height: 30px;
+	font-size: 15px;
+	font-weight: 500;
+	color: #fff;
+	background-color: #ff9694;
+	line-height: 30px;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+	float: right;
+}
+
+a.soul-btn:active {
+	color: #fff;
+}

@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			background: #fff
+		}
+
+		.bigBox {
+			width: 100%;
+			height: 100%;
+		}
+
+		.roofS {
+			width: 100%;
+			background: #fff;
+			overflow: hidden;
+			position: fixed;
+			z-index: 1001;
+			top: 0;
+			left: 0;
+		}
+
+		.roof {
+			width: 100%;
+			height: 50px;
+			margin: 0 auto 1px;
+			overflow: hidden;
+			position: relative;
+			box-shadow: 0 5px 3px 1px #f2f2f2;
+		}
+
+		.roofReturn {
+			width: 20px;
+			height: 20px;
+			background: url(../../images/return.png) no-repeat;
+			background-size: 100% 100%;
+			position: absolute;
+			top: 20px;
+			left: 15px;
+		}
+
+		.roofConter {
+			width: 100%;
+			height: 50px;
+			text-align: center;
+			line-height: 65px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			overflow: hidden;
+		}
+
+		.five {
+			margin-top: 67px;
+			width: 77px;
+			height: 77px;
+			border-radius: 50%;
+			background: #f0f;
+			margin: 100px auto 0 auto;
+		}
+
+		.one {
+			font-size: 15px;
+			font-family: PingFang-SC-Medium;
+			font-weight: 500;
+			color: rgba(51, 51, 51, 1);
+			line-height: 30px;
+			text-align: center;
+			margin-top: 21px
+		}
+
+		.two {
+			font-size: 13px;
+			font-family: PingFang-SC-Regular;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			line-height: 30px;
+			text-align: center;
+			margin: 12px auto;
+		}
+
+		.three {
+			font-size: 13px;
+			font-family: PingFang-SC-Regular;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			line-height: 30px;
+			text-align: center;
+		}
+
+		.four {
+			font-size: 13px;
+			font-family: PingFang-SC-Medium;
+			font-weight: bold;
+			color: rgba(51, 51, 51, 1);
+			line-height: 30px;
+			margin-top: 38px;
+			text-align: center;
+		}
+
+		.five img {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+	</style>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+</head>
+
+<body>
+	<div class="bigBox">
+		<div class="roofS">
+			<div class="roof">
+				<div class="roofReturn"></div>
+				<!-- <div class="roofSearch"></div>
+				<div class="roofMessage messageU"></div> -->
+				<div class="roofConter">
+					群组
+				</div>
+			</div>
+		</div>
+		<div class="grounp">
+			<script type="text/template" id="grounp">
+				{{? it.group_img =="" }}
+				<div class="five"><img src="../../images/avatar.png"/></div>
+				{{??}}
+				<div class="five"><img src="{{=it.group_img}}"/></div>
+			{{?}}
+		<div class="one">{{=it.group_name}}</div>
+		<!-- <div class="two">群组号：123456</div> -->
+		<div class="three">群组简介：{{=it.group_info}}</div>
+		<div class="four"></div>
+		</script>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/PublicCss.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+<script>
+	apiready = function () {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType == "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType == "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+		}
+		var groupName = api.pageParam.groupName;
+		var groupState = api.pageParam.groupState;
+		findGrounp(groupName, groupState)
+		$(".roofReturn").click(function () {
+			api.closeWin({
+			});
+			api.sendEvent({
+				name: 'mine'
+			});
+		});
+	}
+
+	function findGrounp(groupName, groupState) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.FINDGROUNP,
+				method: 'post',
+				data: {
+					values: {
+						groupName: groupName
+					}
+				}
+			},
+			function (data) {
+				console.log(JSON.stringify(data))
+				console.log(groupState)
+				if (data.code == "200") {
+					var tempFn = doT.template($api.byId('grounp').innerHTML);
+					var resultHTML = tempFn(data.SoulGroup);
+					$(".grounp").append(resultHTML);
+					if (groupState == 0) {
+						$(".four").text("你申请加入的“" + data.SoulGroup.group_name + "”组，正在审核中")
+					} else if (groupState == 1) {
+						$(".four").text("你已经加入“" + data.SoulGroup.group_name + "”组")
+					} else {
+						$(".four").text("你申请加入的“" + data.SoulGroup.group_name + "”组，申请失败")
+					}
+				}
+			});
+	}
+</script>
+
+</html>

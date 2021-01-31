@@ -1,0 +1,359 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>发布动态</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/public.css" />
+		<link href="../css/release.css" rel="stylesheet" />
+	<!-- <link href="../css/mui.min.css" rel="stylesheet" />
+	<link href="../css/common.css" rel="stylesheet" />-->
+
+
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">发布动态</h1>
+		<a class="app-submit-icon">提交</a>
+	</header> -->
+	<!-- <div class="SquareHeaderS">
+	<div class="SquareHeader">
+			<div class="save-btn">提交</div>
+			<p class="p2"></p>
+			<div class="SquareHeaderDIV">发布动态</div>
+	</div>
+	</div>
+	<img class="SquareImg" src="../images/gct_02.jpg"> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofButton">提交</div>
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				发布动态
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!--发布动态  -->
+	<div class="modifyBox">
+			<textarea id="momentcontent" placeholder="请输入..."></textarea>
+			<div class="modifyBoxW" >
+				<P class="modifyBoxWp"><span class="modifyBoxWText">150</span>/150</p>
+				<ul class="modifyBoxWT release-pic"></ul>
+				<div class="release-video-btn">
+					<img src="../images/release-bg-icon.png">
+				</div>
+			</div>
+	</div>
+
+
+	<!-- <div class="mui-content release-data page-top page-bottom" style="border:1px solid red">
+		<textarea id="momentcontent" rows="6" placeholder="请输入..."></textarea>
+		<div class="release-div" style="border:1px solid red">
+			<div class="release-pic"style="border:1px solid red"></div>
+			<button type="button" class="release-video-btn"style="border:1px solid red"></button>
+			<!-- <span class="release-where"></span>-
+		</div>
+	</div> -->
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../script/jquery.md5.js"></script>
+	<script type="text/javascript" src="../script/PublicCss.js"></script>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "releasedynamic");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({});
+			});
+
+			$(".release-video-btn").click(function() {
+				uploadPic();
+			});
+			/*字数限制*/
+	    $("#momentcontent").on("input propertychange", function() {
+							var $this = $(this),
+	            _val = $this.val(),
+	            count = "";
+	        if (_val.length > 150) {
+	            $this.val(_val.substring(0, 150));
+	        }
+	        count = 150 - $this.val().length;
+	        $(".modifyBoxWText").text(count);
+	    });
+
+			$(".roofButton").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var momenttype = 1,
+					momentcontent = $("#momentcontent").val();
+				if (momentcontent == null || momentcontent == "") {
+					api.toast({
+						msg: '动态内容不能为空！',
+						duration: 1000,
+						location: 'bottom'
+					});
+					return false;
+				}
+				api.showProgress({
+					title: '正在发布...',
+					modal: true
+				});
+				if ($(".release-pic img").length > 0) {
+					momenttype = 2;
+					var momentpicture = "";
+					var momentpicturelist =[];
+					var qiniuUpfile = api.require('qiniuUpfile');
+					$.each($(".release-pic img"), function(i, n) {
+						qiniuUpfile.upfile({
+							file: $(n).attr("src"),
+							name: $.md5($(n).attr("src"))+".jpg"
+						}, function(upret, uperr) {
+							if (upret.status) {
+								if (upret.oper == "complete") {
+									momentpicture += CONFIG.QINIUADDR + upret.info.key + ",";
+									momentpicturelist.push(upret.info.key);
+									if (momentpicturelist.length == $(".release-pic img").length) {
+										api.ajax({
+											url: CONFIG.ADDRURL + CONFIG.RELEASEMOMENT,
+											method: 'post',
+											data: {
+												values: {
+													userid: $api.getStorage('userid'),
+													momenttype: momenttype,
+													momentcontent: momentcontent,
+													momentpicture: momentpicture,
+													momentvideo: ""
+												}
+											}
+										}, function(data) {
+											if (data.code == "200") {
+												api.toast({
+													msg: '发布成功！',
+													duration: 1000,
+													location: 'bottom'
+												});
+												api.sendEvent({
+														name: 'refreshSquare'
+												});
+												setTimeout(function() {
+													api.closeWin({
+														name: 'releasedynamic'
+													});
+												}, 500);
+												api.hideProgress();
+											} else {
+												api.hideProgress();
+												api.toast({
+													msg: data.msg,
+													duration: 1000,
+													location: 'bottom'
+												});
+											}
+										});
+									}
+								}
+							}
+						});
+					});
+				} else {
+					api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.RELEASEMOMENT,
+						method: 'post',
+						data: {
+							values: {
+								userid: $api.getStorage('userid'),
+								momenttype: momenttype,
+								momentcontent: momentcontent,
+								momentpicture: "",
+								momentvideo: ""
+							}
+						}
+					}, function(data) {
+						if (data.code == "200") {
+							api.toast({
+								msg: '发布成功！',
+								duration: 1000,
+								location: 'bottom'
+							});
+							api.sendEvent({
+									name: 'btnSwitch',
+									extra: {
+											index: 2
+									}
+							});
+							setTimeout(function() {
+								api.closeWin({
+									name: 'releasedynamic'
+								});
+							}, 500);
+							api.hideProgress();
+						} else {
+							api.hideProgress();
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'bottom'
+							});
+						}
+					});
+				}
+			});
+
+		}
+		// 点击删除
+		$(".modifyBoxWT").on("click", "p", function() {
+			$(this).parent("li").remove();
+		});
+		function uploadPic() {
+			api.actionSheet({
+				title: '上传照片',
+				cancelTitle: '取消',
+				buttons: ['拍照', '手机相册']
+			}, function(ret, err) {
+				if (ret) {
+					if (ret.buttonIndex == 1) {
+						if ($(".release-pic img").length >= 9) {
+							api.toast({
+								msg: '最多上传9张图片！',
+								duration: 1000,
+								location: 'bottom'
+							});
+							return false;
+						}
+						api.getPicture({
+							sourceType: 'camera',
+							encodingType: 'jpg',
+							mediaValue: 'pic',
+							destinationType: 'url',
+							allowEdit: false,
+							quality: 100,
+							saveToPhotoAlbum: false
+						}, function(ret, err) {
+							if (ret) {
+								if (ret.data) {
+									$(".release-pic").append("<li><p></p><img src=\"" + ret.data + "\"/></li>");
+								}
+							} else {
+								api.toast({
+									msg: '图像获取失败',
+									duration: 1000,
+									location: 'bottom'
+								});
+							}
+						});
+					} else if (ret.buttonIndex == 2) {
+						//手机相册选图片
+						var UIMediaScanner = api.require('UIMediaScanner');
+						UIMediaScanner.open({
+							type: 'picture', //视频与图片,all（图片和视频）picture（图片）video（视频）
+							column: 4,
+							classify: true,
+							max: 9 - $(".release-pic img").length,
+							sort: {
+								key: 'time',
+								order: 'desc'
+							},
+							texts: {
+								stateText: '已选择*项',
+								cancelText: '取消',
+								finishText: '完成'
+							},
+							styles: {
+								bg: '#fff',
+								mark: {
+									icon: '',
+									position: 'bottom_left',
+									size: 20
+								},
+								nav: {
+									bg: '#eee',
+									stateColor: '#000',
+									stateSize: 18,
+									cancelBg: 'rgba(0,0,0,0)',
+									cancelColor: '#000',
+									cancelSize: 18,
+									finishBg: 'rgba(0,0,0,0)',
+									finishColor: '#000',
+									finishSize: 18
+								}
+							},
+							scrollToBottom: {
+								intervalTime: -1
+							},
+							exchange: true,
+							rotation: true
+						}, function(ret) {
+							if (ret) {
+								if (ret.eventType == 'confirm') {
+									var imageFilter = api.require('imageFilter');
+									var path = api.cacheDir + "/upload/";
+									$.each(ret.list, function(i, n) {
+										if (api.systemType == "ios") {
+											UIMediaScanner.transPath({
+												path: n.path
+											}, function(transPathret, transPatherr) {
+												if (transPathret) {
+													$(".release-pic").append("<li><p></p><img src=\"" + transPathret.path + "\"/></li>");
+												}
+											});
+										} else {
+											$(".release-pic").append("<li><p></p><img src=\"" + n.path + "\"/></li>");
+										}
+									});
+								}
+							}
+						});
+					}
+				}
+			});
+		};
+		function checklogin() {
+			var userinfo = $api.getStorage('userid');
+			if (userinfo == null || userinfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+@charset "utf-8";
+body {
+    background: #fff;
+}
+
+.HeadVideo {
+    width: 94.7%;
+    height:20rem;
+    margin: 0.5rem auto 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2px #ebebeb;
+    /*background:url(../images/banner.png) no-repeat;
+	background-size:100% 100%;*/
+    overflow: hidden;
+    position: relative;
+}
+
+.HeadAttention,.HeadAttention2 {
+    height: 25px;
+    line-height: 27px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+    padding: 0 10px;
+    border-radius: 20px;
+    background: #ff9694;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.HeadAttention2 {
+    top: 50px;
+}
+
+.HeadAttention.Attention {
+    color: #333;
+    background: #eee
+}
+
+.HeadVideoBF {
+    width: 3.9rem;
+    height: 3.9rem;
+    position: absolute;
+    top: 3rem;
+    left: 44.4%;
+}
+
+.HeadVideoBF img, .PNDSContentV>img, .PictureSlide li>img, .PNDSVideoW>img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.HeadVideo>img,.PNDSMaterialBUC li img, .PNDSDynamicOperationUL img, .PNDSDynamicOperationUR img, .PNDSContentV p img, .PNDSVideoW .p1 img, .PNDSVideoBUL img, .PNDSVideoBURL img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.HeadVideoU {
+    width: 100%;
+    height: 3.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.HeadVideoU>li {
+    width: 33.3%;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    float: left;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.HeadVideoU>li span {
+    margin-left: 0.2rem;
+}
+
+
+/*图片滑动*/
+
+.PictureSlide {
+    width: 94.7%;
+    height: 8.5rem;
+    margin: 1rem auto 0;
+    overflow: scroll;
+}
+
+.PictureSlide ul {
+    height: 8.5rem;
+    overflow: hidden;
+}
+
+.PictureSlide li {
+    width: 8.5rem;
+    /*height:8.5rem;*/
+    float: left;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    overflow: hidden;
+}
+
+.PictureSlide li:first-of-type {
+    margin-left: 0;
+}
+
+.PictureSlide::-webkit-scrollbar {
+    display: none;
+}
+
+
+/*个人导航*/
+
+.PersonalNavigation {
+    width: 94.7%;
+    height: 5rem;
+    margin: 1.5rem auto 0;
+    border-radius: 5rem;
+    box-shadow: 0 0 2px #ebebeb;
+    overflow: hidden;
+}
+
+.PersonalNavigation ul {
+    width: 85.9%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.PersonalNavigation li {
+    width: 25%;
+    height: 5rem;
+    float: left;
+    text-align: center;
+    line-height: 5rem;
+    font-size: 1.4rem;
+    color: #1b1919;
+    font-weight: 500;
+}
+
+#PersonalNavigationL {
+    color: #333;
+}
+
+#PersonalNavigationL span {
+    line-height: 1;
+    padding: 0 0.5rem 1.4rem;
+    border-bottom: 0.3rem solid #ff9694;
+}
+
+
+/*分类*/
+
+.PersonalNavigationDS {
+    width: 100%;
+    margin: 1rem auto 1rem;
+    overflow: hidden;
+    display: none;
+}
+
+
+/*资料*/
+
+.PNDSMaterialT {
+    width: 94.7%;
+    margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+}
+
+.PNDSMaterialT li {
+    width: 33.3%;
+    float: left;
+    overflow: hidden;
+}
+
+.PNDSMaterialT li div {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #ccc;
+    font-weight: 400;
+    border-left: 0.05px solid #f2f2f2;
+}
+
+.PNDSMaterialT li:first-of-type div {
+    border-left: 0;
+}
+
+.PNDSMaterialT li div .p1 {
+    margin-top: 1rem;
+}
+
+.PNDSMaterialT li div .p2 {
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+    font-size: 0.9 rem;
+    color: #333;
+}
+
+.PNDSMaterialB {
+    width: 87.2%;
+    margin: 0.5rem auto 0;
+    overflow: hidden;
+}
+
+.PNDSMaterialBU {
+    width: 100%;
+    margin: 0.8rem auto 0;
+    overflow: hidden;
+}
+
+.PNDSMaterialBUL {
+    width: 25%;
+    height: 2.1rem;
+    float: left;
+    line-height: 2.4rem;
+    font-size: 1.2rem;
+    color: #999;
+    text-align: center;
+    border-radius: 2.1rem;
+    border: 0.05rem solid #e9e9e9;
+    overflow: hidden;
+}
+
+.PNDSMaterialBUC {
+    width: 70%;
+    float: left;
+    margin-left: 4%;
+    overflow: hidden;
+}
+
+.PNDSMaterialBUC li {
+    width: 1.5rem;
+    height: 1.5rem;
+    float: left;
+    margin-top: 0.3rem;
+    margin-right: 0.5rem;
+}
+
+.PNDSMaterialBUR {
+    width: 70%;
+    float: left;
+    margin-left: 4%;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 400;
+    line-height: 2.2rem;
+    overflow: hidden;
+}
+
+
+/*服务*/
+
+.activityU {
+    width: 100%;
+    margin: 0.5rem auto;
+    overflow: hidden;
+}
+
+.activityU>li {
+    width: 94.7%;
+    margin: 0.5rem auto;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px 5px #f5f3f3;
+}
+
+.activityUImg {
+    width: 95%;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+
+.activityUImg>li {
+    width: 33.33%;
+    float: left;
+    overflow: hidden;
+}
+
+.activityUImg>li div {
+    width: 95%;
+    margin-top: 5%;
+}
+
+.activityUImg>li div img {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.activityList, .activityBut {
+    width: 95%;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+
+.activityListL {
+    width: 25%;
+    height: 2rem;
+    float: left;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #b2b2b2;
+    text-align: center;
+    line-height: 2.3rem;
+    border-radius: 2rem;
+    border: 0.05rem solid #e8e8e8;
+    overflow: hidden;
+}
+
+.activityListR {
+    width: 70%;
+    float: left;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+.activityBut>li {
+    width: 33.33%;
+    float: right;
+}
+
+.activityButSC, .activityButYY, .activityButCL {
+    width: 90%;
+    height: 3rem;
+    text-align: center;
+    line-height: 3.3rem;
+    color: #333;
+    background: #fff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0.5rem auto;
+    border-radius: 3rem;
+    overflow: hidden;
+    box-shadow: 0 0 0.25rem 0.25rem #f3f3f3;
+}
+
+.activityButYY {
+    color: #fff;
+    background: #ff9694;
+}
+
+.activityButCL {
+    color: #fff;
+    background: #c7d9ff;
+}
+
+
+/*动态*/
+
+.PNDSDynamic {
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.PNDSDynamic>li {
+    width: 94.7%;
+    margin: 0.25rem auto 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2px #ebebeb;
+    overflow: hidden;
+}
+
+.PNDSDynamicHr, .PNDSDynamicHr2 {
+    width: 90.7%;
+    margin: 0.75rem auto 0;
+    border-top: 1px solid #f5f5f5;
+}
+
+.PNDSDynamicHr2 {
+    margin: 1rem auto 0;
+}
+
+
+/*动态内容*/
+
+.PNDSContent {
+    width: 90.7%;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+}
+
+.PNDSContentW {
+    width: 100%;
+    margin: 1rem auto 0;
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+
+/*动态图片*/
+.PNDSContentT,.PNDSContentTOne,.PNDSContentTTwo{
+	width:100%;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.PNDSContentTOne > li{
+	width:90%;
+	margin:5px auto;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.PNDSContentTTwo > li{
+	width:45%;
+	float:left;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:2%;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.PNDSContentTTwo > li:first-of-type{
+	margin-left:4%;
+}
+.PNDSContentTOne > li img,.PNDSContentTTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.PNDSContentT {
+    width: 100%;
+    margin: 1rem auto 0;
+    overflow: hidden;
+}
+
+.PNDSContentT>li {
+    width: 33.3%;
+    float: left;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.PNDSContentT>li img {
+    width: 95%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+
+/*动态视频*/
+
+.PNDSContentV {
+    width: 15.25rem;
+    height: 15.25rem;
+    border-radius: 0.5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.PNDSContentV p {
+    width: 3.9rem;
+    height: 3.9rem;
+    position: absolute;
+    top: 5.675rem;
+    left: 5.675rem;
+}
+
+
+/*转发,评论,关注*/
+
+.PNDSDynamicDateD {
+    width: 90.7%;
+    margin: 1rem auto 0;
+    font-size: 1.2rem;
+    color: #999;
+    line-height: 1.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.PNDSDynamicDateD p {
+    width: 1rem;
+    height: 1.25rem;
+    background: url(../images/dellete_03.png) no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: ;
+    right: 1rem;
+}
+
+.PNDSDynamicOperation {
+    width: 90.7%;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+
+.PNDSDynamicOperation>li {
+    width: 33.3%;
+    float: left;
+    overflow: hidden;
+}
+
+.PNDSDynamicOperationU {
+    width: 56%;
+    float: left;
+    margin-left: 5%;
+    overflow: hidden;
+}
+
+#PNDSDOUC {
+    margin-left: 25%;
+}
+
+#PNDSDOUR {
+    float: right;
+    margin-right: 5%;
+}
+
+.PNDSDynamicOperationUL {
+    width: 1.45rem;
+    height: 1.25rem;
+    float: left;
+}
+
+.PNDSDynamicOperationUR {
+    width: 1.5rem;
+    height: 1.25rem;
+    float: left;
+    line-height: 1.25rem;
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+
+/*视频*/
+
+.PNDSVideo {
+    width: 94.7%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.PNDSVideo>li {
+    width: 33.3%;
+    float: left;
+    margin-top: 0.5rem;
+}
+
+.PNDSVideoW {
+    width: 9.5rem;
+    height: 9.5rem;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0.5rem;
+    background: #996600;
+}
+
+.PNDSVideoW>.p1 {
+    width: 3.9rem;
+    height: 3.9rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
+.PNDSVideoW>.p2 {
+    width: 4rem;
+    height: 1.4rem;
+    text-align: center;
+    line-height: 1.7rem;
+    font-size: 1.1rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1.4rem;
+    position: absolute;
+    bottom: 0.4rem;
+    right: 0.6rem;
+}
+
+.PNDSVideoW>.p3 {
+    height: 2rem;
+    position: absolute;
+    top: -0.8rem;
+    right: 0.6rem;
+}
+
+.PNDSVideoW>.p3 span {
+    line-height: 1;
+    font-size: 2rem;
+    color: #fff;
+}
+
+.PNDSVideoWP {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    display: none;
+}
+
+.PNDSVideoWP div {
+    width: 80%;
+    height: 2rem;
+    margin: 1rem auto 0;
+    border-radius: 2rem;
+    text-align: center;
+    color: #fff;
+    line-height: 2.3rem;
+    border: 1px solid #fff;
+}
+
+.PNDSVideoWP .relay {
+    margin-top: 20%;
+}
+
+
+/*视频关注与评论*/
+
+.PNDSVideoB {
+    width: 95%;
+    margin: 0.75rem auto 0;
+    overflow: hidden;
+}
+
+.PNDSVideoB>ul {
+    width: 50%;
+    float: left;
+    overflow: hidden;
+}
+
+.PNDSVideoBUL {
+    width: 1.45rem;
+    height: 1.25rem;
+    float: left;
+}
+
+.PNDSVideoBUR {
+    width: 1.5rem;
+    height: 1.25rem;
+    float: left;
+    line-height: 1.25rem;
+    margin-left: 0.3rem;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.PNDSVideoBURR {
+    /*width:1.5rem;*/
+    height: 1.25rem;
+    float: right;
+    line-height: 1.25rem;
+    margin-left: 0.3rem;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.PNDSVideoBURL {
+    width: 1.45rem;
+    height: 1.25rem;
+    float: right;
+}
+
+#Material {
+    display: block;
+}

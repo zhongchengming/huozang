@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>IOS用户指导</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/MyPromotion.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofButton">推广记录</div> -->
+			<div class="roofConter">
+				IOS用户指导
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+<div class="IOSImg">
+  <img src="../../images/IOSImg_01.png" width="100%">
+  <img src="../../images/IOSImg_02.png" width="100%">
+  <img src="../../images/IOSImg_03.png" width="100%">
+  <img src="../../images/IOSImg_04.png" width="100%">
+  <img src="../../images/IOSImg_05.png" width="100%">
+  <img src="../../images/IOSImg_06.png" width="100%">
+  <img src="../../images/IOSImg_07.png" width="100%">
+  <img src="../../images/IOSImg_08.png" width="100%">
+  <img src="../../images/IOSImg_09.png" width="100%">
+  <img src="../../images/IOSImg_10.png" width="100%">
+</div>
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script>
+  apiready = function() {
+    $api.fixStatusBar($api.dom('.roofS'));
+    var winname = api.pageParam.winname;
+    // 列表距顶部距离
+    var systemType = api.systemType;
+    if (systemType == "android") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+    }
+    if (systemType == "ios") {
+      $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+    }
+    $api.setStorage('openWin', "iosPromotion");
+    //返回箭头事件
+    $(".roofReturn").click(function() {
+      api.closeWin({
+        name:"iosPromotion"
+      });
+    });
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({
+				name: 'iosPromotion'
+			});
+		});
+}
+</script>
+
+
+
+
+</body>
+</html>

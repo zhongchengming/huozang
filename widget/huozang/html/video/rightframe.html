@@ -1,0 +1,562 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <style>
+        html,
+        body {
+            background: rgba(255, 255, 255, 0);
+            /*background: rgba(0, 0, 0, 1);*/
+        }
+
+        .Pendant {
+            width: 80px;
+            /*height: 250px;*/
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /*头像*/
+
+        .PendantAvatar {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            border-radius: 100%;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .PendantAvatar img,
+        .PendantReview img {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /*关注*/
+
+        .PendantAttention {
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            margin: 0px auto 0;
+            text-align: center;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+            background: #ff9694;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .PendantReview {
+            width: 36px;
+            height: 36px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+
+        .PendantReview-gift {
+            width: 42px;
+            height: 42px;
+            margin-top: 20px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+
+        .PendantReview-jia {
+            width: 25px;
+            height: 25px;
+            margin: 0 auto 0;
+            overflow: hidden;
+        }
+
+        .PendantAmount {
+            width: 100%;
+            line-height: 1.2;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        #like {
+            background: url(../../images/Videos_03.png) no-repeat;
+            background-size: 36px 36px;
+        }
+
+        #like.active {
+            background: url(../../images/SquarePLs_09.png) no-repeat;
+            background-size: 36px 36px;
+        }
+
+        #comment {
+            background: url(../../images/Videos_07.png) no-repeat;
+            background-size: 36px 36px;
+        }
+
+        #share {
+            background: url(../../images/Videos_10.png) no-repeat;
+            background-size: 36px 36px;
+        }
+
+        #Complaints {
+            background: url(../../images/Complaints.png) no-repeat;
+            background-size: 36px 36px;
+        }
+
+        #gift {
+            background: url(../../images/video_gift.png) no-repeat;
+            background-size: 42px 42px;
+        }
+
+        #video_jia {
+            background: url(../../images/video_jia.png) no-repeat;
+            background-size: 25px 25px;
+            position: absolute;
+            top: 38px;
+            left: 30px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /*-------------------------------------------------------*/
+    </style>
+</head>
+
+<body>
+    <div class="Pendant">
+        <div class="PendantAvatar" id="avatar">
+            <img src="../../images/avatar.png">
+        </div>
+        <!-- <div class="PendantReview-jia" id="video_jia"></div> -->
+        <div class="PendantAttention" id="gz">
+            +&nbsp;关注
+        </div>
+        <div class="PendantReview" id="like"></div>
+        <div class="PendantAmount" id="likecount">0</div>
+        <div class="PendantReview" id="comment"></div>
+        <div class="PendantAmount" id="commentcount">0</div>
+        <div class="PendantReview" id="share"></div>
+        <div class="PendantAmount" id="sharecount">0</div>
+        <div class="PendantReview" id="Complaints"></div>
+        <div class="PendantReview-gift" id="gift"></div>
+    </div>
+
+    <!-- E 播放当前的视频 -->
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../../script/mui.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript">
+        apiready = function () {
+            videoavatar();
+            videolike();
+            videocomment();
+            videoshare();
+        }
+
+        function videoavatar() {
+            api.addEventListener({
+                name: 'videoavatar'
+            }, function (ret, err) {
+
+                $("#avatar img").attr("src", ret.value.avatar == null || ret.value.avatar == "" ?
+                    "../../images/avatar.png" : ret.value.avatar);
+                $("#avatar").attr("userid", ret.value.userid);
+                $("#gz").attr("userid", ret.value.userid);
+                if (ret.value.userid == $api.getStorage('userid')) {
+                    $("#gz").hide()
+                }
+                if (ret.value.isfans) {
+                    $("#gz").html("已关注").attr("userid", ret.value.userid);
+                    $(".PendantAttention").css({
+                        "color": "#999",
+                        "background": "#eee",
+                    });
+                } else {
+                    $("#gz").html("+&nbsp;关注").attr("userid", ret.value.userid);
+                    $(".PendantAttention").css({
+                        "color": "#fff",
+                        "background": "#ff9694",
+                    });
+                }
+            });
+
+            $("#avatar").click(function () {
+                api.sendEvent({
+                    name: 'pausevideo'
+                });
+                var userid = $(this).attr("userid");
+                if (api.pageParam.isOthers == true) {
+                    api.sendEvent({
+                        name: 'closevideobtn'
+                    });
+                    api.sendEvent({
+                        name: 'closeplaywin'
+                    });
+                } else {
+                    api.openWin({
+                        name: 'otherspage',
+                        url: '../otherspage.html',
+                        rect: {
+                            x: 0,
+                            y: 0,
+                            w: 'auto',
+                            h: 'auto'
+                        },
+                        pageParam: {
+                            userid: userid
+                        },
+                        animation: {
+                            type: "push", //动画类型（详见动画类型常量）
+                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                            duration: 300 //动画过渡时间，默认300毫秒
+                        }
+                    });
+                }
+            })
+            //投诉举报
+            $("#Complaints").click(function () {
+                api.sendEvent({
+                    name: 'pausevideo'
+                });
+                var reportid = $(this).attr("reportid")
+                api.openWin({
+                    name: 'complain',
+                    url: '../member/complain.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    pageParam: {
+                        userid: $("#like").attr("userid"),
+                        type: 1,
+                        id: $("#like").attr("videoid")
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            });
+
+            $('#gift').click(function () {
+                if ($api.getStorage('userid') == null || $api.getStorage('userid') == "") {
+                    api.toast({
+                        msg: '请先登录！',
+                        duration: 1000,
+                        location: 'middle'
+                    });
+                    setTimeout(function () {
+                        api.sendEvent({
+                            name: 'pausevideo'
+                        });
+                        api.openWin({
+                            name: 'login',
+                            url: '../../login.html',
+                            bgColor: "rgba(255, 255, 255, 0)",
+                            animation: {
+                                type: "push", //动画类型（详见动画类型常量）
+                                subType: "from_right", //动画子类型（详见动画子类型常量）
+                                duration: 300 //动画过渡时间，默认300毫秒
+                            }
+                        });
+                    }, 1000);
+                    return false;
+                }
+                api.openFrame({
+                    name: 'gift',
+                    url: '../gift.html',
+                    rect: {
+                        w: 'auto',
+                        h: 'auto',
+                        marginLeft: 0, //相对父页面左外边距的距离，数字类型
+                        // marginTop: 0,     //相对父页面上外边距的距离，数字类型
+                        marginBottom: 0, //相对父页面下外边距的距离，数字类型
+                        marginRight: 0 //相对父页面右外边距的距离，数字类型
+                    },
+                    pageParam: {
+                        userid: $("#like").attr("userid")
+                    },
+                    animation: {
+                        type: "push",
+                        subType: "from_bottom",
+                        duration: 300
+                    }
+                })
+            })
+
+            $("#gz").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var fansuserid = $api.getStorage('userid');
+                var userid = $(this).attr("userid");
+
+                api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.FANS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: userid,
+                            fansuserid: fansuserid
+                        }
+                    }
+                },
+                    function (data, err) {
+                        if (data.code == "200") {
+                            if ($("#gz").html().indexOf("已关注") >= 0) {
+                                $("#gz").html("+&nbsp;关注").attr("userid", userid);
+                                $(".PendantAttention").css({
+                                    "color": "#fff",
+                                    "background": "#ff9694",
+                                });
+                            } else {
+                                $("#gz").html("已关注").attr("userid", userid);
+                                $(".PendantAttention").css({
+                                    "color": "#999",
+                                    "background": "#eee",
+                                });
+                                api.sendEvent({
+                                    name: "sendTextMessageListener",
+                                    extra: {
+                                        touserid: userid,
+                                        message: "系统提示：当前人关注你咯，快去看看吧！"
+                                    }
+                                });
+                            }
+                        } else {
+                            api.toast({
+                                msg: data.msg,
+                                duration: 1000,
+                                location: 'middle'
+                            });
+                        }
+                    });
+            });
+        }
+
+        function videolike() {
+            api.addEventListener({
+                name: 'videolike'
+            }, function (ret, err) {
+                $("#like").attr("userid", ret.value.userid);
+                $("#like").attr("videoid", ret.value.videoid);
+                $("#likecount").text(ret.value.dianzancount);
+                console.log(ret.value.dianzan)
+                if ($api.getStorage('userid') == null || $api.getStorage('userid') == "") {
+                    $("#like").removeClass("active");
+                } else {
+                    if (ret.value.dianzan == "1") {
+                        $("#like").addClass("active");
+                    } else if (ret.value.dianzan == "0") {
+                        $("#like").removeClass("active");
+                    }
+                }
+
+            });
+            $("#like").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var userid = $api.getStorage('userid');
+                var passiveuserid = $(this).attr("userid");
+                var videoid = $(this).attr("videoid");
+                var videoZVal = parseInt($("#likecount").text());
+                if ($("#like").hasClass("active")) { //取消点赞
+                    api.ajax({
+                        url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+                        method: 'post',
+                        data: {
+                            values: {
+                                passiveuserid: passiveuserid,
+                                userid: userid,
+                                videoid: videoid,
+                                videotype: 1
+                            }
+                        }
+                    },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                $("#like").removeClass("active");
+                                videoZVal--;
+                                $("#likecount").text(videoZVal);
+                            }
+                        });
+                } else { //点赞
+                    api.ajax({
+                        url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+                        method: 'post',
+                        data: {
+                            values: {
+                                passiveuserid: passiveuserid,
+                                userid: userid,
+                                videoid: videoid,
+                                videotype: 1,
+                                videocontent: "喜欢"
+                            }
+                        }
+                    },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                $("#like").addClass("active");
+                                videoZVal++;
+                                $("#likecount").text(videoZVal);
+                                api.sendEvent({
+                                    name: "sendTextMessageListener",
+                                    extra: {
+                                        touserid: passiveuserid,
+                                        message: "系统提示：当前人对你的视频点赞咯，快去看看吧！"
+                                    }
+                                });
+                            }
+                        });
+                }
+            });
+        }
+
+        function videocomment() {
+            api.addEventListener({
+                name: 'videocomment'
+            }, function (ret, err) {
+                $("#comment").attr("userid", ret.value.userid);
+                $("#comment").attr("videoid", ret.value.videoid);
+                $("#commentcount").text(ret.value.pinluncount);
+            });
+
+            $("#comment").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var videoid = $("#comment").attr("videoid");
+                var videouserid = $("#comment").attr("userid");
+                api.openFrame({
+                    name: 'videocomment',
+                    url: './videocomment.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    rect: {
+                        x: 0, //左上角x坐标
+                        y: api.winHeight - api.winHeight * 0.6,
+                        w: api.winWidth,
+                        h: api.winHeight * 0.6
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_bottom", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    },
+                    pageParam: {
+                        videoid: videoid,
+                        videouserid: videouserid
+                    }
+                });
+            });
+
+            api.addEventListener({
+                name: 'videoaddcomment'
+            }, function (ret, err) {
+                $("#commentcount").text($("#commentcount").text() * 1 + 1);
+            });
+        }
+
+        function videoshare() {
+            api.addEventListener({
+                name: 'videoshare'
+            }, function (ret, err) {
+                $("#share").attr("userid", ret.value.userid);
+                $("#share").attr("videoid", ret.value.videoid);
+                $("#share").attr("videofrontcover", ret.value.videofrontcover);
+                $("#share").attr("videourl", ret.value.videourl);
+                $("#share").attr("comment", ret.value.comment);
+                $("#share").attr("nickname", ret.value.nickname);
+                $("#sharecount").text(ret.value.sharecount);
+
+            });
+            $("#share").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var userid = $(this).attr("userid");
+                var videoid = $(this).attr("videoid");
+                var videofrontcover = $(this).attr("videofrontcover");
+                var videourl = $(this).attr("videourl");
+                var comment = $(this).attr("comment");
+                var nickname = $(this).attr("nickname");
+
+                api.openFrame({
+                    name: 'share',
+                    url: './share.html',
+                    rect: {
+                        x: 0,
+                        y: api.winHeight - 170,
+                        w: api.winWidth,
+                        h: 170
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_bottom", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    },
+                    pageParam: {
+                        userid: userid,
+                        videoid: videoid,
+                        videofrontcover: videofrontcover,
+                        videourl: videourl,
+                        comment: comment,
+                        nickname: nickname
+                    }
+                });
+            });
+            api.addEventListener({
+                name: 'videoaddshare'
+            }, function (ret, err) {
+                $("#sharecount").text($("#sharecount").text() * 1 + 1);
+            });
+        }
+
+        function checklogin() {
+            var userinfo = $api.getStorage('userid');
+            if (userinfo == null || userinfo == "") {
+                api.sendEvent({
+                    name: 'pausevideo'
+                });
+                api.toast({
+                    msg: '请先登录！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>

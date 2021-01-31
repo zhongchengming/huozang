@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>动态详情</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/DynamicDetails.css" />
+</head>
+
+<body>
+    <!--浮动底部-->
+    <ul class="DynamicDetailsBot">
+        <!-- <li id="fengxiang">
+            <div>
+                <img src="../../images/SquarePL_03.png">
+            </div>
+        </li> -->
+        <li id="pinlun">
+            <div>
+                <img src="../../images/SquarePL_05.png">
+            </div>
+        </li>
+        <li id="dianzan">
+            <div>
+                <img src="../../images/SquarePL_07.png">
+            </div>
+        </li>
+    </ul>
+    <!--头部-->
+    <!-- <div class="SquareHeaderS">
+        <div class="SquareHeader">
+            <p class="p2"></p>
+            <p class="p1"></p>
+            <div class="SquareHeaderDIV">动态详情</div>
+        </div>
+    </div>
+    <img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+
+
+
+    <div class="roofS">
+        <div class="roof">
+            <div class="roofReturn"></div>
+            <!-- <div class="roofSearch"></div>
+        <div class="roofMessage messageU"></div> -->
+            <div class="roofConter">
+                动态详情
+            </div>
+        </div>
+    </div>
+    <div class="roofSDiv"></div>
+    <!--详情-->
+    <ul class="DynamicDetailsTop">
+        <li class="DynamicDetailsTopL">
+            <img src="../../images/banner.png">
+        </li>
+        <li class="DynamicDetailsTopC">
+            <p class="p1"></p>
+            <P class="p2"></P>
+        </li>
+        <li class="DynamicDetailsTopR">
+            +&nbsp;关注TA
+        </li>
+    </ul>
+    <hr class="DynamicDetailsHr" />
+    <!--文字-->
+    <div class="DynamicDetailsFontSize">
+    </div>
+    <!--图片-->
+    <div class="squrepic">
+        <!-- <div class="DynamicDetailsImgOne">
+    		<img src="../../images/SquarePL_07.png">
+    	</div>
+    	<ul class="DynamicDetailsImgTwo">
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+    	</ul>
+    	<ul class="DynamicDetailsImg">
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+    		<li>
+    			<img src="../../images/SquarePL_07.png">
+    		</li>
+      </ul> -->
+        <!-- 收藏，举报 -->
+
+    </div>
+    <div class="DynamicDetailsHint">
+        <!-- <div class="collect"><span class="collect-icon"></span>收藏</div> -->
+        <div class="report"><span class="report-icon"></span>举报</div>
+        <div class="myClear"></div>
+    </div>
+    <!--视频-->
+    <!-- <div class="DynamicDetailsVideo">
+        <P><img src="../../images/SquareBF_03.png"></P>
+        <img src="../../images/imgT_03.png" />
+    </div> -->
+
+    <!--动态详情导航-->
+    <ul class="DynamicDetailsNvn">
+        <li id="DynamicDetailsNvnL" data-DDNId="Comment">
+            <P class="p1"></P>
+            <ul class="DynamicDetailsNvnW">
+                <li class="DynamicDetailsNvnWL">
+                    <img src="../../images/SquarePL_05.png" />
+                </li>
+                <li id="pinluncount" class="DynamicDetailsNvnWR">
+                    0
+                </li>
+            </ul>
+        </li>
+        <li data-DDNId="Attention">
+            <P class="p1"></P>
+            <ul class="DynamicDetailsNvnW">
+                <li class="DynamicDetailsNvnWL">
+                    <img src="../../images/SquarePL_07.png" />
+                </li>
+                <li id="dianzancount" data-id="dianzancount" class="DynamicDetailsNvnWR">
+                    0
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!--评论详情列表-->
+    <div id="Comment" class="DetailsList">
+
+    </div>
+    <!--关注详情列表-->
+    <div id="Attention" class="DetailsList">
+
+    </div>
+    <P class="DDetailsB"></P>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+    <script type="text/javascript" src="../../script/util.js"></script>
+    <script type="text/javascript" src="../../script/PublicCss.js"></script>
+    <script type="text/javascript">
+        var pinlunPageSize = 5,
+            pinlunPageNum = 1,
+            pinlunHasNext = true;
+        var dianzanPageSize = 5,
+            dianzanPageNum = 1,
+            dianzanHasNext = true;
+        var type = "pinlun";
+        var squreid = "";
+        var userid = "";
+        var momentid = "";
+        apiready = function () {
+            $api.fixStatusBar($api.dom('.roofS'));
+            // 列表距顶部距离
+            var systemType = api.systemType;
+            if (systemType == "android") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+            }
+            if (systemType == "ios") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+            }
+
+            $api.setStorage('openWin', "DynamicDetails");
+            //返回箭头事件
+            $(".roofReturn").click(function () {
+                api.closeWin({});
+            });
+
+            //滑动关闭
+            api.addEventListener({
+                name: 'swiperight'
+            }, function (ret, err) {
+                api.closeWin({
+                    name: 'DynamicDetails'
+                });
+            });
+
+            squreid = api.pageParam.squreid;
+            userid = api.pageParam.userid;
+            momentid = api.pageParam.momentid;
+            getsquredetail(squreid);
+            photosListener();
+            if (userid == $api.getStorage('userid')) {
+                $(".DynamicDetailsTopR").hide();
+            } else {
+                isfans(userid);
+            }
+
+            isdianzan(momentid);
+            getpinlun(momentid, pinlunPageSize, pinlunPageNum, true);
+            getdianzan(momentid, dianzanPageSize, dianzanPageNum, true, function (data) {
+                                    $('[data-id="dianzancount"]').text(data)
+                                });
+            //动态详情导航
+            $(".DynamicDetailsNvn li").click(function () {
+                $(".DynamicDetailsNvn li").attr("id", "");
+                $(this).attr("id", "DynamicDetailsNvnL");
+                $(".DetailsList").css("display", "none");
+                $("#" + $(this).attr("data-DDNId") + "").css("display", "block");
+                if ($(this).attr("data-DDNId") == "Comment") {
+                    type = "pinlun";
+                } else if ($(this).attr("data-DDNId") == "Attention") {
+                    type = "dianzan";
+                }
+            });
+            //投诉
+            $(".report").click(function () {
+                var reportid = $(this).attr("reportid")
+                api.openWin({
+                    name: 'complain',
+                    url: '../member/complain.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    pageParam: {
+                        userid: userid,
+                        type: 2,
+                        id: reportid
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            });
+            //列表底部
+            $(".DDetailsB").css("height", "" + $(".DynamicDetailsBot").height() + "px");
+
+            api.addEventListener({
+                name: 'swipeup'
+            }, function (ret, err) {
+                if (type == "pinlun") {
+                    if (pinlunHasNext) {
+                        getpinlun(momentid, pinlunPageSize, pinlunPageNum, false);
+                    }
+                } else if (type == "dianzan") {
+                    if (dianzanHasNext) {
+                        getdianzan(momentid, dianzanPageSize, dianzanPageNum, false);
+                    }
+                }
+            });
+
+            // 进入个人主页
+            $("#Comment,#Attention,.DynamicDetailsTop").on("click", ".otherspage", function () {
+                var userid = $(this).attr("userid");
+                api.openWin({
+                    name: 'otherspage',
+                    url: '../otherspage.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    pageParam: {
+                        userid: userid
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            });
+
+            $("#pinlun").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var UIChatBox = api.require('UIChatBox');
+                UIChatBox.open({
+                    autoFocus: true,
+                    emotionPath: "widget://res/image/emotion",
+                    texts: {
+                        sendBtn: {
+                            title: '发送'
+                        }
+                    },
+                    styles: {
+                        inputBar: {
+                            borderColor: '#d9d9d9',
+                            bgColor: '#f2f2f2'
+                        },
+                        inputBox: {
+                            borderColor: '#B3B3B3',
+                            bgColor: '#FFFFFF'
+                        },
+                        indicator: {
+                            target: 'both',
+                            color: '#c4c4c4',
+                            activeColor: '#9e9e9e'
+                        },
+                        sendBtn: {
+                            bg: '#4cc518',
+                            titleColor: '#ffffff',
+                            activeBg: '#46a91e',
+                            titleSize: 13
+                        }
+                    }
+                }, function (ret, err) {
+                    if (ret.eventType == "send") {
+                        if (ret.msg == null || ret.msg == "") {
+                            api.toast({
+                                msg: "评论内容不能为空！",
+                                duration: 1000,
+                                location: 'middle'
+                            });
+                        } else {
+                            api.ajax({
+                                    url: CONFIG.ADDRURL + CONFIG.COMMENT,
+                                    method: 'post',
+                                    data: {
+                                        values: {
+                                            passiveuserid: userid,
+                                            userid: $api.getStorage('userid'),
+                                            momentid: momentid,
+                                            commentcontent: ret.msg,
+                                            commenttype: 2
+                                        }
+                                    }
+                                },
+                                function (data) {
+                                    if (data.code = "200") {
+                                        getpinlun(momentid, 5, 1, true);
+                                        // getsquredetail(squreid);
+                                        api.sendEvent({
+                                            name: 'refreshSquare'
+                                        });
+                                        api.sendEvent({
+                                            name: "sendTextMessageListener",
+                                            extra: {
+                                                touserid: userid,
+                                                message: "系统提示：当前人评论了你的动态，快去看看吧！"
+                                            }
+                                        });
+                                    }
+                                });
+                            UIChatBox.close();
+                        }
+                    }
+                });
+            });
+
+            //子评论
+            $("#Comment").on("click", ".zipinlun", function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var pid = $(this).attr("commentid");
+                var UIChatBox = api.require('UIChatBox');
+                UIChatBox.open({
+                    autoFocus: true,
+                    emotionPath: "widget://res/image/emotion",
+                    texts: {
+                        sendBtn: {
+                            title: '发送'
+                        }
+                    },
+                    styles: {
+                        inputBar: {
+                            borderColor: '#d9d9d9',
+                            bgColor: '#f2f2f2'
+                        },
+                        inputBox: {
+                            borderColor: '#B3B3B3',
+                            bgColor: '#FFFFFF'
+                        },
+                        indicator: {
+                            target: 'both',
+                            color: '#c4c4c4',
+                            activeColor: '#9e9e9e'
+                        },
+                        sendBtn: {
+                            bg: '#4cc518',
+                            titleColor: '#ffffff',
+                            activeBg: '#46a91e',
+                            titleSize: 13
+                        }
+                    }
+                }, function (ret, err) {
+                    if (ret.eventType == "send") {
+                        if (ret.msg == null || ret.msg == "") {
+                            api.toast({
+                                msg: "评论内容不能为空！",
+                                duration: 1000,
+                                location: 'middle'
+                            });
+                        } else {
+                            console.log(userid)
+                            console.log(momentid)
+                            console.log(ret.msg)
+                            console.log(pid)
+                            api.ajax({
+                                    url: CONFIG.ADDRURL + CONFIG.COMMENT,
+                                    method: 'post',
+                                    data: {
+                                        values: {
+                                            passiveuserid: userid,
+                                            userid: $api.getStorage('userid'),
+                                            momentid: momentid,
+                                            commentcontent: ret.msg,
+                                            commenttype: 2,
+                                            pid: pid
+                                        }
+                                    }
+                                },
+                                function (data) {
+                                    if (data.code = "200") {
+                                        getpinlun(momentid, 5, 1, true);
+                                        // getsquredetail(squreid);
+                                        api.sendEvent({
+                                            name: 'refreshSquare'
+                                        });
+                                        api.sendEvent({
+                                            name: "sendTextMessageListener",
+                                            extra: {
+                                                touserid: userid,
+                                                message: "系统提示：当前人回复了你的评论，快去看看吧！"
+                                            }
+                                        });
+                                    }
+                                });
+                            UIChatBox.close();
+                        }
+                    }
+                });
+            });
+
+            //关闭窗口
+            $('body').on('touchstart', function (e) {
+                var UIChatBox = api.require('UIChatBox');
+                UIChatBox.close();
+            });
+            //点赞按钮
+            $("#dianzan").click(function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var dianzan = $(this).find("img");
+                if ($(dianzan).attr("isdianzan") == "true") {
+                    api.ajax({
+                            url: CONFIG.ADDRURL + CONFIG.DELETECOMMENT,
+                            method: 'post',
+                            data: {
+                                values: {
+                                    passiveuserid: userid,
+                                    momentid: momentid,
+                                    userid: $api.getStorage('userid'),
+                                    commenttype: 1
+                                }
+                            }
+                        },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                // $(dianzan).attr("src", "../../images/SquarePL_07.png").attr("isdianzan",
+                                //     "false");
+                                // getsquredetail(squreid);
+                                // dianzanPageNum = 1;
+                                isdianzan(momentid)
+                                getdianzan(momentid, dianzanPageSize, dianzanPageNum, true, function (data) {
+                                    $('[data-id="dianzancount"]').text(data)
+                                })
+                                api.sendEvent({
+                                    name: 'refreshSquare'
+                                });
+                            }
+                        });
+                } else {
+                    api.ajax({
+                            url: CONFIG.ADDRURL + CONFIG.COMMENT,
+                            method: 'post',
+                            data: {
+                                values: {
+                                    momentid: momentid,
+                                    passiveuserid: userid,
+                                    userid: $api.getStorage('userid'),
+                                    commenttype: 1,
+                                    commentcontent: "喜欢"
+                                }
+                            }
+                        },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                // $(dianzan).attr("src", "../../images/SquarePL_09.png").attr("isdianzan",
+                                //     "true");
+                                // getsquredetail(squreid);
+                                // dianzanPageNum = 1;
+                                isdianzan(momentid)
+                                getdianzan(momentid, dianzanPageSize, dianzanPageNum, true, function (data) {
+                                    $('[data-id="dianzancount"]').text(data)
+                                })
+                                api.sendEvent({
+                                    name: 'refreshSquare'
+                                });
+                                api.sendEvent({
+                                    name: "sendTextMessageListener",
+                                    extra: {
+                                        touserid: userid,
+                                        message: "系统提示：当前人对你的动态点赞了，快去看看吧！"
+                                    }
+                                });
+                            }
+                        });
+                }
+            });
+            //子点赞按钮
+            $("#Comment").on("click", ".zidianzan", function () {
+                if (!checklogin()) {
+                    return false;
+                }
+                var dianzan = $(this).find("img");
+                var dianzancount = $(this).siblings(".DLURCommentCR");
+                var pid = $(this).attr("commentid");
+                if ($(dianzan).attr("isdianzan") == "1") {
+                    api.ajax({
+                            url: CONFIG.ADDRURL + CONFIG.DELETECOMMENT,
+                            method: 'post',
+                            data: {
+                                values: {
+                                    momentid: momentid,
+                                    passiveuserid: userid,
+                                    userid: $api.getStorage('userid'),
+                                    commenttype: 1
+                                }
+                            }
+                        },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                $(dianzan).attr("src", "../../images/SquarePL_07.png").attr("isdianzan",
+                                    "0");
+                                $(dianzancount).text($(dianzancount).text() * 1 - 1);
+                            }
+                        });
+                } else {
+                    api.ajax({
+                            url: CONFIG.ADDRURL + CONFIG.COMMENT,
+                            method: 'post',
+                            data: {
+                                values: {
+                                    momentid: momentid,
+                                    passiveuserid: userid,
+                                    userid: $api.getStorage('userid'),
+                                    commenttype: 1,
+                                    commentcontent: "喜欢",
+                                    pid: pid
+                                }
+                            }
+                        },
+                        function (data, err) {
+                            if (data.code == "200") {
+                                $(dianzan).attr("src", "../../images/SquarePL_09.png").attr("isdianzan",
+                                    "1");
+                                $(dianzancount).text($(dianzancount).text() * 1 + 1);
+                                api.sendEvent({
+                                    name: "sendTextMessageListener",
+                                    extra: {
+                                        touserid: userid,
+                                        message: "系统提示：当前人对你的回复点赞了，快去看看吧！"
+                                    }
+                                });
+                            }
+                        });
+                }
+            });
+
+        }
+
+        function getsquredetail(id) {
+            $(".squrepic").empty();
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETUERNEWS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            id: id,
+                            pagesize: 1,
+                            pagenum: 1,
+                            otheruserid: $api.getStorage('userid')
+                        }
+                    }
+                },
+                function (data) {
+                    if (data.code == "200" && data.community != null && data.community.list != null && data
+                        .community.list.length > 0) {
+                        $(".report").attr("reportid", data.community.list[0].id)
+                        $(".DynamicDetailsTopC .p1").html(data.community.list[0].nickname);
+                        $(".DynamicDetailsTopC .p2").html(data.community.list[0].createtime);
+                        $(".DynamicDetailsTopL img").attr("src", data.community.list[0].avatar == null || data
+                            .community.list[0].avatar == "" ? "../../images/avatar.png" : data.community.list[0]
+                            .avatar);
+                        $(".DynamicDetailsTopL,.DynamicDetailsTopC").addClass("otherspage").attr("userid", data
+                            .community.list[0].userid);
+                        $(".DynamicDetailsFontSize").html(data.community.list[0].momentcontent);
+                        $("#pinluncount").html(data.community.list[0].pinluncount);
+                        $("#dianzancount").html(data.community.list[0].dianzancount);
+                        var htmls = "";
+
+
+                        if (data.community.list[0].pics && data.community.list[0].pics.length == 1) {
+                            htmls += "<div class='DynamicDetailsImgOne'>";
+                            $.each(data.community.list[0].pics, function (key, val) {
+                                if (val != null && val != "") {
+                                    htmls += "<img src='" + val + "?imageView2/1/w/300/h/300'>";
+                                }
+                            });
+                            htmls += "</div>";
+                        } else if (data.community.list[0].pics && data.community.list[0].pics.length == 2) {
+                            htmls += "<ul class='DynamicDetailsImgTwo'>";
+                            $.each(data.community.list[0].pics, function (key, val) {
+                                if (val != null && val != "") {
+                                    htmls += "<li><img src='" + val + "?imageView2/1/w/300/h/300'></li>";
+                                }
+                            });
+                            htmls += "</ul>";
+                        } else if (data.community.list[0].pics && data.community.list[0].pics.length > 2) {
+                            htmls += "<ul class ='DynamicDetailsImg'>";
+                            $.each(data.community.list[0].pics, function (key, val) {
+                                if (val != null && val != "") {
+                                    htmls += "<li><img src='" + val + "?imageView2/1/w/300/h/300'></li>";
+                                }
+                            });
+                            htmls += "</ul>";
+
+                        }
+                        $(".squrepic").append(htmls);
+
+                    }
+                });
+        };
+
+
+        // 写真预览监听
+        function photosListener() {
+            $(".squrepic").on("click", "img", function () {
+                var images = [];
+                var index = 0;
+                if ($(this).parent().hasClass("DynamicDetailsImgOne")) {
+                    images.push($(this).attr("src").replace("?imageView2/1/w/300/h/300", ""));
+                } else {
+                    index = $(this).parent().index();
+                    $(this).parent().parent().find("li").each(function () {
+                        images.push($(this).find("img").attr("src").replace("?imageView2/1/w/300/h/300",
+                            ""));
+                    });
+                }
+                var photoBrowser = api.require('photoBrowser');
+                photoBrowser.open({
+                    images: images,
+                    placeholderImg: "",
+                    bgColor: '#000'
+                }, function (ret, err) {
+                    if (ret.eventType == "show") {
+                        api.toast({
+                            msg: "长按可以保存图片哦!",
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    } else if (ret.eventType == "click") {
+                        photoBrowser.close();
+                    } else if (ret.eventType == "longPress") {
+                        api.download({
+                            url: images[ret.index],
+                            report: true,
+                            cache: true,
+                            allowResume: true
+                        }, function (ret, err) {
+                            if (ret.percent == 100) {
+                                api.saveMediaToAlbum({
+                                    path: ret.savePath
+                                }, function (albumret, albumreterr) {
+                                    if (albumret && albumret.status) {
+                                        api.toast({
+                                            msg: "保存成功!",
+                                            duration: 1000,
+                                            location: 'middle'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                photoBrowser.setIndex({
+                    index: index
+                });
+            });
+        }
+
+        function isfans(userid) {
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.ISFANS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: userid,
+                            fansid: $api.getStorage('userid')
+                        }
+                    }
+                },
+                function (isfans, err) {
+                    if (isfans.isfans) {
+                        //已关注
+                        $(".DynamicDetailsTopR").html("已关注");
+                        $(".DynamicDetailsTopR").css({
+                            "color": "#999",
+                            "background": "#eee",
+                        });
+                    } else {
+                        $(".DynamicDetailsTopR").html("+&nbsp;关注");
+                        $(".DynamicDetailsTopR").css({
+                            "color": "#fff",
+                            "background": "#ff9694",
+                        });
+                    }
+                    $(".DynamicDetailsTopR").click(function () {
+                        if (!checklogin()) {
+                            return false;
+                        }
+                        api.ajax({
+                                url: CONFIG.ADDRURL + CONFIG.FANS,
+                                method: 'post',
+                                data: {
+                                    values: {
+                                        userid: userid,
+                                        fansuserid: $api.getStorage('userid')
+                                    }
+                                }
+                            },
+                            function (data, err) {
+                                if (data.code == "200") {
+                                    if ($(".DynamicDetailsTopR").text().indexOf("已关注") >= 0) {
+                                        $(".DynamicDetailsTopR").html("+&nbsp;关注");
+                                        $(".DynamicDetailsTopR").css({
+                                            "color": "#fff",
+                                            "background": "#ff9694",
+                                        });
+                                    } else {
+                                        $(".DynamicDetailsTopR").html("已关注");
+                                        $(".DynamicDetailsTopR").css({
+                                            "color": "#999",
+                                            "background": "#eee",
+                                        });
+                                        api.sendEvent({
+                                            name: "sendTextMessageListener",
+                                            extra: {
+                                                touserid: userid,
+                                                message: "系统提示：当前人关注你咯，快去看看吧！"
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    api.toast({
+                                        msg: data.msg,
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                }
+                            });
+                    });
+                });
+        }
+
+        function isdianzan(momentid) {
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.ISDIANZANMOMENT,
+                    method: 'post',
+                    data: {
+                        values: {
+                            momentid: momentid,
+                            userid: $api.getStorage('userid')
+                        }
+                    }
+                },
+                function (isdianzan, err) {
+                    if (isdianzan.isdianzan) {
+                        $("#dianzan").find("img").attr("src", "../../images/SquarePL_09.png").attr("isdianzan",
+                            "true");
+                    } else {
+                        $("#dianzan").find("img").attr("src", "../../images/SquarePL_07.png").attr("isdianzan",
+                            "false");
+                    }
+                });
+        }
+
+        function getpinlun(id, pagesize, pagenum, isclear) {
+            if (isclear) {
+                $("#Comment").empty();
+            }
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETMOMENTCOMMENTS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            momentid: id,
+                            pagesize: pagesize,
+                            pagenum: pagenum,
+                            commenttype: 2
+                        }
+                    }
+                },
+                function (data) {
+                    if (data.code == "200" && data.comments != null && data.comments.list.length > 0) {
+                        pinlunPageNum = data.comments.nextPage;
+                        pinlunHasNext = data.comments.hasNextPage;
+                        $.each(data.comments.list, function (key, val) {
+                            val.createtime = timestampToTime(val.createtime);
+                            val.replycreatetime = timestampToTime(val.replycreatetime);
+                        });
+                        var tempFn = doT.template($api.byId('pinluntemplate').innerHTML);
+                        var resultHTML = tempFn(data.comments.list);
+                        $("#Comment").append(resultHTML);
+                    }
+                });
+        };
+
+        function getdianzan(id, pagesize, pagenum, isclear,func) {
+            if (isclear) {
+                $("#Attention").empty();
+            }
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETMOMENTCOMMENTS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            momentid: id,
+                            pagesize: pagesize,
+                            pagenum: pagenum,
+                            commenttype: 1
+                        }
+                    }
+                },
+                function (data) {
+                    if (data.code == "200" && data.comments != null ) {
+                        dianzanPageNum = data.comments.nextPage;
+                        dianzanHasNext = data.comments.hasNextPage;
+                        $.each(data.comments.list, function (key, val) {
+                            val.replycreatetime = timestampToTime(val.replycreatetime);
+                        });
+                        var tempFn = doT.template($api.byId('dianzantemplate').innerHTML);
+                        var resultHTML = tempFn(data.comments.list);
+                        $("#Attention").append(resultHTML);
+                        if (func) {
+                                
+                                func(data.comments.total)
+                            }
+                    }
+                });
+        };
+
+        function checklogin() {
+            var userinfo = $api.getStorage('userid');
+            if (userinfo == null || userinfo == "") {
+                api.toast({
+                    msg: '请先登录！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+                api.openWin({
+                    name: 'login',
+                    url: '../../login.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <script type="text/template" id="pinluntemplate">
+        {{~it:value:index}}
+        <ul>
+            <li class="DetailsListUL otherspage" userid="{{=value.replyuserid}}">
+                <img src="{{?value.replyavatar}}{{=value.replyavatar}}{{??}}../../images/avatar.png{{?}}" />
+            </li>
+            <li class="DetailsListUR">
+                <ul class="DetailsListURT otherspage" userid="{{=value.replyuserid}}">
+                    <li>{{=value.replynickname}}</li>
+                    <li></li>
+                </ul>
+                <div class="DLURCenter otherspage" userid="{{=value.replyuserid}}">
+                    {{=value.replycommentcontent}}
+                </div>
+                <div class="DLURComment">
+                    <div class="DLURCommentL">
+                        {{=value.replycreatetime}}
+                    </div>
+                    <ul class="DLURCommentC">
+                        <li commentid="{{=value.replyid}}" class="DLURCommentCL zidianzan">
+                            <img isdianzan="{{=value.dianzan}}" src="{{?1==value.dianzan}}../../images/SquarePL_09.png{{??}}../../images/SquarePL_07.png{{?}}" />
+                        </li>
+                        <li class="DLURCommentCR">
+                            {{=value.dianzancount}}
+                        </li>
+                    </ul>
+                    <ul class="DLURCommentR">
+                        <li commentid="{{=value.replyid}}" class="DLURCommentCL zipinlun">
+                            <img src="../../images/SquarePL_05.png" />
+                        </li>
+                        <li class="DLURCommentCR">
+                            {{=value.pinluncount}}
+                        </li>
+                    </ul>
+                </div>
+                {{?value.commentcontent}}
+                <div>
+                    <ul>
+                        <li class="DetailsListUR">
+                            <ul class="DetailsListURT">
+                                <li><img userid="{{=value.userid}}" class="otherspage" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" /></li>
+                                <li>@{{=value.nickname}}</li>
+                                <li></li>
+                            </ul>
+                            <div class="DLURCenter">
+                                {{=value.commentcontent}}
+                            </div>
+                            <div class="DLURComment">
+                                <div class="DLURCommentL">
+                                    {{=value.createtime}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                {{?}}
+            </li>
+        </ul>
+        {{~}}
+    </script>
+
+    <script type="text/template" id="dianzantemplate">
+        {{~it:value:index}}
+        <ul userid="{{=value.replyuserid}}" class="otherspage">
+            <li class="DetailsListUL">
+                <img src="{{?value.replyavatar}}{{=value.replyavatar}}{{??}}../../images/avatar.png{{?}}" />
+            </li>
+            <li class="DetailsListUR">
+                <ul class="DetailsListURT">
+                    <li>{{=value.replynickname}}</li>
+                    <li></li>
+                </ul>
+                <div class="DLURComment">
+                    <div class="DLURCommentL">
+                        {{=value.replycreatetime}}
+                    </div>
+                    <!-- <ul class="DLURCommentC">
+                        <li class="DLURCommentCL">
+                            <img src="../../images/SquarePL_07.png" />
+                        </li>
+                        <li class="DLURCommentCR">
+                            0
+                        </li>
+                    </ul> -->
+                </div>
+            </li>
+        </ul>
+        {{~}}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,807 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>个人资料</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mine.css" rel="stylesheet" />
+	<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<style>
+		.madeVoice {
+			display: inline-block;
+			width: 37px;
+			height: 23px;
+			float: right;
+			margin-top: 7px;
+		}
+
+		.madeVoice img {
+			display: 100%;
+			height: 100%;
+		}
+
+		.mui-table-view-cell span {
+			color: #f00;
+			margin-left: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<!-- <a class="app-set-icon"></a> --
+		<h1 class="mui-title">个人资料</h1>
+	</header> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				个人资料
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<div class="mui-content personal-homepage-data page-bottom">
+		<form>
+			<ul class="mui-table-view data-setting">
+				<li class="mui-table-view-cell headimg">
+					<label>头像<span>*</span></label>
+					<span class="mui-pull-right head">
+						<img id="head-img" class="head-img mui-action-preview" src="" />
+					</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell nickname">
+					<a>
+						<label>昵称<span>*</span></label>
+						<span id="nickname" class="mui-pull-right span-text"></span>
+						<i></i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell voiceBtn">
+					<a>
+						<label>录制语音介绍（5~60S）</label>
+						<span class="madeVoice"><img src="../../images/voice.png" /></span>
+						<i></i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell bio">
+					<label>签名<span>*</span></label>
+					<span id="bio" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell" id="birthDate">
+					<label>生日<span>*</span></label>
+					<span class="mui-pull-right span-text" id="j-birth-date">2000-12-20</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell" id="showDataSex">
+					<label>性别<span>*</span></label>
+					<span class="mui-pull-right span-text" id="dataSexResult"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell height">
+					<label>身高cm<span>*</span></label>
+					<span id="height" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell weight">
+					<label>体重kg<span>*</span></label>
+					<span id="weight" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell profession">
+					<label>职业<span>*</span></label>
+					<span id="profession" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell" id="showDataEducation">
+					<label>文化修养</label>
+					<span id="education" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell hometown">
+					<label>家乡</label>
+					<span id="hometown" class="mui-pull-right span-text"></span>
+					<i></i>
+				</li>
+
+				<li class="mui-table-view-cell hobby">
+					<label>喜好</label>
+					<span id="hobby" class="mui-pull-right span-text">打游戏,看电影</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell tags">
+					<label>形象描述<span>*</span></label>
+					<span id="tags" class="mui-pull-right span-text">长发,美甲</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell pet">
+					<label>宠物</label>
+					<span id="pet" class="mui-pull-right span-text">猫</span>
+					<i></i>
+				</li>
+
+			</ul>
+		</form>
+	</div>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/jquery.min.js"></script>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/mui.picker.min.js"></script>
+	<script src="../../script/config.js"></script>
+	<script src="../../script/city.data-3.js"></script>
+	<script type="text/javascript">
+		apiready = function () {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "infosetting");
+
+				api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+             //置空
+        });
+			//返回箭头事件
+			$(".roofReturn").click(function () {
+				var userid = $api.getStorage('userid')
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+						method: 'post',
+						data: {
+							values: {
+								userid: userid
+							}
+						}
+					},
+					function (data, err) {
+						// if (data.code == "200") {
+						// 	if (data.userinfo.avatar == null || data.userinfo.avatar == "") {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.nickname == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.weight == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.gender == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.birthday == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.nickname == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.bio == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.height == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.profession == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if (data.userinfo.tags == null) {
+						// 		api.toast({
+						// 			msg: "请填写带星号的选项",
+						// 			duration: 1000,
+						// 			location: 'middle'
+						// 		});
+						// 		return false
+						// 	}
+						// 	if(data.userinfo.gender == 1){
+						// 		var json = {
+						// 			userid: userid,
+						// 			pagesize:10,
+						// 			pagenum: 1,
+						// 		}
+						// 		ismadam(json)
+						// 	}
+						// 	api.closeWin({});
+						// }
+            api.closeWin({});
+					});
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function (ret, err) {
+				var userid = $api.getStorage('userid')
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+						method: 'post',
+						data: {
+							values: {
+								userid: userid
+							}
+						}
+					},
+					function (data, err) {
+						if (data.code == "200") {
+							if (data.userinfo.avatar == null || data.userinfo.avatar == "") {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.nickname == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.weight == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.gender == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.birthday == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.nickname == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.bio == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.height == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.profession == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if (data.userinfo.tags == null) {
+								api.toast({
+									msg: "请填写带星号的选项",
+									duration: 1000,
+									location: 'middle'
+								});
+								return false
+							}
+							if(data.userinfo.gender == 1){
+								var json = {
+									userid: userid,
+									pagesize:10,
+									pagenum: 1,
+								}
+								ismadam(json)
+							}
+						}
+					});
+				// api.closeWin({
+				//
+				// });
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+
+			var userid = $api.getStorage('userid');
+
+			function ismadam(json) {
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.GETSOULSERVICES,
+						method: 'post',
+						data: {
+							values:json
+						}
+					},
+					function(data, err) {
+							if (data.code == "200") {
+								console.log(JSON.stringify(data))
+								var list = data.services.list.length
+								if(list==0){
+									api.openWin({
+											name: 'infosetting',
+											url: 'html/releaseservice.html',
+											bgColor: "rgba(255, 255, 255, 0)",
+											animation: {
+													type: "push", //动画类型（详见动画类型常量）
+													subType: "from_right", //动画子类型（详见动画子类型常量）
+													duration: 300 //动画过渡时间，默认300毫秒
+											},
+											pageParam:{
+													userid: $api.getStorage('userid'),
+													noGoback: true,
+													gender:0
+											}
+									});
+								}
+							}
+					});
+			}
+			//添加录音
+			$(".voiceBtn").click(function () {
+				api.openWin({
+					name: 'voice',
+					url: 'voice.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid
+					}
+				});
+
+			});
+
+
+			// var btnElem = document.getElementById("messageBtn"); //获取ID
+			// var posStart = 0; //初始化起点坐标
+			// var posEnd = 0; //初始化终点坐标
+			// var posMove = 0; //初始化滑动坐标
+			// function initEvent() {
+			// 	btnElem.addEventListener("touchstart", function(event) {
+			// 		event.preventDefault(); //阻止浏览器默认行为
+			// 		posStart = 0;
+			// 		posStart = event.touches[0].pageY; //获取起点坐标
+			// 		btnElem.value = '松开 结束';
+			// 		console.log("start");
+			// 		console.log(posStart + '---------开始坐标');
+			// 	});
+			// 	btnElem.addEventListener("touchmove", function(event) {
+			// 		event.preventDefault(); //阻止浏览器默认行为
+			// 		posMove = 0;
+			// 		posMove = event.targetTouches[0].pageY; //获取滑动实时坐标
+			// 		if (posStart - posMove < 500) {
+			// 			btnElem.value = '松开 结束';
+			// 		} else {
+			// 			btnElem.value = '松开手指，取消发送';
+			// 		}
+			// 		/*console.log(posStart+'---------');
+			// 		console.log(posMove+'+++++++++');*/
+			// 	});
+			// 	btnElem.addEventListener("touchend", function(event) {
+			// 		event.preventDefault();
+			// 		posEnd = 0;
+			// 		posEnd = event.changedTouches[0].pageY; //获取终点坐标
+			// 		btnElem.value = '按住 说话';
+			// 		console.log("End");
+			// 		console.log(posEnd + '---------结束坐标');
+			// 		if (posStart - posEnd < 500) {
+			// 			console.log("发送成功");
+			// 			save();
+			// 		} else {
+			// 			console.log("取消发送");
+			// 			console.log("Cancel");
+			// 		};
+			// 	});
+			// };
+			// initEvent();
+			//
+			// function save() {
+			// 	//ajax
+			// 	console.log('Success');
+			// 	// api.ajax({
+			// 	// 	url: CONFIG.ADDRURL + CONFIG.UPLOADVD,
+			// 	// 	method: 'post',
+			// 	// 	data: {
+			// 	// 		values: {
+			// 	//
+			// 	// 		}
+			// 	// 	}
+			// 	// }, function(data, err) {
+			// 	// 	if (data.code == "200" && data.dict && data.dict.length > 0) {
+			// 	// 		$("#wx").attr("src", data.dict[0].value);
+			// 	// 	}
+			// 	// });
+			// }
+
+
+
+			//修改昵称，个性签名，体重
+			$(".nickname,.bio,.weight,.height,.profession,.hobby,.tags,.pet").click(function () {
+				var pageParam = {};
+				pageParam.userid = userid;
+				if ($(this).is(".nickname")) {
+					pageParam.type = "nickname";
+					pageParam.title = "修改昵称";
+					pageParam.vaule = $("#nickname").text();
+				} else if ($(this).is(".bio")) {
+					pageParam.type = "bio";
+					pageParam.title = "修改自我描述";
+					pageParam.vaule = $("#bio").text();
+				} else if ($(this).is(".weight")) {
+					pageParam.type = "weight";
+					pageParam.title = "修改体重";
+					pageParam.vaule = $("#weight").text();
+				} else if ($(this).is(".height")) {
+					pageParam.type = "height";
+					pageParam.title = "修改身高";
+					pageParam.vaule = $("#height").text();
+				} else if ($(this).is(".profession")) {
+					pageParam.type = "profession";
+					pageParam.title = "修改职业";
+					pageParam.vaule = $("#profession").text();
+				} else if ($(this).is(".hobby")) {
+					pageParam.type = "hobby";
+					pageParam.title = "修改喜好";
+					pageParam.vaule = $("#hobby").text();
+				} else if ($(this).is(".tags")) {
+					pageParam.type = "tags";
+					pageParam.title = "修改形象描述";
+					pageParam.vaule = $("#tags").text();
+				} else if ($(this).is(".pet")) {
+					pageParam.type = "pet";
+					pageParam.title = "修改宠物";
+					pageParam.vaule = $("#pet").text();
+				}
+
+				api.openWin({
+					name: 'updatesetting',
+					url: './updatesetting.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: pageParam
+				});
+			});
+
+			//修改头像
+			$(".headimg").click(function () {
+				var userid = $api.getStorage('userid');
+				api.openWin({
+					name: 'uploadavatar',
+					url: './uploadavatar.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					pageParam: {
+						userid: userid
+					},
+					reload: true
+				});
+			});
+
+			loadinfosetting();
+
+			api.addEventListener({
+				name: 'infosetting'
+			}, function (ret, err) {
+				loadinfosetting();
+			});
+
+			//时间控件
+			(function ($) {
+				$.init();
+				var birthDate = document.querySelector("#birthDate");
+				birthDate.addEventListener("touchstart", function (e) {
+					e.preventDefault();
+				}, false);
+				birthDate.addEventListener('touchend', function (e) {
+					e.preventDefault();
+					var options = {
+						type: "date",
+						beginYear: 1970,
+						endDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function (rs) {
+						document.querySelector("#j-birth-date").innerText = rs.text;
+						picker.dispose();
+						updateSelect("birthday", rs.text);
+					});
+				}, false);
+			})(mui);
+
+			//性别下拉选项
+			(function ($, doc) {
+				$.init();
+				$.ready(function () {
+					//性别
+					var dataSex = new $.PopPicker();
+					var dataSexData = [{
+						value: '1',
+						text: '女'
+					}, {
+						value: '0',
+						text: '男'
+					}];
+					dataSex.setData(dataSexData);
+					var showDataSexButton = doc.getElementById('showDataSex');
+					showDataSexButton.addEventListener("touchstart", function (e) {
+						if (showDataSexButton.getAttribute('setted') == "true") {
+							return false
+						}
+						e.preventDefault();
+						api.toast({
+							msg: "性别只能修改一次，请慎重！",
+							duration: 1000,
+							location: 'middle'
+						});
+					}, false);
+					showDataSexButton.addEventListener('touchend', function (e) {
+						e.preventDefault();
+						if (showDataSexButton.getAttribute('setted') == "true") {
+							return false
+						}
+						dataSex.show(function (items) {
+							//修改本地缓存，修改数据库
+							$api.setStorage('gender', items[0].value);
+
+							updateSelect("gender", items[0].value);
+							api.sendEvent({
+								name: 'infosetting',
+							});
+							api.sendEvent({
+								name: 'mine',
+							});
+						});
+					}, false);
+				});
+			})(mui, document);
+
+			//文化修养下拉选项
+			(function ($, doc) {
+				$.init();
+				$.ready(function () {
+					//性别
+					var dataEducation = new $.PopPicker();
+					var dataEducationData = [{
+						value: "博士研究生",
+						text: "博士研究生"
+					}, {
+						value: "硕士研究生",
+						text: "硕士研究生"
+					}, {
+						value: "大学本科教育",
+						text: "大学本科教育"
+					}, {
+						value: "大学专科教育",
+						text: "大学专科教育"
+					}, {
+						value: "高中教育",
+						text: "高中教育"
+					}, {
+						value: "初中教育",
+						text: "初中教育"
+					}, {
+						value: "小学教育",
+						text: "小学教育"
+					}];
+					dataEducation.setData(dataEducationData);
+					var showDataEducationButton = doc.getElementById('showDataEducation');
+					showDataEducationButton.addEventListener("touchstart", function (e) {
+						e.preventDefault();
+					}, false);
+					showDataEducationButton.addEventListener('touchend', function (e) {
+						e.preventDefault();
+						dataEducation.show(function (items) {
+							//修改本地缓存，修改数据库
+							updateSelect("education", items[0].value);
+							document.querySelector("#education").innerText = items[0].value;
+							api.sendEvent({
+								name: 'authsetting'
+							});
+						});
+					}, false);
+				});
+			})(mui, document);
+
+			//家乡下拉选项
+			(function ($, doc) {
+				$.init();
+				$.ready(function () {
+					var city_picker = new mui.PopPicker({
+						layer: 3
+					});
+					city_picker.setData(cityData3);
+					$(".data-setting").on("click", '.hometown', function () {
+						city_picker.show(function (items) {
+							if ((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if ((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							} else if ((items[2] || {}).text == undefined) {
+								(items[2] || {}).text = "";
+							}
+							var hometown = (items[0] || {}).text + "-" + (items[1] || {})
+								.text + "-" + (items[2] || {}).text;
+							document.querySelector("#hometown").innerText = hometown;
+							updateSelect("hometown", hometown);
+						});
+					});
+				});
+			})(mui, document);
+		}
+
+
+
+		function updateSelect(type, update) {
+			var userid = $api.getStorage('userid');
+			//修改头像，性别，生日
+			var params = {};
+			if (type == "birthday") {
+				params.userid = userid;
+				params.birthday = update;
+			} else if (type == "gender") {
+				params.userid = userid;
+				params.gender = update;
+			} else if (type == "avatar") {
+				params.userid = userid;
+				params.birthday = update;
+			} else if (type == "hometown") {
+				params.userid = userid;
+				params.hometown = update;
+			} else if (type == "education") {
+				params.userid = userid;
+				params.education = update;
+			}
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+				method: 'post',
+				data: {
+					values: params
+				}
+			}, function (data) {
+				console.log(JSON.stringify(data))
+				if (data.code == "200") {
+					api.sendEvent({
+						name: 'infosetting',
+					});
+				} else {
+					api.toast({
+						msg: data.msg,
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		}
+
+		function loadinfosetting() {
+			var userid = $api.getStorage('userid');
+			//加载原始数据
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						$("#head-img").attr("src", data.userinfo.avatar == null || data.userinfo.avatar == "" ?
+							"../../images/avatar.png" : data.userinfo.avatar);
+						$("#nickname").text(data.userinfo.nickname == null ? "" : data.userinfo.nickname);
+						$("#weight").text(data.userinfo.weight == null ? "" : data.userinfo.weight);
+						if (data.userinfo.gender == null) {} else if (data.userinfo.gender == 1) {
+							$("#dataSexResult").text('女')
+							$("#showDataSex").attr("setted", "true")
+						} else if (data.userinfo.gender == 0) {
+							$("#dataSexResult").text('男')
+							$("#showDataSex").attr("setted", "true")
+						}
+						$("#j-birth-date").text(data.userinfo.birthday == null ? "" : data.userinfo.birthday);
+						$("#bio").text(data.userinfo.bio == null ? "" : data.userinfo.bio);
+						$("#mobile").text(data.userinfo.mobile == null ? "" : data.userinfo.mobile);
+						$("#height").text(data.userinfo.height == null ? "" : data.userinfo.height);
+						$("#profession").text(data.userinfo.profession == null ? "" : data.userinfo.profession);
+						$("#education").text(data.userinfo.education == null ? "" : data.userinfo.education);
+						$("#hometown").text(data.userinfo.hometown == null ? "" : data.userinfo.hometown);
+						$("#hobby").text(data.userinfo.hobby == null ? "" : data.userinfo.hobby);
+						$("#tags").text(data.userinfo.tags == null ? "" : data.userinfo.tags);
+						$("#pet").text(data.userinfo.pet == null ? "" : data.userinfo.pet);
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

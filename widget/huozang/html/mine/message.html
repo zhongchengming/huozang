@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>消息</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/api.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link href="../../css/common.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/message.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">消息</h1>
+	</header> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				消息
+			</div>
+		</div>
+		<ul class="messageIcon">
+			<li data-id="messageYH">
+				<div class="messageIconTop messageYH"></div>
+				<div class="messageIconBottom">约会</div>
+			</li>
+			<!-- <li data-id="messageBY">
+				<div class="messageIconTop messageBY"></div>
+				<div class="messageIconBottom">伴游</div>
+			</li> -->
+			<li data-id="messageDZ">
+				<div class="messageIconTop messageDZ"></div>
+				<div class="messageIconBottom">点赞</div>
+			</li>
+			<li data-id="messagePL">
+				<div class="messageIconTop messagePL"></div>
+				<div class="messageIconBottom">评论</div>
+			</li>
+			<li data-id="messageGZ">
+				<div class="messageIconTop messageGZ"></div>
+				<div class="messageIconBottom">关注</div>
+			</li>
+		</ul>
+
+	</div>
+	<div class="roofSDiv"></div>
+
+
+	<div class="mui-content personal-homepage-data page-bottom">
+
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/messageUtil.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					
+				});
+			});
+			//导航按下
+			$(".messageIcon li").mousedown(function() {
+				$(".messageIcon li").css("background", "#fff");
+				$(this).css("background", "#f9f9f9");
+			})
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					
+				});
+			});
+			initmessage();
+
+			api.addEventListener({
+				name: 'initmessage'
+			}, function(ret, err) {
+				initmessage();
+			});
+
+			$(".messageIcon li").click(function() {
+				var id = $(this).attr("data-id");
+				if (id == "messageYH") {
+					api.openWin({
+						name: 'MyAppointmentOrder',
+						url: './MyAppointmentOrder.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: $api.getStorage('userid')
+						}
+					});
+				} else if (id == "messageBY") {
+					api.openWin({
+						name: 'MyTravelOrder',
+						url: './MyTravelOrder.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: $api.getStorage('userid')
+						}
+					});
+				} else if (id == "messageDZ") {
+					api.openWin({
+						name: 'commentlist',
+						url: './commentlist.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							type: 1
+						}
+					});
+				} else if (id == "messagePL") {
+					api.openWin({
+						name: 'commentlist',
+						url: './commentlist.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							type: 2
+						}
+					});
+				} else if (id == "messageGZ") {
+					api.openWin({
+						name: 'fans',
+						url: './fans.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: $api.getStorage('userid')
+						}
+					});
+				}
+			});
+		}
+
+		function initmessage() {
+			var msg = new messageUtil();
+			var messageList = msg.showMessageLists($api.getStorage('userid'));
+			var UIListViewData = [];
+			if (messageList.length > 0) {
+				$.each(messageList, function(i, n) {
+					if (n.content.indexOf("img") >= 0) {
+						n.content = "[表情]";
+					}else if(n.content.length>20){
+						n.content = n.content.substring(0,20)+"...";
+					};
+					UIListViewData.push({
+						uid: n.frienduserid,
+						imgPath: n.avatar,
+						title: n.nickname,
+						subTitle: (n.unreadmessages > 0 ? n.unreadmessages + "条未读:" : "") + n.content,
+						remark: messagetTimestampToTime(n.sendtime)
+					});
+				});
+				var UIListView = api.require('UIListView');
+				UIListView.open({
+					rect: {
+						x: 5,
+						y: $api.dom('.roofS').offsetHeight,
+						w: api.winWidth - 10,
+						h: api.winHeight - $api.dom('.roofS').offsetHeight
+					},
+					data: UIListViewData,
+					bounces:true,
+					styles: {
+						borderColor: '#e3e2e6',
+						item: {
+							bgColor: '#fff',
+							activeBgColor: '#F5F5F5',
+							height: 55,
+							imgWidth: 45,
+							imgHeight: 45,
+							imgCorner: 4,
+							placeholderImg: '',
+							titleSize: 12,
+							titleColor: '#000',
+							subTitleSize: 12,
+							subTitleColor: '#000',
+							remarkColor: '#000',
+							remarkSize: 16,
+							remarkIconWidth: 30
+						}
+					},
+					rightBtns: [{
+						bgColor: '#ff0000',
+						activeBgColor: '',
+						width: 70,
+						title: '删除',
+						titleSize: 12,
+						titleColor: '#fff',
+						icon: '',
+						iconWidth: 20
+					}]
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.eventType == "clickRightBtn") { //删除
+							UIListView.getDataByIndex({
+								index: ret.index
+							}, function(indexret, indexerr) {
+								if (indexret) {
+									//删除列表
+									UIListView.deleteItem({
+										index: ret.index
+									}, function(itemret, itemerr) {
+										if (itemret.status) {
+											//删除本地全部信息
+											var msg = new messageUtil();
+											msg.deletefriendMessages(indexret.data.uid);
+										}
+									});
+								}
+							});
+						} else if (ret.eventType == "clickContent") { //点击事件
+							UIListView.getDataByIndex({
+								index: ret.index
+							}, function(indexret, indexerr) {
+								if (indexret) {
+									//跳转到聊天界面
+									api.openWin({
+										name: 'onetoone',
+										url: './onetoone.html',
+										bgColor: "rgba(255, 255, 255, 0)",
+										animation: {
+											type: "push", //动画类型（详见动画类型常量）
+											subType: "from_right", //动画子类型（详见动画子类型常量）
+											duration: 300 //动画过渡时间，默认300毫秒
+										},
+										pageParam: {
+											touserid: indexret.data.uid,
+											tousername: indexret.data.title
+										}
+									});
+
+								}
+							});
+						}
+					}
+				});
+			} else {
+				$(".mui-content").append("<div id=\"no-conent\"><img src=\"../../images/no-messagecontent.png\"/></div>");
+			}
+		}
+	</script>
+</body>
+
+</html>

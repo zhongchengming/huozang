@@ -1,0 +1,717 @@
+<!doctype html>
+<htm
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>SOUL</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/mui.min.css" />
+    <script type="text/javascript" src="script/base.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+</head>
+
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <div id="main" class="bar-tab flex-con">
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script type="text/javascript" src="script/config.js"></script>
+<script type="text/javascript" src="script/messageUtil.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+
+        var systemType = api.systemType;
+        // 读取最新版本
+        //  api.ajax({
+        //      url: CONFIG.ADDRURL + CONFIG.GETDIC,
+        //      method: 'post',
+        //      data: {
+        //          values: {
+        //              type: systemType
+        //          }
+        //      }
+        //  }, function(ret, err) {
+        //      if (ret) {
+        //          var newversion = ret.dict[0].value;
+        //          //检测应用版本
+        //          var appVersion = api.appVersion;
+        //          if (appVersion != newversion) {
+        //              alert("当前版本过低，请更新到最新版本！");
+        //              api.ajax({
+        //                  url: CONFIG.ADDRURL + CONFIG.GETDIC,
+        //                  method: 'post',
+        //                  data: {
+        //                      values: {
+        //                          type: "appdownload"
+        //                      }
+        //                  }
+        //              }, function(data, err) {
+        //               //  alert(JSON.stringify(data))
+        //                  if (data.code == "200" && data.dict && data.dict.length > 0) {
+        //                   //  alert(data.dict[0].value)
+        //                      api.openFrame({
+        //                          name: 'download',
+        //                          url: data.dict[0].value,
+        //                          pageParam: {
+        //                              name: 'download'
+        //                          },
+        //                          rect: {
+        //                              x: 0,
+        //                              y: 0,
+        //                              w: api.winWidth,
+        //                              h: api.winHeight
+        //                          }
+        //                      });
+        //                      setTimeout(function() {
+        //                          api.sendEvent({
+        //                              name: 'hidefooter'
+        //                          });
+        //                      }, 1000);
+        //                  }
+        //              });
+        //          }
+        //      }
+        //  });
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: 'rgba(255,255,255,0)'
+        });
+        if (api.systemType == "android") {
+            //添加返回键监听
+            api.addEventListener({
+                name: 'keyback'
+            }, function (ret, err) {
+                exitApp()
+                //frame在视频的时候可以返回到首页
+                if ($api.getStorage('indexOpenFrame') == "video") {
+                    api.sendEvent({
+                        name: 'setgroupIndex',
+                        extra: {
+                            index: 0
+                        }
+                    });
+
+                    api.sendEvent({
+                        name: 'closevideobtn'
+                    });
+                    api.sendEvent({
+                        name: 'closevideocomment'
+                    });
+                    api.sendEvent({
+                        name: 'closevideoshare'
+                    });
+                } else {
+                    if ($api.getStorage('openWin')) {
+                        api.closeWin({
+                            name: $api.getStorage('openWin')
+                        });
+                        $api.rmStorage('openWin');
+                    }
+                }
+            });
+        }
+        //打开数据库
+        var msg = new messageUtil();
+        msg.openDb();
+        msg.createTable();
+        funIniGroup();
+        //增加监听首页默认
+        api.addEventListener({
+            name: 'index'
+        }, function (ret, err) {
+            api.sendEvent({
+                name: 'btnSwitch',
+                extra: {
+                    index: 0
+                }
+            });
+        });
+        //获取通讯录
+        if ($api.getStorage('userid') != null && $api.getStorage('userid') != "") {
+            getcontact($api.getStorage('userid'));
+        }
+        api.addEventListener({
+            name: 'openapplocation'
+        }, function (ret, err) {
+            $api.setStorage('position', "108.9534750000,34.2675560000");
+            openapplocation();
+
+        });
+        $api.setStorage('position', "108.9534750000,34.2675560000");
+        openapplocation();
+
+        getUserInfo()
+        //消息提醒事项打开
+        if (api.systemType == "android") {
+            var checknotification = api.require('checknotification');
+            checknotification.check({}, function (ret) {
+                if (ret.code == 1) {
+                    api.toast({
+                        msg: "你未开启消息提醒哦，新的消息可能不能及时看到哦！",
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                    checknotification.jumpSetting();
+                }
+            });
+        } else if (api.systemType == "ios") {
+            var privacy = api.require('privacy');
+            privacy.reminders(function (ret, err) {
+                if (!ret.status) {
+                    api.toast({
+                        msg: "你未开启消息提醒哦，新的消息可能不能及时看到哦！",
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                }
+            });
+        }
+
+        //消息
+        api.openFrame({
+            name: 'rongyun',
+            url: './html/rongyun.html',
+            bgColor: "rgba(255, 255, 255, 0)",
+            rect: {
+                x: 0,
+                y: 0,
+                w: '0px',
+                h: '0px'
+            }
+        });
+
+        //点击消息状态栏跳转
+        api.addEventListener({
+            name: 'noticeclicked'
+        }, function (ret, err) {
+            if (ret.value == "CHATMESSAGE") {
+                api.openWin({
+                    name: 'message',
+                    url: './html/mine/message.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            }
+        });
+
+        //打开APP后，清除所有通知栏通知
+        api.cancelNotification({
+            id: -1
+        });
+    }
+
+    function openapplocation() {
+        //获取定位
+        var bmLocation = api.require('bmLocation');
+        bmLocation.configManager({
+            accuracy: 'device_sensors',
+            filter: 1,
+            activityType: 'automotiveNavigation',
+            coordinateType: 'GCJ02',
+            locationTimeout: 10,
+            reGeocodeTimeout: 10
+        });
+        bmLocation.singleLocation({
+            reGeocode: false,
+            netWorkState: false
+        }, function (ret, err) {
+            if (ret.status) {
+                $api.setStorage('position', ret.location.longitude + "," + ret.location.latitude);
+                var userid = $api.getStorage('userid');
+                if (userid != null && userid != "") {
+                    if (api.systemType == "android") {
+                        var location = ret.location.longitude + "," + ret.location.latitude + "," + ret.reGeo
+                            .locationDescribe;
+                        postLocation(userid, location)
+                    } else if (api.systemType == "ios") {
+                        api.ajax({
+                            url: "http://api.map.baidu.com/reverse_geocoding/v3/",
+                            method: 'post',
+                            data: {
+                                values: {
+                                    ak: "r0GPTlafEf4gbOZAENRPNTb0b8OfzXGK",
+                                    output: 'json',
+                                    coordtype: 'wgs84ll',
+                                    extensions_poi: '1',
+                                    location: ret.location.latitude + ',' + ret.location.longitude
+                                }
+                            }
+                        }, function (data) {
+                            if (data) {
+                                if (data.status == 0) {
+                                    postLocation(userid, ret.location.longitude + "," + ret.location
+                                        .latitude + ",在" + data.result.pois[0].name + '附近')
+                                } else {
+                                    postLocation(userid, ret.location.longitude + "," + ret.location
+                                        .latitude)
+                                }
+                            } else {
+                                postLocation(userid, ret.location.longitude + "," + ret.location
+                                    .latitude)
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+    }
+
+    function getUserInfo() {
+        var userid = $api.getStorage('userid')
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+                method: 'post',
+                data: {
+                    values: {
+                        userid: userid
+                    }
+                }
+            },
+            function (data, err) {
+                if (data.code == "200") {
+                    if (data.userinfo.avatar == null || data.userinfo.avatar == "") {
+                        openUserSetting('请上传头像')
+                        return false
+                    }
+                    if (data.userinfo.nickname == null) {
+                        openUserSetting("请填写昵称")
+                        return false
+                    }
+                    if (data.userinfo.weight == null) {
+                        openUserSetting("请填写体重")
+                        return false
+                    }
+                    if (data.userinfo.gender == null) {
+                        openUserSetting("请填写性别")
+                        return false
+                    }
+                    if (data.userinfo.birthday == null) {
+                        openUserSetting("请填写生日")
+                        return false
+                    }
+                    if (data.userinfo.nickname == null) {
+                        openUserSetting("请填写昵称")
+                        return false
+                    }
+                    if (data.userinfo.bio == null) {
+                        openUserSetting("请填写自我描述")
+                        return false
+                    }
+                    if (data.userinfo.height == null) {
+                        openUserSetting("请填写身高")
+                        return false
+                    }
+                    if (data.userinfo.profession == null) {
+                        openUserSetting("请填写职业")
+                        return false
+                    }
+                    if (data.userinfo.tags == null) {
+                        openUserSetting("请填写形象描述")
+                        return false
+                    }
+                    if (data.userinfo.gender == 1) {
+                      var json = {
+                        userid: userid,
+                        pagesize:10,
+                        pagenum: 1,
+                      }
+                        ismadam(json)
+                    }
+
+                }
+            });
+    }
+
+    function ismadam(json) {
+      api.ajax({
+          url: CONFIG.ADDRURL + CONFIG.GETSOULSERVICES,
+          method: 'post',
+          data: {
+            values:json
+          }
+        },
+        function(data, err) {
+            if (data.code == "200") {
+  						console.log(JSON.stringify(data))
+  						var list = data.services.list.length
+              if(list==0){
+                api.openWin({
+                    name: 'infosetting',
+                    url: './html/releaseservice.html',
+                    bgColor: "rgba(255, 255, 255, 0)",
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    },
+                    pageParam:{
+                        userid: $api.getStorage('userid'),
+                        noGoback: true,
+                        gender:1
+                    }
+                });
+              }
+  					}
+        });
+    }
+
+    function openUserSetting(msg) {
+        api.toast({
+            msg: msg+',让更多人认识你！',
+            duration: 2000,
+            location: 'middle'
+        });
+        api.openWin({
+            name: 'infosetting',
+            url: './html/mine/infosetting.html',
+            bgColor: "rgba(255, 255, 255, 0)",
+            animation: {
+                type: "push", //动画类型（详见动画类型常量）
+                subType: "from_right", //动画子类型（详见动画子类型常量）
+                duration: 300 //动画过渡时间，默认300毫秒
+            },
+            pageParam:{
+                userid: $api.getStorage('userid'),
+                noGoback: true
+            }
+        });
+    }
+    // 保存定位信息
+    function postLocation(userid, location) {
+        api.ajax({
+            url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+            method: 'post',
+            data: {
+                values: {
+                    userid: userid,
+                    location: location
+                }
+            }
+        }, function (data) {
+
+        });
+    }
+
+    //双击关闭APP
+    function exitApp() {
+        api.addEventListener({
+            name: 'keyback'
+
+        }, function (ret, err) {
+
+            api.toast({
+
+                msg: '再按一次返回键退出' + api.appName,
+
+                duration: 2000,
+
+                location: 'bottom'
+
+            });
+
+
+
+            api.addEventListener({
+
+                name: 'keyback'
+
+            }, function (ret, err) {
+
+                api.closeWidget({
+
+                    id: 'A6157457478881', //这里改成自己的应用ID
+
+                    retData: {
+                        name: 'closeWidget'
+                    },
+
+                    silent: true
+
+                });
+
+            });
+
+
+
+            setTimeout(function () {
+
+                exitApp();
+
+            }, 3000)
+
+        });
+
+    }
+
+    function funIniGroup() {
+        var systemType = api.systemType;
+        // if (systemType == "ios") {
+        //     var frames = [{
+        //         name: 'main',
+        //         url: './html/main/main.html',
+        //         bgColor: 'rgba(255,255,255,0)',
+        //         bounces: false
+        //     }, {
+        //         name: 'video',
+        //         url: './html/video/videoioslist.html',
+        //         bgColor: 'rgba(255,255,255,0)',
+        //         bounces: false
+        //     }, {
+        //         name: 'community',
+        //         url: './html/community/Square.html',
+        //         bgColor: 'rgba(255,255,255,0)',
+        //         bounces: false
+        //     }, {
+        //         name: 'mine',
+        //         url: './html/mine/mine.html',
+        //         bgColor: 'rgba(255,255,255,0)',
+        //         bounces: false
+        //     }];
+        //     //菜单
+        // } else if (systemType == "android") {
+        var frames = [{
+            name: 'main',
+            url: './html/main/main.html',
+            bgColor: 'rgba(255,255,255,0)',
+            bounces: false
+        }, {
+            name: 'video',
+            url: './html/video/video.html',
+            bgColor: 'rgba(255,255,255,0)',
+            bounces: false
+        }, {
+            name: 'community',
+            url: './html/community/Square.html',
+            bgColor: 'rgba(255,255,255,0)',
+            bounces: false
+        }, {
+            name: 'mine',
+            url: './html/mine/mine.html',
+            bgColor: 'rgba(255,255,255,0)',
+            bounces: false
+        }];
+
+        // }
+        $api.setStorage('indexOpenFrame', "video");
+        api.openFrameGroup({
+            name: 'group',
+            background: "rgba(255,255,255,0)",
+            scrollEnabled: false, //滑动切换
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            index: 0,
+            preload: 0,
+            frames: frames
+        }, function (ret, err) {
+            if ($api.getStorage('indexOpenFrame') == "video") {
+                api.sendEvent({
+                    name: 'showfooter'
+                });
+                //切换关闭视频
+                api.sendEvent({
+                    name: 'hidevideo'
+                });
+                api.sendEvent({
+                    name: 'closevideobtn'
+                });
+                api.sendEvent({
+                    name: 'closevideocomment'
+                });
+                api.sendEvent({
+                    name: 'closevideoshare'
+                });
+
+
+                setTimeout(function () {
+                    api.sendEvent({
+                        name: 'scrollSwitch',
+                        extra: {
+                            index: ret.index
+                        }
+                    });
+                }, 500);
+            } else {
+                if (ret.index == 3) {
+                    var userid = $api.getStorage('userid');
+                    if (userid == null || userid == "") {
+                        api.toast({
+                            msg: '请先登录！',
+                            duration: 1000,
+                            location: 'middle'
+                        });
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'login',
+                                url: './login.html',
+                                bgColor: "rgba(255, 255, 255, 0)",
+                                animation: {
+                                    type: "push", //动画类型（详见动画类型常量）
+                                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                                    duration: 300 //动画过渡时间，默认300毫秒
+                                }
+                            });
+                        }, 1000);
+                        return false;
+                    }
+                }
+                api.sendEvent({
+                    name: 'scrollSwitch',
+                    extra: {
+                        index: ret.index
+                    }
+                });
+
+            }
+            $api.setStorage('indexOpenFrame', ret.name);
+        });
+
+        api.addEventListener({
+            name: 'showfooter'
+        }, function (ret, err) {
+            // api.closeFrame({
+            //     name: 'squareSquare'
+            // });
+
+            api.openFrame({
+                name: 'footer',
+                url: './footer.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                rect: {
+                    x: 0,
+                    y: api.winHeight - 49,
+                    w: api.winWidth,
+                    h: '49px'
+                }
+            });
+            //发布按钮
+            api.openFrame({
+                name: 'releasebtn',
+                url: './html/releasebtn.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                rect: {
+                    x: api.winWidth / 2 - 42 / 2,
+                    y: api.winHeight - 49,
+                    w: '42px',
+                    h: '42px'
+                }
+            });
+        });
+
+        api.addEventListener({
+            name: 'hidefooter'
+        }, function (ret, err) {
+            api.closeFrame({
+                name: 'footer'
+            });
+            api.closeFrame({
+                name: 'releasebtn'
+            });
+        });
+
+        //展示导航footer
+        api.sendEvent({
+            name: 'showfooter'
+        });
+
+
+        //关闭发布按钮监听
+        api.addEventListener({
+            name: 'releasereset'
+        }, function (ret, err) {
+            setTimeout(function () { //解决IOS关闭Frame，Win打开无效的问题
+                api.closeFrame({
+                    name: 'release'
+                });
+            }, 1000);
+        });
+        //关闭发布按钮监听
+        api.addEventListener({
+            name: 'releaseresetnow'
+        }, function (ret, err) {
+            api.closeFrame({
+                name: 'release'
+            });
+        });
+
+        //打开发布按钮监听
+        api.addEventListener({
+            name: 'release'
+        }, function (ret, err) {
+            api.openFrame({
+                name: 'release',
+                url: './html/release.html',
+                background: "rgba(255,255,255,0)",
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight //$api.dom('#main').offsetHeight - 49
+                }
+            });
+        });
+        api.addEventListener({
+            name: 'setgroupIndex'
+        }, function (ret, err) {
+            api.setFrameGroupIndex({
+                name: 'group',
+                index: ret.value.index,
+                scroll: true
+            });
+        });
+    }
+
+    function getcontact(userInfo) {
+        //获取通讯录
+        var contacts = [];
+        var contact = api.require('contact');
+        contact.queryContact({
+            ids: []
+        }, function (ret, err) {
+            if (ret.status) {
+                var contacts = [];
+                $.each(ret.contacts, function (i, n) {
+                    contacts.push({
+                        contactid: n.id,
+                        userid: userInfo,
+                        name: n.name,
+                        phones: JSON.stringify(n.phones),
+                        email: n.email,
+                        company: n.company,
+                        address: n.address != null ? (n.address.Country + "," + n.address
+                            .State + "," + n.address.City + "," + n.address.Street) : ""
+                    });
+                });
+                api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.CONTACTSINFOADD,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: userInfo,
+                            jsonUserContacts: JSON.stringify(contacts)
+                        }
+                    }
+                }, function (data, err) {
+
+                });
+            }
+        });
+    }
+</script>

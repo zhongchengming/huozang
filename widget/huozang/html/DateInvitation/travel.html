@@ -1,0 +1,1031 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>伴游</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/travel.css" />
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<!--高级筛选-->
+	<div class="DateInvitationOrderDW">
+		<div class="DateInvitationOrderDN">
+			<div class="DateIOrderDWBT">性别</div>
+			<ul id="sex" class="DateIOrderDWUL">
+				<li data-id="" class="DateIODWUL DateActive">不限</li>
+				<li data-id="0" class="DateIODWUL">男</li>
+				<li data-id="1" class="DateIODWUL">女</li>
+			</ul>
+			<div class="DateIOrderDWBT">年龄</div>
+			<ul id="age" class="DateIOrderDWUL">
+				<li data-min="" data-max="" class="DateIODWUL DateActive">不限</li>
+				<li data-min="0" data-max="25" class="DateIODWUL">25岁以下</li>
+				<li data-min="25" data-max="35" class="DateIODWUL">25-35</li>
+				<li data-min="35" data-max="100" class="DateIODWUL">35以上</li>
+			</ul>
+			<div class="DateIOrderDWBT">距离</div>
+			<ul id="Distance" class="DateIOrderDWUL">
+				<li data-id="" class="DateIODWUL DateActive">不限</li>
+				<li data-id="5" class="DateIODWUL">5公里以内</li>
+				<li data-id="10" class="DateIODWUL">10公里以内</li>
+			</ul>
+			<div class="DateIOrderDWBT">认证</div>
+			<ul id="certify" class="DateIOrderDWUL">
+				<li data-id="" class="DateIODWUL DateActive">不限</li>
+				<li data-id="wechat" class="DateIODWUL">微信认证</li>
+				<li data-id="email" class="DateIODWUL">邮箱认证</li>
+				<li data-id="idcard" class="DateIODWUL">身份认证</li>
+				<li data-id="education" class="DateIODWUL">学历认证</li>
+			</ul>
+			<ul class="DateIOrderDWSub">
+				<li id="choosereset">重置</li>
+				<li id="choosesubmit">确认</li>
+			</ul>
+		</div>
+	</div>
+	<!-- <div class="travelS"> -->
+	<!--顶部-->
+	<!-- <div class="SquareHeader">
+			<p class="p3"></p>
+			<p class="p2"></p>
+			<p class="p1"></p>
+			<ul class="DIHead">
+				<li data-id="travel-invitation" id="DIHeadLi" data-DINId="Hire">
+					<div class="DIHeadW">邀请</div>
+				</li>
+				<li data-id="travel-recommend" data-DINId="Recommend">
+					<div class="DIHeadW">推荐</div>
+				</li>
+			</ul>
+		</div>
+		<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+	<!--标签导航-->
+	<!-- <div class="LabelNavigationS">
+			<div class="LabelNavigationT">
+				分类
+			</div>
+			<div class="LabelNavigationB">
+				<ul id="bigtags" class="LabelNavigation">
+
+				</ul>
+			</div>
+		</div> -->
+	<!--排序-->
+	<!-- <ul class="DateInvitationOrder">
+			<li data-id="" id="DateInvitationOrderLi">智能排序</li>
+			<li data-id="highPeople">人气最高</li>
+			<li data-id="nearDistance">距离最近</li>
+			<div class="DateInvitationOrderR">
+				<P class="p1"></P>
+				高级筛选
+			</div>
+		</ul> -->
+	<!-- </div> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div>
+			<ul class="roofUL">
+				<li class="Selected" data-id="travel-invitation" data-DINId="Hire">
+					<p class="roofULD"></p>
+					<span>邀请</span>
+				</li>
+				<li data-id="travel-recommend" data-DINId="Recommend">
+					<p class="roofULD"></p>
+					<span>推荐</span>
+				</li>
+			</ul>
+		</div>
+		<!--标签导航-->
+		<div class="LabelNavigationS">
+			<div class="LabelNavigationT">
+				分类
+			</div>
+			<div class="LabelNavigationB">
+				<ul id="bigtags" class="LabelNavigation">
+
+				</ul>
+			</div>
+		</div>
+		<!--推荐排序-->
+		<ul class="DateInvitationOrder">
+			<li data-id="" id="DateInvitationOrderLi">智能排序</li>
+			<li data-id="highPeople">人气最高</li>
+			<li data-id="nearDistance">距离最近</li>
+			<div class="DateInvitationOrderR">
+				<P class="p1"></P>
+				高级筛选
+			</div>
+		</ul>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<!--推荐-->
+	<div id="Recommend" class="InviteRecommendation">
+		<ul class="InviteEscort travel-recommend">
+
+		</ul>
+	</div>
+	<!--邀请-->
+	<div id="Hire" class="InviteRecommendation">
+		<ul class="InviteHire travel-invitation">
+
+		</ul>
+	</div>
+	<!--推荐  -->
+	<script type="text/template" id="recommendtemplate">
+		{{~it:value:index}}
+		<li>
+			<div class="InviteEscortT">
+				<div class="IETLAvatar">
+					<img class="avatar otherspage" userid="{{=value.userid}}" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" />
+				</div>
+				<div class="IETLSex">{{=value.age}}岁</div>
+				<div class="InviteEscortTL">
+					<div class="IETLInformation">
+						<div class="IETLInformationName">
+							{{=value.nickname}}
+						</div>
+						<div class="IETLInformationSex">
+							<img src="{{?0==value.gender}}../../images/man-icon.png{{??}}../../images/woman-icon.png{{?}}">
+						</div>
+					</div>
+					<ul class="IETLInformationS">
+						{{?1==value.mobieauth}}
+						<li><img src="../../images/Datashape10.png"></li>
+						{{?}} {{?1==value.idcardauth}}
+						<li><img src="../../images/Datashape11.png"></li>
+						{{?}} {{?1==value.wxauth}}
+						<li><img src="../../images/Datashape12.png"></li>
+						{{?}} {{?1==value.emailauth}}
+						<li><img src="../../images/Datashape13.png"></li>
+						{{?}} {{?1==value.educationauth}}
+						<li><img src="../../images/Datashape14.png"></li>
+						{{?}}
+					</ul>
+					<ul class="IETLAddress">
+						<li></li>
+						<li>距离我{{=value.distance}}KM</li>
+					</ul>
+				</div>
+				<div class="InviteEscortTR">
+					{{?value.hobby}}
+					<ul class="InviteEscortTRU">
+						<li>服务项目</li>
+						<li>{{=value.hobby}}</li>
+					</ul>
+					{{?}} {{?value.profession}}
+					<ul class="InviteEscortTRU">
+						<li>职业</li>
+						<li>{{=value.profession}}</li>
+					</ul>
+					{{?}}
+					<ul class="InviteEscortTRU">
+						<li>伴游标签</li>
+						<li>{{=value.servicetags}}</li>
+					</ul>
+					<ul class="InviteEscortTRU">
+						<li>伴游价格</li>
+						<li><span>{{=value.charges}}金币/天</span></li>
+					</ul>
+					<ul class="InviteEscortTRU">
+						<li>伴游内容</li>
+						<li>{{=value.content}}</li>
+					</ul>
+				</div>
+			</div>
+			{{?value.photos}} {{?value.photos.length==1}}
+			<ul class="escortImgOne">
+				{{?value.photos[0]}}
+				<li>
+					<img src="{{=value.photos[0]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}}
+			</ul>
+			{{?}} {{?value.photos.length==2}}
+			<ul class="escortImgTwo">
+				{{?value.photos[0]}}
+				<li>
+					<img src="{{=value.photos[0]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}} {{?value.photos[1]}}
+				<li>
+					<img src="{{=value.photos[1]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}}
+			</ul>
+			{{?}} {{?value.photos.length>2}}
+			<ul class="escortImg">
+				{{ for(var j=0, len=value.photos.length; j
+				<len; j++) { }} {{?value.photos[j]}} <li>
+					<img src="{{=value.photos[j]}}?imageView2/1/w/300/h/300">
+		</li>
+		{{?}} {{ } }}
+		</ul>
+		{{?}} {{?}}
+		<ul class="InviteEscortBut">
+			<li>
+				<div class="InviteEscortButYY appointment" recommendid="{{=value.id}}" userid="{{=value.userid}}">邀约</div>
+			</li>
+			<li>
+				<div class="InviteEscortButSL recommendshare" userid="{{=value.userid}}" avatar="{{?0==value.gender}}../../images/man-icon.png{{??}}../../images/woman-icon.png{{?}}">分享</div>
+			</li>
+			<!-- <li>
+					<div class="InviteEscortButSC">收藏</div>
+				</li> -->
+			<!-- <li>
+					<div class="InviteEscortButSL chat" userid="{{=value.userid}}" nickname="{{=value.nickname}}">畅聊</div>
+				</li> -->
+		</ul>
+		</li>
+		{{~}}
+	</script>
+	<!--邀请  -->
+	<script type="text/template" id="invitationtemplate">
+		{{~it:value:index}}
+		<li>
+			<div class="InviteW">
+				<div class="InviteWL">
+					<img class="otherspage" userid="{{=value.userid}}" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}">
+				</div>
+				<div class="InviteWC">
+					<ul class="InviteWCT">
+						<li class="InviteWCTL">{{=value.nickname}}</li>
+						<!--<li class="InviteWCTR"></li>-->
+					</ul>
+					<div class="InviteWCB">
+						<div class="InviteWCBL">
+							<p class="{{?1==value.gender}}p1{{??}}p3{{?}}"></p>
+							<p class="p2">{{=value.age}}</p>
+						</div>
+						<ul class="InviteWCBR">
+							{{?1==value.mobieauth}}
+							<li><img src="../../images/Datashape10.png"></li>
+							{{?}} {{?1==value.idcardauth}}
+							<li><img src="../../images/Datashape11.png"></li>
+							{{?}} {{?1==value.wxauth}}
+							<li><img src="../../images/Datashape12.png"></li>
+							{{?}} {{?1==value.emailauth}}
+							<li><img src="../../images/Datashape13.png"></li>
+							{{?}} {{?1==value.educationauth}}
+							<li><img src="../../images/Datashape14.png"></li>
+							{{?}}
+						</ul>
+					</div>
+				</div>
+				<ul class="InviteWR">
+					<li class="InviteWRL">距离我{{=value.distance}}KM</li>
+					<li class="InviteWRR">
+						<img src="../../images/GPSD_03.png">
+					</li>
+				</ul>
+			</div>
+			<div class="InviteHireTitle">
+				{{=value.content}}
+			</div>
+			<div class="InviteHireCenter">
+				{{=value.requirement}}
+			</div>
+			<ul class="InviteHireList">
+				<!-- <li>
+					<div class="InviteHireListL">
+						邀请人
+					</div>
+					<div class="InviteHireListR">
+						{{=value.nickname}}
+					</div>
+				</li> -->
+				<li>
+					<div class="InviteHireListL">
+						伴游地
+					</div>
+					<div class="InviteHireListR">
+						{{=value.locationinvitation}}
+					</div>
+				</li>
+				<li>
+					<div class="InviteHireListL">
+						开始日期
+					</div>
+					<div class="InviteHireListR">
+						{{=value.starttime}}
+					</div>
+				</li>
+				<li>
+					<div class="InviteHireListL">
+						结束日期
+					</div>
+					<div class="InviteHireListR">
+						{{=value.endtime}}
+					</div>
+				</li>
+				<li>
+					<div class="InviteHireListL">
+						诚意金
+					</div>
+					<div class="InviteHireListR">
+						<span>{{=value.payment}}金币</span>
+					</div>
+				</li>
+			</ul>
+			{{?value.photosList}} {{?value.photosList.length==1}}
+			<ul class="escortImgOne">
+				{{?value.photosList[0]}}
+				<li>
+					<img src="{{=value.photosList[0]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}}
+			</ul>
+			{{?}} {{?value.photosList.length==2}}
+			<ul class="escortImgTwo">
+				{{?value.photosList[0]}}
+				<li>
+					<img src="{{=value.photosList[0]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}} {{?value.photosList[1]}}
+				<li>
+					<img src="{{=value.photosList[1]}}?imageView2/1/w/300/h/300">
+				</li>
+				{{?}}
+			</ul>
+			{{?}} {{?value.photosList.length>2}}
+			<ul class="escortImg">
+				{{ for(var j=0, len=value.photosList.length; j
+				<len; j++) { }} {{?value.photosList[j]}} <li>
+					<img src="{{=value.photosList[j]}}?imageView2/1/w/300/h/300">
+		</li>
+		{{?}} {{ } }}
+		</ul>
+		{{?}} {{?}}
+		<div invitationid="{{=value.id}}" userid="{{=value.userid}}" class="ViewDetails">
+			查看详情
+		</div>
+		</li>
+		{{~}}
+	</script>
+
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+
+	<script type="text/javascript">
+		var type = "travel-invitation";
+		var pageSize = 2,
+			pageNum = 1,
+			hasNext = true;
+		var recommendPageSize = 2,
+			recommendPageNum = 1,
+			recommendHasNext = true;
+		var invitationFilter = {
+			reload: true,
+			bigtags: "",
+			oparetor: "",
+			choice: "",
+			choicelist: {
+				gender: "",
+				ageMin: "",
+				ageMax: "",
+				distance: "", //KM
+				mobieauth: "",
+				wxauth: "",
+				emailauth: "",
+				idcardauth: "",
+				educationauth: ""
+			}
+		};
+		var recommendFilter = {
+			reload: true,
+			bigtags: "",
+			oparetor: "",
+			choice: "",
+			choicelist: {
+				gender: "",
+				ageMin: "",
+				ageMax: "",
+				distance: "", //KM
+				mobieauth: "",
+				wxauth: "",
+				emailauth: "",
+				idcardauth: "",
+				educationauth: ""
+			}
+		};
+
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "travel");
+
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'travel'
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'travel'
+				});
+			});
+
+			$(".InviteRecommendation").css("margin-top", "" + ($(".travelS").height() + 20) + "px");
+
+			//导航切换
+			$(".roofULD").css({
+				"width": "" + $(".roofUL span").width() + "px",
+				"left": "" + ($(".roofUL li").width() - $(".roofUL span").width()) / 2 + "px",
+			});
+			//顶部切换
+			$(".roofUL li").click(function() {
+				DateIOrderDW();
+				$(".roofUL li").removeClass("Selected");
+				$(this).addClass("Selected");
+				$(".InviteRecommendation").css("display", "none");
+				$("#" + $(this).attr("data-DINId") + "").css("display", "block");
+				type = $(this).attr("data-id");
+				if (type == "travel-invitation") {
+					invitationFilter = {
+						reload: true,
+						bigtags: "",
+						oparetor: "",
+						choice: "",
+						choicelist: {
+							gender: "",
+							ageMin: "",
+							ageMax: "",
+							distance: "", //KM
+							mobieauth: "",
+							wxauth: "",
+							emailauth: "",
+							idcardauth: "",
+							educationauth: ""
+						}
+					};
+					pageNum = 1;
+					getinvitationtags();
+					getinvitations(invitationFilter, pageSize, pageNum);
+				} else if (type == "travel-recommend") {
+					recommendFilter = {
+						reload: true,
+						bigtags: "",
+						oparetor: "",
+						choice: "",
+						choicelist: {
+							gender: "",
+							ageMin: "",
+							ageMax: "",
+							distance: "", //KM
+							mobieauth: "",
+							wxauth: "",
+							emailauth: "",
+							idcardauth: "",
+							educationauth: ""
+						}
+					};
+					recommendPageNum = 1;
+					getrecommendtags();
+					getrecommends(recommendFilter, recommendPageSize, recommendPageNum);
+				}
+
+			});
+
+
+			photosListener();
+			api.addEventListener({
+				name: 'swipeup'
+			}, function(ret, err) {
+				if (type == "travel-invitation") {
+					if (hasNext) {
+						invitationFilter.reload = false;
+						getinvitations(invitationFilter, pageSize, pageNum);
+					}
+				} else if (type == "travel-recommend") {
+					if (recommendHasNext) {
+						recommendFilter.reload = false;
+						getrecommends(recommendFilter, recommendPageSize, recommendPageNum);
+					}
+				}
+			});
+
+			//标签点击切换
+			$(".LabelNavigation").on("click", "li", function() {
+				DateIOrderDW();
+				$(".LabelNavigation li").attr("class", "");
+				$(this).attr("class", "Selected");
+				if (type == "travel-invitation") {
+					invitationFilter.reload = true;
+					invitationFilter.bigtags = $(this).attr("bigtags");
+					pageNum = 1;
+					getinvitations(invitationFilter, pageSize, pageNum);
+				} else if (type == "travel-recommend") {
+					recommendFilter.reload = true;
+					recommendFilter.bigtags = $(this).attr("bigtags");
+					recommendPageNum = 1;
+					getrecommends(recommendFilter, recommendPageSize, recommendPageNum);
+				}
+			});
+			//排序
+			$(".DateInvitationOrder li").eq(0).attr("id", "DateInvitationOrderLi");
+			$(".DateInvitationOrder").on("click", "li", function() {
+				DateIOrderDW();
+				$(".DateInvitationOrder li").attr("id", "");
+				$(this).attr("id", "DateInvitationOrderLi");
+
+				if (type == "travel-invitation") {
+					invitationFilter.reload = true;
+					invitationFilter.oparetor = $(this).attr("data-id");
+					pageNum = 1;
+					getinvitations(invitationFilter, pageSize, pageNum);
+				} else if (type == "travel-recommend") {
+					recommendFilter.reload = true;
+					recommendFilter.oparetor = $(this).attr("data-id");
+					recommendPageNum = 1;
+					getrecommends(recommendFilter, recommendPageSize, recommendPageNum);
+				}
+			});
+
+			// 高级筛选
+			$(".DateInvitationOrder").on("click", ".DateInvitationOrderR", function() {
+				if ($(this).hasClass("active")) {
+					DateIOrderDW();
+				} else {
+					$(this).css("color", "#ff9694");
+					var pId = $(".Selected").attr("data-DINId");
+					var Pheight = $(document).height() - $(".DateInvitationOrder").offset().top - $(".DateInvitationOrder").height();
+					var Ptop = $(".roofSDiv").height() - 5;
+					$(".DateInvitationOrderDW").css({
+						"height": "" + Pheight + "px",
+						"top": "" + Ptop + "px"
+					})
+					$(this).find("p").attr("class", "p2");
+					$(".DateInvitationOrderDW").slideDown(500);
+					$(this).addClass("active");
+				}
+			});
+
+			// 图片预览监听
+			function photosListener() {
+				$(".travel-invitation,.travel-recommend").on("click", ".escortImgOne img,.escortImgTwo img ,.escortImg img", function() {
+					var images = [];
+					var index = $(this).parent().index();
+					$(this).parent().parent().find("li").each(function() {
+						images.push($(this).find("img").attr("src").replace("?imageView2/1/w/300/h/300", ""));
+					});
+					var photoBrowser = api.require('photoBrowser');
+					photoBrowser.open({
+						images: images,
+						placeholderImg: "",
+						bgColor: '#000'
+					}, function(ret, err) {
+						if (ret.eventType == "show") {
+							api.toast({
+								msg: "长按可以保存图片哦!",
+								duration: 2000,
+								location: 'bottom'
+							});
+						} else if (ret.eventType == "click") {
+							photoBrowser.close();
+						} else if (ret.eventType == "longPress") {
+							api.download({
+								url: images[ret.index],
+								report: true,
+								cache: true,
+								allowResume: true
+							}, function(ret, err) {
+								if (ret.percent == 100) {
+									api.saveMediaToAlbum({
+										path: ret.savePath
+									}, function(albumret, albumreterr) {
+										if (albumret && albumret.status) {
+											api.toast({
+												msg: "保存成功!",
+												duration: 1000,
+												location: 'middle'
+											});
+										}
+									});
+								}
+							});
+						}
+					});
+					photoBrowser.setIndex({
+						index: index
+					});
+				});
+			}
+
+
+
+
+			// 高级筛选点击
+			$(".DateIOrderDWUL li").click(function() {
+				var DateId = $(this).parent(".DateIOrderDWUL").attr("id");
+				$("#" + DateId + "").find("li").removeClass("DateActive");
+				$(this).addClass("DateActive");
+			});
+			chooseListener();
+
+			//默认加载
+			getinvitationtags();
+			getinvitations(invitationFilter, pageSize, pageNum);
+			$("#Hire").show();
+			btnListener();
+
+			//未读消息
+			api.addEventListener({
+				name: 'unreadmessages'
+			}, function(ret, err) {
+				if (ret.value.unreadmessages * 1 > 0) {
+					$(".roofMessage").addClass("messageF").removeClass("messageU");
+					// $(".SquareHeader .p3").css({"background": "url(../../images/MessageF.png) no-repeat","background-size":"100% 100%"});
+				} else {
+					$(".roofMessage").addClass("messageU").removeClass("messageF");
+					// $(".SquareHeader .p3").css({"background": "url(../../images/Message.png) no-repeat","background-size":"100% 100%"});
+				}
+			});
+
+			//消息
+			$(".roofMessage").click(function() {
+				api.openWin({
+					name: 'message',
+					url: '../mine/message.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			//搜索
+			$(".roofSearch").click(function() {
+				api.openWin({
+					name: 'search',
+					url: '../search.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			$('body').on('touchstart', function(e) {
+				api.closeFrame({
+					name: 'share'
+				});
+			});
+
+			$(".travel-recommend").on('click', '.InviteEscortButSL.recommendshare', function() {
+				var userid = $(this).attr("userid");
+				var avatar = $(this).attr("avatar");
+
+				api.openFrame({
+					name: 'share',
+					url: './share.html',
+					rect: {
+						x: 0,
+						y: api.winHeight - 200,
+						w: api.winWidth,
+						h: 200
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_bottom", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid,
+						avatar: avatar,
+						type: 2
+					}
+				});
+			});
+		}
+
+		function getinvitations(invitationfilter, pagesize, pagenum) {
+			var filter = {
+				type: 2,
+				pagesize: pagesize,
+				pagenum: pagenum,
+				position: $api.getStorage('position'),
+				filter: "Y"
+			};
+			if (invitationFilter.reload) {
+				$(".travel-invitation").empty();
+			}
+
+			if (invitationfilter.bigtags != null && invitationfilter.bigtags != "") {
+				filter.bigtags = invitationfilter.bigtags;
+			}
+			if (invitationfilter.oparetor != null && invitationfilter.oparetor != "") {
+				filter.oparetor = invitationfilter.oparetor;
+			}
+			if (invitationfilter.choice) {
+				filter.choice = invitationfilter.choice;
+				filter.gender = invitationfilter.choicelist.gender;
+				filter.ageMin = invitationfilter.choicelist.ageMin;
+				filter.ageMax = invitationfilter.choicelist.ageMax;
+				filter.mobieauth = invitationfilter.choicelist.mobieauth;
+				filter.wxauth = invitationfilter.choicelist.wxauth;
+				filter.emailauth = invitationfilter.choicelist.emailauth;
+				filter.idcardauth = invitationfilter.choicelist.idcardauth;
+				filter.educationauth = invitationfilter.choicelist.educationauth;
+			}
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETINVITATIONS,
+					method: 'post',
+					data: {
+						values: filter
+					}
+				},
+				function(data, err) {
+					if (data.code == "200" && data.invitations && data.invitations.list) {
+						$.each(data.invitations.list, function(i, n) {
+							n.starttime = timestampToDate(n.starttime);
+							n.endtime = timestampToDate(n.endtime);
+						});
+						var tempFn = doT.template($api.byId('invitationtemplate').innerHTML);
+						var resultHTML = tempFn(data.invitations.list);
+						$('.travel-invitation').append(resultHTML);
+						hasNext = data.invitations.hasNextPage;
+						pageNum = data.invitations.nextPage;
+					}
+				});
+		}
+
+		function getrecommends(recommendfilter, recommendpagesize, recommendpagenum) {
+			var filter = {
+				scene: "noequaluserid",
+				type: 2,
+				pagesize: recommendpagesize,
+				pagenum: recommendpagenum,
+				position: $api.getStorage('position')
+			};
+			if (recommendfilter.reload) {
+				$(".travel-recommend").empty();
+			}
+			if (recommendfilter.bigtags != null && recommendfilter.bigtags != "") {
+				filter.bigtags = recommendfilter.bigtags;
+			}
+			if (recommendfilter.oparetor != null && recommendfilter.oparetor != "") {
+				filter.oparetor = recommendfilter.oparetor;
+			}
+
+			if (recommendfilter.choice) {
+				filter.choice = recommendfilter.choice;
+				filter.gender = recommendfilter.choicelist.gender;
+				filter.ageMin = recommendfilter.choicelist.ageMin;
+				filter.ageMax = recommendfilter.choicelist.ageMax;
+				filter.mobieauth = recommendfilter.choicelist.mobieauth;
+				filter.wxauth = recommendfilter.choicelist.wxauth;
+				filter.emailauth = recommendfilter.choicelist.emailauth;
+				filter.idcardauth = recommendfilter.choicelist.idcardauth;
+				filter.educationauth = recommendfilter.choicelist.educationauth;
+			}
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETSERVICES,
+					method: 'post',
+					data: {
+						values: filter
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						recommendHasNext = data.services.hasNextPage;
+						recommendPageNum = data.services.nextPage;
+						$.each(data.services.list, function(i, n) {
+							if (n.photos.substr(n.photos.length - 1, 1) == ",") {
+								n.photos = n.photos.substr(0, n.photos.length - 1);
+							}
+							n.photos = n.photos.split(",");
+						});
+						var tempFn = doT.template($api.byId('recommendtemplate').innerHTML);
+						var resultHTML = tempFn(data.services.list);
+						$(".travel-recommend").append(resultHTML);
+						$(".IETLInformationName").css("width", "" + ($(".InviteEscort li:first-of-type").find(".IETLInformation").width() - $(".InviteEscort li:first-of-type").find(".IETLInformationSex").width() - 10) + "px");
+					}
+				});
+		};
+
+		function getinvitationtags() {
+			$("#bigtags").empty();
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.SEARCHTAGS,
+					method: 'post',
+					data: {
+						values: {
+							tagstype: "TRAVELINVITATION"
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						$.each(data.tags, function(i, n) {
+							$("#bigtags").append("<li bigtags=\"" + n.id + "\">" + n.tagsname + "</li>");
+						});
+						$(".LabelNavigation").css("width", "" + ($(".LabelNavigation > li").width() + 2) * $(".LabelNavigation > li").length + "px");
+						$(".LabelNavigation li").eq(0).attr("class", "Selected");
+					}
+				});
+
+
+		};
+
+		function getrecommendtags() {
+			$("#bigtags").empty();
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.SEARCHTAGS,
+					method: 'post',
+					data: {
+						values: {
+							tagstype: "TRAVELRECOMMEND"
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						$.each(data.tags, function(i, n) {
+							$("#bigtags").append("<li bigtags=\"" + n.id + "\">" + n.tagsname + "</li>");
+						});
+						$(".LabelNavigation").css("width", "" + ($(".LabelNavigation > li").width() + 2) * $(".LabelNavigation > li").length + "px");
+						$(".LabelNavigation li").eq(0).attr("class", "Selected");
+					}
+				});
+		};
+
+		function btnListener() {
+			$(".travel-invitation").on("click", ".ViewDetails", function() {
+				var invitationid = $(this).attr("invitationid");
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'travelinvitationdetail',
+					url: './travelinvitationdetail.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						invitationid: invitationid,
+						userid: userid
+					}
+				});
+			});
+
+			$(".travel-recommend").on("click", ".appointment", function() {
+				var recommendid = $(this).attr("recommendid");
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'travelappointmentdetail',
+					url: './travelappointmentdetail.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						recommendid: recommendid,
+						userid: userid
+					}
+				});
+			});
+
+			$(".travel-invitation,.travel-recommend").on("click", ".chat", function() {
+				var touserid = $(this).attr("userid");
+				var tousername = $(this).attr("nickname");
+				api.openWin({
+					name: 'onetoone',
+					url: '../mine/onetoone.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						touserid: touserid,
+						tousername: tousername,
+						latestMessageId: -1
+					}
+				});
+			});
+
+
+
+			$(".travel-invitation,.travel-recommend").on("click", ".otherspage", function() {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid
+					}
+				});
+			});
+		};
+
+		// 筛选重置
+		function choosereset() {
+			$("#sex > li").removeClass("DateActive");
+			$("#sex > li:first").addClass("DateActive");
+
+			$("#age > li").removeClass("DateActive");
+			$("#age > li:first").addClass("DateActive");
+
+			$("#Distance > li").removeClass("DateActive");
+			$("#Distance > li:first").addClass("DateActive");
+
+			$("#certify > li").removeClass("DateActive");
+			$("#certify > li:first").addClass("DateActive");
+		};
+
+		// 收起筛选框
+		function DateIOrderDW() {
+			$(".DateInvitationOrderDW").slideUp(500);
+			$(".DateInvitationOrderR").removeClass("active");
+			$(".DateInvitationOrderR").find("p").attr("class", "p1");
+			$(".DateInvitationOrderR").css("color", "#999");
+			setTimeout(function() {
+				choosereset();
+			}, 1000);
+		};
+
+		function chooseListener() {
+			//高级搜索重置
+			$("#choosereset").click(function() {
+				choosereset();
+			});
+			$("#choosesubmit").click(function() {
+				var gender = $("#sex > li.DateActive").attr("data-id");
+				var ageMin = $("#age > li.DateActive").attr("data-min");
+				var ageMax = $("#age > li.DateActive").attr("data-max");
+				var distance = $("#Distance > li.DateActive").attr("data-id");
+				var certify = $("#certify > li.DateActive").attr("data-id");
+
+				var wxauth = (certify == "wechat" ? "1" : "");
+				var emailauth = (certify == "email" ? "1" : "");
+				var idcardauth = (certify == "idcard" ? "1" : "");
+				var educationauth = (certify == "education" ? "1" : "");
+				if (type == "travel-invitation") {
+					//获取邀请，条件全部初始化
+					invitationPageNum = 1;
+					invitationFilter.reload = true;
+					invitationFilter.choice = "1";
+					invitationFilter.choicelist.gender = gender;
+					invitationFilter.choicelist.ageMin = ageMin;
+					invitationFilter.choicelist.ageMax = ageMax;
+					invitationFilter.choicelist.distance = distance;
+					invitationFilter.choicelist.wxauth = wxauth;
+					invitationFilter.choicelist.emailauth = emailauth;
+					invitationFilter.choicelist.idcardauth = idcardauth;
+					invitationFilter.choicelist.educationauth = educationauth;
+					getinvitations(invitationFilter, pageSize, pageNum);
+				} else if (type == "travel-recommend") {
+					recommendPageNum = 1;
+					recommendFilter.reload = true;
+					recommendFilter.choice = "1";
+					recommendFilter.choicelist.gender = gender;
+					recommendFilter.choicelist.ageMin = ageMin;
+					recommendFilter.choicelist.ageMax = ageMax;
+					recommendFilter.choicelist.distance = distance;
+					recommendFilter.choicelist.wxauth = wxauth;
+					recommendFilter.choicelist.emailauth = emailauth;
+					recommendFilter.choicelist.idcardauth = idcardauth;
+					recommendFilter.choicelist.educationauth = educationauth;
+					getrecommends(recommendFilter, recommendPageSize, recommendPageNum);
+				}
+				DateIOrderDW();
+			});
+		};
+	</script>
+</body>
+
+</html>

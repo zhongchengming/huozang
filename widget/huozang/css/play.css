@@ -1,0 +1,195 @@
+html, body {
+    position: relative;
+    height: 100%;
+    bgColor: rgba(255, 255, 255, 0)
+}
+
+body {
+    background: #fff;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.swiper-slide {
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.follow-play-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-left: -21px;
+    margin-top: -21px;
+    background-image: url(../images/bg-icon.png);
+    background-repeat: no-repeat;
+    background-size: 300px 300px;
+    background-position: -170px -239px;
+}
+
+.j-controll-video {
+    width: 100%;
+    height: 100%;
+}
+
+.play-div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.play-div video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.play-div .video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.personal-follow video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.video-div {
+    width: 100%;
+    height: 100%;
+}
+
+#video-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: block;
+    width: 18px;
+    height: 27px;
+    background-image: url(../images/videoIcon.png);
+    background-size: 159px 30px;
+    background-repeat: no-repeat;
+}
+
+.video-info-p {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+}
+
+.video-info-p p {
+    color: #fff;
+    margin-bottom: 0px;
+}
+
+.video-info-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 37px;
+    height: 300px;
+    /*margin-top: -150px;*/
+    text-align: center;
+    color: #fff;
+}
+
+.video-info-icon span {
+    display: block;
+    margin-bottom: 25px;
+}
+
+.video-info-icon span i {
+    display: block;
+    width: 36px;
+    height: 36px;
+    background-image: url(../images/videoIcon.png);
+    background-size: 318px 60px;
+    background-repeat: no-repeat;
+}
+
+.video-info-icon .video-z i {
+    background-position: -137px -14px;
+}
+
+.video-info-icon .video-z i.active {
+    background-position: -59px -14px;
+}
+
+.video-info-icon .video-pj i {
+    background-position: -206px -14px;
+}
+
+.video-info-icon .video-fx i {
+    background-position: -263px -13px;
+}
+
+.video-info-icon span b {
+    font-weight: normal;
+}
+
+.video-info-icon span img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.video-gz {
+    display: block;
+    width: 47px;
+    height: 21px;
+    line-height: 21px;
+    color: #fff;
+    font-size: 10px;
+    background-color: #ffb9b8;
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: 16px;
+    font-style: normal;
+}
+
+.videopj {
+    position: fixed;
+    display: none;
+    margin: 0 auto;
+    bottom: 0px;
+    width: 100%;
+    height: 50%;
+    overflow-y: scroll;
+    overflow-x: visible;
+    background-color: #fff;
+    z-index: 102;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}

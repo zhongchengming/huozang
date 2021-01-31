@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/SharePopUp.css" />
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+	<style>
+		.SharePopUpU>li {
+			width: 50%;
+			float: left;
+			margin-top: 10px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="SharePopUpS">
+		<div class="SharePopUpR">
+			<div class="SharePopUp">
+				<div class="ShareClose"></div>
+				<ul class="SharePopUpU">
+					<li>
+						<div class="SharePopUpULT Wechat"></div>
+						<div class="SharePopUpULB">
+							微信好友
+						</div>
+					</li>
+					<li>
+						<div class="SharePopUpULT CircleOfFriends"></div>
+						<div class="SharePopUpULB">
+							朋友圈
+						</div>
+					</li>
+					<!-- <li>
+						<div class="SharePopUpULT Weibo"></div>
+						<div class="SharePopUpULB">
+							微博
+						</div>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript">
+	var invitationid = "",
+		userid = "",
+		type = 1,
+		avatar = "",
+		content = "";
+	apiready = function() {
+		invitationid = api.pageParam.invitationid;
+		userid = api.pageParam.userid;
+		avatar = api.pageParam.avatar;
+		type = api.pageParam.type;
+		content = api.pageParam.content;
+		$(".ShareClose").click(function() {
+			api.closeFrame({
+				name: "share"
+			});
+		});
+
+		// 微信朋友
+		$(".Wechat").click(function() {
+			var param = {};
+			if (type == 1) {
+				param = {
+					apiKey: '',
+					scene: 'session',
+					title: '来和我约会吧！',
+					description: content,
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "share/ShareInvitation.html?invitationid=" + invitationid
+				};
+			} else if (type == 2) {
+				param = {
+					apiKey: '',
+					scene: 'session',
+					title: '快去找TA约会吧！',
+					description: content,
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "share/ShareAate.html?userid=" + userid
+				};
+			}
+			var wx = api.require('wx');
+			wx.shareWebpage(param, function(ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		// 朋友圈
+		$(".CircleOfFriends").click(function() {
+			var param = {};
+			if (type == 1) {
+				param = {
+					apiKey: '',
+					scene: 'timeline',
+					title: '来和我约会吧！',
+					description: content,
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "share/ShareInvitation.html?invitationid=" + invitationid
+				};
+			} else if (type == 2) {
+				param = {
+					apiKey: '',
+					scene: 'timeline',
+					title: '快去找TA约会吧！',
+					description: content,
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "share/ShareAate.html?userid=" + userid
+				};
+			}
+			var wx = api.require('wx');
+			wx.shareWebpage(param, function(ret, err) {
+				if (ret.status) {
+					api.closeFrame({
+						name: "share"
+					});
+					api.toast({
+						msg: "分享成功！",
+						duration: 1000,
+						location: 'middle'
+					});
+				} else {
+					api.toast({
+						msg: "分享失败！",
+						duration: 1000,
+						location: 'middle'
+					});
+				}
+			});
+		});
+
+		// 微博
+		$(".Weibo").click(function() {
+			var param = {};
+			if (type == 1) {
+				param = {
+					text: '来和我约会吧！',
+					title: '来和我约会吧！',
+					description: '来和我约会吧！',
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "a.html"
+				};
+			} else if (type == 2) {
+				param = {
+					text: '快去找TA约会吧！',
+					title: '快去找TA约会吧！',
+					description: '快去找TA约会吧！',
+					thumb: avatar,
+					contentUrl: CONFIG.SHAREADDR + "b.html"
+				};
+			}
+
+			var weiboPlus = api.require('weiboPlus');
+			weiboPlus.isInstalled(
+				function(ret) {
+					// alert(JSON.stringify(ret))
+					if (ret.status) {
+						weiboPlus.shareWebPage(param, function(shareret, shareerr) {
+							// alert(JSON.stringify(shareret))
+							// alert(JSON.stringify(shareerr))
+							if (shareret.status) {
+								api.closeFrame({
+									name: "share"
+								});
+								api.toast({
+									msg: "分享成功！",
+									duration: 1000,
+									location: 'middle'
+								});
+							} else {
+								api.toast({
+									msg: JSON.stringify(shareerr),
+									duration: 1000,
+									location: 'middle'
+								});
+								api.toast({
+									msg: "分享失败！",
+									duration: 1000,
+									location: 'middle'
+								});
+							}
+						});
+					} else {
+						api.toast({
+							msg: "未安装新浪微博客户端!",
+							duration: 1000,
+							location: 'middle'
+						});
+					}
+				}
+			);
+		});
+	};
+</script>
+
+</html>

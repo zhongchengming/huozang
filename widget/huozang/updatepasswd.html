@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="./css/mui.min.css" rel="stylesheet" />
+	<link href="./css/common.css" rel="stylesheet" />
+	<link href="./css/register.css" rel="stylesheet" />
+</head>
+
+<body>
+	<header>
+		<a class="app-back-icon"></a>
+		<h1>忘记密码</h1>
+	</header>
+	<div class="mui-content register-data page-top page-bottom">
+		<section>
+			<p class="mui-clearfix bottom-line">
+				<i class="phone-icon"></i>
+				<input type="text" id="mobile" placeholder="请输入手机号码" />
+			</p>
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="text" id="checknum" placeholder="验证码" />
+				<!--请不要将下面的span标签换成button类型的，以免造成样式闪烁的问题 -->
+				<span class="msg-btn">发送验证码</span>
+			</p>
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="password" id="password" placeholder="请输入新的登录密码（6-16位数字字母组合）" />
+			</p>
+
+			<p class="mui-clearfix bottom-line">
+				<i class="lock-icon"></i>
+				<input type="password" id="surepassword" placeholder="再次输入新的登录密码" />
+			</p>
+
+			<div class="submit-div">
+				<!--请不要将下面的span标签换成button类型的，以免造成样式闪烁的问题 -->
+				<span class="submit-btn register-btn" id="submit-btn">确认修改</span>
+			</div>
+		</section>
+	</div>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript" src="./script/config.js"></script>
+	<script type="text/javascript" src="./script/util.js"></script>
+	<script type="text/javascript" src="./script/jquery.min.js"></script>
+	<script type="text/javascript" src="./script/mui.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+		$api.fixStatusBar($api.dom('body'));
+		$api.setStorage('openWin', "register");
+		//返回
+		$(".app-back-icon").click(function() {
+			api.closeWin({
+				name: 'updatepasswd'
+			});
+		});
+		// 滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({
+				name: 'updatepasswd'
+			});
+		});
+
+		$("#submit-btn").click(function() {
+			var mobile = $api.val($api.byId('mobile'));
+			var checknum = $api.val($api.byId('checknum'));
+			var password = $api.val($api.byId('password'));
+			var surepassword = $api.val($api.byId('surepassword'));
+			if (!isPhoneAvailable(mobile)) {
+				mui.alert('手机号码格式不正确！');
+				return false;
+			}
+			if (mobile == null || mobile == "") {
+				mui.alert("手机号不能为空！");
+				return false;
+			}
+			if (checknum == null || checknum == "") {
+				mui.alert("验证码不能为空！");
+				return false;
+			}
+			if (password == null || password == "") {
+				mui.alert("密码不能为空！");
+				return false;
+			}
+			if (surepassword != password) {
+				mui.alert("两次密码不一致！");
+				return false;
+			}
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.UPDATEPWD,
+					method: 'post',
+					data: {
+						values: {
+							mobile: mobile,
+							checknum: checknum,
+							password: password
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						mui.alert("密码修改成功，返回登录界面！", function() {
+							api.closeWin({
+								name: 'updatepasswd'
+							});
+						});
+					} else {
+						mui.alert(data.msg);
+					}
+				});
+		});
+
+		$(".msg-btn").click(function() {
+			if ($(this).text() != "发送验证码") {
+				return false;
+			}
+			var mobile = $api.val($api.byId('mobile'));
+			if (!isPhoneAvailable(mobile)) {
+				mui.alert('手机号码格式不正确！');
+				return false;
+			}
+
+			var time = 60;
+			$(".msg-btn").html(time + "秒后重试").attr("disabled", "disabled").css("background", "#EBEBEB");
+			var timer = setInterval(function() {
+				if (time > 0) {
+					time--;
+					$(".msg-btn").html(time + "秒后重试").attr("disabled", "disabled").css("background", "#EBEBEB");
+				} else {
+					$(".msg-btn").html("发送验证码").removeAttr("disabled");
+					clearInterval(timer);
+				}
+			}, 1000);
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.SENDCHECKNUM,
+					method: 'post',
+					data: {
+						values: {
+							mobile: mobile
+						}
+					}
+				},
+				function(phoneNumdata) {
+					if (phoneNumdata.code == "200") {
+
+					} else {
+						mui.alert(phoneNumdata.msg);
+					}
+				});
+		});
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>添加银行卡</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<!-- <link href="../../css/mui.min.css" rel="stylesheet" /> -->
+	<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+	<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+	<link href="../../css/api.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/AddBank.css" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofButton">保存</div>
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+		<div class="roofMessage messageU"></div> page-bottom-->
+			<div id="friend" class="roofConter">
+				添加银行卡
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv" style="height:65px;"></div>
+	<div class="AddBank">
+		<ul class="AddBankU">
+			<li id="banks">
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>银行类型</li>
+					<li class="AddBankUWC" id="banksInfo">
+						点击选择银行类型
+					</li>
+					<li class="AddBankUWR"></li>
+					<input class="input" id="banktype" type="hidden" type="text" />
+				</ul>
+			</li>
+			<li>
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>银行卡号</li>
+					<li class="AddBankUWC">
+						<input class="input" type="text" id="cardnumber" placeholder="请输入银行卡卡号" />
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>开户银行</li>
+					<li class="AddBankUWC">
+						<input class="input" type="text" id="openbank" placeholder="请输入银行卡开户行信息" />
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="AddBank">
+		<ul class="AddBankU">
+			<li>
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>开户姓名</li>
+					<li class="AddBankUWC">
+						<input class="input" type="text" id="realname" placeholder="请输入银行卡持有者姓名" />
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>身份证号</li>
+					<li class="AddBankUWC">
+						<input class="input" type="text" id="idcardnumber" placeholder="请输入银行卡持有者身份证号" />
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul class="AddBankUW">
+					<!-- <li class="AddBankUWP">获取验证码</li> -->
+					<li class="AddBankUWL"><span>*&nbsp;</span>预留手机</li>
+					<li class="AddBankUWC">
+						<input class="input" type="text" id="phone" placeholder="请输入银行预留手机号" />
+					</li>
+				</ul>
+			</li>
+			<!-- <li>
+				<ul class="AddBankUW">
+					<li class="AddBankUWL"><span>*&nbsp;</span>验证码</li>
+					<li class="AddBankUWC">
+						<input type="text" placeholder="手机验证码" />
+					</li>
+				</ul>
+			</li> -->
+		</ul>
+	</div>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.picker.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.poppicker.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+
+	<script>
+		apiready = function() {
+			$("body").css("height", "" + $(document).height() + "px");
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+				$(".mains").css("height","1px");
+			}
+			$api.setStorage('openWin', "AddBankCard");
+
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'AddBankCard'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'AddBankCard'
+				});
+			});
+
+
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//银行类型
+					var banks = new $.PopPicker();
+					banks.setData(CONFIG.BANKS);
+					var showBanksPickerButton = doc.getElementById('banks');
+					var bankInfoResult = doc.getElementById('banksInfo');
+					showBanksPickerButton.addEventListener('tap', function(event) {
+						banks.show(function(items) {
+							bankInfoResult.innerText = items[0].text;
+							doc.getElementById('banktype').value = items[0].value; //给表单控件赋值，用于向后台提交数据
+						});
+					}, false);
+				});
+			})(mui, document);
+
+			$(".roofButton").click(function() {
+				var banktype = $("#banktype").val();
+				var cardnumber = $("#cardnumber").val();
+				var openbank = $("#openbank").val();
+				var realname = $("#realname").val();
+				var idcardnumber = $("#idcardnumber").val();
+				var phone = $("#phone").val();
+
+				if (banktype == null || banktype == "") {
+					api.toast({
+						msg: '银行类型不能为空！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+
+				if (cardnumber == null || cardnumber == "") {
+					api.toast({
+						msg: '银行卡号不能为空！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+
+				if (openbank == null || openbank == "") {
+					api.toast({
+						msg: '开户银行不能为空！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+
+				if (realname == null || realname == "") {
+					api.toast({
+						msg: '开户姓名不能为空！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+
+				if (!isCardNo(idcardnumber)) {
+					api.toast({
+						msg: '身份证号不合法！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+				if (!isPhoneAvailable(phone)) {
+					api.toast({
+						msg: '手机号码格式不正确！',
+						duration: 2000,
+						location: 'bottom'
+					});
+					return false;
+				}
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.ADDSOULBANKCARD,
+						method: 'post',
+						data: {
+							values: {
+								userid: $api.getStorage('userid'),
+								cardtype: 1,
+								banktype: banktype,
+								cardnumber: cardnumber,
+								openbank: openbank,
+								realname: realname,
+								idcardnumber: idcardnumber,
+								phonenumber: phone
+							}
+						}
+					},
+					function(data, err) {
+						if (data.code == "200") {
+							api.sendEvent({
+								name: 'getbankcards'
+							});
+							api.closeWin({
+								name: 'AddBankCard'
+							});
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 2000,
+								location: 'bottom'
+							});
+						}
+					});
+			});
+		}
+	</script>
+</body>
+
+</html>

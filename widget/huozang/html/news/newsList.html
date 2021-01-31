@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>购买会员</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <meta name="viewport" content="width=device-width">
+    <link href="../../css/member.css" rel="stylesheet" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/public.css">
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+</head>
+<style media="screen">
+    html,
+    body {
+        background-color: #fff;
+    }
+
+    .roofSearch {
+        right: 20px;
+    }
+
+    .main {
+        padding-bottom: 24px;
+    }
+
+    .roofConter {
+        font-size: 17px;
+    }
+    .toutiaoList{
+    padding-top:60px;
+    }
+    .toutiaoCon{
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    }
+    .toutiaoCon p:nth-child(1){
+      width: 70%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="roofS">
+            <div class="roof">
+                <div class="roofReturn"></div>
+                <div class="roofConter">
+                    头条
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="main">
+      <div class="toutiaoList">
+
+      </div>
+
+    </section>
+    <script type="text/template" id="toutiaocontent">
+        {{~it:value:index}}
+            <div class="toutiaoCon" toutiaoid="{{= value.id}}">
+              <p>{{= value.title}}</p><p>{{= value.createTime}}</p>
+            </div>
+      {{~}}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/PublicCss.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+<script type="text/javascript" src="../../script/timeChange.js"></script>
+<script type="text/javascript" src="../../script/swiper.min.js"></script>
+<script type="text/javascript">
+var pagesize = 20
+var pagenum = 1
+    apiready = function () {
+
+        var userid = $api.getStorage('userid');
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType == "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType == "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+        }
+
+          getExpressList(pagesize,pagenum)
+          api.addEventListener({
+              name: 'scrolltobottom',
+              extra: {
+                  threshold: 50 //距离底部距离
+              }
+          }, function (ret, err) {
+                getExpressList(pagesize,pagenum)
+          });
+    }
+
+    //头条
+    function getExpressList(pagesize,pagenum) {
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETEXPRESSLIST,
+                method: 'post',
+                data: {
+                    values: {
+                        pagesize:pagesize,
+                        pagenum:pagenum
+                    }
+                }
+            },
+            function (data) {
+// console.log(JSON.stringify(data))
+                if (data.code == "200") {
+                    var tempFn = doT.template($api.byId('toutiaocontent').innerHTML);
+                    var resultHTML = tempFn(data.expressList.list);
+                      pagenum = data.expressList.nextPage
+                      pagesize = data.expressList.hasNextPage;
+                  $(".toutiaoList").html(resultHTML)
+                }
+            });
+    }
+    // 点击头条进入详情
+    $('.toutiaoList').on('click', ".toutiaoCon", function () {
+      var toutiaoid = $(this).attr("toutiaoid")
+      api.openWin({
+          name: 'newsListDetail',
+          url: '../news/newsListDetail.html',
+          bgColor: "rgba(255, 255, 255, 0)",
+          animation: {
+              type: "push", //动画类型（详见动画类型常量）
+              subType: "from_right", //动画子类型（详见动画子类型常量）
+              duration: 300 //动画过渡时间，默认300毫秒
+          },
+          pageParam: {
+            expressId:toutiaoid
+          },
+          reload: true
+      });
+    })
+    //返回箭头事件
+    $(".roofReturn").click(function () {
+        api.closeWin({});
+    });
+
+</script>
+
+</html>

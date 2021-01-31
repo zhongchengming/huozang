@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <style>
+        html,
+        body {
+            background: rgba(255, 255, 255, 0);
+        }
+
+        .closeplay {
+            width: 53px;
+            height: 19px;
+            overflow: hidden;
+            background: url(../../images/ReturnV.png) no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="closeplay">
+    </div>
+    <!-- E 播放当前的视频 -->
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../../script/mui.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript">
+        var videoid = "";
+        apiready = function() {
+            $(".closeplay").click(function() {
+                api.sendEvent({
+                    name: 'hidevideo'
+                });
+                api.sendEvent({
+                    name: 'closevideobtn'
+                });
+
+                api.sendEvent({
+                    name: 'closeplaywin'
+                });
+
+                api.closeWin({
+                  name: 'releasevideo'
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

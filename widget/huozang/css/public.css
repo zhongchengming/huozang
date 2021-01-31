@@ -1,0 +1,269 @@
+@charset "UTF-8";
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, font {
+    padding: 0;
+    margin: 0;
+}
+
+ul, li {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    padding: 0;
+    margin: 0 auto;
+    font-family: "微软雅黑";
+    font-size: 12px;
+    line-height: 1.4;
+    z-index: 1;
+    background: #fff;
+}
+input {
+  outline:none;
+}
+
+.otw {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cb {
+    clear: both;
+}
+
+.SquareHeaderS {
+    width: 100%;
+    height: 3.15rem;
+    position: fixed;
+    z-index: 99;
+}
+
+.SquareHeader {
+    width: 100%;
+    height: 3.15rem;
+    background: #fff;
+    text-align: center;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.SquareHeaderDIV {
+    height: 3.15rem;
+    line-height: 3.15rem;
+    font-size: 1.6rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.SquareHeader .p1 {
+    width: 1.8rem;
+    height: 1.8rem;
+    position: absolute;
+    right: 4.5rem;
+    top: 0.65rem;
+    background: url(../images/search.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.SquareHeader .p2 {
+    width: 1rem;
+    height: 1.8rem;
+    position: absolute;
+    left: 1.4rem;
+    top: 0.675rem;
+    background: url(../images/HeadlineF_05.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.SquareHeader .p3, .SquareHeader .p4 {
+    width: 1.5rem;
+    height: 1.8rem;
+    position: absolute;
+    right: 1.35rem;
+    top: 0.65rem;
+    background: url(../images/Message.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.SquareHeader .p4 {
+    background: url(../images/Message.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.SquareImg {
+    width: 100%;
+    /*height:0.35rem;*/
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.SquareHeaderS+.SquareImg {
+    padding-top: 6.3rem;
+}
+
+
+/*-----------------------------------------------------------*/
+
+
+/*导航*/
+
+.roofS {
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+    position: fixed;
+    z-index:1001;
+    top: 0;
+    left: 0;
+}
+
+.roof {
+    width: 100%;
+    height:35px;
+    margin: 0 auto 1px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 3px 1px #f2f2f2;
+}
+
+.roofConter {
+    width: 100%;
+    height:35px;
+    text-align: center;
+    line-height:35px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    overflow: hidden;
+}
+
+.roofUL {
+    width: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.roofUL>li {
+    width: 50%;
+    height:35px;
+    float: left;
+    line-height: 35px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    overflow: hidden;
+    position: relative;
+}
+
+.roofULD {
+    width: 70%;
+    overflow: hidden;
+    position: absolute;
+    left: 15%;
+    bottom: 0;
+}
+
+.Selected .roofULD {
+    border-bottom: 3px solid #ff9694;
+}
+
+.roofReturn {
+    width: 20px;
+    height: 20px;
+    background: url(../images/return.png) no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 7.5px;
+    left: 15px;
+}
+
+.roofSearch {
+    width: 20px;
+    height: 20px;
+    background: url(../images/search.png) no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 7.5px;
+    right: 55px;
+}
+
+.roofMessage {
+    width: 20px;
+    height: 20px;
+		background: url(../images/message.png) no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 7.5px;
+    right: 15px;
+}
+
+.roofMessage.messageU {
+    background: url(../images/message.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.roofMessage.messageF {
+    background: url(../images/messageF.png) no-repeat;
+    background-size: 100% 100%;
+}
+.roofButton{
+  height:25px;
+  font-size:12px;
+  color:#fff;
+  text-align:center;
+  line-height:27px;
+  padding:0 10px;
+  border-radius:3px;
+  background:#ff9694;
+  position: absolute;
+  top:5px;
+  right: 15px;
+}
+
+/*搜索框*/
+
+.SearchBox {
+    width: 94.7%;
+    height: 40px;
+    margin: 30px auto;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 3px 3px #CFCFCF;
+}
+
+.SearchInput {
+    width: 85%;
+    height: 40px;
+    text-indent: 1em;
+    overflow: hidden;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.SearchBoxP {
+    width: 20px;
+    height: 20px;
+    background: url(../images/search.png) no-repeat;
+    background-size: 100% 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}

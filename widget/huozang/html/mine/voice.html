@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>录制声音</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<link rel="stylesheet" href="../../css/common.css" />
+	<style>
+		html {
+			font-size: calc(100vw / 7.5) !important;
+		}
+
+		body {
+			background: #fff;
+		}
+
+		.save-btn {
+			width: 5rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			font-size: 1.2rem;
+			color: #fff;
+			background: #ff9694;
+			border-radius: 0.25rem;
+			overflow: hidden;
+			position: absolute;
+			top: 0.25rem;
+			right: 1.5rem;
+		}
+
+		.modifyBoxImg {
+			position: absolute;
+			top: 0;
+			width: 3rem;
+			height: 2.57rem;
+			margin: 2rem auto 0 auto;
+		}
+
+		.modifyBoxImg01 {
+			width: 3rem;
+			height: 3rem;
+			position: relative;
+			left: 50%;
+			margin-left: -1.5rem;
+		}
+
+		.modifyBoxImg02 {
+			position: absolute;
+			top: 1rem;
+			margin: 3rem auto 0 auto;
+			background: rgba(0, 0, 0, .5);
+			border-radius: 50%;
+			width: 100%;
+			height: 100%;
+			display: none;
+			z-index: 999;
+		}
+
+		.modifyBoxImg02 img {
+			width: 100%;
+			height: 100%
+		}
+
+		.text {
+			font-size: .26rem;
+			color: #999;
+			text-align: center;
+			margin: 2rem 0 .2rem 0;
+		}
+
+		.luzhiBtn {
+			width: 4.1rem;
+			height: .9rem;
+			border-radius: .48rem;
+			line-height: .9rem;
+			background: -webkit-linear-gradient(#ffbab9, #ff9795);
+			margin: 0 auto;
+			font-size: .3rem;
+			text-align: center;
+			color: #fff
+		}
+
+		.huatongImg {
+			display: inline-block;
+			width: .33rem;
+			height: .44rem
+		}
+
+		.modifyBoxText {
+			position: absolute;
+			bottom: .1rem;
+			width: 100%;
+			text-align: center;
+			font-size: .32rem;
+			color: rgba(255, 255, 255, 1)
+		}
+
+		.modifyBoxImg03 {
+			width: 3.03rem;
+			margin: 3rem auto 0 auto;
+			position: relative;
+			display: none;
+		}
+
+		.modifyBoxImg04 {
+			width: 100%;
+			height: .9rem;
+			line-height: .9rem;
+			border-radius: .45rem;
+			border: .01rem solid #ff9694;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.modifyBoxImg04 img {
+			width: .7rem;
+			height: .7rem;
+			border-radius: 50%;
+			margin: .1rem;
+		}
+
+		.time {
+			margin-right: .2rem;
+			color: #ff9694;
+			font-size: .32rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofButton">保存</div>
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				录制语音介绍
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<div class="modifyBox">
+
+
+		<div class="modifyBoxImg01">
+			<img class="modifyBoxImg" src="../../images/grounpImg01.png" />
+			<div class="modifyBoxImg02">
+				<img class="modifyBoxGift" src="../../images/voice.gif" />
+				<p class="modifyBoxText" id="time">00:00</p>
+			</div>
+		</div>
+
+		<div class="modifyBoxImg03">
+			<p class="modifyBoxImg04"><img class="playImg" src="../../images/voice01.png" />
+				<span class="time" id="delvoice">删除录音</span>
+				<p>
+		</div>
+		<p class="text">语音长度为5-60s</p>
+		<p class="luzhiBtn"><img class="huatongImg" src="../../images/huatong.png" />长按录制语音</p>
+	</div>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/jquery.md5.js"></script>
+	<script type="text/javascript">
+		var status = 0
+		apiready = function () {
+			var recMp3 = api.require('recMp3')
+			var audioStreamer = api.require('audioStreamer')
+			var qiniuUpfile = api.require('qiniuUpfile')
+			var userid = api.pageParam.userid
+			var tempVoice = ''
+			$api.fixStatusBar($api.dom('.roofS'))
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			// $api.setStorage('openWin', "updatesetting");
+			//返回箭头事件
+			$(".roofReturn").click(function () {
+				api.closeWin({});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function (ret, err) {
+				api.closeWin({});
+			});
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid
+					}
+				}
+			}, function (res, err) {
+				if (res) {
+					console.log(JSON.stringify(res));
+
+					if (res.userinfo.voiceurl) {
+						$('.modifyBoxImg03').show()
+						$('.modifyBoxImg').hide()
+						tempVoice = res.userinfo.voiceurl
+					} else {
+
+					}
+				}
+			})
+
+			// 开始录音
+			$('.luzhiBtn').on('click', function () {
+				if (status == 0) {
+					status = 1
+					recMp3.start(function (ret, err) {
+						if (ret) {
+							if (ret.db != undefined) {
+								// 在这里做ui 处理
+							} else {
+								//打开成功，开始录音
+								console.log('开始录音')
+								times();
+								$('.modifyBoxImg02').show()
+							}
+						} else {}
+					});
+				} else {
+					status = 0
+					recMp3.stop(function (ret, err) {
+						if (ret) {
+							$('.modifyBoxImg02').hide()
+							var duration = ret.duration;
+							var path = ret.path;
+							if (duration >= 4 && duration <= 55) {
+								stop()
+								$('.modifyBoxImg03').show()
+								$('.modifyBoxImg').hide()
+								tempVoice = path
+							} else {
+								stop()
+								api.toast({
+									msg: '录音时长不足5秒或超过60秒',
+									duration: 1000,
+									location: 'middle'
+								});
+							}
+						}
+					})
+				}
+
+
+			})
+
+			// 播放/停止
+			$(".modifyBoxImg04 img").click(function () {
+				if ($(".playImg").attr('status') == "play") {
+					$(".playImg").attr({
+						"src": "../../images/voice01.png",
+						"status": "stop"
+					})
+					audioStreamer.stop()
+				} else {
+					$(".playImg").attr({
+						"src": "../../images/vioce02.gif",
+						"status": "play"
+					})
+					audioStreamer.openPlayer({
+						path: tempVoice,
+					});
+				}
+
+
+			})
+
+			// 监听是否播放完毕
+			audioStreamer.addEventListener(function (ret) {
+				if (ret.state == "finished") {
+					$(".playImg").attr({
+						"src": "../../images/voice01.png",
+						"status": "stop"
+					})
+				}
+			})
+
+			//提交表单
+			$(".roofButton").click(function () {
+				var name = $.md5(tempVoice);
+				if (tempVoice == "") {
+					postVoice({
+						userid: userid,
+						voiceurl: tempVoice
+					})
+				} else {
+					qiniuUpfile.upfile({
+						file: api.fsDir + tempVoice.replace('fs:/', ''),
+						name: name + ".mp3"
+					}, function (upret, uperr) {
+						if (upret.status) {
+							if (upret.oper == "complete") {
+								postVoice({
+									userid: userid,
+									voiceurl: CONFIG.QINIUADDR + upret.info.key
+								})
+							}
+						}
+					})
+				}
+			})
+
+			// 删除录音
+			$('#delvoice').click(function () {
+				tempVoice = ""
+				$('.modifyBoxImg03').hide()
+			})
+
+			function postVoice(data) {
+				api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+					method: 'post',
+					data: {
+						values: data
+					}
+				}, function (ret, err) {;
+					if (ret) {
+						if (ret.code == "200") {
+							api.toast({
+								msg: '保存成功！',
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					} else {
+
+					}
+				});
+			}
+			var n = 0,
+				timer = null
+
+			function times() {
+				clearInterval(timer);
+				timer = setInterval(function () {
+					n++;
+					var m = parseInt(n / 60);
+					var s = parseInt(n % 60);
+					$('#time').text(toDub(m) + ":" + toDub(s))
+				}, 1000 / 60);
+			}
+
+			function stop() {
+				clearInterval(timer)
+				n = 0
+			}
+			//补零
+			function toDub(n) {
+				return n < 10 ? "0" + n : "" + n;
+			}
+		};
+	</script>
+</body>
+
+</html>

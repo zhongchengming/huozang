@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ch" manifest="">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>视频</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+</head>
+
+<body>
+
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script>
+	var videopageSize = 5,
+		videopageNum = 1,
+		videohasNext = false;
+	var isLast = 4, //默认第一页最后一个下标
+		isPlay = true; //是否播放
+	var videoData = [];
+	var videoPlayer;
+	var videoid = "",
+		userid = "";
+	apiready = function() {
+		$api.fixStatusBar($api.dom('body'));
+		$api.setStorage('openWin', "videoiosplay");
+		videoid = api.pageParam.videoid;
+		userid = api.pageParam.userid;
+		videoPlayer = api.require('videoPlayer');
+
+		getScrollVideos(videoid, function(userData) {
+			loadvideo(userData);
+		});
+
+		//切换到后台
+		api.addEventListener({
+			name: 'pause'
+		}, function(ret, err) {
+			isPlay = false;
+			videoPlayer.pause();
+			api.openFrame({
+				name: 'playbtn',
+				url: './playbtn.html',
+				background: "rgba(255,255,255,0)",
+				rect: {
+					x: api.frameWidth / 2 - 25,
+					y: api.frameHeight / 2 - 25,
+					w: 50,
+					h: 50
+				}
+			});
+		});
+		// 应用从后台回到前台
+		api.addEventListener({
+			name: 'resume'
+		}, function(ret, err) {
+			isPlay = true;
+			videoPlayer.start();
+			api.closeFrame({
+				name: 'playbtn'
+			});
+		});
+
+
+		api.addEventListener({
+			name: 'hidevideo'
+		}, function(ret, err) {
+			isPlay = false;
+			videoPlayer.pause();
+			// videoPlayer.close();
+		});
+
+		api.addEventListener({
+			name: 'playvideo'
+		}, function(ret, err) {
+			isPlay = true;
+			videoPlayer.start();
+		});
+
+		api.addEventListener({
+			name: 'pausevideo'
+		}, function(ret, err) {
+			isPlay = false;
+			videoPlayer.pause();
+		});
+
+		api.addEventListener({
+			name: 'closevideobtn'
+		}, function(ret, err) {
+			closebtn();
+		});
+
+		api.addEventListener({
+			name: 'closeplaywin'
+		}, function(ret, err) {
+			api.closeWin({
+				name: 'videoiosplay'
+			});
+		});
+
+		api.addEventListener({
+			name: 'resetvideo'
+		}, function(ret, err) {
+			videopageNum = 1;
+			videopageSize = 5;
+
+			getvideo(userid, videopageSize, videopageNum, function(userData) {
+				loadvideo(userData);
+			});
+		});
+	}
+
+	function loadvideo(userData) {
+		videoData = userData;
+		if (videoData.length > 0) {
+			//打开播放器
+			videoPlayer.open({
+				coverImg: "widget://images/loadingvideo.png",
+				path: videoData[0].videoUrl,
+				scalingMode: 'scaleAspectFit',
+				loop: true,
+				rect: {
+					x: 0,
+					y: 0,
+					w: api.winWidth,
+					h: api.winHeight
+				},
+				fixedOn: api.frameName,
+				fixed: true,
+				bg:"#000"
+			}, function(ret, err) {
+				if (ret.status) {
+					openbtn(function() {
+						setTimeout(function() {
+							getvideoinfo(videoData[0].uid, $api.getStorage('userid'));
+						}, 1000);
+					});
+
+					videoPlayer.addEventListener({
+						name: "click"
+					}, function(ret, err) { //切换监听
+						if (ret.eventType == "pause") {
+							api.sendEvent({
+								name: 'playvideo'
+							});
+							api.closeFrame({
+								name: 'playbtn'
+							});
+						} else {
+							api.sendEvent({
+								name: 'pausevideo'
+							});
+							api.openFrame({
+								name: 'playbtn',
+								url: './playbtn.html',
+								background: "rgba(255,255,255,0)",
+								rect: {
+									x: api.frameWidth / 2 - 25,
+									y: api.frameHeight / 2 - 25,
+									w: 50,
+									h: 50
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	}
+
+	function getvideo(userinfo, pageSize, pageNum, userDatacallback) {
+		//随机获取video
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETVIDEOS,
+				method: 'post',
+				data: {
+					values: {
+						userid: userinfo,
+						otheruserid: $api.getStorage('userid'),
+						pagesize: pageSize,
+						pagenum: pageNum,
+						randomOperater: "Y"
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					videopageNum = data.videos.nextPage;
+					videopageSize = 1;
+					var userData = [];
+					$.each(data.videos.list, function(i, n) {
+						userData.push({
+							uid: n.videoid,
+							imageUrl: n.frontcover,
+							videoUrl: n.video,
+							userid: n.userinfo.userid,
+							scalingMode: 1
+						});
+					});
+					userDatacallback(userData);
+				}
+			});
+	};
+
+	function getScrollVideos(video, userDatacallback) {
+		//随机获取video
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETSCROLLVIDEOS,
+				method: 'post',
+				data: {
+					values: {
+						videoid: video
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200") {
+					var userData = [];
+					$.each(data.videos, function(i, n) {
+						userData.push({
+							uid: n.videoid,
+							imageUrl: n.frontcover,
+							videoUrl: n.video,
+							userid: n.userid,
+							scalingMode: 1
+						});
+					});
+					userDatacallback(userData);
+				}
+			});
+	};
+
+	function getvideoinfo(videoid, userid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETVIDEOSDETAIL,
+				method: 'post',
+				data: {
+					values: {
+						otheruserid: userid,
+						videoid: videoid
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200" && data.videos != null) {
+					api.sendEvent({
+						name: "videoavatar",
+						extra: {
+							userid: data.videos.userinfo.userid,
+							avatar: data.videos.userinfo.avatar,
+							isfans: data.videos.isfans
+						}
+					});
+					api.sendEvent({
+						name: "videolike",
+						extra: {
+							videoid: data.videos.videoid,
+							dianzan: data.videos.dianzan,
+							dianzancount: data.videos.dianzancount,
+							userid: data.videos.userinfo.userid
+						}
+					});
+					api.sendEvent({
+						name: "videocomment",
+						extra: {
+							videoid: data.videos.videoid,
+							pinluncount: data.videos.pinluncount,
+							userid: data.videos.userinfo.userid
+						}
+					});
+					api.sendEvent({
+						name: "videouserinfo",
+						extra: {
+							nickname: data.videos.userinfo.nickname,
+							bio: data.videos.userinfo.bio,
+							comment: data.videos.comment
+						}
+					});
+					api.sendEvent({
+						name: "videoshare",
+						extra: {
+							videoid: data.videos.videoid,
+							videofrontcover: data.videos.frontcover,
+							videourl: data.videos.video,
+							userid: data.videos.userinfo.userid,
+							nickname: data.videos.userinfo.nickname,
+							sharecount: data.videos.fengxiangcount,
+							comment: data.videos.comment
+						}
+					});
+				}
+			});
+	}
+
+	function openbtn(callbak) {
+		//打开返回
+		api.openFrame({
+			name: 'closeplay',
+			url: './closeplay.html',
+			bgColor: "rgba(255, 255, 255, 0)",
+			rect: {
+                x: 5,
+                y: 60,
+                w: 106,
+                h: 38
+			}
+		});
+		//打开右侧
+		api.openFrame({
+			name: 'rightframe',
+			url: './rightframe.html',
+			bgColor: "rgba(255, 255, 255, 0)",
+			rect: {
+				x: api.frameWidth - 80,
+				y: (api.frameHeight - 110) / 2,
+				w: 90,
+				h: 335
+			}
+		});
+
+		//打开个人信息
+		api.openFrame({
+			name: 'userinfo',
+			url: './userinfo.html',
+			background: "rgba(255,255,255,0)",
+			rect: {
+				x: 0,
+				y: api.frameHeight - 80,
+				w: api.frameWidth,
+				h: 80
+			}
+		});
+		callbak();
+	}
+
+	function closebtn() {
+		//关闭右侧
+		api.closeFrame({
+			name: 'rightframe'
+		});
+		//关闭个人信息
+		api.closeFrame({
+			name: 'userinfo'
+		});
+		api.closeFrame({
+			name: 'playbtn'
+		});
+		api.closeFrame({
+			name: 'closeplay'
+		});
+	}
+</script>
+
+</html>

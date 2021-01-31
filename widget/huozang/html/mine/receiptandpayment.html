@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>收支明细</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mine.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				收支明细
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">收支明细</h1>
+	</header> -->
+	<div class="mui-content personal-homepage-data page-bottom">
+		<div class="order-search">
+			<div class="search">
+				<input type="text" />
+				<i id="j-search"></i>
+			</div>
+		</div>
+		<ul class="mui-table-view income-ul" id="bills">
+
+		</ul>
+
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script type="text/javascript">
+		var pageSize = 8,
+			pageNum = 1,
+			hasNextPage = true,
+			userid = "";
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "receiptandpayment");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({});
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({});
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+
+			userid = $api.getStorage('userid');
+
+			loadBills(userid, pageSize, pageNum);
+			//上拉刷新
+			api.addEventListener({
+				name: 'swipeup'
+			}, function(ret, err) {
+				if (hasNextPage) {
+					loadBills(userid,pageSize, pageNum);
+				}
+			});
+
+			//小三角
+			var objI = document.querySelectorAll(".order-search span i");
+			for (var i = 0; i < objI.length; i++) {
+				objI[i].addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+			}
+			//搜索图标
+			var objSearch = document.querySelector("#j-search");
+			objSearch.addEventListener("touchstart", function(e) {
+				e.preventDefault();
+			}, false);
+			//行点击a事件
+			var objA = document.querySelectorAll(".income-ul li a");
+			for (var i = 0; i < objA.length; i++) {
+				objA[i].addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				objA[i].addEventListener("touchmove", function(e) {
+					this.isMove = true; //判断标识：防止误触
+				}, false);
+				objA[i].addEventListener("touchend", function(e) {
+					e.preventDefault();
+					if (!this.isMove) {
+						window.location.href = this.href; //跳转
+					}
+					this.isMove = false;
+				}, false);
+			}
+		}
+
+		function loadBills(userid, pagesize, pagenum) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERBILLS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							pagesize: pagesize,
+							pagenum: pagenum
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						hasNextPage = data.userbills.hasNextPage;
+						pageNum = data.userbills.nextPage;
+						if (data.userbills && data.userbills.list.length != 0) {
+							$.each(data.userbills.list, function(i, n) {
+								var bills = "";
+								if (n.type == "1") {
+									bills += "<li>" +
+										"<a class=\"mui-table-view-cell mui-media mui-table income\">" +
+										"<div class=\"mui-table-cell mui-col-xs-9\">" +
+										"<div class=\"income-type\">" +
+										"<span>收</span>" +
+										"</div>" +
+										"<div class=\"mui-media-body\">" +
+										"<p class=\"mui-ellipsis\">" + n.remark + "</p>" +
+										"<span>" + timestampToTime(n.createtime) + "</span>" +
+										"</div>" +
+										"</div>" +
+										"<div class=\"mui-table-cell mui-col-xs-3 mui-text-right\">" +
+										"<span class=\"mui-h5\">+" +  (n.amount=="0"?'':n.amount) + "</span>" +
+										"</div>" +
+										"</a>" +
+										"</li>";
+								} else if (n.type == "2") {
+									bills += "<li>" +
+										"<a class=\"mui-table-view-cell mui-media mui-table income\">" +
+										"<div class=\"mui-table-cell mui-col-xs-9\">" +
+										"<div class=\"income-type expenditure\">" +
+										"<span>支</span>" +
+										"</div>" +
+										"<div class=\"mui-media-body\">" +
+										"<p class=\"mui-ellipsis\">" + n.remark + "</p>" +
+										"<span>" + timestampToTime(n.createtime) + "</span>" +
+										"</div>" +
+										"</div>" +
+										"<div class=\"mui-table-cell mui-col-xs-3 mui-text-right\">" +
+										"<span class=\"mui-h5\">" + (n.amount=="0"?'':(n.amount*-1)) + "</span>" +
+										"</div>" +
+										"</a>" +
+										"</li>";
+								}
+								$("#bills").append(bills);
+							});
+						} else {
+							$(".mui-content").append("<div id=\"no-conent\"><img src=\"../../images/no-content.png\"/></div>");
+						}
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

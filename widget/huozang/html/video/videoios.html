@@ -1,0 +1,546 @@
+c
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>视频播放</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<link rel="stylesheet" href="../../css/videoios.css" />
+</head>
+
+<body>
+	<!--底部评论-->
+	<div class="BotComment">
+		<ul class="BotCommentU">
+			<li class="BotCommentUL">
+				<input type="text" id="videocomment" placeholder="请输入评论内容" />
+			</li>
+			<li class="BotCommentUR">发送</li>
+		</ul>
+	</div>
+	<!--顶部导航-->
+	<div class="videoTopS">
+		<ul class="videoTop">
+			<li class="VTRuturn"></li>
+			<li class="VTPraise"></li>
+			<li class="VTRelay"></li>
+			<li class="VTComplaints"></li>
+			<li class="VTAttention">+关注</li>
+			<li class="VTAvatar"></li>
+		</ul>
+	</div>
+	<!--视频显示区-->
+	<div class="videoImg">
+
+	</div>
+	<!--视频信息区-->
+	<div class="videoComment">
+		<div class="videoCommentW">
+			<ul class="videoCommentTop">
+				<li>
+					<span>9.6w</span> 播放
+				</li>
+				<li>
+					<span>18小时</span> 前
+				</li>
+			</ul>
+			<div class="videoCommentCen">
+				<span class="span1">播放</span>:
+				<span class="span2">播放播放播放播放播放播放播放播放播放播放播放播放播放</span>
+			</div>
+			<ul class="videoCommentBot">
+				<li class="videoCommentBotGZ"></li>
+				<li><span>9851</span>喜欢</li>
+			</ul>
+			<ul class="videoCommentBot">
+				<li class="videoCommentBotPL"></li>
+				<li><span>9851</span>评论</li>
+			</ul>
+		</div>
+		<!--评论-->
+		<ul class="videoReview">
+
+		</ul>
+
+	</div>
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+
+	<script type="text/template" id="pinluntemplate">
+		{{~it:value:index}}
+		<li>
+			<div class="videoReviewL">
+				<img userid="{{=value.replyuserid}}" class="otherspage" src="{{?value.replyavatar}}{{=value.replyavatar}}{{??}}../../images/avatar.png{{?}}" />
+			</div>
+			<div class="videoReviewR">
+				<ul class="VReviewRTop">
+					<li class="VReviewRTopL">{{=value.replynickname}}</li>
+					<li class="VReviewRTopR"></li>
+				</ul>
+				<div class="VReviewRCen">{{=value.replyvideocontent}}</div>
+				<ul class="VReviewRBot">
+					<li class="VReviewRBotL">{{=value.replycreatetime}}</li>
+					<!-- 点赞 -->
+					<li class="VReviewRBotRR">{{=value.dianzan}}</li>
+					<li commentid="{{=value.replyid}}" class="VReviewRBotRL dianzan">
+						<img isdianzan="{{=value.dianzan}}" src="{{?1==value.dianzan}}../../images/SquarePL_09.png{{??}}../../images/SquarePL_07.png{{?}}" />
+					</li>
+					<!--评论-->
+					<!-- <li class="VReviewRBotRR"> {{=value.pinluncount}}</li> -->
+					<li class="VReviewRBotRL pinlun">
+						<img src="../../images/SquarePL_05.png" />
+					</li>
+				</ul>
+		</li>
+		{{~}}
+	</script>
+
+	<script type="text/javascript">
+		var videopageSize = 5,
+			videopageNum = 1,
+			videohasNext = true;
+		var videoid = "",
+			videouserid = "";
+		apiready = function() {
+			$api.fixStatusBar($api.dom('body'));
+
+			$api.setStorage('openWin', "videoios");
+			videoid = api.pageParam.videoid;
+			userid = api.pageParam.userid;
+			getvideo();
+			getpinlun(videoid, videopageSize, videopageNum, true);
+			$('body').on('touchstart', function(e) {
+				api.closeFrame({
+					name: 'share'
+				});
+			});
+			//检测图像显示区高度
+			$(".videoImg").css({
+				// "height":""+($(window).height()-$(".videoCommentW").height())+"px",
+				"margin-top": "-28px"
+			});
+			//顶部点击
+			// 头像
+			$(".VTAvatar").click(function() {
+					var userid = $(this).attr("userid");
+					api.openWin({
+						name: 'otherspage',
+						url: '../otherspage.html',
+						rect: {
+							x: 0,
+							y: 0,
+							w: 'auto',
+							h: 'auto'
+						},
+						pageParam: {
+							userid: userid
+						},
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+				})
+				//返回
+			$(".VTRuturn").click(function() {
+				api.closeWin({
+					name: 'videoios'
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'videoios'
+				});
+			});
+			//关注
+			$(".VTAttention").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var fansuserid = $api.getStorage('userid');
+				var userid = $(this).attr("userid");
+				api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.FANS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							fansuserid: fansuserid
+						}
+					}
+				}, function(data, err) {
+					if (data.code == "200") {
+						if ($(".VTAttention").text() == "+关注") {
+							$(".VTAttention").text("√已关注");
+							$(".VTAttention").addClass("active");
+							api.sendEvent({
+								name: "sendTextMessageListener",
+								extra: {
+									touserid: userid,
+									message: "系统提示：当前人关注你咯，快去看看吧！"
+								}
+							});
+						} else if ($(".VTAttention").text() == "√已关注") {
+							$(".VTAttention").text("+关注");
+							$(".VTAttention").removeClass("active");
+						}
+					} else {
+							api.toast({
+									msg: data.msg,
+									duration: 1000,
+									location: 'middle'
+							});
+					}
+				});
+			});
+			//点赞
+			$(".VTPraise").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var userid = $api.getStorage('userid');
+				var passiveuserid = $(this).attr("userid");
+				var videoid = $(this).attr("videoid");
+				var dianzan = $(this);
+				if ($(dianzan).hasClass("active")) { //取消点赞
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+							method: 'post',
+							data: {
+								values: {
+									passiveuserid: passiveuserid,
+									userid: userid,
+									videoid: videoid,
+									videotype: 1
+								}
+							}
+						},
+						function(data, err) {
+							if (data.code == "200") {
+								$(dianzan).css({
+									"background": "url(../../images/Videos_03.png)",
+									"background-repeat": "no-repeat",
+									"background-size": "100% 100%",
+								}).removeClass("active");
+							}
+						});
+				} else { //点赞
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+							method: 'post',
+							data: {
+								values: {
+									passiveuserid: passiveuserid,
+									userid: userid,
+									videoid: videoid,
+									videotype: 1,
+									videocontent: "喜欢"
+								}
+							}
+						},
+						function(data, err) {
+							if (data.code == "200") {
+								$(dianzan).css({
+									"background": "url(../../images/SquarePL_09.png)",
+									"background-repeat": "no-repeat",
+									"background-size": "100% 100%",
+								}).addClass("active");
+								api.sendEvent({
+									name: "sendTextMessageListener",
+									extra: {
+										touserid: passiveuserid,
+										message: "系统提示：当前人对你的视频点赞咯，快去看看吧！"
+									}
+								});
+							}
+						});
+				}
+
+			});
+			//转发
+			$(".VTRelay").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var userid = $(this).attr("userid");
+				var videoid = $(this).attr("videoid");
+				var videofrontcover = $(this).attr("videofrontcover");
+				var videourl = $(this).attr("videourl");
+				var comment = $(this).attr("comment");
+				var nickname = $(this).attr("nickname");
+
+				api.openFrame({
+					name: 'share',
+					url: './share.html',
+					rect: {
+						x: 0,
+						y: api.winHeight - 170,
+						w: api.winWidth,
+						h: 170
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_bottom", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid,
+						videoid: videoid,
+						videofrontcover: videofrontcover,
+						videourl: videourl,
+						comment: comment,
+						nickname: nickname
+					}
+				});
+			});
+			//投诉
+			$(".VTComplaints").click(function() {
+
+				// alert("投诉");
+			});
+			setInterval(function() {
+				//监听顶部变化
+				if ($(document).scrollTop() > $(".videoImg").height()) {
+					$(".videoTop").css(
+						"background", "rgba(255,255,255,1)"
+					);
+					$(".VTRuturn").css({
+						"background": "url(../../images/return.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+					$(".VTRelay").css({
+						"background": "url(../../images/RelayH.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+					$(".VTComplaints").css({
+						"background": "url(../../images/ComplaintsH.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+				} else {
+					$(".videoTop").css(
+						"background", "rgba(255,255,255,0)"
+					);
+					$(".VTRuturn").css({
+						"background": "url(../../images/returnB.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+					$(".VTRelay").css({
+						"background": "url(../../images/Videos_10.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+					$(".VTComplaints").css({
+						"background": "url(../../images/Complaints.png)",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%",
+					});
+				}
+				//监听底部变化
+				if ($(document).scrollTop() > 10) {
+					$(".BotComment").css("display", "block");
+				} else {
+					$(".BotComment").css("display", "none");
+				}
+			}, 100);
+
+
+			// 评论发送
+			$(".BotCommentUR").click(function() {
+				var videoid = $(this).attr("videoid");
+				var videouserid = $(this).attr("videouserid");
+
+				var videocomment = $("#videocomment").val();
+				if (videocomment == null || videocomment == "") {
+					api.toast({
+						msg: '说点什么吧！',
+						duration: 1000,
+						location: 'middle'
+					});
+				} else {
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+							method: 'post',
+							data: {
+								values: {
+									videoid: videoid,
+									passiveuserid: videouserid,
+									userid: $api.getStorage('userid'),
+									videotype: 2,
+									videocontent: videocomment
+								}
+							}
+						},
+						function(data, err) {
+							if (data.code == "200") {
+								$("#videocomment").val("");
+								videopageNum = 1;
+								getpinlun(videoid, videopageSize, videopageNum, true);
+
+								api.sendEvent({
+									name: "sendTextMessageListener",
+									extra: {
+										touserid: videouserid,
+										message: "系统提示：当前人对你的视频进行评论了，快去看看吧！"
+									}
+								});
+							}
+						});
+				}
+
+			});
+		}
+
+		//获取视频
+		function getvideo() {
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETVIDEOS,
+				method: 'post',
+				data: {
+					values: {
+						videoid: videoid,
+						otheruserid: userid
+					}
+				}
+			}, function(data, ree) {
+				if (data.code == "200") {
+					$(".VTAvatar").css({
+						"background": "url(" + data.videos.list[0].userinfo.avatar + ")",
+						"background-repeat": "no-repeat",
+						"background-size": "100% 100%"
+					});
+
+					$(".VTAvatar").attr("userid", data.videos.list[0].userinfo.userid);
+					$(".videoCommentCen").find(".span1").text(data.videos.list[0].userinfo.nickname);
+					$(".videoCommentCen").find(".span2").text(data.videos.list[0].comment);
+					$(".videoCommentBotGZ").find("span").text(data.videos.list[0].dianzancount);
+					$(".videoCommentBot").find("span").text(data.videos.list[0].pinluncount);
+					$(".videoImg").empty();
+					var index1 = data.videos.list[0].video.lastIndexOf(".");
+					var index2 = data.videos.list[0].video.length;
+					var suffix = data.videos.list[0].video.substring(index1 + 1, index2); //后缀名
+					$(".videoImg").append("<video controls='controls' webkit-playsinline='true' playsinline='true' preload='none' autoplay='autoplay'>" +
+						"<source src='" + data.videos.list[0].video + "' type='video/" + ((suffix.length > 3) ? "mp4" : suffix) + "'></source></video>");
+
+					//关注
+					if (data.videos.list[0].isfans) {
+						$(".VTAttention").text("√已关注");
+						$(".VTAttention").addClass("active");
+					} else {
+						$(".VTAttention").text("+关注");
+						$(".VTAttention").removeClass("active");
+					}
+					$(".VTAttention").attr("userid", data.videos.list[0].userinfo.userid);
+
+					// 点赞
+					if (data.videos.list[0].dianzan * 1 == 1) {
+						$(".VTPraise").css({
+							"background": "url(../../images/SquarePL_09.png)",
+							"background-repeat": "no-repeat",
+							"background-size": "100% 100%",
+						}).addClass("active");
+					} else {
+						$(".VTPraise").css({
+							"background": "url(../../images/Videos_03.png)",
+							"background-repeat": "no-repeat",
+							"background-size": "100% 100%",
+						});
+					}
+					$(".VTPraise").attr("userid", data.videos.list[0].userinfo.userid);
+					$(".VTPraise").attr("videoid", data.videos.list[0].videoid);
+
+					//分享
+					$(".VTRelay").attr("userid", data.videos.list[0].userinfo.userid);
+					$(".VTRelay").attr("videoid", data.videos.list[0].videoid);
+					$(".VTRelay").attr("videofrontcover", data.videos.list[0].frontcover);
+					$(".VTRelay").attr("videourl", data.videos.list[0].video);
+					$(".VTRelay").attr("comment", data.videos.list[0].comment);
+					$(".VTRelay").attr("nickname", data.videos.list[0].userinfo.nickname);
+
+					// 发送
+
+					$(".BotCommentUR").attr("videouserid", data.videos.list[0].userinfo.userid);
+					$(".BotCommentUR").attr("videoid", data.videos.list[0].videoid);
+				}
+			});
+		};
+		//评论
+		function getpinlun(videoid, pageSize, pageNum, isclear) {
+			if (isclear) {
+				$(".videoReview").empty();
+			}
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETVIDEOCOMMENTS,
+					method: 'post',
+					data: {
+						values: {
+							videoid: videoid,
+							videotype: 2,
+							pagesize: pageSize,
+							pagenum: pageNum
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200" && data.comments.list) {
+						$.each(data.comments.list, function(i, n) {
+							n.createtime = timestampToTime(n.createtime);
+							n.replycreatetime = timestampToTime(n.replycreatetime);
+						});
+						var tempFn = doT.template($api.byId('pinluntemplate').innerHTML);
+						var resultHTML = tempFn(data.comments.list);
+						$(".videoReview").append(resultHTML);
+						videohasNext = data.comments.hasNextPage;
+						videopageNum = data.comments.nextPage;
+					}
+				});
+		};
+		// 登录检测
+		function checklogin() {
+			var userinfo = $api.getStorage('userid');
+			if (userinfo == null || userinfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+
+
+
+
+</body>
+
+</html>

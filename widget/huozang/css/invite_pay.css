@@ -1,0 +1,413 @@
+@charset "utf-8";
+body {
+    background-color: #fff;
+}
+
+.Information {
+    width: 85.6%;
+    height: 1.4rem;
+    margin: 2.7rem auto 0;
+    overflow: hidden;
+}
+
+.InformationL {
+    height: 1.4rem;
+    float: left;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.InformationC {
+    width: 2.5rem;
+    height: 1.2rem;
+    float: left;
+    margin-left: 1rem;
+    border-radius: 0.7rem;
+    font-size: 0.85rem;
+    line-height: 1.5rem;
+    color: #fff;
+    background: #FF9694;
+    overflow: hidden;
+    position: relative;
+}
+
+.InformationC>li:first-of-type.man {
+    width: 1rem;
+    height: 1rem;
+    background: url(../images/man-icon.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0.2rem;
+    top:1px;
+}
+
+.InformationC>li:first-of-type.woman {
+    width: 1rem;
+    height: 1rem;
+    background: url(../images/woman-icon.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0.2rem;
+    top:1px;
+}
+
+.InformationC>li:last-of-type {
+    position: absolute;
+    right: 0.4rem;
+}
+
+.InformationR {
+    float: left;
+    margin-left: 1.5rem;
+    overflow: hidden;
+}
+
+.InformationR>li:first-of-type {
+    width: 0.75rem;
+    height: 1.1rem;
+    float: left;
+    margin-top: 0.25rem;
+    margin-right: 0.5rem;
+    overflow: hidden;
+}
+
+.InformationR>li:last-of-type {
+    height: 1.2rem;
+    float: left;
+    line-height: 1.4rem;
+    font-size: 1.1rem;
+    color: #b2b2b2;
+    margin-top: 0.3rem;
+}
+
+.InformationR>li:first-of-type img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+/*约会类型*/
+
+.AppointmentType {
+    width: 85.6%;
+    margin: 2rem auto 0;
+    overflow: hidden;
+}
+
+.AppointmentType>li {
+    width: 5.8rem;
+    height: 5.8rem;
+    float: left;
+    border-radius: 0.5rem;
+    border: 1px solid #ff9694;
+}
+
+.AppointmentType>li .p1 {
+    width: 2.8rem;
+    height: 2.5rem;
+    margin: 0.6rem auto 0;
+    overflow: hidden;
+}
+
+.AppointmentType>li .p1 img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.AppointmentType>li .p2 {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #FF9694;
+    margin-top: 0.5rem;
+}
+
+.AppointmentHr {
+    width: 94.7%;
+    margin: 2.2rem auto 0;
+    border-top: 1px solid #f5f5f5;
+    overflow: hidden;
+}
+
+
+/*约会内容*/
+
+.AppointmentCenter {
+    width: 85.6%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.AppointmentCenterL {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 400;
+}
+
+.AppointmentCenterC {
+    width: 95%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.AppointmentCenterC li {
+    height: 2rem;
+    float: left;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    color: #fff;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    line-height: 2.3rem;
+    font-size: 1.2rem;
+    border-radius: 0.25rem;
+    background: #FF9694;
+    overflow: hidden;
+}
+
+.AppointmentCenterR, .AppointmentCenterRS {
+    width: 98%;
+    margin: 0.5rem auto 0;
+    border: 1px solid #f0f0f0;
+    border-radius: 0.25rem;
+}
+
+.AppointmentCenterRS {
+    margin-top: 1rem;
+    border-radius: 0.25rem;
+}
+
+#starttime,#endtime{
+    width: 98%;
+    height: 3rem;
+    font-size: 1.3rem;
+    color: #ccc;
+    font-weight: 400;
+    margin-left: 1%;
+    text-indent: 1em;
+    outline: none;
+    border: 0;
+    overflow: hidden;
+}
+
+/*input.input{
+    width: 98%;
+    height: 3rem;
+    font-size: 1.3rem;
+    color: #ccc;
+    font-weight: 400;
+    margin-left: 1%;
+    text-indent: 1em;
+    outline: none;
+    border: 0;
+    overflow: hidden;
+}*/
+
+.textarea {
+    width: 95%;
+    height: 5rem;
+    font-size: 1.3rem;
+    color: #ccc;
+    font-weight: 400;
+    margin: 2.5%;
+    line-height: 1.5;
+    outline: none;
+    resize: none;
+    border: 0;
+    overflow: hidden;
+}
+
+.AppointmentCenterB {
+    width: 98%;
+    margin: 0.5rem auto 0;
+    overflow: hidden;
+}
+
+.AppointmentCenterB li {
+    height: 2rem;
+    float: left;
+    margin-right:0.5rem;
+    margin-bottom:0.5rem;
+    text-align: center;
+    color: #fff;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    line-height: 2.3rem;
+    font-size: 1.2rem;
+    border-radius: 0.25rem;
+    background: #e6e6e6;
+    overflow: hidden;
+}
+
+
+/*诚意金*/
+
+.EarnestMoney {
+    width: 94.7%;
+    margin: 2.5rem auto 0;
+    background: #fcfcfc;
+    overflow: hidden;
+}
+
+.EarnestMoney .p1 {
+    width: 85.6%;
+    margin: 1.5rem auto 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-indent: 0.5rem;
+    overflow: hidden;
+    border-left: 0.5rem solid #ff9694;
+}
+
+.EarnestMoney .p2 {
+    width: 85.6%;
+    margin: 0.5rem auto 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ff9694;
+    overflow: hidden;
+}
+
+.EarnestMoneyU {
+    /*width:85.6%;*/
+    width: 86.9%;
+    margin: 0 auto 2rem;
+    overflow: hidden;
+}
+
+.EarnestMoneyU>li {
+    width: 23.7%;
+    float: left;
+    /*margin-left: 0.65%;
+    margin-right: 0.65%;
+    margin-top: 1.4rem;*/
+    margin:1rem 0.65% 0.7rem;
+    overflow: hidden;
+}
+
+.EarnestMoneyU>li:last-of-type {
+    width: 48.7%;
+}
+
+.EarnestMoneyU>li div {
+    width: 95%;
+    height:30px;
+    font-size: 1.2rem;
+    color: #999;
+    font-weight: 400;
+    line-height:30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius:30px;
+}
+
+.EarnestMoneyU>li:last-of-type div {
+    width: 98%;
+}
+
+.EarnestMoneyU>li div input{
+    width:97%;
+    height:25px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height:25px;
+    text-indent: 0.2rem;
+    text-align: center;
+    border-radius:25px;
+    border:0;
+    outline:none;
+    overflow:hidden;
+}
+
+#EarnestMoneyUL div {
+    color: #ff9694;
+    background: #fef3f1;
+    border: 1px solid #ff9694;
+}
+
+#EarnestMoneyUL input {
+    color: #ff9694;
+    background: #fef3f1;
+}
+
+#EarnestMoneyUL input::-webkit-input-placeholder {
+    color: #ff9694;
+}
+
+#EarnestMoneyUL input:-moz-placeholder {
+    color: #ff9694;
+}
+
+#EarnestMoneyUL input::-moz-placeholder {
+    color: #ff9694;
+}
+
+#EarnestMoneyUL input:-ms-input-placeholder {
+    color: #ff9694;
+}
+
+
+/*协议*/
+
+.Protocol {
+    width: 66.7%;
+    margin: 3rem auto 0;
+    overflow: hidden;
+}
+
+.ProtocolL {
+    width: 1.6rem;
+    height: 1.6rem;
+    float: left;
+    background: url(../images/xieyiBut_03.png);
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+#ProtocolOpt {
+    width: 1.6rem;
+    height: 1.6rem;
+    float: left;
+    background: url(../images/xieyiButF_03.png);
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.ProtocolR {
+    height: 1.6rem;
+    float: left;
+    font-size: 1.3rem;
+    color: #333;
+    line-height: 1.6rem;
+    margin-left: 0.5rem;
+    overflow: hidden;
+}
+
+.ProtocolR span {
+    color: #ff9694;
+    margin-left: 0.3rem;
+}
+
+.appointmentSub {
+    width: 70%;
+    height: 3rem;
+    margin: 1.5rem auto 3rem;
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #fff;
+    background: #ff9694;
+    border-radius: 3rem;
+    overflow: hidden;
+}
+.mui-btn-blue {
+    color: #fff;
+    border: 1px solid #ff9694 !important;
+    background-color: #ff9694 !important;
+}

@@ -1,0 +1,100 @@
+@charset "utf-8";
+/*视频类*/
+#video{
+  width:100%;
+  margin:5px auto;
+  overflow:hidden;
+}
+#video > li{
+	width:50%;
+	height:250px;
+	float:left;
+	overflow:hidden;
+	position:relative;
+}
+#video > li > img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoTop{
+	width:100%;
+	overflow:hidden;
+	position:absolute;
+	bottom:0;
+	left:0;
+}
+.videoTopW{
+	width:95%;
+	margin:0 auto;
+	color:#fffefe;
+	line-height:1.2;
+	font-size:12px;
+	font-weight:bold;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+.videoTopU{
+	width:95%;
+	margin:5px auto;
+	overflow:hidden;
+}
+.videoTopUL{
+	width:25px;
+	height:25px;
+	float:left;
+	border-radius:100%;
+	overflow:hidden;
+}
+.videoTopUL img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoTopUCL{
+	width:35%;
+	float:left;
+	color:#fefefe;
+	line-height:28px;
+	font-size:14px;
+	font-weight:bold;
+	margin-left:3px;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.videoTopUCR{
+	width:12px;
+	height:12px;
+	float:left;
+	margin-left:6px;
+	margin-top:6.5px;
+	border-radius:100%;
+	overflow:hidden;
+	background:url(../images/SquarePL_09.png) no-repeat;
+	background-size:100% 100%;
+}
+.videoTopUR{
+	width:30%;
+	float:left;
+	color:#fefefe;
+	line-height:28px;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:3px;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}

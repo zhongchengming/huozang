@@ -1,0 +1,1254 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/mui.min.css" rel="stylesheet" />
+	<link href="../css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/public.css">
+	<link rel="stylesheet" href="../css/otherspage.css" />
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<p class="p2"></p>
+		<!-- <p class="p1"></p> -
+		<div id="nickname" class="SquareHeaderDIV">Sunneer</div>
+	</div>
+	<img class="SquareImg" src="../images/gct_02.jpg"> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div> -->
+			<!-- <div class="roofMessage messageU"></div> -->
+			<div id="nickname" class="roofConter">
+				Sunneer
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!--头图视频-->
+	<div class="HeadVideo">
+		<div class="HeadAttention">
+			<span>+&nbsp;关注</span>
+		</div>
+		<div class="HeadAttention2 sayhello">
+			<span>打招呼</span>
+		</div>
+		<!-- <P class="HeadVideoBF">
+			<img src="../images/SquareBF_03.png">
+		</P> -->
+		<ul class="HeadVideoU">
+			<li>
+				年龄<span id="age">19</span>
+			</li>
+			<li class="fans">
+				关注<span id="concerns">19</span>
+			</li>
+			<li class="fans">
+				粉丝<span id="fans">19</span>
+			</li>
+		</ul>
+		<img id="banner" src="">
+	</div>
+	<!--图片滑动-->
+	<div class="PictureSlide">
+		<ul id="photographs">
+
+		</ul>
+	</div>
+	<!--个人导航-->
+	<div class="PersonalNavigation">
+		<ul>
+			<li id="PersonalNavigationL" data-PNDSID="Material">
+				<span>资料</span>
+			</li>
+			<li data-PNDSID="Activity">
+				<span>服务</span>
+			</li>
+			<li data-PNDSID="Dynamic">
+				<span>动态</span>
+			</li>
+			<li data-PNDSID="Video">
+				<span>视频</span>
+			</li>
+		</ul>
+	</div>
+	<!--资料-->
+	<div id="Material" class="PersonalNavigationDS">
+		<ul class="PNDSMaterialT">
+			<li>
+				<div>
+					<p class="p1">生日</p>
+					<p class="p2" id="birthday"></p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<p class="p1">身高cm</p>
+					<p class="p2" id="height"></p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<p class="p1">体重kg</p>
+					<p class="p2" id="weight"></p>
+				</div>
+			</li>
+		</ul>
+		<div class="PNDSMaterialB">
+
+		</div>
+	</div>
+	<!--活动-->
+	<div id="Activity" class="PersonalNavigationDS">
+		<ul class="activityU">
+
+		</ul>
+	</div>
+	<!--动态-->
+	<div id="Dynamic" class="PersonalNavigationDS">
+		<ul class="PNDSDynamic">
+
+		</ul>
+	</div>
+	<!--视频-->
+	<div id="Video" class="PersonalNavigationDS">
+		<ul class="PNDSVideo">
+
+		</ul>
+	</div>
+	<!-- E 播放当前的视频 -->
+	<script type="text/template" id="personinfotemplate">
+		{{~it:value:index}}
+		<div class="PNDSMaterialBU">
+			<div class="PNDSMaterialBUL">
+				认证
+			</div>
+			<ul class="PNDSMaterialBUC">
+				{{?value.mobile}}
+				<li>
+					<img src="../images/Datashape10.png">
+				</li>
+				{{?}} {{?value.idcard}}
+				<li>
+					<img src="../images/Datashape11.png">
+				</li>
+				{{?}} {{?value.wechatauth}}
+				<li>
+					<img src="../images/Datashape12.png">
+				</li>
+				{{?}} {{?value.email}}
+				<li>
+					<img src="../images/Datashape13.png">
+				</li>
+				{{?}} {{?value.education && value.diploma}}
+				<li>
+					<img src="../images/Datashape14.png">
+				</li>
+				{{?}}
+			</ul>
+		</div>
+		{{?value.profession}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				职业
+			</li>
+			<li class="PNDSMaterialBUR" id="profession">
+				{{=value.profession}}
+			</li>
+		</ul>
+		{{?}} {{?value.hometown}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				故乡
+			</li>
+			<li class="PNDSMaterialBUR" id="hometown">
+				{{=value.hometown}}
+			</li>
+		</ul>
+		{{?}} {{?value.bio}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				签名
+			</li>
+			<li class="PNDSMaterialBUR" id="bio">
+				{{=value.bio}}
+			</li>
+		</ul>
+		{{?}} {{?value.education}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				文化修养
+			</li>
+			<li class="PNDSMaterialBUR" id="education">
+				{{=value.education}}
+			</li>
+		</ul>
+		{{?}} {{?value.tags}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				个性标签
+			</li>
+			<li class="PNDSMaterialBUR" id="tags">
+				{{=value.tags}}
+			</li>
+		</ul>
+		{{?}} {{?value.hobby}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				喜好
+			</li>
+			<li class="PNDSMaterialBUR" id="hobby">
+				{{=value.hobby}}
+			</li>
+		</ul>
+		{{?}} {{?value.pet}}
+		<ul class="PNDSMaterialBU">
+			<li class="PNDSMaterialBUL">
+				宠物
+			</li>
+			<li class="PNDSMaterialBUR" id="pet">
+				{{=value.pet}}
+			</li>
+		</ul>
+		{{?}} {{~}}
+	</script>
+	<!--活动  -->
+	<script type="text/template" id="activitytemplate">
+		{{~it:value:index}}
+		<li>
+			<div class="PNDSDynamicDateD">
+				<!-- <p id="{{=value.id}}"></p> -->
+				{{=value.createtime}}
+			</div>
+			<ul class="activityUImg">
+				{{ for(var j=0, len=value.photos.length; j
+				<len; j++) { }} {{?value.photos[j]}} <li>
+					<div>
+						<img src="{{=value.photos[j]}}?imageView2/1/w/300/h/300">
+					</div>
+		</li>
+		{{?}} {{ } }}
+		</ul>
+		<ul class="activityList">
+			<li class="activityListL">服务类型</li>
+			<li class="activityListR">
+				{{=value.type}}
+			</li>
+		</ul>
+		<ul class="activityList">
+			<li class="activityListL">标签</li>
+			<li class="activityListR">
+				{{=value.tags}}
+			</li>
+		</ul>
+		<!-- <ul class="activityList">
+			<li class="activityListL">地点</li>
+			<li class="activityListR">
+				{{=value.location}}
+			</li>
+		</ul> -->
+		<ul class="activityList">
+			<li class="activityListL">兴趣内容</li>
+			<li class="activityListR">
+				{{=value.content}}
+			</li>
+		</ul>
+		<ul class="activityBut">
+			<!-- <li>
+				<div class="activityButSC">
+					收藏
+				</div>
+			</li> -->
+			<li>
+				<div type="{{=value.type}}" userid="{{=value.userid}}" recommendid="{{=value.id}}" class="activityButYY appointment">
+					邀约
+				</div>
+			</li>
+			<!-- <li>
+				<div class="activityButCL" userid="{{=value.userid}}" >
+					畅聊
+				</div>
+			</li> -->
+		</ul>
+		</li>
+		{{~}}
+	</script>
+
+	<script type="text/template" id="momentstemplate">
+		{{~it:value:index}}
+		<li class="moment" squreid="{{=value.id}}" userid="{{=value.userid}}" momentid="{{=value.momentid}}">
+			<div class="PNDSDynamicDateD">
+				{{=value.createtime}}
+			</div>
+			<hr class="PNDSDynamicHr" />
+			<div class="PNDSContent">
+				<div class="PNDSContentW">
+					{{=value.momentcontent}}
+				</div>
+
+				{{?value.momentpicture}} {{?value.momentpicture.length==1}}
+				<ul class="PNDSContentTOne">
+					{{?value.momentpicture[0]}}
+					<li>
+						<img src="{{=value.momentpicture[0]}}?imageView2/1/w/300/h/300">
+					</li>
+					{{?}}
+				</ul>
+				{{?}} {{?value.momentpicture.length==2}}
+				<ul class="PNDSContentTTwo">
+					{{?value.momentpicture[0]}}
+					<li>
+						<img src="{{=value.momentpicture[0]}}?imageView2/1/w/300/h/300">
+					</li>
+					{{?}} {{?value.momentpicture[1]}}
+					<li>
+						<img src="{{=value.momentpicture[1]}}?imageView2/1/w/300/h/300">
+					</li>
+					{{?}}
+				</ul>
+				{{?}} {{?value.momentpicture.length>2}}
+				<ul class="PNDSContentT">
+					{{ for(var j=0, len=value.momentpicture.length; j
+					<len; j++) { }} {{?value.momentpicture[j]}} <li>
+						<img src="{{=value.momentpicture[j]}}?imageView2/1/w/300/h/300">
+		</li>
+		{{?}} {{ } }}
+		</ul>
+		{{?}} {{?}}
+
+
+		<!-- <div class="PNDSContentV">
+			<P>
+				<img src="../images/SquareBF_03.png">
+			</P>
+		</div> -->
+		</div>
+		<hr class="PNDSDynamicHr2" />
+		<ul class="PNDSDynamicOperation">
+			<!-- <li>
+				<ul id="PNDSDOUL" class="PNDSDynamicOperationU">
+					<li class="PNDSDynamicOperationUL">
+						<img src="../images/SquarePL_03.png" />
+					</li>
+					<li class="PNDSDynamicOperationUR">
+						{{=value.fenxiangcount}}
+					</li>
+				</ul>
+			</li> -->
+			<li>
+				<ul id="PNDSDOUC" momentid="{{=value.momentid}}" class="PNDSDynamicOperationU j-comment">
+					<li class="PNDSDynamicOperationUL">
+						<img src="../images/SquarePL_05.png" />
+					</li>
+					<li class="PNDSDynamicOperationUR">
+						{{=value.pinluncount}}
+					</li>
+				</ul>
+			</li>
+			<li style="float:right">
+				<ul id="PNDSDOUR" momentid="{{=value.momentid}}" class="PNDSDynamicOperationU j-fabulous">
+					<li class="PNDSDynamicOperationUL">
+						{{?1==value.dizan}}
+						<img class="kheart-icon" src="../images/SquarePL_09.png" /> {{??}}
+						<img class="heart-icon" src="../images/SquarePL_07.png" /> {{?}}
+					</li>
+					<li class="PNDSDynamicOperationUR">
+						{{=value.dizancount}}
+					</li>
+				</ul>
+			</li>
+		</ul>
+		</li>
+		{{~}}
+	</script>
+	<!--视频  -->
+	<script type="text/template" id="videotemplate">
+		{{~it:value:index}}
+		<li>
+			<div class="PNDSVideoW">
+				<P video="{{=value.videoid}}" class="p1">
+					<img src="../images/SquareBF_03.png">
+				</P>
+				<!-- <P class="p2">{{=value.duration}}</P> -->
+				<!-- <p class="p3"><span>.</span><span>.</span><span>.</span></p>
+				<div class="PNDSVideoWP">
+					<div class="relay">转发</div>
+					<div video="{{=value.video}}" class="delete">删除</div>
+				</div> -->
+				<img src="{{=value.frontcover}}?imageView2/1/w/300/h/300">
+			</div>
+			<div class="PNDSVideoB ">
+				<ul>
+					<li class="PNDSVideoBUL ">
+						<img src="../images/SquarePL_05.png " />
+					</li>
+					<li class="PNDSVideoBUR ">
+						{{=value.pinluncount}}
+					</li>
+				</ul>
+				<ul>
+					<li class="PNDSVideoBURR j-fabulous"> {{=value.dianzancount}}</li>
+					<li class="PNDSVideoBURL">
+						<img src="../images/SquarePL_07.png " />
+					</li>
+				</ul>
+			</div>
+		</li>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/mui.min.js"></script>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<script type="text/javascript" src="../script/util.js"></script>
+
+	<script type="text/javascript">
+		var momentpageSize = 4,
+			momentpageNum = 1,
+			momenthasNextPage = true,
+			videopageSize = 8,
+			videopageNum = 1,
+			videohasNextPage = true,
+			activitypageSize = 8,
+			activitypageNum = 1,
+			activityhasNextPage = true;
+		var userinfo = "",
+			otheruserinfo = "";
+		apiready = function () {
+			api.addEventListener({
+				name: 'keyback'
+			}, function (ret, err) {
+
+
+				api.sendEvent({
+					name: 'pausevideo'
+				});
+				api.closeWin({});
+			});
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "otherspage");
+			userinfo = api.pageParam.userid; //当前主页人
+			otheruserinfo = $api.getStorage('userid'); //当前登录人
+
+			//增加访客
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.VISITOR,
+				method: 'post',
+				data: {
+					values: {
+						visitor: otheruserinfo,
+						passivevisitor: userinfo
+					}
+				}
+			});
+
+			//关注，粉丝
+			$(".fans").unbind().click(function () {
+				var id = $(this).find("span").attr("id");
+				api.openWin({
+					name: 'fans',
+					url: './mine/fans.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					reload: true,
+					pageParam: {
+						userid: userinfo,
+						listid: id
+					}
+				});
+			});
+
+
+			//关注按钮是否可用
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.ISFANS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userinfo,
+							fansid: otheruserinfo
+						}
+					}
+				},
+				function (isfans, err) {
+					if (isfans.isfans) {
+						//已关注
+						$(".HeadAttention").addClass("Attention");
+						$(".HeadAttention").html("已关注");
+					} else {
+						$(".HeadAttention").removeClass("Attention");
+						$(".HeadAttention").html("+&nbsp;关注");
+					}
+				});
+
+			$(".HeadAttention").click(function () {
+				if (!checklogin()) {
+					return false;
+				}
+				var Attention = $(this);
+				api.ajax({
+						url: CONFIG.ADDRURL + CONFIG.FANS,
+						method: 'post',
+						data: {
+							values: {
+								userid: userinfo,
+								fansuserid: otheruserinfo
+							}
+						}
+					},
+					function (data, err) {
+						if (data.code == "200") {
+							if ($(Attention).hasClass("Attention")) {
+								$(".HeadAttention").removeClass("Attention");
+								$(".HeadAttention").html("+&nbsp;关注");
+							} else {
+								$(".HeadAttention").addClass("Attention");
+								$(".HeadAttention").html("已关注");
+								api.sendEvent({
+									name: "sendTextMessageListener",
+									extra: {
+										touserid: userinfo,
+										message: "系统提示：当前人关注你咯，快去看看吧！"
+									}
+								});
+							}
+						} else {
+							api.toast({
+								msg: data.msg,
+								duration: 1000,
+								location: 'middle'
+							});
+						}
+					});
+			});
+
+			//返回箭头事件
+			$(".roofReturn").click(function () {
+				api.closeWin({});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function (ret, err) {
+				api.closeWin({});
+			});
+			$('.PictureSlide').on('touchstart', function (e) {
+				api.removeEventListener({
+					name: 'swiperight'
+				});
+			});
+			$('.PictureSlide').on('touchend', function (e) {
+				api.addEventListener({
+					name: 'swiperight'
+				}, function (ret, err) {
+					api.closeWin({
+						name: 'otherspage'
+					})
+				})
+			})
+
+			//个人资料
+			loadpersonal(userinfo);
+			//活动
+			getactivity(userinfo, activitypageSize, activitypageNum);
+			//动态
+			getmoments(userinfo, otheruserinfo, momentpageSize, momentpageNum);
+			//视频
+			getvideos(userinfo, otheruserinfo, videopageSize, videopageNum);
+
+
+			//上拉刷新
+			api.addEventListener({
+				name: 'scrolltobottom',
+				extra:{
+					threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			}, function (ret, err) {
+				if ($("#PersonalNavigationL").attr("data-PNDSID") == "Activity") {
+					if (activityhasNextPage) {
+						api.showProgress({
+							title: '努力加载中...',
+							text: '先喝杯茶...',
+							modal: false
+						});
+						getactivity(userinfo, otheruserinfo,activitypageSize, activitypageNum);
+					}else{
+						api.toast({
+							msg: '已经到底了！',
+							duration: 1000,
+							location: 'middle'
+						});
+						api.hideProgress()
+					}
+				} else if ($("#PersonalNavigationL").attr("data-PNDSID") == "Dynamic") {
+					if (momenthasNextPage) {
+						api.showProgress({
+							title: '努力加载中...',
+							text: '先喝杯茶...',
+							modal: false
+						});
+						getmoments(userinfo,otheruserinfo, momentpageSize, momentpageNum);
+					}else{
+						api.toast({
+							msg: '已经到底了！',
+							duration: 1000,
+							location: 'middle'
+						});
+						api.hideProgress()
+					}
+				} else if ($("#PersonalNavigationL").attr("data-PNDSID") == "Video") {
+					if (videohasNextPage) {
+						api.showProgress({
+							title: '努力加载中...',
+							text: '先喝杯茶...',
+							modal: false
+						});
+						getvideos(userinfo,otheruserinfo, videopageSize, videopageNum);
+					}else{
+						api.toast({
+							msg: '已经到底了！',
+							duration: 1000,
+							location: 'middle'
+						});
+						api.hideProgress()
+					}
+				}
+			});
+
+			// //点击动态图片预览
+			// $("#Dynamic").on("click", ".PNDSContentT li img", function() {
+			// 	var images = [];
+			// 	var index = $(this).parent().parent().index();
+			// 	$(this).parent().parent().find("li").each(function() {
+			// 		images.push($(this).find("img").attr("src"));
+			// 	});
+			// 	var photoBrowser = api.require('photoBrowser');
+			// 	photoBrowser.open({
+			// 		images: images,
+			// 		placeholderImg: "",
+			// 		bgColor: '#000'
+			// 	}, function(ret, err) {
+			// 		if (ret.eventType == "click") {
+			// 			photoBrowser.close();
+			// 		}
+			// 	});
+			// 	photoBrowser.setIndex({
+			// 		index: index
+			// 	});
+			// });
+
+			// //动态点赞和取消点赞监听
+			// $(".PNDSDynamic").on("click", ".j-fabulous", function() {
+			// 	var dianzan = $(this);
+			// 	var nowVal = parseInt($(dianzan).find(".PNDSDynamicOperationUR").text());
+			// 	var objHeart = $(dianzan).find("img")[0];
+			// 	var momentid = $(dianzan).attr("momentid");
+			// 	if ($(objHeart).hasClass("heart-icon")) { //取消点赞
+			// 		api.ajax({
+			// 				url: CONFIG.ADDRURL + CONFIG.COMMENT,
+			// 				method: 'post',
+			// 				data: {
+			// 					values: {
+			// 						momentid: momentid,
+			// 						userid: otheruserinfo,
+			// 						commenttype: 1
+			// 					}
+			// 				}
+			// 			},
+			// 			function(data, err) {
+			// 				if (data.code == "200") {
+			// 					$(objHeart).addClass("kheart-icon").removeClass("heart-icon").attr("src", "../images/SquarePL_07.png");
+			// 					nowVal--;
+			// 					$(dianzan).find(".PNDSDynamicOperationUR").text(nowVal);
+			// 				}
+			// 			});
+			// 	} else if ($(objHeart).hasClass("kheart-icon")) { //点赞
+			// 		api.ajax({
+			// 				url: CONFIG.ADDRURL + CONFIG.COMMENT,
+			// 				method: 'post',
+			// 				data: {
+			// 					values: {
+			// 						userid: otheruserinfo,
+			// 						momentid: momentid,
+			// 						commenttype: 1,
+			// 						commentcontent: "喜欢"
+			// 					}
+			// 				}
+			// 			},
+			// 			function(data, err) {
+			// 				if (data.code == "200") {
+			// 					$(objHeart).addClass("heart-icon").removeClass("kheart-icon").attr("src", "../images/SquarePL_09.png");
+			// 					nowVal++;
+			// 					$(dianzan).find(".PNDSDynamicOperationUR").text(nowVal);
+			// 				}
+			// 			});
+			// 	}
+			// });
+			//
+			// //动态评论
+			// $(".PNDSDynamic").on("click", ".j-comment", function() {
+			// 	var pinlun = $(this);
+			// 	var nowVal = parseInt($(pinlun).find(".PNDSDynamicOperationUR").text());
+			// 	var momentid = $(pinlun).attr("momentid");
+			//
+			// 	var UIChatBox = api.require('UIChatBox');
+			// 	UIChatBox.open({
+			// 		autoFocus: true,
+			// 		texts: {
+			// 			sendBtn: {
+			// 				title: '发送'
+			// 			}
+			// 		},
+			// 		styles: {
+			// 			inputBar: {
+			// 				borderColor: '#d9d9d9',
+			// 				bgColor: '#f2f2f2'
+			// 			},
+			// 			inputBox: {
+			// 				borderColor: '#B3B3B3',
+			// 				bgColor: '#FFFFFF'
+			// 			},
+			// 			sendBtn: {
+			// 				bg: '#4cc518',
+			// 				titleColor: '#ffffff',
+			// 				activeBg: '#46a91e',
+			// 				titleSize: 13
+			// 			}
+			// 		}
+			// 	}, function(ret, err) {
+			// 		if (ret.eventType == "send") {
+			// 			api.ajax({
+			// 					url: CONFIG.ADDRURL + CONFIG.COMMENT,
+			// 					method: 'post',
+			// 					data: {
+			// 						values: {
+			// 							userid: otheruserinfo,
+			// 							momentid: momentid,
+			// 							commenttype: 2,
+			// 							commentcontent: ret.msg
+			// 						}
+			// 					}
+			// 				},
+			// 				function(data, err) {
+			// 					if (data.code == "200") {
+			// 						nowVal++;
+			// 						$(pinlun).find(".PNDSDynamicOperationUR").text(nowVal);
+			// 						UIChatBox.close();
+			// 					}
+			// 				});
+			// 		}
+			// 	});
+			//
+			// });
+
+			$('body').on('touchstart', function (e) {
+				var UIChatBox = api.require('UIChatBox');
+				UIChatBox.close();
+			});
+
+			// //视频点赞和取消点赞监听
+			// $(".PNDSVideo").on("click", ".j-fabulous", function() {
+			// 	var nowVal = parseInt($(this).text());
+			// 	var objHeart = $(this).children(".heart-icon")[0];
+			// 	var videoid = $(objHeart).attr("videoid");
+			// 	if ($(objHeart).hasClass("red-heart")) { //取消点赞
+			// 		api.ajax({
+			// 				url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+			// 				method: 'post',
+			// 				data: {
+			// 					values: {
+			// 						passiveuserid:userinfo,
+			// 						userid: otheruserinfo,
+			// 						videoid: videoid,
+			// 						videotype: 1
+			// 					}
+			// 				}
+			// 			},
+			// 			function(data, err) {
+			// 				if (data.code == "200") {
+			// 					$(objHeart).addClass("full-heart").removeClass("red-heart");
+			// 					nowVal--;
+			// 					$(objHeart).next().text(nowVal);
+			// 				}
+			// 			});
+			// 	} else if ($(objHeart).hasClass("full-heart")) { //点赞
+			// 		api.ajax({
+			// 				url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+			// 				method: 'post',
+			// 				data: {
+			// 					values: {
+			// 						passiveuserid:userinfo,
+			// 						userid: otheruserinfo,
+			// 						videoid: videoid,
+			// 						videotype: 1,
+			// 						videocontent: "喜欢"
+			// 					}
+			// 				}
+			// 			},
+			// 			function(data, err) {
+			// 				if (data.code == "200") {
+			// 					$(objHeart).addClass("red-heart").removeClass("full-heart");
+			// 					nowVal++;
+			// 					$(objHeart).next().text(nowVal);
+			// 				}
+			// 			});
+			// 	}
+			// });
+
+			//视频点击播放
+			$("#Video").on("click", ".p1", function () {
+				// if (systemType == "android") {
+				var video = $(this).attr("video");
+				api.openFrame({
+					name: 'play',
+					url: './video/play.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userinfo,
+						videoid: video,
+						isOthers: true
+					}
+				});
+				// }else if (systemType == "ios") {
+				// 	var userid =userinfo;
+				//   var videoid = $(this).attr("video");
+				//   api.openWin({
+				//     name: 'videoiosplay',
+				//     url: './video/videoiosplay.html',
+				//     animation: {
+				//       type: "push", //动画类型（详见动画类型常量）
+				//       subType: "from_right", //动画子类型（详见动画子类型常量）
+				//       duration: 300 //动画过渡时间，默认300毫秒
+				//     },
+				//     pageParam: {
+				//       userid: userid,
+				//       videoid:videoid
+				//     }
+				//   });
+				// }
+			});
+
+			// //视频评论
+			// $("#video-small").on("click", ".j-video-mes", function() {
+			// 	var nowVal = parseInt($(this).text());
+			// 	var objMes = $(this).children(".message-icon")[0];
+			// 	var videoid = $(objMes).attr("videoid");
+			// 	var UIChatBox = api.require('UIChatBox');
+			// 	UIChatBox.open({
+			// 		autoFocus: true,
+			// 		texts: {
+			// 			sendBtn: {
+			// 				title: '发送'
+			// 			}
+			// 		},
+			// 		styles: {
+			// 			inputBar: {
+			// 				borderColor: '#d9d9d9',
+			// 				bgColor: '#f2f2f2'
+			// 			},
+			// 			inputBox: {
+			// 				borderColor: '#B3B3B3',
+			// 				bgColor: '#FFFFFF'
+			// 			},
+			// 			sendBtn: {
+			// 				bg: '#4cc518',
+			// 				titleColor: '#ffffff',
+			// 				activeBg: '#46a91e',
+			// 				titleSize: 13
+			// 			}
+			// 		}
+			// 	}, function(ret, err) {
+			// 		if (ret.eventType == "send") {
+			// 			api.ajax({
+			// 					url: CONFIG.ADDRURL + CONFIG.VIDEOCOMMENT,
+			// 					method: 'post',
+			// 					data: {
+			// 						values: {
+			// 							passiveuserid:userinfo,
+			// 							userid: otheruserinfo,
+			// 							videoid: videoid,
+			// 							videotype: 2,
+			// 							videocontent: ret.msg
+			// 						}
+			// 					}
+			// 				},
+			// 				function(data, err) {
+			// 					if (data.code == "200") {
+			// 						nowVal++;
+			// 						$(objMes).next().text(nowVal);
+			// 						UIChatBox.close();
+			// 					}
+			// 				});
+			// 		}
+			// 	});
+			//
+			// });
+
+			//邀约
+			$("#Activity").on("click", ".appointment", function () {
+				var userid = $(this).attr("userid");
+				var recommendid = $(this).attr("recommendid");
+				var type = $(this).attr("type");
+				if (type == "约会") {
+					api.openWin({
+						name: 'appointmentdetail',
+						url: './DateInvitation/appointmentdetail.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: userid
+						}
+					});
+				} else if (type == "伴游") {
+					api.openWin({
+						name: 'travelappointmentdetail',
+						url: './DateInvitation/travelappointmentdetail.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						},
+						pageParam: {
+							userid: userid,
+							recommendid: recommendid
+						}
+					});
+				}
+
+			});
+
+			//动态详情
+			$(".PNDSDynamic").on("click", "li.moment", function () {
+				var squreid = $(this).attr("squreid");
+				var userid = $(this).attr("userid");
+				var momentid = $(this).attr("momentid");
+				api.openWin({
+					name: 'DynamicDetails',
+					url: './community/DynamicDetails.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					reload: true,
+					pageParam: {
+						squreid: squreid,
+						userid: userid,
+						momentid: momentid
+					}
+				});
+			});
+		}
+
+		function loadpersonal(userid) {
+			//个人导航
+			$(".PersonalNavigation li").click(function () {
+				$(".PersonalNavigation li").attr("id", "");
+				$(this).attr("id", "PersonalNavigationL");
+				$(".PersonalNavigationDS").css("display", "none");
+				$("#" + $(this).attr("data-PNDSID") + "").css("display", "block");
+			});
+
+			//获取粉丝,关注
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETMINE,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						$("#concerns").text(data.mine.concerns);
+						$("#fans").text(data.mine.fans);
+					}
+				});
+
+			//获取年龄,个人资料
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(err));
+
+					if (data.code == "200") {
+						$("#banner").attr("src", data.userinfo.personbgpic || "../images/banner.png");
+						$("#nickname").text(data.userinfo.nickname == null ? "" : data.userinfo.nickname);
+						$("#age").text(data.userinfo.age == null ? "" : data.userinfo.age);
+						$("#birthday").text(data.userinfo.birthday == null ? "" : data.userinfo.birthday);
+						$("#height").text(data.userinfo.height == null ? "" : data.userinfo.height);
+						$("#weight").text(data.userinfo.weight == null ? "" : data.userinfo.weight);
+						var tempFn = doT.template($api.byId('personinfotemplate').innerHTML);
+						var resultHTML = tempFn([data.userinfo]);
+						$(".PNDSMaterialB").append(resultHTML);
+					}
+				});
+
+			//个人写真
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETPHTOGRAPHS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200" && data.photographs) {
+						if (data.photographs.length * 1 > 0) {
+							$.each(data.photographs, function (i, n) {
+								$("#photographs").append("<li><img src=\"" + n.url +
+									"?imageView2/1/w/300/h/300\" /></li>");
+								//图片滑动
+								$(".PictureSlide ul").css("width", "" + $(".PictureSlide li").length * 9 + "rem");
+							});
+						} else {
+							$(".PictureSlide").hide();
+						}
+					}
+				});
+			photographListener();
+		}
+
+		// 写真预览监听
+		function photographListener() {
+			$("#photographs").on("click", "img", function () {
+				var images = [];
+				var index = $(this).parent().index();
+				$(this).parent().parent().parent().find("li").each(function () {
+					images.push($(this).find("img").attr("src").replace("?imageView2/1/w/300/h/300", ""));
+				});
+				var photoBrowser = api.require('photoBrowser');
+				photoBrowser.open({
+					images: images,
+					placeholderImg: "",
+					bgColor: '#000'
+				}, function (ret, err) {
+					if (ret.eventType == "show") {
+						api.toast({
+							msg: "长按可以保存图片哦!",
+							duration: 2000,
+							location: 'bottom'
+						});
+					} else if (ret.eventType == "click") {
+						photoBrowser.close();
+					} else if (ret.eventType == "longPress") {
+						api.download({
+							url: images[ret.index],
+							report: true,
+							cache: true,
+							allowResume: true
+						}, function (ret, err) {
+							if (ret.percent == 100) {
+								api.saveMediaToAlbum({
+									path: ret.savePath
+								}, function (albumret, albumreterr) {
+									if (albumret && albumret.status) {
+										api.toast({
+											msg: "保存成功!",
+											duration: 1000,
+											location: 'middle'
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+				photoBrowser.setIndex({
+					index: index
+				});
+			});
+		}
+
+		//活动
+		function getactivity(userid, pageSize, pageNum) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETSOULSERVICES,
+					method: 'post',
+					data: {
+						values: {
+							pagesize: pageSize,
+							pagenum: pageNum,
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						activityhasNextPage = data.services.hasNextPage;
+						activitypageNum = data.services.nextPage;
+						$.each(data.services.list, function (i, n) {
+							n.type = CONFIG.SERVICETYPE[n.type];
+
+							if (n.photos.substr(n.photos.length - 1, 1) == ",") {
+								n.photos = n.photos.substr(0, n.photos.length - 1);
+							}
+							n.photos = n.photos.split(",");
+
+							n.createtime = timestampToTime(n.createtime);
+						});
+						var tempFn = doT.template($api.byId('activitytemplate').innerHTML);
+						var resultHTML = tempFn(data.services.list);
+						$("#Activity ul.activityU").append(resultHTML);
+						api.hideProgress();
+					}
+				});
+		}
+
+		//动态
+		function getmoments(userid, otheruserid, pageSize, pageNum) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETMOMENTS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							pagesize: pageSize,
+							pagenum: pageNum,
+							otheruserid: otheruserid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						momenthasNextPage = data.moments.hasNextPage;
+						momentpageNum = data.moments.nextPage;
+						$.each(data.moments.list, function (i, n) {
+							n.createtime = timestampToTime(n.createtime);
+							if (n.momentpicture.substr(n.momentpicture.length - 1, 1) == ",") {
+								n.momentpicture = n.momentpicture.substr(0, n.momentpicture.length - 1);
+							}
+							n.momentpicture = n.momentpicture.split(",");
+
+							if (n.momentcontent.length > 100) {
+								n.momentcontent = n.momentcontent.substring(0, 100) + "...";
+							}
+						});
+						var tempFn = doT.template($api.byId('momentstemplate').innerHTML);
+						var resultHTML = tempFn(data.moments.list);
+
+						$(".PNDSDynamic").append(resultHTML);
+						api.hideProgress();
+					}
+				});
+		}
+
+		//视频
+		function getvideos(userid, otheruserid, pageSize, pageNum) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETVIDEOS,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							otheruserid: otheruserid,
+							pagesize: pageSize,
+							pagenum: pageNum
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200" && data.videos) {
+						videohasNextPage = data.videos.hasNextPage;
+						videopageNum = data.videos.nextPage;
+						$.each(data.videos.list, function (i, n) {
+							n.duration = secondToDate(n.duration);
+						});
+						var tempFn = doT.template($api.byId('videotemplate').innerHTML);
+						var resultHTML = tempFn(data.videos.list);
+						$(".PNDSVideo").append(resultHTML);
+						//视频
+						$(".PNDSVideoW .p1").css({
+							"top": "" + ($(".PNDSVideoW").height() - $(".PNDSVideoW .p1").height()) / 2 + "px",
+							"left": "" + ($(".PNDSVideoW").width() - $(".PNDSVideoW .p1").width()) / 2 + "px",
+						});
+						api.hideProgress();
+					}
+				});
+		}
+		$(".HeadVideo").on("click", ".sayhello", function () {
+			if (!checklogin()) {
+				return false;
+			}
+			api.openWin({
+				name: 'onetoone',
+				url: './mine/onetoone.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					touserid: userinfo,
+					tousername: $("#nickname").text()
+				}
+			});
+		});
+
+		function checklogin() {
+			var userinfo = $api.getStorage('userid');
+			if (userinfo == null || userinfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>

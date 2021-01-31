@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>约TA</title>
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<link rel="stylesheet" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/public.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/invite_pay.css" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<div class="roofConter">
+				约TA
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!-- <div class="SquareHeader">
+		<!-- <p class="p3"></p>
+		<p class="p2"></p>
+		<div class="SquareHeaderDIV">约TA</div>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+	<!--头部信息-->
+	<div class="Information">
+		<div id="nickname" class="InformationL">仲喵_MG</div>
+		<ul class="InformationC">
+			<li id="gender"></li>
+			<li id="age">20</li>
+		</ul>
+		<ul class="InformationR">
+			<li>
+				<img src="../../images/GPSD_03.png">
+			</li>
+			<li id="distance"></li>
+		</ul>
+	</div>
+	<!--约会类型-->
+	<ul class="AppointmentType">
+		<li>
+			<P class="p1">
+				<img src="../../images/DIUDD2.png">
+			</P>
+			<P class="p2">看电影</P>
+		</li>
+	</ul>
+	<hr class="AppointmentHr">
+	<!--标签-->
+	<!-- <div id="appointmentselectedtags" class="AppointmentCenter">
+		<div class="AppointmentCenterL">
+			约会标签
+		</div>
+		<div class="AppointmentCenterRS">
+			<ul class="AppointmentCenterC"></ul>
+			<input class="input" type="text" placeholder="请添加约会标签" />
+		</div>
+		<ul id="appointmenttags" class="AppointmentCenterB">
+
+		</ul>
+	</div> -->
+
+	<!--约会地点-->
+	<div id="Location" class="AppointmentCenter">
+		<div class="AppointmentCenterL">
+			约会地点
+		</div>
+		<div class="AppointmentCenterR">
+			<textarea class="textarea" placeholder="请输入约会地点"></textarea>
+		</div>
+	</div>
+	<!--约会内容-->
+	<div id="center" class="AppointmentCenter">
+		<div class="AppointmentCenterL">
+			约会内容
+		</div>
+		<div class="AppointmentCenterR">
+			<textarea class="textarea" placeholder="请输入约会内容"></textarea>
+		</div>
+	</div>
+	<!--约会时间-->
+	<div class="AppointmentCenter">
+		<div class="AppointmentCenterL">
+			约会开始时间
+		</div>
+		<div class="AppointmentCenterR">
+			<!-- <input id="starttime" class="input" type="text" placeholder="请输入约会开始时间" /> -->
+			<span id="starttime" class="input"></span>
+		</div>
+		<div class="AppointmentCenterL">
+			约会结束时间
+		</div>
+		<div class="AppointmentCenterR">
+			<!-- <input class="input" type="text" placeholder="请输入约会结束时间" /> -->
+			<span id="endtime" class="input"></span>
+		</div>
+	</div>
+	<!--诚意金-->
+	<div class="EarnestMoney">
+		<P class="p1">诚意金</P>
+		<P class="p2">未成交诚意金将退回您的账户</P>
+		<ul class="EarnestMoneyU">
+			<!-- <li data-value="50">
+				<div>50金币</div>
+			</li>
+			<li data-value="100">
+				<div>100金币</div>
+			</li>
+			<li data-value="200">
+				<div>200金币</div>
+			</li>
+			<li data-value="500">
+				<div>500金币</div>
+			</li>
+			<li data-value="1000">
+				<div>1000金币</div>
+			</li>
+			<li data-value="2000">
+				<div>2000金币</div>
+			</li>
+			<li id="EarnestMoneyUL">
+				<div>
+					<input type="text" placeholder="请输入任意金额"  value=""/>
+				</div>
+			</li> -->
+		</ul>
+	</div>
+	<!--协议-->
+	<ul class="Protocol">
+		<li class="ProtocolL"></li>
+		<li class="ProtocolR">我同意<span id="yhxy">&lt;&lt;用户协议&gt;&gt;</span></li>
+	</ul>
+	<div class="appointmentSub">提交</div>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.3.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.picker.min.js"></script>
+	<script type="text/javascript" src="../../script/mui.poppicker.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+				$(".mains").css("height","1px");
+			}
+
+			$api.setStorage('openWin', "appointment");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'appointment'
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'appointment'
+				});
+			});
+
+			var tagsid = api.pageParam.tagsid;
+			var tagsname = api.pageParam.tagsname;
+			var bgimg = api.pageParam.bgimg;
+			$(".AppointmentType .p1 img").attr("src", bgimg);
+			$(".AppointmentType .p2").text(tagsname);
+			$(".AppointmentType li").attr("tagsid", tagsid);
+			var userid = api.pageParam.userid;
+			getuserinfo(userid);
+			// gettags(tagsid);
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETSERVERPRICE,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							serviceid: tagsid,
+						}
+					}
+				},function(data,err) {
+					if (data.charges) {
+							$(".EarnestMoneyU").html('<li  data-value="'+data.charges+'"><div><span class="cyjmoney">'  + data.charges+'</span><span>金币</span></div></li>');
+					}
+				});
+
+
+
+
+
+			//用户协议
+			$("#yhxy").click(function() {
+				api.openWin({
+					name: 'agreement',
+					url: '../agreement.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						title: "用户协议",
+						code: "yhxy"
+					}
+				});
+			});
+
+			//添加标签
+			function AppointmentAdd(AppId, text) {
+				$("#" + AppId + "").find(".AppointmentCenterC").prepend("<li>#" + text + "#</li>");
+			}
+			//输入标签失去焦点
+			$(".AppointmentCenterRS").on("blur", "input", function() {
+				if ($(this).val() != "") {
+					AppointmentAdd("appointmentselectedtags", $(this).val());
+					$(".AppointmentCenterRS input").val("");
+				}
+			});
+
+			//点击标签
+			$(".AppointmentCenterB").on("click", "li", function() {
+				AppointmentAdd($(this).parents(".AppointmentCenter").attr("id"), $(this).text());
+			});
+
+			//取消标签
+			$(".AppointmentCenterC").on("click", "li", function() {
+				$(".AppointmentCenterC li").eq($(this).index()).remove();
+			});
+
+			//时间控件
+			(function($) {
+				$.init();
+				var startTime = document.querySelector("#starttime");
+				startTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				startTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "datetime",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						startTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+				var endTime = document.querySelector("#endtime");
+				endTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				endTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "datetime",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						endTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			})(mui);
+
+			//诚意金
+			$(".EarnestMoneyU li").click(function() {
+				$(".EarnestMoneyU li").attr("id", "");
+				$(this).attr("id", "EarnestMoneyUL");
+			});
+			//协议
+			$(".ProtocolL").click(function() {
+				if ($(this).attr("id") == "ProtocolOpt") {
+					$(this).attr("id", "");
+				} else {
+					$(this).attr("id", "ProtocolOpt");
+				}
+			});
+
+			$("#EarnestMoneyUL").find("input").keyup(function() {
+				var money = $(this).val();
+				money = money.replace(/^0*(0\.|[1-9])/, '$1'); //解决 粘贴不生效
+				money = money.replace(/[^\d]/g, '');
+				if (money != "") { //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+					if (money.substr(0, 1) == '0' && money.length == 2) {
+						money = money.substr(1, money.length);
+					}
+				}
+				$(this).val(money);
+			});
+
+			$(".appointmentSub").click(function() {
+				var serviceuserid = $("#nickname").attr("userid");
+				var tags = "";//$("#appointmentselectedtags").find(".AppointmentCenterC").text();
+				var location = $("#Location").find("textarea").val();
+				var content = $("#center").find("textarea").val();
+				var starttime = $("#starttime").text();
+				var endtime = $("#endtime").text();
+				var payment = $(".cyjmoney").text();
+
+
+
+
+
+				// if ($("#EarnestMoneyUL").index() == $(".EarnestMoneyU li").last().index()) {
+				// 	payment = $("#EarnestMoneyUL").find("input").val();
+				// } else {
+				// 	payment = $("#EarnestMoneyUL").attr("data-value");
+				// }
+				// if (tags == null || tags == "") {
+				// 	api.toast({
+				// 		msg: '请填写或选择标签哦！',
+				// 		duration: 1000,
+				// 		location: 'middle'
+				// 	});
+				// 	return false;
+				// }
+				if (location == null || location == "") {
+					api.toast({
+						msg: '请填写约会地点！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (content == null || content == "") {
+					api.toast({
+						msg: '请填写约会内容！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (starttime == null || starttime == "") {
+					api.toast({
+						msg: '请填写开始时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (timeToTimestamp(starttime + ":00") > timeToTimestamp(endtime + ":00")) {
+					api.toast({
+						msg: '开始时间不能大于结束时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (payment == null || payment == "" || payment == 0) {
+					api.toast({
+						msg: '请填写诚意金！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (!$("#ProtocolOpt").hasClass("ProtocolL")) {
+					api.toast({
+						msg: '请确认同意协议！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				var appointment = {
+					serviceuserid: serviceuserid,
+					tags: tags,
+					location: location,
+					content: content,
+					starttime: timeToTimestamp(starttime + ":00"),
+					endtime: timeToTimestamp(endtime + ":00"),
+					payment: payment
+				};
+				appointmentSub(appointment);
+
+			});
+			$('#monet-list li').click(function() {
+				$(this).addClass('active').siblings().removeClass('active')
+			})
+		};
+
+		function getuserinfo(userid) {
+
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							position: $api.getStorage('position')
+						}
+					}
+				},
+				function(data,err) {
+
+			console.log(JSON.stringify(data,err))
+					if (data.code == "200" && data.userinfo != null) {
+						$("#nickname").text(data.userinfo.nickname).attr("userid", data.userinfo.userid);
+						$("#age").text(data.userinfo.age);
+						if (data.userinfo.gender == 0) {
+							$("#gender").removeClass("woman").addClass("man");
+						} else {
+							$("#gender").removeClass("man").addClass("woman");
+						}
+						$("#distance").text("距离我" + data.userinfo.distance);
+					}
+				});
+		};
+
+		function gettags(pid) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.SEARCHTAGS,
+					method: 'post',
+					data: {
+						values: {
+							pid: pid,
+							pagesize: 5,
+							pagenum: 1
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200") {
+						$("#appointmenttags").empty();
+						$.each(data.tags, function(i, n) {
+							$("#appointmenttags").append("<li data-value=\"" + n.id + "\">" + n.tagsname + "</li>");
+						});
+					}
+				});
+		};
+
+		function appointmentSub(appointment) {
+			//判断余额
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETMINE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			}, function(moneydata) {
+				if (moneydata.code == "200") {
+					if (appointment.payment * 1 > moneydata.mine.currency * 1) {
+						var btnArray = ['取消', '确定'];
+						mui.confirm('您的金币余额不足，是否要补充金币？', '金币不足', btnArray, function(e) {
+							if (e.index == 1) {
+								api.openWin({
+									name: 'topUps',
+									url: '../mine/topUps.html',
+									bgColor: "rgba(255, 255, 255, 0)",
+									animation: {
+										type: "push", //动画类型（详见动画类型常量）
+										subType: "from_right", //动画子类型（详见动画子类型常量）
+										duration: 300 //动画过渡时间，默认300毫秒
+									},
+									pageParam: {
+										userid: $api.getStorage('userid')
+									}
+								});
+							}
+						});
+					} else {
+
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.APPOINTMENT,
+								method: 'post',
+								data: {
+									values: {
+										type: 1,
+										userid: $api.getStorage('userid'),
+										serviceuserid: appointment.serviceuserid,
+										tags: appointment.tags,
+										location: appointment.location,
+										content: appointment.content,
+										starttime: appointment.starttime,
+										endtime: appointment.endtime,
+										payment: appointment.payment,
+										status: 2,
+										remark: "邀约：" + appointment.content
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									api.toast({
+										msg: '邀约成功！',
+										duration: 1000,
+										location: 'middle'
+									});
+
+									//给发起邀请的人发消息
+									api.sendEvent({
+										name: "sendTextMessageListener",
+										extra: {
+											touserid: appointment.serviceuserid,
+											message: "系统提示：当前人向你发起了约会邀请，快去看看吧！"
+										}
+									});
+
+									setTimeout(function() {
+										api.closeWin({
+											name: 'appointment'
+										});
+									}, 500);
+								} else {
+									api.toast({
+										msg: data.msg,
+										duration: 1000,
+										location: 'middle'
+									});
+								}
+							});
+					}
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

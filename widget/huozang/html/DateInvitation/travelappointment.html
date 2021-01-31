@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/travelappointment.css" rel="stylesheet" />
+	<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">邀约TA</h1>
+	</header> -->
+
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				邀约TA
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<div class="mui-content order-data page-bottom">
+		<form action="" id="order-form">
+			<div class="order-info-details">
+				<div class="details-item mui-clearfix">
+					<label>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签</label>
+					<span id="showOrderPlace">
+							<b id="ordertags"></b>
+						</span>
+				</div>
+				<div class="details-item mui-clearfix">
+					<label>伴游地点</label>
+					<span id="showOrderPlace">
+							<b id="orderlocation"></b>
+						</span>
+				</div>
+				<div class="details-item mui-clearfix">
+					<label>伴游内容</label>
+					<textarea id="content"></textarea>
+				</div>
+				<div class="details-item mui-clearfix">
+					<label>邀约时间</label>
+					<span class="appointment-time" id="j-time-start"></span>
+					<input type="hidden" id="startTimeHide" value="" />
+					<em>至</em>
+				</div>
+				<div class="details-item mui-clearfix">
+					<label></label>
+					<span class="appointment-time" id="j-time-end"></span>
+					<input type="hidden" id="endTimeHide" value="" />
+				</div>
+				<div class="details-item mui-clearfix">
+					<label>计费方式</label>
+					<span id="showOrderMoney">
+							<b id="ordercharges"></b>金币/天
+					</span>
+				</div>
+			</div>
+			<p class="price">总计金币：<b id="payment">0<b></p>
+			<p class="agreement">
+				<input type="checkbox" id="check-input" />
+				<label for="check-input">我已同意</label>
+				<a id="yhxy">&lt;&lt;用户协议&gt;&gt;</a>
+			</p>
+			<button type="button" class="order-payment-btn"></button>
+			<div class="recommend recommend-p">
+				<p>
+					<span>
+							伴游地点-路线推荐
+							<i></i>
+						</span>
+				</p>
+			</div>
+			<ul class="mui-table-view mui-grid-view">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<div class="recommend-route-wrap">
+						<img class="mui-media-object" src="../../images/merchant/25.png">
+						<div>
+							<p class="mui-ellipsis-2">泰国芭提雅格兰岛+萨岛一日游</p>
+							<span>￥600起</span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<div class="recommend-route-wrap">
+						<img class="mui-media-object" src="../../images/merchant/23.png">
+						<div>
+							<p class="mui-ellipsis-2">清莱白庙+黑庙+蓝庙一日游</p>
+							<span>￥600起</span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<div class="recommend-route-wrap">
+						<img class="mui-media-object" src="../../images/merchant/22.png">
+						<div>
+							<p class="mui-ellipsis-2">曼谷往返芭提雅酒店接送三日两夜游</p>
+							<span>￥600起</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</form>
+	</div>
+
+	<script src="../../script/api.js"></script>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery.min.js"></script>
+	<script src="../../script/mui.picker.min.js"></script>
+	<script src="../../script/mui.poppicker.js"></script>
+	<script src="../../script/config.js"></script>
+	<script src="../../script/util.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "travelappointment");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'travelappointment'
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'travelappointment'
+				});
+			});
+
+			//时间控件
+			(function($) {
+				$.init();
+				var startTime = document.querySelector("#j-time-start");
+				var startVal = document.querySelector("#startTimeHide");
+				startTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				startTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "date",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						startTime.innerText = rs.text;
+						startVal.value = rs.text; //给隐藏域赋值，用于向后台传值
+						picker.dispose();
+						var endVal = document.querySelector("#endTimeHide");
+						if(endVal.value!=null && endVal.value!=""){
+						var start = timeToTimestamp(startVal.value+" 00:00:00");
+						var end = timeToTimestamp(endVal.value+" 23:59:59");
+						if(start>=end){
+							endTime.innerText = "";
+							endVal.value = "";
+							api.toast({
+								msg: '开始时间不能大于结束时间！',
+								duration: 1000,
+								location: 'middle'
+							});
+						}else{
+							var days = Math.ceil((end -start)/3600/24);
+							var ordercharges = document.querySelector("#ordercharges");
+							var payment = document.querySelector("#payment");
+							payment.innerHTML=ordercharges.innerHTML*days;
+						}
+					}
+					});
+				}, false);
+				var endTime = document.querySelector("#j-time-end");
+				var endVal = document.querySelector("#endTimeHide");
+				endTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				endTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "date",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						endTime.innerText = rs.text;
+						endVal.value = rs.text; //给隐藏域赋值，用于向后台传值
+						picker.dispose();
+						var startVal = document.querySelector("#startTimeHide");
+						if(startVal.value!=null && startVal.value!=""){
+								var start = timeToTimestamp(startVal.value+" 00:00:00");
+								var end = timeToTimestamp(endVal.value+" 23:59:59");
+								if(start>=end){
+									endTime.innerText = "";
+									endVal.value = "";
+									api.toast({
+										msg: '开始时间不能大于结束时间！',
+										duration: 1000,
+										location: 'middle'
+									});
+								}else{
+									var days = Math.ceil((end -start)/3600/24);
+									var ordercharges = document.querySelector("#ordercharges");
+									var payment = document.querySelector("#payment");
+									payment.innerHTML=ordercharges.innerHTML*days;
+								}
+						}
+					});
+				}, false);
+			})(mui);
+
+			var serviceuserid = api.pageParam.userid;
+			var recommendid = api.pageParam.recommendid;
+			getservice(recommendid);
+
+			//用户协议
+			$("#yhxy").click(function() {
+				api.openWin({
+					name: 'agreement',
+					url: '../agreement.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						title: "用户协议",
+						code: "yhxy"
+					}
+				});
+			});
+
+			$(".order-payment-btn").click(function() {
+				var tags = $("#ordertags").text();
+				var location = $("#orderlocation").text();
+				var content = $("#content").val();
+				var starttime = $("#startTimeHide").val();
+				var endtime = $("#endTimeHide").val();
+				var charges = $("#ordercharges").text()*1;
+				var payment = $("#payment").text()*1;
+
+				if (content == null || content == "") {
+					api.toast({
+						msg: '请填写约会内容！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (starttime == null || starttime == "") {
+					api.toast({
+						msg: '请填写开始时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (!$("#check-input").is(':checked')) {
+					api.toast({
+						msg: '请确认同意协议！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+			var appointment = {
+					serviceuserid: serviceuserid,
+					tags: tags,
+					location: location,
+					content: content,
+					starttime: timeToTimestamp(starttime + " 00:00:00"),
+					endtime: timeToTimestamp(endtime + " 23:59:59"),
+					charges:charges,
+					payment: payment
+				};
+				appointmentSub(appointment);
+			})
+		};
+
+		function getservice(recommendid) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETSERVICES,
+					method: 'post',
+					data: {
+						values: {
+							id: recommendid,
+							position: $api.getStorage('position')
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200" && data.services != null && data.services.list.length > 0) {
+						$("#ordertags").text(data.services.list[0].servicetags);
+						$("#content").attr("placeholder",data.services.list[0].content);
+						$("#orderlocation").text(data.services.list[0].locationservice);
+						$("#ordercharges").text(data.services.list[0].charges);
+					}
+				});
+		};
+		function appointmentSub(appointment) {
+			//判断余额
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETMINE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			}, function(moneydata) {
+				if (moneydata.code == "200") {
+					if (appointment.payment * 1 > moneydata.mine.currency * 1) {
+						var btnArray = ['取消', '确定'];
+						mui.confirm('您的金币余额不足，是否要补充金币？', '金币不足', btnArray, function(e) {
+							if (e.index == 1) {
+								api.openWin({
+									name: 'topUps',
+									url: '../mine/topUps.html',
+									bgColor: "rgba(255, 255, 255, 0)",
+									animation: {
+										type: "push", //动画类型（详见动画类型常量）
+										subType: "from_right", //动画子类型（详见动画子类型常量）
+										duration: 300 //动画过渡时间，默认300毫秒
+									},
+									pageParam: {
+										userid: $api.getStorage('userid')
+									}
+								});
+							}
+						});
+					} else {
+							api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.APPOINTMENT,
+								method: 'post',
+								data: {
+									values: {
+										type: 2,
+										userid: $api.getStorage('userid'),
+										serviceuserid: appointment.serviceuserid,
+										tags: appointment.tags,
+										location: appointment.location,
+										content: appointment.content,
+										starttime: appointment.starttime,
+										endtime: appointment.endtime,
+										payment: appointment.payment,
+										status: 2,
+										remark: "邀约：" + appointment.content
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									api.toast({
+										msg: '邀约成功！',
+										duration: 1000,
+										location: 'middle'
+									});
+
+									//给发起邀请的人发消息
+									api.sendEvent({
+										name: "sendTextMessageListener",
+										extra: {
+											touserid: appointment.serviceuserid,
+											message: "系统提示：当前人向你发起了约会邀请，快去看看吧！"
+										}
+									});
+
+									setTimeout(function() {
+										api.closeWin({
+											name: 'travelappointment'
+										});
+									}, 500);
+								} else {
+									api.toast({
+										msg: data.msg,
+										duration: 1000,
+										location: 'middle'
+									});
+								}
+							});
+					}
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

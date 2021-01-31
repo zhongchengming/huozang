@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>约会-推荐</title>
+
+
+	<script type="text/javascript">
+		//此段内联js处理适配，必须尽早执行，请不要移动它的位置，也不要抽成外链js!
+		;
+		(function(win, lib) {
+			var doc = win.document;
+			var docEl = doc.documentElement;
+			var metaEl = doc.querySelector('meta[name="viewport"]');
+			var flexibleEl = doc.querySelector('meta[name="flexible"]');
+			var dpr = 0;
+			var scale = 0;
+			var tid;
+			var flexible = lib.flexible || (lib.flexible = {});
+
+			if (metaEl) {
+				var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+				if (match) {
+					scale = parseFloat(match[1]);
+					dpr = parseInt(1 / scale);
+				}
+			} else if (flexibleEl) {
+				var content = flexibleEl.getAttribute('content');
+				if (content) {
+					var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+					var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+					if (initialDpr) {
+						dpr = parseFloat(initialDpr[1]);
+						scale = parseFloat((1 / dpr).toFixed(2));
+					}
+					if (maximumDpr) {
+						dpr = parseFloat(maximumDpr[1]);
+						scale = parseFloat((1 / dpr).toFixed(2));
+					}
+				}
+			}
+
+			if (!dpr && !scale) {
+				var isAndroid = win.navigator.appVersion.match(/android/gi);
+				var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+				var devicePixelRatio = win.devicePixelRatio;
+				if (isIPhone) {
+					// iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+					if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+						dpr = 3;
+					} else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+						dpr = 2;
+					} else {
+						dpr = 1;
+					}
+				} else {
+					// 其他设备下，仍旧使用1倍的方案
+					dpr = 1;
+				}
+				scale = 1 / dpr;
+			}
+
+			docEl.setAttribute('data-dpr', dpr);
+			if (!metaEl) {
+				metaEl = doc.createElement('meta');
+				metaEl.setAttribute('name', 'viewport');
+				metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+				if (docEl.firstElementChild) {
+					docEl.firstElementChild.appendChild(metaEl);
+				} else {
+					var wrap = doc.createElement('div');
+					wrap.appendChild(metaEl);
+					doc.write(wrap.innerHTML);
+				}
+			}
+
+			function refreshRem() {
+				var width = docEl.getBoundingClientRect().width;
+				if (width / dpr > 540) {
+					width = 540 * dpr;
+				}
+				var rem = width / 10;
+				docEl.style.fontSize = rem + 'px';
+				flexible.rem = win.rem = rem;
+			}
+
+			win.addEventListener('resize', function() {
+				clearTimeout(tid);
+				tid = setTimeout(refreshRem, 300);
+			}, false);
+			win.addEventListener('pageshow', function(e) {
+				if (e.persisted) {
+					clearTimeout(tid);
+					tid = setTimeout(refreshRem, 300);
+				}
+			}, false);
+
+			if (doc.readyState === 'complete') {
+				doc.body.style.fontSize = 12 * dpr + 'px';
+			} else {
+				doc.addEventListener('DOMContentLoaded', function(e) {
+					doc.body.style.fontSize = 12 * dpr + 'px';
+				}, false);
+			}
+
+			refreshRem();
+
+			flexible.dpr = win.dpr = dpr;
+			flexible.refreshRem = refreshRem;
+			flexible.rem2px = function(d) {
+				var val = parseFloat(d) * this.rem;
+				if (typeof d === 'string' && d.match(/rem$/)) {
+					val += 'px';
+				}
+				return val;
+			}
+			flexible.px2rem = function(d) {
+				var val = parseFloat(d) / this.rem;
+				if (typeof d === 'string' && d.match(/px$/)) {
+					val += 'rem';
+				}
+				return val;
+			}
+
+		})(window, window['lib'] || (window['lib'] = {}));
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/appointmentdetail.css" />
+</head>
+
+<body>
+	<header>
+		<div class="header-div-bg"></div>
+		<a href="#" class="header-right-icon"></a>
+		<div class="avator-box">
+			<img class="avator-img" src="../../images/banner.png" />
+			<img class="avator-v" src="../../images/v.png" />
+			<div class="sex-box">
+				<span id="sex" class="sex"></span>
+				<span id="age" class="age">20</span>
+			</div>
+		</div>
+		<div class="user-intro">
+			<div class="user-name"></div>
+			<!-- <div class="love">已有<span id="userdzcount">0</span>人暗恋TA</div> -->
+			<a href="#" class="recommend-btn like">+&nbsp;关注</a>
+		</div>
+	</header>
+	<div class="page-bottom">
+		<div class="content-wrap top-line">
+			<div class="list flex-wrap">
+				<h1 class="list-title">个人动态</h1>
+				<p id="distance"><span class="img-adress"></span></p>
+			</div>
+			<div class="active-list-box mui-clearfix">
+
+			</div>
+		</div>
+		<ul class="center-ul top-line">
+			<li id="authentication" class="authentication-center bottom-line">
+				<a href="#">
+					<h1 class="list-title">认证信息</h1>
+
+					<!-- <i></i>  -->
+				</a>
+			</li>
+			<li class="authentication-center">
+				<a href="#">
+					<h1 class="list-title">访客列表</h1>
+					<label class="list-title" id="vistorscount"></label>
+				</a>
+			</li>
+			<li class="authentication-center bottom-line visitor-box">
+				<a id="visitors" class="mui-clearfix">
+
+				</a>
+			</li>
+		</ul>
+		<div class="content-wrap">
+			<div class="list mui-clearfix">
+				<h1 class="list-title">TA提供的伴游</h1>
+			</div>
+			<div class="cell-list">
+				<div class="cell-item">
+					<div class="cell-con">
+						<ul class="appoint-list">
+							<li class="flex-wrap">
+								<div class="lab">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签：</div>
+								<div id="tags" class="con flex-con"></div>
+							</li>
+							<li class="flex-wrap">
+								<div class="lab">伴游内容：</div>
+								<div id="content" class="con flex-con"></div>
+							</li>
+							<li class="flex-wrap">
+								<div class="lab">伴游地点：</div>
+								<div id="location" class="con flex-con"></div>
+							</li>
+							<li class="flex-wrap">
+								<div class="lab">伴游价格：</div>
+								<div id="charge" class="con flex-con"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="ImgListS">
+
+			</div>
+		</div>
+		<!--评论区-->
+		<div class="comment-wrapper">
+			<div class="comment-head list flex-wrap">
+				<h1 class="list-title">评论区</h1>
+				<p id="commentscount"></p>
+			</div>
+			<ul id="comment" class="comment-box mui-clearfix">
+
+			</ul>
+		</div>
+
+	</div>
+
+	<footer class="flex-wrap">
+		<div class="flex-con">
+			<div id="commentscount2" class="comfirm-comment">
+			</div>
+		</div>
+		<div class="flex-con">
+			<div class="Submission">
+				<button class="btnSummit" userid="" recommendid=""></button>
+			</div>
+		</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/mui.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/util.js"></script>
+
+<script>
+	var pageSize = 5,
+		pageNum = 1,
+		hasNextPage = true;
+	apiready = function() {
+		$api.fixStatusBar($api.dom('body'));
+		$api.setStorage('openWin', "appointmentdetail");
+		//返回箭头事件
+		$(".header-right-icon").click(function() {
+			api.closeWin({
+			});
+		});
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({
+				name: 'travelappointmentdetail'
+			});
+		});
+		var userid = api.pageParam.userid;
+		var recommendid = api.pageParam.recommendid;
+		getuserinfo(userid);
+		getmoments(userid);
+		// getuserdzcount(userid);
+		getservice(recommendid);
+		getvisitors(userid);
+		getcomments(userid, pageSize, pageNum, true);
+		photosListener();
+
+		//关注按钮是否可用
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.ISFANS,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid,
+						fansid: $api.getStorage('userid')
+					}
+				}
+			},
+			function(isfans, err) {
+				if (isfans.isfans) {
+					//已关注
+					$(".like").html("已关注");
+				} else {
+					$(".like").html("+&nbsp;关注");
+				}
+			});
+
+		//上拉刷新
+		api.setRefreshHeaderInfo({
+			bgColor: '#fff'
+		},function(ret, err) {
+			api.refreshHeaderLoadDone();
+		});
+		api.addEventListener({
+			name: 'scrolltobottom',
+			extra: {
+				threshold: 50 //距离底部距离
+			}
+		}, function(ret, err) {
+			var id = $(".active").prop("id");
+			var nickname = $("#nickname").val();
+			if (hasNextPage) {
+				getcomments(userid, pageSize, pageNum, false);
+			} else {
+				api.toast({
+					msg: '没有更多评论了！',
+					duration: 1000,
+					location: 'middle'
+				});
+			}
+		});
+
+		$("#visitors").click(function() {
+			var userid = $(this).find("div.more").attr("userid");
+			api.openWin({
+				name: 'visitors',
+				url: './visitors.html',
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid
+				}
+			});
+		});
+
+		$(".active-list-box").on("click", ".more", function() {
+			var userid = $(this).attr("userid");
+			api.openWin({
+				name: 'otherspage',
+				url: '../otherspage.html',
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					userid: userid
+				}
+			});
+		});
+		// 图片预览监听
+		function photosListener() {
+			$(".ImgListS").on("click", ".InviteVideoImgOne img,.InviteVideoImgTwo img ,.InviteVideoImg img", function() {
+				var images = [];
+				var index = $(this).parent().index();
+				$(this).parent().parent().find("li").each(function() {
+					images.push($(this).find("img").attr("src").replace("?imageView2/1/w/300/h/300", ""));
+				});
+				var photoBrowser = api.require('photoBrowser');
+				photoBrowser.open({
+					images: images,
+					placeholderImg: "",
+					bgColor: '#000'
+				}, function(ret, err) {
+					if (ret.eventType == "show") {
+						api.toast({
+							msg: "长按可以保存图片哦!",
+							duration: 2000,
+							location: 'bottom'
+						});
+					} else if (ret.eventType == "click") {
+						photoBrowser.close();
+					} else if (ret.eventType == "longPress") {
+						api.download({
+							url: images[ret.index],
+							report: true,
+							cache: true,
+							allowResume: true
+						}, function(ret, err) {
+							if (ret.percent == 100) {
+								api.saveMediaToAlbum({
+									path: ret.savePath
+								}, function(albumret, albumreterr) {
+									if (albumret && albumret.status) {
+										api.toast({
+											msg: "保存成功!",
+											duration: 1000,
+											location: 'middle'
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+				photoBrowser.setIndex({
+					index: index
+				});
+			});
+		}
+		//评论
+		$("#commentscount2").click(function() {
+			if (!checklogin()) {
+				return false;
+			}
+			var passivecommentuserid = $(this).attr("userid");
+			var UIChatBox = api.require('UIChatBox');
+			UIChatBox.open({
+				autoFocus: true,
+				emotionPath: "widget://res/image/emotion",
+				texts: {
+					sendBtn: {
+						title: '发送'
+					}
+				},
+				styles: {
+					inputBar: {
+						borderColor: '#d9d9d9',
+						bgColor: '#f2f2f2'
+					},
+					inputBox: {
+						borderColor: '#B3B3B3',
+						bgColor: '#FFFFFF'
+					},
+					indicator: {
+						target: 'both',
+						color: '#c4c4c4',
+						activeColor: '#9e9e9e'
+					},
+					sendBtn: {
+						bg: '#4cc518',
+						titleColor: '#ffffff',
+						activeBg: '#46a91e',
+						titleSize: 13
+					}
+				}
+			}, function(ret, err) {
+				if (ret.eventType == "send") {
+					if (ret.msg == null || ret.msg == "") {
+						api.toast({
+							msg: "评论内容不能为空！",
+							duration: 1000,
+							location: 'middle'
+						});
+					} else {
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.PEOPLECOMMENT,
+								method: 'post',
+								data: {
+									values: {
+										commentuserid: $api.getStorage('userid'),
+										passivecommentuserid: passivecommentuserid,
+										comment: ret.msg,
+										commenttype: 2
+									}
+								}
+							},
+							function(data) {
+								if (data.code = "200") {
+									pageSize = 5;
+									pageNum = 1;
+									getcomments(passivecommentuserid, pageSize, pageNum, true);
+									api.sendEvent({
+										name: "sendTextMessageListener",
+										extra: {
+											touserid: passivecommentuserid,
+											message: "系统提示：当前人对你的进行了评论，快去看看吧！"
+										}
+									});
+								}
+							});
+						UIChatBox.close();
+					}
+				}
+			});
+		});
+
+		//评论详情
+		$("#comment").on("click", ".commentdetail", function() {
+			var commentid = $(this).attr("commentid");
+			var id = $(this).attr("id");
+			api.openWin({
+				name: 'DetailsOfComments',
+				url: './DetailsOfComments.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					id: id,
+					commentid: commentid
+				}
+			});
+		});
+
+		//关闭窗口
+		$('body').on('touchstart', function(e) {
+			var UIChatBox = api.require('UIChatBox');
+			UIChatBox.close();
+		});
+
+		$(".comment-box>li .love-btn").click(function() {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass("active");
+			} else {
+				$(this).addClass("active");
+			}
+		});
+
+		//关注
+		$(".user-intro").on("click", ".like", function() {
+			if (!checklogin()) {
+				return false;
+			}
+			var like = $(this);
+			var passivecommentuserid = $(this).attr("userid");
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.FANS,
+					method: 'post',
+					data: {
+						values: {
+							userid: passivecommentuserid,
+							fansuserid: $api.getStorage('userid')
+						}
+					}
+				},
+				function(data, err) {
+					if (data.code == "200") {
+						if ($(like).text().indexOf("已关注") >= 0) {
+							$(like).html("+&nbsp;关注");
+						} else {
+							$(like).html("已关注");
+							api.sendEvent({
+								name: "sendTextMessageListener",
+								extra: {
+									touserid: passivecommentuserid,
+									message: "系统提示：当前人关注你咯，快去看看吧！"
+								}
+							});
+						}
+					} else {
+							api.toast({
+									msg: data.msg,
+									duration: 1000,
+									location: 'middle'
+							});
+					}
+				});
+		});
+		//邀请提交
+		$('.btnSummit').click(function() {
+			if (!checklogin()) {
+				return false;
+			}
+			var userid = $(this).attr("userid");
+			if (userid == $api.getStorage('userid')) {
+				api.toast({
+					msg: '自己不能邀约自己哦！',
+					duration: 1000,
+					location: 'middle'
+				});
+				return false;
+			}
+			var recommendid = $(this).attr("recommendid");
+			api.openWin({
+				name: 'travelappointment',
+				url: './travelappointment.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				},
+				pageParam: {
+					recommendid: recommendid,
+					userid: userid
+				}
+			});
+		});
+	}
+
+	function getuserinfo(userid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid,
+						position: $api.getStorage('position')
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200" && data.userinfo != null) {
+					$(".btnSummit").attr("userid", data.userinfo.userid);
+					$(".like").attr("userid", data.userinfo.userid);
+					$(".avator-img").attr("src", data.userinfo.avatar == null || data.userinfo.avatar == "" ? "../../images/avatar.png" : data.userinfo.avatar);
+					$(".user-name").text(data.userinfo.nickname);
+					if (data.userinfo.gender * 1 == 1) {
+						$("#sex").addClass("woman");
+					} else {
+						$("#sex").addClass("man");
+					}
+					$("#age").text(data.userinfo.age);
+
+					$("#distance").append("距离我" + data.userinfo.distance);
+					if (data.userinfo.mobile != null && data.userinfo.mobile != "") {
+						$("#authentication a").append("<span class=\"icon phone-icon\"></span>");
+					}
+					if (data.userinfo.idcard != null && data.userinfo.idcard != "") {
+						$("#authentication a").append("<span class=\"icon phone-user\"></span>");
+					}
+					if (data.userinfo.wechatauth != null && data.userinfo.wechatauth != "") {
+						$("#authentication a").append("<span class=\"icon phone-weixin\"></span>");
+					}
+					if (data.userinfo.email != null && data.userinfo.email != "") {
+						$("#authentication a").append("<span class=\"icon phone-email\"></span>");
+					}
+
+					if (data.userinfo.diploma != null && data.userinfo.diploma != "") {
+						$("#authentication a").append("<span class=\"icon phone-education\"></span>");
+					}
+				}
+			});
+	}
+
+
+	function getmoments(userid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETMOMENTS,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid,
+						type: 2,
+						pagesize: 3,
+						pagenum: 1
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200") {
+					var pics = [];
+					if (data.moments.list) {
+						$.each(data.moments.list, function(i, n) {
+							if (n.momentpicture) {
+								var pic = n.momentpicture.split(",");
+								$.each(pic, function(index, picn) {
+									if (picn) {
+										pics.push({
+											pic: picn
+										});
+									}
+								});
+							}
+						});
+					}
+					var tempFn = doT.template($api.byId('mommentstemplate').innerHTML);
+					if (pics.length > 3) {
+						pics = pics.slice(0, 3);
+					}
+					var resultHTML = tempFn(pics);
+					$(".active-list-box").append(resultHTML);
+					$(".active-list-box").append("<a userid = \"" + userid + "\" class=\"more span-text\">更多</a><i userid = \"" + userid + "\" class=\"more\"></i>");
+				}
+			});
+	}
+
+	function getuserdzcount(userid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.PEOPLEDZCOUNT,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200") {
+					$("#userdzcount").text(data.dianzancount);
+				}
+			});
+	}
+
+	function getvisitors(userid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETVISITOR,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid,
+						pagesize: 6,
+						pagenum: 1
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200" && data.visitor != null) {
+					$("#vistorscount").text("总访问人数：" + data.visitor.total);
+					var tempFn = doT.template($api.byId('visitorstemplate').innerHTML);
+					var resultHTML = tempFn(data.visitor.list);
+					$("#visitors").append(resultHTML);
+					$("#visitors").append("<div class=\"more span-text\" userid=\"" + userid + "\">更多</div><span class=\"arrow\"></span>");
+				}
+			});
+	}
+
+	function getcomments(userid, pagesize, pagenum, isclear) {
+		if (isclear) {
+			$("#comment").empty();
+		}
+		$("#commentscount2").empty();
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETPEOPLECOMMENT,
+				method: 'post',
+				data: {
+					values: {
+						userid: userid,
+						pagesize: pagesize,
+						pagenum: pagenum
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200" && data.peoplecomment != null) {
+					pageNum = data.peoplecomment.nextPage;
+					hasNextPage = data.peoplecomment.hasNextPage;
+
+					$("#commentscount").text(data.peoplecomment.total);
+					$("#commentscount2").append("<img class=\"comment-img\" src=\"../../images/SquarePL_05.png\"/>" + data.peoplecomment.total).attr("userid", userid);
+					$.each(data.peoplecomment.list, function(i, n) {
+						n.createtime = timestampToTime(n.createtime);
+					});
+					var tempFn = doT.template($api.byId('commenttemplate').innerHTML);
+					var resultHTML = tempFn(data.peoplecomment.list);
+					$("#comment").append(resultHTML);
+				} else {
+					$("#commentscount").text(0);
+					$("#commentscount2").append("<img class=\"comment-img\" src=\"../../images/SquarePL_05.png\"/>0").attr("userid", userid);
+				}
+			});
+	}
+
+	function getservice(recommendid) {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETSERVICES,
+				method: 'post',
+				data: {
+					values: {
+						id: recommendid,
+						position: $api.getStorage('position')
+					}
+				}
+			},
+			function(data) {
+				if (data.code == "200" && data.services != null && data.services.list.length > 0) {
+					$("#tags").text(data.services.list[0].servicetags);
+					$("#content").text(data.services.list[0].content);
+					$("#location").text(data.services.list[0].locationservice);
+					$("#charge").text(data.services.list[0].charges + "金币/天");
+					$(".btnSummit").attr("recommendid", data.services.list[0].id);
+
+					if(data.services.list[0].photos!=null && data.services.list[0].photos!=""){
+						if (data.services.list[0].photos.substr(data.services.list[0].photos.length - 1, 1) == ",") {
+							data.services.list[0].photos = data.services.list[0].photos.substr(0, data.services.list[0].photos.length - 1);
+						}
+						data.services.list[0].photos = data.services.list[0].photos.split(",");
+
+						$(".ImgListS").empty();
+						var html = "";
+						if (data.services.list[0].photos.length == 1) {
+							html += "<ul class='InviteVideoImgOne'><li><img src='" + data.services.list[0].photos[0] + "?imageView2/1/w/300/h/300'></li></ul>";
+						}
+						if (data.services.list[0].photos.length == 2) {
+							html += "<ul class='InviteVideoImgTwo'><li><img src='" + data.services.list[0].photos[0] + "?imageView2/1/w/300/h/300'></li><li><img src='" + data.services.list[0].photos[1] + "?imageView2/1/w/300/h/300'></li></ul>";
+						}
+						if (data.services.list[0].photos.length > 2) {
+							html += "<ul class='InviteVideoImg'>";
+							for (var i = 0; i < data.services.list[0].photos.length; i++) {
+								html += "<li><img src='" + data.services.list[0].photos[i] + "?imageView2/1/w/300/h/300'></li>";
+							}
+							html += "</ul>";
+						}
+						$(".ImgListS").append(html);
+					}
+				}
+			});
+	}
+
+	function checklogin() {
+		var userinfo = $api.getStorage('userid');
+		if (userinfo == null || userinfo == "") {
+			api.toast({
+				msg: '请先登录！',
+				duration: 1000,
+				location: 'middle'
+			});
+			api.openWin({
+				name: 'login',
+				url: '../../login.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+			return false;
+		}
+		return true;
+	}
+</script>
+<script type="text/template" id="mommentstemplate">
+	{{~it:value:index}}
+	<a href="#" class="active-list">
+		<img class="img" src="{{=value.pic}}?imageView2/1/w/300/h/300" />
+	</a>
+	{{~}}
+</script>
+
+<script type="text/template" id="visitorstemplate">
+	{{~it:value:index}}
+	<div class="visitor-box-list">
+		<img class="img" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}">
+	</div>
+	{{~}}
+</script>
+
+<script type="text/template" id="commenttemplate">
+	{{~it:value:index}}
+	<li class="commentdetail" id="{{=value.id}}" commentid="{{=value.commentid}}">
+		<div class="user-intro flex-wrap flex-center">
+			<img class="user-img" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" />
+			<span class="name">{{=value.nickname}}</span>
+			<div class=" flex-con">
+				<div class="sex-box com-user ">
+					<span class="sex {{?1==value.gender}}woman{{??}}man{{?}}"></span>
+					<span class="age">{{=value.age}}</span>
+				</div>
+			</div>
+
+		</div>
+		<div class="comment-con ellipsis-2">
+			{{=value.comment}}
+		</div>
+		<div class="comment-footer flex-wrap flex-center top-line">
+			<div class="flex-con">
+				{{=value.createtime}}
+			</div>
+			<div class="comfirm-comment">
+				<img class="comment-img" src="../../images/SquarePL_05.png" />{{=value.pinluncount}}
+			</div>
+			<div class="comfirm-comment love-btn">
+				<span class="love-icon"></span>{{=value.dianzancount}}
+			</div>
+		</div>
+	</li>
+	{{~}}
+</script>
+
+</html>

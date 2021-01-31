@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>发布邀请</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../css/mui.min.css" />
+
+	<link rel="stylesheet" href="../css/mui.picker.min.css" />
+	<link rel="stylesheet" href="../css/api.css">
+	<link rel="stylesheet" href="../css/public.css">
+	<link rel="stylesheet" href="../css/releaseservice.css" />
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<!-- <div class="roofButton">提交</div> -->
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				发布邀请
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!--邀请类型-->
+	<!-- <ul class="ActivitiesType">
+		<li class="ActivitiesTypeL">邀请类型</li>
+		<li id="ActivitiesTypeR" class="ActivitiesTypeR" data-ActivitiesId="engagement">约会</li>
+		<li class="ActivitiesTypeR" data-ActivitiesId="escort">伴游</li>
+	</ul> -->
+	<hr class="gActivitiesHr">
+	<div id="engagement" class="DateEscort">
+		<P class="DateEscortTitle">
+			请发布您的约会邀请
+		</P>
+		<!-- <ul class="ActivitiesU">
+			<li class="ActivitiesUL">约会方式</li>
+			<li class="ActivitiesUC">
+				<P class="ActivitiesUCP"></P>
+				<ul id="servicewayvalue" class="ActivitiesUCUL">
+					<li data-value="1">线上邀请</li>
+					<li data-value="2">线下邀请</li>
+				</ul>
+				<div id="serviceway" data-value="" class="ActivitiesUCFontSize InviteSelection">
+					请选择邀请方式
+				</div>
+			</li>
+		</ul> -->
+		<!-- <div class="ActivitiesU">
+			<div class="ActivitiesUL">约会方式</div>
+			<ul class="ActivitiesUHF">
+				<li class="ActivitiesUHFL" data-value="1">线上邀请</li>
+				<li data-value="2">线下邀请</li>
+			</ul>
+		</div> -->
+		<p class="cb"></p>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">主题选择</li>
+			<li class="ActivitiesUC">
+				<P class="ActivitiesUCP"></P>
+				<ul id="appointmenttypevalue" class="ActivitiesUCUL">
+
+				</ul>
+				<div id="appointmenttype" data-value="" class="ActivitiesUCFontSize InviteSelection">
+					请选择约会类别
+				</div>
+			</li>
+		</ul>
+		<div class="tipList"></div>
+		<p class="cb"></p>
+		<div class="ActivitiesU">
+			<div class="ActivitiesUL">内容描述</div>
+			<div class="Etiquette">
+				<ul id="appointmentselectedtags" class="EtiquetteU">
+
+				</ul>
+				<textarea id="appointmentcontent" value="" class="textarea" placeholder="如：一起吃个火锅吧"></textarea>
+				<!-- <input class="input" type="text" placeholder="请输入标签，如：火锅" /> -->
+			</div>
+			<ul id="appointmenttags" class="EtiquetteUB">
+			</ul>
+		</div>
+		<p class="cb"></p>
+		<!-- <ul class="ActivitiesU">
+			<li class="ActivitiesUL">邀请地点</li>
+			<li class="ActivitiesUC">
+				<P class="ActivitiesUCP"></P>
+				<ul class="ActivitiesUCUL">
+					<li>1111111111</li>
+					<li>1111111112</li>
+					<li>1111111113</li>
+					<li>1111111114</li>
+				</ul>
+				<div class="ActivitiesUCFontSize">
+					请选择邀请地点
+				</div>
+			</li>
+		</ul> -->
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">约会地点</li>
+			<li class="ActivitiesUR">
+				<textarea id="appointmentlocation" class="textarea" placeholder="如：大雁塔附近"></textarea>
+			</li>
+		</ul>
+		<!--<p class="cb"></p>
+		 <ul class="ActivitiesU">
+			<li class="ActivitiesUL">约会内容</li>
+			<li class="ActivitiesUR">
+				<textarea id="appointmentcontent" class="textarea" placeholder="如：一起吃个火锅吧"></textarea>
+			</li>
+		</ul> -->
+		<p class="cb"></p>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">开始时间</li>
+			<li class="ActivitiesUR">
+				<span id="appointmentstarttime" class="ActivitiesUCFontSize"></span>
+			</li>
+		</ul>
+		<p class="cb"></p>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">结束时间</li>
+			<li class="ActivitiesUR">
+				<span id="appointmentendtime" class="ActivitiesUCFontSize"></span>
+			</li>
+		</ul>
+
+		<P class="cb"></P>
+		<!-- <div class="ActivitiesU">
+			<div class="ActivitiesUL">诚意金</div>
+			<div class="PriceSetting">
+				<input class="input" id="appointmentpayment" type="text" placeholder="请输入诚意金" value="100"/>
+			</div>
+		</div> -->
+		<p class="cb"></p>
+		<div class="ActivitiesU">
+			<div class="ActivitiesUL">上传照片</div>
+			<div class="ActivitiesURR">
+				<P class="p1"></P>
+				<ul id="AppointmentUpload" class="ActivitiesURRU">
+
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		<P class="cb"></P>
+		<!--协议-->
+		<ul class="Protocol">
+			<li class="ProtocolL"></li>
+			<li class="ProtocolR">我同意<span>&lt;&lt;用户协议&gt;&gt;</span></li>
+		</ul>
+		<div id="appointmentsubmit" class="appointmentSub">发布邀请</div>
+	</div>
+
+	<div id="escort" class="DateEscort">
+		<P class="DateEscortTitle">请发布您的伴游邀请</P>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">伴游分类</li>
+			<li class="ActivitiesUC">
+				<P class="ActivitiesUCP"></P>
+				<ul id="traveltypevalue" class="ActivitiesUCUL">
+
+				</ul>
+				<div id="traveltype" data-value="" class="ActivitiesUCFontSize">
+					请选择伴游分类
+				</div>
+			</li>
+		</ul>
+		<P class="cb"></P>
+		<!--伴游礼仪-->
+		<div class="ActivitiesU">
+			<div class="ActivitiesUL">搜索标签</div>
+			<div class="Etiquette">
+				<ul id="travelselectedtags" class="EtiquetteU">
+				</ul>
+				<input class="input" type="text" placeholder="请输入标签" />
+			</div>
+			<ul id="traveltags" class="EtiquetteUB">
+			</ul>
+		</div>
+		<!-- <P class="cb"></P>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">伴游区域</li>
+			<li class="ActivitiesUC">
+				<P class="ActivitiesUCP"></P>
+				<ul class="ActivitiesUCUL">
+					<li>1111111111</li>
+					<li>1111111112</li>
+					<li>1111111113</li>
+					<li>1111111114</li>
+				</ul>
+				<div class="ActivitiesUCFontSize">
+					请选择伴游区域
+				</div>
+			</li>
+		</ul> -->
+		<P class="cb"></P>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">伴游地点</li>
+			<li class="ActivitiesUR">
+				<textarea class="textarea" id="travellocation" placeholder="如：西安-南京"></textarea>
+			</li>
+		</ul>
+		<P class="cb"></P>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">伴游内容</li>
+			<li class="ActivitiesUR">
+				<textarea class="textarea" id="travelcontent" placeholder="如：西安市内游，兵马俑，可做导游"></textarea>
+			</li>
+		</ul>
+		<P class="cb"></P>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">伴游要求</li>
+			<li class="ActivitiesUR">
+				<textarea class="textarea" id="travelrequirement" placeholder="如：英语表达流利"></textarea>
+			</li>
+		</ul>
+		<p class="cb"></p>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">开始时间</li>
+			<li class="ActivitiesUR">
+				<span id="travelstarttime" class="ActivitiesUCFontSize"></span>
+			</li>
+		</ul>
+		<p class="cb"></p>
+		<ul class="ActivitiesU">
+			<li class="ActivitiesUL">结束时间</li>
+			<li class="ActivitiesUR">
+				<span id="travelendtime" class="ActivitiesUCFontSize"></span>
+			</li>
+		</ul>
+
+		<P class="cb"></P>
+		<div class="ActivitiesU">
+			<div class="ActivitiesUL">诚意金</div>
+			<div class="PriceSetting">
+				<input class="input" id="travelpayment" type="text" placeholder="请输入诚意金" />
+			</div>
+		</div>
+		<P class="cb"></P>
+		<div class="ActivitiesU">
+			<div class="ActivitiesUL">上传照片</div>
+			<div class="ActivitiesURR">
+				<P class="p1">可上传历史伴游的照片</P>
+				<ul id="PartnerUpload" class="ActivitiesURRU">
+
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		<P class="cb"></P>
+		<!--协议-->
+		<ul class="Protocol">
+			<li class="ProtocolL"></li>
+			<li class="ProtocolR">我同意<span>&lt;&lt;用户协议&gt;&gt;</span></li>
+		</ul>
+		<div id="travelsubmit" class="appointmentSub">发布伴游</div>
+	</div>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../script/jquery.md5.js"></script>
+	<script type="text/javascript" src="../script/PublicCss.js"></script>
+	<script type="text/javascript" src="../script/mui.min.js"></script>
+	<script type="text/javascript" src="../script/mui.picker.min.js"></script>
+	<script type="text/javascript" src="../script/mui.poppicker.js"></script>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<script type="text/javascript" src="../script/util.js"></script>
+
+	<script type="text/javascript">
+		var winname = "";
+		apiready = function() {
+			winname = api.pageParam.winname;
+
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "releaseinvitation");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+
+				});
+			});
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+
+				});
+			});
+
+			//用户协议
+			$(".ProtocolR").click(function() {
+				api.openWin({
+					name: 'agreement',
+					url: './agreement.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						title: "用户协议",
+						code: "yhxy"
+					}
+				});
+			});
+
+
+			//邀请类型
+			$(".ActivitiesType").on("click", ".ActivitiesTypeR", function() {
+				$(".ActivitiesTypeR").attr("id", "");
+				$(this).attr("id", "ActivitiesTypeR");
+				$(".DateEscort").css("display", "none");
+				$("#" + $(this).attr("data-ActivitiesId") + "").css("display", "block");
+			})
+
+			/************约会开始***************/
+			//活动方式
+			$(".ActivitiesUHF").on("click", "li", function() {
+					$(".ActivitiesUHF > li").removeClass("ActivitiesUHFL");
+					$(this).addClass("ActivitiesUHFL");
+				})
+				//选择活动类别
+			$("#appointmenttype").click(function() {
+				if ($("#appointmenttypevalue").css("display") == "none") {
+					$("#appointmenttypevalue").css("display", "block");
+				} else {
+					$("#appointmenttypevalue").css("display", "none");
+				}
+			});
+			// //邀请方式选择邀请类别
+			// $(".InviteSelection").click(function(){
+			// 	var ISId=$(this).attr("id");
+			// 	$(".ActivitiesUCUL").css("display","none");
+			// 	if(ISId=="serviceway"){
+			// 		$("#servicewayvalue").css("display","block");
+			// 	}
+			// 	if(ISId=="appointmenttype"){
+			// 		$("#appointmenttypevalue").css("display","block");
+			// 	}
+			// });
+			// $("#serviceway").click(function() {
+			// 	if ($("#servicewayvalue").css("display") == "none") {
+			// 		$("#servicewayvalue").css("display", "block");
+			// 	} else {
+			// 		$("#servicewayvalue").css("display", "none");
+			// 	}
+			// });
+
+			$("#servicewayvalue").on("click", "li", function() {
+				$("#servicewayvalue").css("display", "none");
+				$("#serviceway").text($(this).text());
+				$("#serviceway").attr("data-value", $(this).attr("data-value"));
+			});
+
+			//邀请类别
+			gettags("appointmenttypevalue", "APPOINTMENTINVITATION", "");
+
+			// $("#appointmenttype").click(function() {
+			// 	if ($("#appointmenttypevalue").css("display") == "none") {
+			// 		$("#appointmenttypevalue").css("display", "block");
+			// 	} else {
+			// 		$("#appointmenttypevalue").css("display", "none");
+			// 	}
+			// });
+			$("#appointmenttypevalue").on("click", "li", function() {
+				$("#appointmenttypevalue").css("display", "none");
+				$("#appointmenttype").text($(this).text());
+				$("#appointmenttype").attr("data-value", $(this).attr("data-value"));
+
+				gettags("appointmenttags", "", $(this).attr("data-value"));
+				$("#appointmentselectedtags").empty();
+			});
+
+			//上传照片
+			$("#AppointmentUpload li:last-of-type").click(function() {
+				//手机相册选图片
+				var UIMediaScanner = api.require('UIMediaScanner');
+				UIMediaScanner.open({
+					type: 'picture', //视频与图片,all（图片和视频）picture（图片）video（视频）
+					column: 4,
+					classify: true,
+					max: 10 - $("#AppointmentUpload li").length,
+					sort: {
+						key: 'time',
+						order: 'desc'
+					},
+					texts: {
+						stateText: '已选择*项',
+						cancelText: '取消',
+						finishText: '完成'
+					},
+					styles: {
+						bg: '#fff',
+						mark: {
+							icon: '',
+							position: 'bottom_left',
+							size: 20
+						},
+						nav: {
+							bg: '#eee',
+							stateColor: '#000',
+							stateSize: 18,
+							cancelBg: 'rgba(0,0,0,0)',
+							cancelColor: '#000',
+							cancelSize: 18,
+							finishBg: 'rgba(0,0,0,0)',
+							finishColor: '#000',
+							finishSize: 18
+						}
+					},
+					scrollToBottom: {
+						intervalTime: -1
+					},
+					exchange: true,
+					rotation: true
+				}, function(ret) {
+					if (ret) {
+						if (ret.eventType == 'confirm') {
+							var imageFilter = api.require('imageFilter');
+							var path = api.cacheDir + "/upload/";
+							$.each(ret.list, function(i, n) {
+								if (api.systemType == "ios") {
+									UIMediaScanner.transPath({
+										path: n.path
+									}, function(transPathret, transPatherr) {
+										if (transPathret) {
+											$("#AppointmentUpload").prepend("<li><P class=\"p1\"><img src=\"../images/AClose.png\"></P><img src=\"" + transPathret.path + "\"></li>");
+										}
+									});
+								} else {
+									$("#AppointmentUpload").prepend("<li><P class=\"p1\"><img src=\"../images/AClose.png\"></P><img src=\"" + n.path + "\"></li>");
+								}
+							});
+						}
+					}
+				});
+			});
+
+			$("#appointmentsubmit").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var appointmenttype = $(".ActivitiesUHFL").attr("data-value");
+				var bigtags = $("#appointmenttype").attr("data-value");
+				var tags = $("#appointmentselectedtags").text();
+				var location = $("#appointmentlocation").val();
+				var content = $("#appointmentcontent").val();
+				var payment = $("#appointmentpayment").val();
+				var starttime = $("#appointmentstarttime").text();
+				var endtime = $("#appointmentendtime").text();
+
+				// if (appointmenttype == null || appointmenttype == "") {
+				// 	api.toast({
+				// 		msg: '请选择约会方式！',
+				// 		duration: 1000,
+				// 		location: 'middle'
+				// 	});
+				// 	return false;
+				// }
+				if (bigtags == null || bigtags == "") {
+					api.toast({
+						msg: '请选择约会类别！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (tags == null || tags == "") {
+					api.toast({
+						msg: '搜索标签为空，你的约会邀请会很难被搜索到哦！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (location == null || location == "") {
+					api.toast({
+						msg: '请填写约会地点！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				// if (content == null || content == "") {
+				// 	api.toast({
+				// 		msg: '请填写约会内容！',
+				// 		duration: 1000,
+				// 		location: 'middle'
+				// 	});
+				// 	return false;
+				// }
+				if (starttime == null || starttime == "") {
+					api.toast({
+						msg: '请填写开始时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (endtime == null || endtime == "") {
+					api.toast({
+						msg: '请填写结束时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (timeToTimestamp(starttime + ":00") > timeToTimestamp(endtime + ":00")) {
+					api.toast({
+						msg: '开始时间不能大于结束时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				// if (payment == null || payment == "") {
+				// 	api.toast({
+				// 		msg: '请填写邀请诚意金！',
+				// 		duration: 1000,
+				// 		location: 'middle'
+				// 	});
+				// 	return false;
+				// }
+
+				var DateEscortIDS = $(this).parents(".DateEscort").attr("id");
+				if (!$("#" + DateEscortIDS + "").find(".ProtocolL").hasClass("checkpro")) {
+					api.toast({
+						msg: '请确认同意协议！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				api.showProgress({
+					title: '正在发布...',
+					modal: true
+				});
+				var appointment = {
+					appointmenttype: appointmenttype,
+					type: "1", //约会
+					bigtags: bigtags,
+					tags: tags,
+					content: content,
+					location: location,
+					photos: "",
+					payment: "0",
+					requirement: "",
+					starttime: timeToTimestamp(starttime + ":00"),
+					endtime: timeToTimestamp(endtime + ":00")
+				};
+				//判断是否有图片
+				if ($("#AppointmentUpload li>img").length > 0) {
+					//先上传图片
+					var pic = "",
+						piclist = [];
+					var qiniuUpfile = api.require('qiniuUpfile');
+					$.each($("#AppointmentUpload li>img"), function(i, n) {
+						console.log($(n).attr("src"));
+						qiniuUpfile.upfile({
+							file: $(n).attr("src"),
+							name: $.md5($(n).attr("src")) + ".jpg"
+						}, function(upret, uperr) {
+							if (upret.status) {
+								if (upret.oper == "complete") {
+									pic += CONFIG.QINIUADDR + upret.info.key + ",";
+									piclist.push(upret.info.key);
+									if (piclist.length == $("#AppointmentUpload li>img").length) {
+										appointment.photos = pic;
+										appointmentSub(appointment);
+									}
+								}
+							}
+						});
+					});
+
+				} else {
+					appointmentSub(appointment);
+				}
+			});
+			/************约会结束***************/
+
+
+			/************伴游开始***************/
+			gettags("traveltypevalue", "TRAVELINVITATION", "");
+			$("#traveltype").click(function() {
+				if ($("#traveltypevalue").css("display") == "none") {
+					$("#traveltypevalue").css("display", "block");
+				} else {
+					$("#traveltypevalue").css("display", "none");
+				}
+				// $("#traveltypevalue").css("display", "block");
+			});
+			$("#traveltypevalue").on("click", "li", function() {
+				$("#traveltypevalue").css("display", "none");
+				$("#traveltype").text($(this).text());
+				$("#traveltype").attr("data-value", $(this).attr("data-value"));
+
+				gettags("traveltags", "", $(this).attr("data-value"));
+				$("#travelselectedtags").empty();
+			});
+
+			$("#travelpayment,#appointmentpayment").keyup(function() {
+				var payment = $(this).val();
+				payment = payment.replace(/^0*(0\.|[1-9])/, '$1'); //解决 粘贴不生效
+				payment = payment.replace(/[^\d]/g, ""); //清除“数字”以外的字符
+				if (payment != "") { //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+					if (payment.substr(0, 1) == '0') {
+						payment = payment.substr(1, payment.length);
+					}
+				}
+				$(this).val(payment);
+			});
+
+			//上传照片
+			$("#PartnerUpload li:last-of-type").click(function() {
+				//手机相册选图片
+				var UIMediaScanner = api.require('UIMediaScanner');
+				UIMediaScanner.open({
+					type: 'picture', //视频与图片,all（图片和视频）picture（图片）video（视频）
+					column: 4,
+					classify: true,
+					max: 10 - $("#PartnerUpload li").length,
+					sort: {
+						key: 'time',
+						order: 'desc'
+					},
+					texts: {
+						stateText: '已选择*项',
+						cancelText: '取消',
+						finishText: '完成'
+					},
+					styles: {
+						bg: '#fff',
+						mark: {
+							icon: '',
+							position: 'bottom_left',
+							size: 20
+						},
+						nav: {
+							bg: '#eee',
+							stateColor: '#000',
+							stateSize: 18,
+							cancelBg: 'rgba(0,0,0,0)',
+							cancelColor: '#000',
+							cancelSize: 18,
+							finishBg: 'rgba(0,0,0,0)',
+							finishColor: '#000',
+							finishSize: 18
+						}
+					},
+					scrollToBottom: {
+						intervalTime: -1
+					},
+					exchange: true,
+					rotation: true
+				}, function(ret) {
+					if (ret) {
+						if (ret.eventType == 'confirm') {
+							var imageFilter = api.require('imageFilter');
+							var path = api.cacheDir + "/upload/";
+							$.each(ret.list, function(i, n) {
+								if (api.systemType == "ios") {
+									UIMediaScanner.transPath({
+										path: n.path
+									}, function(transPathret, transPatherr) {
+										if (transPathret) {
+											$("#PartnerUpload").prepend("<li><P class=\"p1\"><img src=\"../images/AClose.png\"></P><img src=\"" + transPathret.path + "\"></li>");
+										}
+									});
+								} else {
+									$("#PartnerUpload").prepend("<li><P class=\"p1\"><img src=\"../images/AClose.png\"></P><img src=\"" + n.path + "\"></li>");
+								}
+							});
+						}
+					}
+				});
+			});
+
+			$("#travelsubmit").click(function() {
+				if (!checklogin()) {
+					return false;
+				}
+				var bigtags = $("#traveltype").attr("data-value");
+				var tags = $("#travelselectedtags").text();
+				var location = $("#travellocation").val();
+				var content = $("#travelcontent").val();
+				var payment = $("#travelpayment").val();
+				var requirement = $("#travelrequirement").val();
+				var starttime = $("#travelstarttime").text();
+				var endtime = $("#travelendtime").text();
+
+				if (bigtags == null || bigtags == "") {
+					api.toast({
+						msg: '请选择邀请类别！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (tags == null || tags == "") {
+					api.toast({
+						msg: '搜索标签为空，你的邀请会很难被搜索到哦！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (location == null || location == "") {
+					api.toast({
+						msg: '请填写伴游地点！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (content == null || content == "") {
+					api.toast({
+						msg: '请填写伴游内容！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (requirement == null || requirement == "") {
+					api.toast({
+						msg: '请填写伴游要求！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (payment == null || payment == "") {
+					api.toast({
+						msg: '请填写邀请诚意金！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (starttime == null || starttime == "") {
+					api.toast({
+						msg: '请填写开始时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if (endtime == null || endtime == "") {
+					api.toast({
+						msg: '请填写结束时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				if (timeToTimestamp(starttime + " 00:00:00") > timeToTimestamp(endtime + " 00:00:00")) {
+					api.toast({
+						msg: '开始时间不能大于结束时间！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				var DateEscortIDS = $(this).parents(".DateEscort").attr("id");
+				if (!$("#" + DateEscortIDS + "").find(".ProtocolL").hasClass("checkpro")) {
+					api.toast({
+						msg: '请确认同意协议！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+
+				api.showProgress({
+					title: '正在发布...',
+					modal: true
+				});
+
+				var appointment = {
+					appointmenttype: "",
+					type: "2", //伴游
+					bigtags: bigtags,
+					tags: tags,
+					content: content,
+					location: location,
+					photos: "",
+					payment: payment,
+					requirement: requirement,
+					starttime: timeToTimestamp(starttime + " 00:00:00"),
+					endtime: timeToTimestamp(endtime + " 23:59:59")
+				};
+				//判断是否有图片
+				if ($("#PartnerUpload li>img").length > 0) {
+					//先上传图片
+					var pic = "",
+						piclist = [];
+					var qiniuUpfile = api.require('qiniuUpfile');
+					$.each($("#PartnerUpload li>img"), function(i, n) {
+						qiniuUpfile.upfile({
+							file: $(n).attr("src"),
+							name: $.md5($(n).attr("src")) + ".jpg"
+						}, function(upret, uperr) {
+							if (upret.status) {
+								if (upret.oper == "complete") {
+									pic += CONFIG.QINIUADDR + upret.info.key + ",";
+									piclist.push(upret.info.key);
+									if (piclist.length == $("#PartnerUpload li>img").length) {
+										appointment.photos = pic;
+										appointmentSub(appointment);
+									}
+								}
+							}
+						});
+					});
+
+				} else {
+					appointmentSub(appointment);
+				}
+			});
+			/************伴游结束***************/
+
+
+			/*************图片上传，协议,时间控件开始************/
+			//图片删除
+			$(".ActivitiesURRU").on("click", ".p1", function() {
+				var AId = $(this).parents(".ActivitiesURRU").attr("id");
+				var Aindex = $(this).parents("li").index();
+				$("#" + AId + "").find("li").eq(Aindex).remove();
+			})
+
+			//协议
+			$(".ProtocolL").click(function() {
+				var DateEscortIDS = $(this).parents(".DateEscort").attr("id");
+				if ($("#" + DateEscortIDS + "").find(".ProtocolL").hasClass("checkpro")) {
+					$("#" + DateEscortIDS + "").find(".ProtocolL").removeClass("checkpro");
+					// $(this).attr("class", "");
+				} else {
+					$("#" + DateEscortIDS + "").find(".ProtocolL").addClass("checkpro");
+					// $(this).attr("class", "travel");
+				}
+			});
+
+			//时间控件
+			(function($) {
+				$.init();
+				//约会时间控件
+				var appointmentstartTime = document.querySelector("#appointmentstarttime");
+				appointmentstartTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				appointmentstartTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "datetime",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						appointmentstartTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+				var appointmentendTime = document.querySelector("#appointmentendtime");
+				appointmentendTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				appointmentendTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "datetime",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						appointmentendTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+
+				//伴游时间控件
+				var travelstartTime = document.querySelector("#travelstarttime");
+				travelstartTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				travelstartTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "date",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						travelstartTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+				var travelendTime = document.querySelector("#travelendtime");
+				travelendTime.addEventListener("touchstart", function(e) {
+					e.preventDefault();
+				}, false);
+				travelendTime.addEventListener('touchend', function(e) {
+					e.preventDefault();
+					var options = {
+						type: "date",
+						beginDate: new Date()
+					};
+					var id = this.getAttribute('id');
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						travelendTime.innerText = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			})(mui);
+			/*************图片上传，协议，时间控件结束************/
+
+			/************添加标签开始****************/
+			//点击标签
+			$(".EtiquetteUB").on("click", "li", function() {
+				EtiquetteUBAdd($(this).text());
+			});
+			//添加标签
+			function EtiquetteUBAdd(text) {
+				$(".EtiquetteU").prepend("<li>" + text + "</li>");
+			}
+			//取消标签
+			$(".EtiquetteU").on("click", "li", function() {
+				$(this).remove()
+			});
+			//失去焦点
+			$(".Etiquette").on("blur", "input", function() {
+				if ($(this).val() != "") {
+					EtiquetteUBAdd("#" + $(this).val() + "#");
+					$(".Etiquette input").val("");
+				}
+			});
+			/************添加标签结束****************/
+
+		}
+
+		function gettags(div, type, pid) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.SEARCHTAGS,
+					method: 'post',
+					data: {
+						values: {
+							tagstype: type,
+							pid: pid,
+							pagesize: 5,
+							pagenum: 1
+						}
+					}
+				},
+				function(data, err) {
+
+					if (data.code == "200") {
+						$("#" + div).empty();
+						$.each(data.tags, function(i, n) {
+							$("#" + div).append("<li data-value=\"" + n.id + "\">#" + n.tagsname + "#</li>");
+						});
+					}
+				});
+		};
+
+		function appointmentSub(appointment) {
+			//判断余额
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETMINE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			}, function(moneydata) {
+				if (moneydata.code == "200") {
+					if (appointment.payment * 1 > moneydata.mine.currency * 1) {
+						var btnArray = ['取消', '确定'];
+						mui.confirm('您的金币余额不足，是否要补充金币？', '金币不足', btnArray, function(e) {
+							if (e.index == 1) {
+								api.openWin({
+									name: 'topUps',
+									url: './mine/topUps.html',
+									bgColor: "rgba(255, 255, 255, 0)",
+									animation: {
+										type: "push", //动画类型（详见动画类型常量）
+										subType: "from_right", //动画子类型（详见动画子类型常量）
+										duration: 300 //动画过渡时间，默认300毫秒
+									},
+									pageParam: {
+										userid: $api.getStorage('userid')
+									}
+								});
+							}
+						});
+						api.hideProgress();
+					} else {
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.RELEASEINVITATION,
+								method: 'post',
+								data: {
+									values: {
+										userid: $api.getStorage('userid'),
+										appointmenttype: appointment.appointmenttype,
+										type: appointment.type,
+										bigtags: appointment.bigtags,
+										tags: appointment.tags,
+										content: appointment.content,
+										location: appointment.location,
+										photos: appointment.photos,
+										requirement: appointment.requirement,
+										payment: appointment.payment,
+										remark: "发布邀请：" + appointment.content,
+										starttime: appointment.starttime,
+										endtime: appointment.endtime
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									api.toast({
+										msg: '发布成功！',
+										duration: 1000,
+										location: 'middle'
+									});
+									setTimeout(function() {
+										if (appointment.type == 1) {
+											api.openWin({
+												name: 'invitationdetail',
+												url: './DateInvitation/invitationdetail.html',
+												bgColor: "rgba(255, 255, 255, 0)",
+												animation: {
+													type: "push", //动画类型（详见动画类型常量）
+													subType: "from_right", //动画子类型（详见动画子类型常量）
+													duration: 300 //动画过渡时间，默认300毫秒
+												},
+												pageParam: {
+													invitationid: data.invitation.id,
+													userid: $api.getStorage('userid')
+												}
+											});
+										} else if (appointment.type == 2) {
+											api.openWin({
+												name: 'travelinvitationdetail',
+												url: './DateInvitation/travelinvitationdetail.html',
+												bgColor: "rgba(255, 255, 255, 0)",
+												animation: {
+													type: "push", //动画类型（详见动画类型常量）
+													subType: "from_right", //动画子类型（详见动画子类型常量）
+													duration: 300 //动画过渡时间，默认300毫秒
+												},
+												pageParam: {
+													invitationid: data.invitation.id,
+													userid: $api.getStorage('userid')
+												}
+											});
+										}
+									}, 500);
+
+									setTimeout(function() {
+										api.closeWin({
+											name: (winname == null || winname == "") ? 'releaseinvitation' : winname
+										});
+										api.hideProgress();
+									}, 1500);
+									api.sendEvent({
+										name: "mine"
+									});
+								} else {
+									api.toast({
+										msg: data.msg,
+										duration: 1000,
+										location: 'middle'
+									});
+									api.hideProgress();
+								}
+							});
+					}
+				}
+			});
+		}
+
+		function checklogin() {
+			var userinfo = $api.getStorage('userid');
+			if (userinfo == null || userinfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				api.openWin({
+					name: 'login',
+					url: '../login.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>

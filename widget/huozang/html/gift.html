@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>礼物</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/swiper.min.css" />
+    <link href="../css/gift.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="gift">
+        <div class="gift-head">
+            <div class="gift-head-left">金币余额<span><i id="currency">125</i><img src="../images/gift/coin.png"></span>
+            </div>
+            <div class="gift-head-right" onclick="recharge()">金币不够了，去充值</div>
+        </div>
+        <div class="gift-con">
+            <div class="gift-con-left">
+                <div class="gift-tab">
+                    <span class="active">礼物</span>
+                    <!-- <span>VIP特权</span> -->
+                    <span class="getGift">我收到的礼物</span>
+                </div>
+            </div>
+            <div class="gift-con-right" onclick="getvip()">
+                <img src="../images/gift/vip.png">成为会员
+            </div>
+        </div>
+        <div class="gift-list" id="giftlist">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <script type="text/template" id="gittemplate">
+                        {{~it:value:index}}
+                    <div class="swiper-slide">
+                        <div class="item" data-id="{{=value.id}}" data-name="{{=value.giftName}}">
+                            <div class="img"><img src="{{=value.giftImg}}"></div>
+                            <p>{{=value.giftName}}</p>
+                            <span>{{=value.giftPrice}}<img src="../images/gift/coin.png"></span>
+                        </div>
+                    </div>
+                    {{~}}
+                </script>
+                </div>
+
+                <div class="swiper-pagination"></div>
+
+            </div>
+        </div>
+        <div class="gift-bottom">
+            <div class="num">
+                <span>数量</span>
+                <input type="text" id="num" value="1">
+            </div>
+            <button onclick="send()">送出</button>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/config.js"></script>
+    <script type="text/javascript" src="../script/swiper.min.js"></script>
+    <script type="text/javascript" src="../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+
+    <script>
+        function getvip() {
+            api.sendEvent({
+                    name: 'pausevideo'
+                });
+            api.openWin({
+                name: 'membercenter',
+                url: 'member/membercenter.html',
+            });
+            api.closeFrame({
+                name: 'gift'
+            })
+        }
+
+        function recharge() {
+            api.sendEvent({
+                    name: 'pausevideo'
+                });
+            api.openWin({
+                name: 'MyGoldCoin',
+                url: 'mine/MyGoldCoin.html',
+            });
+            api.closeFrame({
+                name: 'gift'
+            })
+        }
+        $(".gift-list").on('touchstart', '.item', function () {
+            $(".gift-list").find('.on').removeClass('on')
+            $(this).addClass('on')
+        })
+
+        $('.mask').click(function(){
+            api.closeFrame({
+                name: 'gift'
+            })
+        })
+
+        function send() {
+            if (!$('.swiper-wrapper .on').attr('data-id')) {
+                api.toast({
+                    msg: '请选择要送出的礼物！',
+                    duration: 1000,
+                    location: 'middle'
+                })
+                return
+            }
+            api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.POSTGIFTS,
+                method: 'post',
+                data: {
+                    values: {
+                        giftId: $('.swiper-wrapper .on').attr('data-id'),
+                        giftNum: $('#num').val(),
+                        giveUserId: $api.getStorage('userid'),
+                        getUserId: api.pageParam.userid
+                    }
+                }
+            }, function (res, err) {
+                if (res) {
+                    if (res.code == 200) {
+                        api.sendEvent({
+								name: "sendTextMessageListener",
+								extra: {
+									touserid: api.pageParam.userid,
+									message: "您已收到" + $('.swiper-wrapper .on').attr('data-name') + "x" + $('#num').val()
+								}
+							});
+                        api.toast({
+                            msg: res.msg,
+                            duration: 1000,
+                            location: 'middle'
+                        })
+                        api.closeFrame({
+                            name: 'gift'
+                        })
+                    } else {
+                        api.toast({
+                            msg: res.msg,
+                            duration: 1000,
+                            location: 'middle'
+                        })
+                    }
+                } else {
+                    console.log(JSON.stringify(err))
+                }
+            });
+        }
+        apiready = function () {
+            var userid = $api.getStorage('userid');
+            api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GIFT,
+                method: 'post',
+                data: {
+                    values: {
+                        userId: userid
+                    }
+                }
+            }, function (res, err) {
+                if (res) {
+                    if (res.code == 200) {
+                        var tempFn = doT.template($api.byId('gittemplate').innerHTML);
+                        var resultHTML = tempFn(res.giftList);
+                        $("#giftlist .swiper-wrapper").html(resultHTML);
+                        new Swiper('.gift-list .swiper-container', {
+                            pagination: '.swiper-pagination',
+                            slidesPerView: 3,
+                            slidesPerColumn: 2,
+                        });
+                        $api.byId('currency').innerHTML = res.currency
+                    }
+                } else {
+                    console.log('错误');
+                }
+            });
+            //我收到的礼物
+        $(".gift-con-left").on('click', '.getGift', function () {
+            api.sendEvent({
+                    name: 'pausevideo'
+                });
+            api.openWin({
+					name: 'mygift',
+					url: './mine/mygift.html',
+					bgColor: "rgba(255, 255, 255, 0)",
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+        })
+
+        }
+    </script>
+
+
+</body>
+
+</html>

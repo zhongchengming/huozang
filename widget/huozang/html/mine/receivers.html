@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>应邀列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/receivers.css" />
+    <script src="../../script/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <div class="roofS">
+        <div class="roof">
+            <div class="roofReturn"></div>
+            <div id="friend" class="roofConter">
+                应邀列表
+            </div>
+        </div>
+    </div>
+    <div class="roofSDiv" style="height:50px;"></div>
+    <ul class="onInvitation">
+
+    </ul>
+    <script type="text/template" id="receiverstemplate">
+        {{~it:value:index}}
+        <li>
+            <div class="onInvitationTop">
+                <div class="onInvitationTopL otherspage" userid="{{=value.entity.userid}}">
+                    <img src="{{?value.entity.avatar}}{{=value.entity.avatar}}{{??}}../../images/avatar.png{{?}}">
+                </div>
+                <div class="onInvitationTopC otherspage" userid="{{=value.entity.userid}}">
+                    <div class="OITopCT">
+                        <div class="OITopCTL">{{=value.entity.nickname}}</div>
+                        <div class="OITopCTR">
+                            {{?1==value.entity.gender}}
+                            <p class="p1 woman"></p>{{??}}
+                            <p class="p1 man">
+                                {{?}}
+                                <p class="p2">{{=value.entity.age}}</p>
+                        </div>
+                    </div>
+                    <div class="OITopCB">
+                        手机号：<span>{{=value.entity.mobile}}</span>
+                    </div>
+                </div>
+                <div class="onInvitationTopR accept-btn" receiverid="{{=value.id}}">{{?"0"==value.status}}约TA{{??}}{{?"2"==value.status}}已接受{{??}}已取消{{?}}{{?}}</div>
+            </div>
+            <ul class="onInvitationBot">
+                <li class="sendmymobile"  userid="{{=value.entity.userid}}" nickname="{{=value.entity.nickname}}">发送我的手机号</li>
+                <li class="sendwechat" userid="{{=value.entity.userid}}" nickname="{{=value.entity.nickname}}">发送我的微信号</li>
+            </ul>
+        </li>
+        {{~}}
+    </script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/mui.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+    <script type="text/javascript" src="../../script/util.js"></script>
+
+    <script>
+        var pageSize = 8,
+            pageNum = 1,
+            hasNextPage = true,
+            userid = "",
+            invitationid = "";
+        apiready = function() {
+            
+            console.log($api.getStorage('sendwechat'))
+            $api.fixStatusBar($api.dom('.roofS'));
+            $(".onInvitation > li:even").addClass("evenBack");
+            $(".onInvitation > li:odd").addClass("oddBack");
+            $api.setStorage('openWin', "receivers");
+
+            // 列表距顶部距离
+            var systemType = api.systemType;
+            if (systemType == "android") {
+              $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+            }
+            if (systemType == "ios") {
+              $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+            }
+
+            //返回箭头事件
+            $(".roofReturn").click(function() {
+                api.closeWin({});
+            });
+
+            //滑动关闭
+            api.addEventListener({
+                name: 'swiperight'
+            }, function(ret, err) {
+                api.closeWin({});
+            });
+            invitationid = api.pageParam.invitationid; //邀请ID
+            userid = api.pageParam.userid;
+
+            loadreceiverslist(invitationid, pageSize, pageNum, true);
+
+            api.addEventListener({
+                name: 'loadreceiverslist'
+            }, function(ret, err) {
+                pageNum = 1;
+                loadreceiverslist(invitationid, pageSize, pageNum, true);
+            });
+
+            //上拉刷新
+            api.addEventListener({
+                name: 'swipeup'
+            }, function(ret, err) {
+                if (hasNextPage) {
+                    loadreceiverslist(invitationid, pageSize, pageNum, false);
+                }
+            });
+
+            $(".onInvitation").on("click", ".otherspage", function() {
+                var userinfo = $(this).attr("userid");
+                api.openWin({
+                    name: 'otherspage',
+                    url: '../otherspage.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    },
+                    pageParam: {
+                        userid: userinfo
+                    },
+                    animation: {
+                        type: "push", //动画类型（详见动画类型常量）
+                        subType: "from_right", //动画子类型（详见动画子类型常量）
+                        duration: 300 //动画过渡时间，默认300毫秒
+                    }
+                });
+            });
+
+            $(".onInvitation").on("click", ".sendmymobile", function() {
+                if(ismymemberfunction()==false){
+                    api.toast({
+                        msg: "请先升级会员后操作",
+                        duration: 1000,
+                        location: 'middle'
+                    });
+                    return false
+                }
+                var mobile = $api.getStorage('sendmobile')
+                var userinfo = $(this).attr('userid');
+                var nickname = $(this).attr('nickname');
+                if(mobile == null || mobile == ""){
+                    if($api.getStorage('mobile')==null ||$api.getStorage('mobile')=="" ){
+                        api.toast({
+                            msg: "发送失败咯，请重新登录后试试！",
+                            duration: 1000,
+                            location: 'middle'
+                        })
+                    }else{
+                        send($api.getStorage('mobile'))
+                    }
+                }else{
+                        send(mobile)
+                }
+
+                function send(mobile){
+                    api.sendEvent({
+                        name: "sendTextMessageListener",
+                        extra: {
+                            touserid: userinfo,
+                            message: "这是我的手机号码：" + mobile + "，方便联系我哦！"
+                        }
+                    });
+                    api.toast({
+                        msg: "发送成功",
+                        duration: 1000,
+                        location: 'middle'
+                    });
+
+                    setTimeout(function() {
+                        api.openWin({
+                            name: 'onetoone',
+                            url: '../mine/onetoone.html',
+                            bgColor: "rgba(255, 255, 255, 0)",
+                            animation: {
+                                type: "push", //动画类型（详见动画类型常量）
+                                subType: "from_right", //动画子类型（详见动画子类型常量）
+                                duration: 300 //动画过渡时间，默认300毫秒
+                            },
+                            pageParam: {
+                                touserid: userinfo,
+                                tousername: nickname,
+                                latestMessageId: -1
+                            }
+                        });
+                    }, 1000);
+                }
+            });
+
+            $(".onInvitation").on("click", ".sendwechat", function() {
+                if(ismymemberfunction()==false){
+                    api.toast({
+                        msg: "请先升级会员后操作",
+                        duration: 1000,
+                        location: 'middle'
+                    });
+                    return false
+                }
+                var userinfo = $(this).attr('userid');
+                var nickname = $(this).attr('nickname');
+                var btnArray = ['取消', '确认']; 
+                if($api.getStorage('sendwechat')==null ||$api.getStorage('sendwechat')=="" ){
+
+                    mui.prompt("", "请填写微信号！", "微信号", btnArray, function(e) { 
+                            if (e.index == 1) {
+                                var wechat = e.value;
+                                if (wechat == null || wechat == "") {
+                                    api.toast({
+                                        msg: "填写正确的微信号，和你的TA好好交流吧！",
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                    return false;
+                                } else {
+                                    sendw(wechat)
+                                }
+                            } 
+                        }, 'div');
+                }else{
+                    sendw($api.getStorage('sendwechat'))
+                }
+                function sendw(wechat){
+                    api.sendEvent({
+                                    name: "sendTextMessageListener",
+                                    extra: {
+                                        touserid: userinfo,
+                                        message: "这是我的微信号：" + wechat + "，方便联系我哦！"
+                                    }
+                                });
+                                api.toast({
+                                    msg: "发送成功",
+                                    duration: 1000,
+                                    location: 'middle'
+                                });
+
+                                setTimeout(function() {
+                                    api.openWin({
+                                        name: 'onetoone',
+                                        url: '../mine/onetoone.html',
+                                        bgColor: "rgba(255, 255, 255, 0)",
+                                        animation: {
+                                            type: "push", //动画类型（详见动画类型常量）
+                                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                                            duration: 300 //动画过渡时间，默认300毫秒
+                                        },
+                                        pageParam: {
+                                            touserid: userinfo,
+                                            tousername: nickname,
+                                            latestMessageId: -1
+                                        }
+                                    });
+                                }, 1000);
+                }
+            });
+
+            $(".onInvitation").on("click", ".accept-btn", function() {
+                if(ismymemberfunction()==false){
+                    api.toast({
+                        msg: "请先升级会员后操作",
+                        duration: 1000,
+                        location: 'middle'
+                    });
+                    return false
+                }
+                var receiverid = $(this).attr("receiverid");
+                var btnArray = ['再看看', '确认'];
+                mui.confirm('确认接受他(她)，拒绝其他人吗？', '', btnArray, function(e) {
+                    if (e.index == 1) { //确认
+                        api.ajax({
+                                url: CONFIG.ADDRURL + CONFIG.UPDATERECEIVER,
+                                method: 'post',
+                                data: {
+                                    values: {
+                                        receiverid: receiverid,
+                                        userid: $api.getStorage('userid'),
+                                        status: "2",
+                                        remark: "咱们约会吧！"
+                                    }
+                                }
+                            },
+                            function(data, err) {
+                                if (data.code == "200") {
+                                    api.sendEvent({
+                                        name: 'loadappointmentorder'
+                                    });
+                                    api.sendEvent({
+                                        name: 'loadtravelorder'
+                                    });
+                                    api.sendEvent({
+                                        name: 'loadreceiverslist'
+                                    });
+                                    api.sendEvent({
+                                        name: "sendTextMessageListener",
+                                        extra: {
+                                            touserid: receiverid,
+                                            message: "系统提示：当前人已经接受了你的应邀，快打扮一下去约会吧！"
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: data.msg,
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                }
+                            });
+                    }
+                });
+            });
+
+
+        }
+
+        function loadreceiverslist(id, pagesize, pagenum, isclear) {
+            if (isclear) {
+                $(".onInvitation").empty();
+            }
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETRECEIVERS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            invitationid: id,
+                            pagesize: pagesize,
+                            pagenum: pagenum
+                        }
+                    }
+                },
+                function(data, err) {
+                    if (data.code == "200" && data.receivers) {
+                        console.log(JSON.stringify(data))
+                        hasNextPage = data.receivers.hasNextPage;
+                        pageNum = data.receivers.nextPage;
+                        var tempFn = doT.template($api.byId("receiverstemplate").innerHTML);
+                        var resultHTML = tempFn(data.receivers.list);
+                        $(".onInvitation").append(resultHTML);
+                    } else {
+                        $(".onInvitation").append("<div id=\"receiversno-conent\"><img src=\"../../images/no-content.png\"/></div>");
+                    }
+                });
+        }
+        //判断是否是会员
+		function ismymemberfunction(userid) {
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+					method: 'post',
+					data: {
+						values: {
+							userId: $api.getStorage('userid')
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						console.log(JSON.stringify(data));
+						
+						if(data.userVipType.vipType == 1){
+							ismymember = true
+						}else{
+							ismymember = false
+						}
+					}
+
+				});
+		}
+    </script>
+</body>
+
+</html>

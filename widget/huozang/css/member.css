@@ -1,0 +1,427 @@
+/*会员中心页面样式*/
+
+/*特权卡展示部分*/
+.tequankaList{
+  padding: 10px;
+  margin-top: 10px;
+}
+/*横向滑动*/
+.tequankaList>ul{
+  display: -webkit-box;
+  overflow-x: scroll;
+}
+/*不显示滚动条*/
+.tequankaList>ul::-webkit-scrollbar{
+  display: none;
+}
+
+.tequankaList>ul>li{
+  width: 96%;
+  height: 186px;
+  position: relative;
+  color: #fff;
+}
+.tequankaList>ul>li p{
+  color: #fff;
+}
+.tequankaList>ul>li>img{
+  width: 100%;
+  height: 100%;
+}
+.text-center{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 64px;
+  text-align: center;
+  font-size: 14px;
+}
+.text-center>p:nth-child(2){
+  margin-top: 5px;
+}
+.text-center>p:nth-child(2)>span{
+  text-decoration: underline;
+}
+.text-bot{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 128px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+.text-bot>p>span{
+  font-size: 14px;
+  margin-left: 8px;
+  text-decoration: underline;
+}
+.type2{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 64px;
+  text-align: center;
+}
+.type2>p{
+  font-size: 14px;
+}
+.kaitong-btn{
+  margin-top:14px;
+}
+.kaitong-btn>p{
+  width: 64px;
+  margin: 0 auto;
+  border: 1px solid #fff!important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+  line-height:16px;
+}
+/*会员特权内容部分*/
+.tequanList>ul{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+.tequanList>ul>li{
+  width: 20%;
+  text-align: center;
+}
+.tequanList>ul>li>img{
+  width: 90%;
+  margin: 0 auto;
+}
+.tequanList>ul>li>p{
+  font-size: 12px;
+  color: #464646;
+}
+.list-title1>p{
+  width: 30px;
+  margin: 0 auto;
+}
+.list-title1>p>img{
+  width: 30px;
+  height: 30px;
+}
+.list-title1>h2{
+  text-align: center;
+  font-size: 18px;
+}
+/*大图片链接部分*/
+.tequan-maxImg{
+  padding: 10px;
+  margin: 10px 0;
+}
+.tequan-maxImg .maxImg-left{
+  float: left;
+  width:38%;
+}
+.tequan-maxImg .maxImg-left>img{
+  width:100%;
+}
+.tequan-maxImg .maxImg-right{
+  float: right;
+  width:60%;
+}
+.tequan-maxImg .maxImg-right>img:nth-child(1){
+  width:100%;
+  height: 49%;
+  margin-bottom: 5px;
+}
+.tequan-maxImg .maxImg-right>img:nth-child(2){
+  width:100%;
+  height: 49%;
+}
+/*会员推荐*/
+.tuijainList{
+  padding: 10px;
+}
+.list-title2{
+  font-size: 18px;
+  text-align: center;
+}
+.list-title2>img{
+  width: 30px;
+  height: 30px;
+  display: inline;
+}
+.tuijainList>ul{
+  display: -webkit-box;
+  overflow-x: scroll;
+  margin-top:10px;
+}
+.tuijainList>ul::-webkit-scrollbar{
+  display: none;
+}
+.tuijainList>ul>li{
+  width: 96%;
+  margin-right: 8px;
+}
+.tuijainList>ul>li>img{
+  width: 100%;
+  height: 128px;
+}
+/*其他开通方式*/
+.kaitongTypeList{
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+.kaitongTypeList>ul{
+  flex-wrap: wrap;
+  padding: 10px;
+}
+.kaitongTypeList>ul>li{
+  width: 42%;
+  border: 1px solid #ececec!important;
+  border-radius: 8px;
+  padding: 9px;
+  margin: 5px;
+}
+.kaitongTypeList-left{
+  width: 26%;
+  padding-top: 5px;
+}
+.kaitongTypeList-left>img{
+  width: 31px;
+  height: 31px;
+}
+.kaitongTypeList-right{
+  width: 74%;
+}
+.kaitongTypeList-right>p{
+  font-size:14px;
+  margin-bottom: 5px;
+}
+.bg-span{
+  font-size: 13px;
+  color: #fff;
+  background-color: #fe407e;
+  padding: 0 2px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.text-span{
+  font-size:14px;
+  color: #858585;
+}
+/* .moneyList ul li:nth-child(1) .right-btn p{
+  background: #f0f
+} */
+/*购买会员页面样式*/
+
+/*用户信息展示部分*/
+.userList{
+  padding: 10px 10px 12px 10px;
+  border-bottom: 1px solid #ececec!important;
+}
+.info-left{
+  float: left;
+  margin-right: 10px;
+}
+.info-left>img{
+  width:42px;
+  height: 42px;
+  border-radius: 50%;
+}
+.info-center{
+  float: left;
+  padding-top: 5px;
+}
+.info-center>p{
+  font-size: 15px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.info-center>span{
+  font-size: 12px;
+  color: #ff9694;
+}
+.info-right{
+  float: right;
+}
+.info-right>img{
+  width: 36px;
+  height: 36px;
+}
+/*会员开通选择部分*/
+.kaitonginfo{
+  /* margin-top: 25px; */
+}
+.tab-ul{
+  width: 50%;
+  height: 32px;
+  line-height: 32px;
+  margin: 0 auto;
+  margin-bottom: 12px;
+  border: 1px solid #ff9694!important;
+  border-radius: 16px;
+  font-size: 16px;
+}
+.tab-ul>li{
+  width: 50%;
+  text-align: center;
+  color: #ff9694;
+  flex-grow: 1;
+}
+.tab-ul>li.active{
+  color: #fff;
+  background-color:#ff9694;
+  border-radius: 16px;
+}
+.tequanList-title2{
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.tequanList-title2>span{
+  font-size: 14px;
+}
+/*开通列表*/
+.moneyList{
+  padding: 0 10px;
+  /* margin-top: 20px; */
+}
+.moneyList>ul>li{
+  padding:12px 10px;
+  position: relative;
+  border-bottom: 1px solid #ececec!important;
+}
+.moneyList>ul>li.active{
+  background-color: #ffeeee;
+  border-radius: 6px;
+}
+.moneyList-left{
+  float: left;
+}
+.moneyList-left>p:nth-child(1){
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.moneyList-left>p:nth-child(2){
+  font-size:14px;
+  color: #a2a0a0;
+}
+.moneyList-right{
+  float: right;
+}
+.right-money{
+  margin-right:6px;
+}
+.right-money>p:nth-child(1){
+  font-size: 14px;
+  color: #ff8583;
+  font-weight: bold;
+}
+.right-money>p:nth-child(2){
+  font-size: 12px;
+  color: #a0a0a0;
+  text-align: right;
+  text-decoration: line-through;
+}
+.right-btn>p{
+  font-size: 12px;
+    font-weight: 600;
+    background-color: #ff9694;
+    color: #fff;
+    border-radius: 12px;
+    padding: 5px 20px;
+}
+.newUser-img{
+  position: absolute;
+  left: 39%;
+  top: -8px;
+}
+.newUser-img>img{
+  width:26px;
+}
+/*支付方式部分*/
+.zhifuTypeList{
+  margin-bottom: 64px;
+}
+.zhifuTypeList>p{
+  font-size: 14px;
+  color: #a0a0a0;
+  height: 41px;
+  line-height:41px;
+}
+.zhifuTypeList>p>span:nth-child(1){
+  width: 4px;
+  height: 19px;
+  display: block;
+  background-color:#ff9694;
+  border-radius: 8px;
+  margin-top: 12px;
+  margin-right:10px;
+}
+.zhifuTypeList>ul{
+  padding: 0 10px;
+}
+.zhifuTypeList>ul>li{
+  padding-left: 6px;
+  height: 38px;
+  line-height: 38px;
+}
+.zhifuTypeList>ul>li>.zhifu-img{
+  display: inline;
+  width: 26px;
+  margin-right: 8px;
+  position: relative;
+  bottom: 3px;
+}
+.zhifuTypeList>ul>li>.checked-img{
+  display: inline;
+  width: 19px;
+  float: right;
+  margin-top: 10px;
+}
+.zhifuTypeList>ul>li>span{
+  display: inline;
+  font-size: 18px;
+}
+/*开通按钮及总金额部分*/
+.kaitong-botDiv{
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+  padding: 0 10px;
+  box-shadow: #e0dddd 0 0 6px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: #fff;
+}
+.botDov-left{
+  width: 68%;
+}
+.botDov-left>span:nth-child(1){
+  font-size: 14px;
+}
+.botDov-left>span:nth-child(2){
+  font-size: 18px;
+  color: #ff8583;
+  margin: 0 3px;
+}
+.botDov-left>span:nth-child(3){
+  font-size: 12px;
+  color: #a0a0a0;
+}
+.botDov-right{
+  text-align: right;
+  width: 28%;
+  padding-right: 10px;
+  padding-top: 7px;
+}
+.botDov-right>div{
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+  height: 35px;
+  line-height: 35px;
+  background-color: #ff9694;
+  color: #fff;
+  border-radius: 16px;
+}

@@ -1,0 +1,336 @@
+@charset "utf-8";
+/*详情*/
+.videoTopS{
+	width:100%;
+	position:fixed;
+	z-index:2;
+	top:0;
+	left:0;
+}
+.videoTop{
+	width:100%;
+	height:47px;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+}
+.videoTop > li{
+	width:25px;
+	height:25px;
+	overflow:hidden;
+	position:absolute;
+	top:11px;
+}
+.videoTop > li.VTRuturn{
+	background:url(../images/returnB.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	left:14px;
+}
+.videoTop > li.VTPraise{
+	background:url(../images/Videos_03.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	left:54px;
+}
+.videoTop > li.VTRelay{
+	background:url(../images/Videos_10.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	left:100px;
+}
+.videoTop > li.VTComplaints{
+	background:url(../images/Complaints.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	left:145px;
+}
+.videoTop > li.VTAttention{
+	width:60px;
+	height:25px;
+	border-radius:25px;
+	line-height:28px;
+	color:#fff;
+	font-size:10px;
+	font-weight:bold;
+	text-align:center;
+	background:#FF9494;
+	overflow:hidden;
+	top:11px;
+	right:65px;
+}
+.videoTop > li.active{
+	width:60px;
+	height:25px;
+	border-radius:25px;
+	line-height:28px;
+	color:#fff;
+	font-size:10px;
+	font-weight:bold;
+	text-align:center;
+	background:#bfbfbf;
+	overflow:hidden;
+	top:11px;
+	right:65px;
+}
+.videoTop > li.VTAvatar{
+	width:35px;
+	height:35px;
+	border-radius:100%;
+	background:url(../images/imgT_03.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+	top:6px;
+	right:25px;
+}
+/**/
+.videoImg{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoImg video{
+	width:100%;
+	height:inherit;
+	margin: inherit;
+	overflow:hidden;
+}
+.videoComment{
+	width:100%;
+	margin:0 auto;
+	background:#fff;
+	overflow:hidden;
+}
+.videoCommentW{
+	padding-bottom:5px;
+	border-bottom:1px solid #e6e6e6;
+}
+.videoCommentTop{
+	width:94.7%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoCommentTop > li{
+	width:50%;
+	float:left;
+	line-height:25px;
+	font-size:11px;
+	font-weight:400;
+	color:#999;
+	overflow:hidden;
+}
+.videoCommentTop > li:last-of-type{
+	text-align:right;
+}
+.videoCommentCen{
+	width:94.7%;
+	margin:5px auto 15px;
+	line-height:1.5;
+	font-size:13px;
+	font-weight:bold;
+	color:#999;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient: vertical;
+}
+.videoCommentCen .span1{
+	color:#122d6a;
+}
+.videoCommentBot{
+	width:94.7%;
+	margin:5px auto;
+	overflow:hidden;
+}
+.videoCommentBot > li:first-of-type{
+	width:15px;
+	height:15px;
+	float:left;
+	margin-right:5px;
+	overflow:hidden;
+}
+.videoCommentBot > li:last-of-type{
+	float:left;
+	font-size:13px;
+	font-weight:400;
+	color:#333;
+	overflow:hidden;
+}
+.videoCommentBot > li:last-of-type span{
+	margin-right:5px;
+}
+.videoCommentBot > li:first-of-type.videoCommentBotGZ{
+	background:url(../images/PraiseH.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.videoCommentBot > li:first-of-type.videoCommentBotPL{
+	background:url(../images/CommentH.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+/*评论*/
+.videoReview,.VReviewRTop,.VReviewRBot{
+	width:auto;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoReview > li{
+	width:94.7%;
+	margin:0 auto;
+	padding:10px 0;
+	overflow:hidden;
+	border-bottom:1px solid #f5f5f5;
+}
+.videoReview > li:last-of-type{
+	border-bottom:0;
+}
+.videoReviewL{
+	width:40px;
+	height:40px;
+	float:left;
+	border-radius:100%;
+	overflow:hidden;
+}
+.videoReviewL > img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.videoReviewR{
+	width:84%;
+	float:left;
+	margin-left:5px;
+	overflow:hidden;
+}
+.VReviewRTopL{
+	float:left;
+	line-height:24px;
+	font-size:14px;
+	font-weight:bold;
+	color:#333;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient: vertical;
+}
+.VReviewRTopR{
+	width:10px;
+	height:10px;
+	float:left;
+	margin-top:7px;
+	margin-left:5px;
+	background:url(../images/InviteWCTDJ_03.jpg);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.VReviewRCen{
+	width:100%;
+	line-height:1.4;
+	font-size:13px;
+	font-weight:400;
+	color:#333;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient: vertical;
+}
+.VReviewRBot{
+	margin:10px auto;
+}
+.VReviewRBotL{
+	float:left;
+	line-height:20px;
+	color:#999;
+	font-weight:400;
+	font-size:11px;
+	overflow:hidden;
+}
+.VReviewRBotRR{
+	float:right;
+	line-height:20px;
+	color:#999;
+	font-weight:400;
+	font-size:12px;
+	margin-right:10px;
+	overflow:hidden;
+}
+.VReviewRBotRL{
+	width:12px;
+	height:12px;
+	float:right;
+	margin-right:3px;
+	margin-top:4px;
+	margin-left:10px;
+	overflow:hidden;
+}
+.VReviewRBotRL.dianzan{
+	background:url(../images/SquarePL_07.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.VReviewRBotRL.pinlun{
+	background:url(../images/SquarePL_05.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+/*底部评论*/
+.BotComment{
+	width:100%;
+	position:fixed;
+	display:none;
+	bottom:0;
+	left:0;
+}
+.BotCommentU{
+	width:100%;
+	height:50px;
+	background:#fff;
+	margin:0 auto;
+	overflow:hidden;
+	box-shadow:0 0 3px 1px #f2f2f2;
+}
+.BotCommentUL{
+	width:75%;
+	height:35px;
+	float:left;
+	margin-top:7.5px;
+	margin-left:3%;
+	border-radius:35px;
+	overflow:hidden;
+}
+.BotCommentUL > input{
+	width:100%;
+	height:100%;
+	font-size:14px;
+	color:#999;
+	font-weight:400;
+	border-radius:35px;
+	background:#f5f5f5;
+	text-indent:1em;
+	outline:none;
+}
+.BotCommentUR{
+	width:50px;
+	height:35px;
+	float:right;
+	margin-top:7.5px;
+	margin-right:3%;
+	font-size:14px;
+	font-weight:400;
+	line-height:38px;
+	text-align:center;
+	color:#fff;
+	background:#FF9694;
+	border-radius:5px;
+	overflow:hidden;
+}

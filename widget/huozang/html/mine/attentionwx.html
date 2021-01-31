@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>关注公众号</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/config.js"></script>
+
+	<style>
+		.PublicNumber {
+			width: 160px;
+			height: 160px;
+			margin: 10px auto 0;
+			overflow: hidden;
+		}
+
+		.PublicNumber img {
+			width: 100%;
+			height: 100%;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+
+		.PublicNumberTEXT {
+			text-align: center;
+			line-height: 1.5;
+			margin-top: 5px;
+			font-size: 14px;
+			color: #999;
+			overflow: hidden;
+		}
+
+		.PublicNumberBt {
+			width: 94.7%;
+			margin: 30px auto 0;
+			line-height: 1.5;
+			font-size: 16px;
+			font-weight: 400;
+			color: #333;
+			overflow: hidden;
+		}
+
+		.PublicNumberU {
+			width: 92%;
+			margin: 5px auto;
+			overflow: hidden;
+		}
+
+		.PublicNumberU>li {
+			width: 100%;
+			padding-bottom: 5px;
+			overflow: hidden;
+			border-bottom: 1px solid #f2f2f2;
+		}
+
+		.PublicNumberU>li p {
+			line-height: 1.2;
+			font-size: 14px;
+			color: #999;
+			margin-top: 5px;
+			margin-bottom: 2.5px;
+		}
+
+		.PublicNumberU>li .p1 {
+			color: #999;
+		}
+
+		.PublicNumberBut {
+			width: 60%;
+			margin: 30px auto 50px;
+			text-align: center;
+			line-height: 2.5;
+			font-size: 16px;
+			color: #fff;
+			background: #FF9694;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="roofS">
+		<div class="roof">
+			<!-- <div class="roofButton">开始认证</div> -->
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> page-bottom-->
+			<div id="friend" class="roofConter">
+				客服
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"> </div>
+	<div class="PublicNumber"><img id="wx" src="" /></div>
+	<div class="PublicNumberTEXT">双SOUL微信公众号</div>
+	<div class="PublicNumberBt">常见问题</div>
+	<ul class="PublicNumberU">
+
+	</ul>
+	<div class="PublicNumberBut">保存二维码，打开微信关注</div>
+
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+				$(".mains").css("height", "1px");
+			}
+			$api.setStorage('openWin', "attentionwx");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'attentionwx'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'attentionwx'
+				});
+			});
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETDIC,
+				method: 'post',
+				data: {
+					values: {
+						type: "xixiu_kefu"
+					}
+				}
+			}, function(data, err) {
+				console.log(JSON.stringify(data))
+				console.log(JSON.stringify(err))
+				if (data.code == "200" && data.dict && data.dict.length > 0) {
+					$("#wx").attr("src", data.dict[0].value);
+				}
+			});
+
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETDIC,
+				method: 'post',
+				data: {
+					values: {
+						type: "questions"
+					}
+				}
+			}, function(data, err) {
+				if (data.code == "200" && data.dict && data.dict.length > 0) {
+					$.each(data.dict, function(i, n) {
+						$(".PublicNumberU").append("<li>" +
+							"<p>问：" + n.value + "</p>" +
+							"<p class=\"p1\">答：" + n.remark + "</p>" +
+							"</li>");
+					});
+				}
+			});
+
+			$(".PublicNumberBut").click(function() {
+				api.showProgress({
+					title: '正在保存...',
+					modal: true
+				});
+				api.download({
+					url: $("#wx").attr("src"),
+					report: true,
+					cache: true,
+					allowResume: true
+				}, function(ret, err) {
+					if (ret.percent == 100) {
+						api.saveMediaToAlbum({
+							path: ret.savePath
+						}, function(albumret, albumreterr) {
+							if (albumret && albumret.status) {
+								api.toast({
+									msg: "二维码保存成功，打开微信!",
+									duration: 1000,
+									location: 'middle'
+								});
+								api.hideProgress();
+								if (api.systemType == "android") {
+									api.openApp({
+										androidPkg: 'com.tencent.mm',
+										mimeType: 'text/html',
+										uri: 'wechat://'
+									});
+								} else if (api.systemType == "ios") {
+									api.openApp({
+										iosUrl: 'wechat://', //打开微信的，其中weixin为微信的URL Scheme
+										appParam: {
+											appParam: ''
+										}
+									});
+								}
+							}
+						});
+					}
+				});
+			});
+
+		}
+	</script>
+</body>
+
+</html>

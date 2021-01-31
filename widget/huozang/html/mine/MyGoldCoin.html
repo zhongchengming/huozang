@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>我的钱包</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/MyGoldCoin.css" />
+	<script src="../../script/api.js"></script>
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+	<script src="../../script/config.js"></script>
+
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<p class="p2"></p>
+		<div class="SquareHeaderDIV">我的钱包</div>
+	</div> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				我的钱包
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<!--金币顶部-->
+	<div class="GoldCoinTop">
+		<div class="GoldCoinTImg"></div>
+		<P class="GoldCoinFontSize">余额</P>
+		<P class="GoldCoinFontSizeS"></P>
+		<div class="GoldCoinXX">
+			<!-- <li></li>
+			<li>
+				金币
+			</li> -->
+		</div>
+	</div>
+	<div class="GoldCoinList">
+		<ul id="come-icon" class="GoldCoinListU">
+			<li>
+				<img src="../../images/GoldCoin_11.png">
+			</li>
+			<li>明细</li>
+			<li></li>
+		</ul>
+		<ul id="topUps" class="GoldCoinListU">
+			<li>
+				<img src="../../images/GoldCoin_14.png">
+			</li>
+			<li>充值</li>
+			<li></li>
+		</ul>
+		<ul id="Withdrawals" class="GoldCoinListU">
+			<li>
+				<img src="../../images/GoldCoin_16.png">
+			</li>
+			<li>提现</li>
+			<li></li>
+		</ul>
+		<ul id="mybankcard" class="GoldCoinListU">
+			<li>
+				<img src="../../images/GoldCoin_18.png">
+			</li>
+			<li>银行卡</li>
+			<li></li>
+		</ul>
+	</div>
+	<!-- <P class="GoldCoinP">人工咨询&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;常见问题</P> -->
+</body>
+<script type="text/javascript">
+	apiready = function() {
+		$api.fixStatusBar($api.dom('.roofS'));
+		// 列表距顶部距离
+		var systemType = api.systemType;
+		if (systemType == "android") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+		}
+		if (systemType == "ios") {
+			$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+		}
+		$api.setStorage('openWin', "MyGoldCoin");
+		//返回箭头事件
+		$(".roofReturn").click(function() {
+			api.closeWin({});
+		});
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			api.closeWin({});
+		});
+		// 余额
+		getblance();
+
+		//滑动关闭
+		api.addEventListener({
+			name: 'getblance'
+		}, function(ret, err) {
+			getblance();
+		});
+
+		$("#topUps").click(function() {
+			api.openWin({
+				name: 'topUps',
+				url: './topUps.html',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: 'auto'
+				},
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+		});
+		$("#Withdrawals").click(function() {
+			api.openWin({
+				name: 'Withdrawals',
+				url: './Withdrawals.html',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: 'auto'
+				},
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+		});
+
+		//收支明细
+		$("#come-icon").click(function() {
+			api.openWin({
+				name: 'receiptandpayment',
+				url: './receiptandpayment.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				bounce: false,
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+		});
+
+		//我的银行卡
+		$("#mybankcard").click(function() {
+			api.openWin({
+				name: 'MyBankCard',
+				url: './MyBankCard.html',
+				bgColor: "rgba(255, 255, 255, 0)",
+				bounce: false,
+				animation: {
+					type: "push", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 300 //动画过渡时间，默认300毫秒
+				}
+			});
+		});
+	}
+
+	function getblance() {
+		api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.GETBALANCE,
+				method: 'post',
+				data: {
+					values: {
+						userid: $api.getStorage('userid')
+					}
+				}
+			},
+			function(data, err) {
+				if (data.code == "200") {
+					$('.GoldCoinFontSizeS').text(data.user.currency);
+				}
+			});
+	}
+</script>
+
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>评论详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/DynamicDetails.css" />
+</head>
+
+<body>
+    <div class="roofS">
+        <div class="roof">
+            <!-- <div class="roofButton">开始认证</div> -->
+            <div class="roofReturn"></div>
+            <!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> page-bottom-->
+            <div id="title" class="roofConter">
+                评论我的
+            </div>
+        </div>
+    </div>
+    <div class="roofSDiv"></div>
+    <!--评论详情列表-->
+    <div id="Dynamic">
+
+    </div>
+    <script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../script/PublicCss.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript" src="../../script/util.js"></script>
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+
+    <script type="text/template" id="pinluntemplate">
+        {{~it:value:index}}
+        <ul class="moment" squreid="{{=value.squreid}}" userid="{{=value.userid}}" momentid="{{=value.momentid}}" type="{{=value.type}}">
+            <li class="DetailsListUL">
+                <img userid="{{=value.userid}}" class="otherspage" src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" />
+            </li>
+            <li class="DetailsListUR">
+                <ul class="DetailsListURT">
+                    <li>{{=value.nickname}}</li>
+                    <li></li>
+                </ul>
+                <div class="DLURCenter">
+                    {{=value.comment}}
+                </div>
+                <div class="DLURComment">
+                    <div class="DLURCenter">
+                      回复：{{=value.passivecomment}}
+                    </div>
+                    <div class="DLURCommentL">
+                        {{=value.createtime}}
+                    </div>
+                </div>
+            </li>
+        </ul>
+        {{~}}
+    </script>
+
+    <script type="text/javascript">
+        var pinlunPageSize = 5,
+            pinlunPageNum = 1,
+            pinlunHasNext = true,
+            type = 1;
+        apiready = function() {
+            $api.fixStatusBar($api.dom('.roofS'));
+            // 列表距顶部距离
+            var systemType = api.systemType;
+            if (systemType == "android") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+            }
+            if (systemType == "ios") {
+                $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+            }
+
+            $api.setStorage('openWin', "DynamicDetails");
+            //返回箭头事件
+            $(".roofReturn").click(function() {
+                api.closeWin({
+                    name: 'commentlist'
+                });
+            });
+
+            //滑动关闭
+            api.addEventListener({
+                name: 'swiperight'
+            }, function(ret, err) {
+                api.closeWin({
+                    name: 'commentlist'
+                });
+            });
+
+            type = api.pageParam.type;
+            if (type == "1") {
+                $("#title").html("点赞我的");
+            } else if (type == "2") {
+                $("#title").html("评论我的");
+            }
+            getcomment(type, pinlunPageSize, pinlunPageNum);
+            api.addEventListener({
+                name: 'swipeup'
+            }, function(ret, err) {
+                if (pinlunHasNext) {
+                    getcomment(type, pinlunPageSize, pinlunPageNum);
+                }
+            });
+
+
+            $("#Dynamic").on("click", ".moment", function() {
+                var momentid = $(this).attr("momentid");
+                var userid = $(this).attr("userid");
+                var type = $(this).attr("type");
+                if (type == "video") {
+                    api.openFrame({
+                        name: 'play',
+                        url: '../video/play.html',
+                        animation: {
+                            type: "push", //动画类型（详见动画类型常量）
+                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                            duration: 300 //动画过渡时间，默认300毫秒
+                        },
+                        pageParam: {
+                            userid: userid,
+                            videoid: momentid
+                        }
+                    });
+                } else if (type == "moment") {
+                    var squreid = $(this).attr("squreid");
+                    var userid = $(this).attr("userid");
+                    var momentid = $(this).attr("momentid");
+                    api.openWin({
+                        name: 'DynamicDetails',
+                        url: '../community/DynamicDetails.html',
+                        bgColor: "rgba(255, 255, 255, 0)",
+                        animation: {
+                            type: "push", //动画类型（详见动画类型常量）
+                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                            duration: 300 //动画过渡时间，默认300毫秒
+                        },
+                        reload:true,
+                        pageParam: {
+                            squreid: squreid,
+                            userid: userid,
+                            momentid: momentid
+                        }
+                    });
+                }
+            });
+        }
+
+        function getcomment(commenttype, pagesize, pagenum) {
+            api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.GETOWNERCOMMENTS,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userid: $api.getStorage('userid'),
+                            pagesize: pagesize,
+                            pagenum: pagenum,
+                            commenttype: commenttype
+                        }
+                    }
+                },
+                function(data) {
+                    if (data.code == "200" && data.comments != null && data.comments.list.length > 0) {
+                        pinlunPageNum = data.comments.nextPage;
+                        pinlunHasNext = data.comments.hasNextPage;
+                        $.each(data.comments.list, function(key, val) {
+                            val.createtime = timestampToTime(val.createtime);
+                        });
+                        var tempFn = doT.template($api.byId('pinluntemplate').innerHTML);
+                        var resultHTML = tempFn(data.comments.list);
+                        $("#Dynamic").append(resultHTML);
+                    }
+                });
+        }
+    </script>
+</body>
+
+</html>

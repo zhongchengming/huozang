@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>购买会员</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <meta name="viewport" content="width=device-width">
+    <link href="../../css/member.css" rel="stylesheet" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/public.css">
+</head>
+<style media="screen">
+    html,
+    body {
+        background-color: #fff;
+    }
+
+    .roofSearch {
+        right: 20px;
+    }
+
+    .main {
+        padding-bottom: 24px;
+    }
+
+    .roofConter {
+        font-size: 17px;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="roofS">
+            <div class="roof">
+                <div class="roofReturn"></div>
+                <div class="roofSearch"></div>
+                <div class="roofConter">
+                    购买会员
+                </div>
+            </div>
+        </div>
+        <div class="roofSDiv"></div>
+    </header>
+    <section class="main">
+        <!-- 用户信息展示部分开始 -->
+        <div class="userList">
+            <div class="info-left">
+                <img src="../../images/focus1.png">
+            </div>
+            <div class="info-center">
+                <p></p>
+                <span class="ismember"></span>
+            </div>
+            <!-- <div class="info-right">
+          <img src="../../images/paler_gift.png">
+        </div> -->
+            <div class="myClear"></div>
+        </div>
+        <!-- 用户信息展示部分结束 -->
+        <!-- 会员开通选择部分开始 -->
+        <div class="kaitonginfo">
+            <!-- <ul class="tab-ul flex-r">
+                <li class="active">蓝卡会员</li>
+                <li>金卡会员</li>
+            </ul> -->
+            <div class="tequanList">
+                <!-- <p class="tequanList-title2">畅想蓝卡会员尊享特权<span class="mui-icon mui-icon-arrowup"></span></p>
+                <ul>
+                    <li>
+                        <img src="../../images/member/tequanList_01.png">
+                        <p>语音聊天</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_02.png">
+                        <p>赠送礼物</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_03.png">
+                        <p>付费图片</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_04.png">
+                        <p>互加好友</p>
+                    </li>
+
+                    <li>
+                        <img src="../../images/member/tequanList_05.png">
+                        <p>其他特权</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_06.png">
+                        <p>语音聊天</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_07.png">
+                        <p>付费视频</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_08.png">
+                        <p>付费图片</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_09.png">
+                        <p>互加好友</p>
+                    </li>
+                    <li>
+                        <img src="../../images/member/tequanList_10.png">
+                        <p>其他特权</p>
+                    </li>
+                </ul> -->
+                <!-- 开通列表 -->
+                <div class="moneyList">
+                    <ul>
+                        <script type="text/template" id="viptemplate">
+                            {{~it:value:index}}
+
+                            <li>
+                                <div class="moneyList-left">
+                                    <p>{{=value.name}}</p>
+                                </div>
+                                <div class="moneyList-right flex-r">
+                                    <div class="right-money">
+                                        <p>{{=value.price}}个金币</p>
+                                        {{? value.old_price}}
+                                        <p>{{=value.old_price}}个金币</p>
+                                        {{?}}
+                                    </div>
+                                    <div class="right-btn buyBtn" buyId ="{{=value.id}}">
+                                        <p>开通</p>
+                                    </div>
+                                </div>
+                                <div class="myClear"></div>
+                            </li>
+                            {{~}}
+                        </script>
+
+                        <!-- <li>
+              <div class="moneyList-left">
+                <p>月费蓝卡会员基础版</p>
+              </div>
+              <div class="moneyList-right flex-r">
+                <div class="right-money">
+                  <p>￥15元</p>
+                  <p>￥20元</p>
+                </div>
+                <div class="right-btn">
+                  <p>开通</p>
+                </div>
+              </div>
+              <div class="myClear"></div>
+            </li> -->
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 会员开通选择部分结束 -->
+        <!-- 支付方式部分开始 -->
+        <!-- <div class="zhifuTypeList">
+        <p class="flex-r"><span></span><span>支付方式</span></p>
+        <ul>
+          <li>
+            <img src="../../images/member/zhifu_weixin.png" class="zhifu-img"><span>微信支付</span><img src="../../images/member/zhifu_checked.png" class="checked-img">
+          </li>
+          <li>
+            <img src="../../images/member/zhifu_zhifubao.png" class="zhifu-img"><span>支付宝支付</span>
+          </li>
+        </ul>
+      </div> -->
+        <!-- 支付方式部分结束 -->
+        <!-- 开通按钮及总金额部分开始 -->
+        <!-- <div class="kaitong-botDiv flex-r">
+        <div class="botDov-left">
+          <span>总计</span><span>￥168</span><span>已优惠￥220元</span>
+        </div>
+        <div class="botDov-right">
+          <div onclick="goComplain()">立即开通</div>
+        </div>
+      </div> -->
+        <!-- 开通按钮及总金额部分结束 -->
+    </section>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+    $(".moneyList").on("click", ".buyBtn", function () {
+        var id = $(this).attr("buyId")
+        opening(id)
+    })
+
+    function opening(id) {
+        api.confirm({
+            title: '购买会员',
+            msg: '是否确认购买?',
+            buttons: ['确定', '取消']
+        }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+                var userid = $api.getStorage('userid');
+                api.ajax({
+                    url: CONFIG.ADDRURL + CONFIG.RECHARGEVIP,
+                    method: 'post',
+                    data: {
+                        values: {
+                            userId: userid,
+                            rechargeId: id
+                        }
+                    }
+                }, function (res, err) {
+                    if (res) {
+                        api.toast({
+                            msg: res.msg,
+                            duration: 1000,
+                            location: 'middle'
+                        })
+                    } else {
+                        // console.log(JSON.stringify(err))
+                    }
+                })
+            } else {
+                api.toast({
+                    msg: "取消购买！",
+                    duration: 1000,
+                    location: 'middle'
+                })
+            }
+        });
+
+    }
+    apiready = function () {
+        var userid = $api.getStorage('userid');
+        var username = $api.getStorage('nickname');
+
+        //判断是否是会员
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                method: 'post',
+                data: {
+                    values: {
+                        userId: $api.getStorage('userid')
+                    }
+                }
+            },
+            function (data, err) {
+            console.log("ISMEMBER")
+            console.log(JSON.stringify(data))
+                if (data.code == "200") {
+                    if (data.userVipType.vipType == 1) {
+                        $(".ismember").text("您目前是蓝卡会员用户")
+                    } else {
+                        $(".ismember").text("您当前不是蓝卡会员用户")
+                    }
+                }
+            });
+
+
+
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType == "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType == "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+        }
+        api.ajax({
+            url: CONFIG.ADDRURL + CONFIG.VIPLIST,
+            method: 'post'
+        }, function (res, err) {
+            if (res) {
+                if (res.code == "200") {
+
+            console.log("VIPLIST")
+            console.log(JSON.stringify(res))
+                    var tempFn = doT.template($api.byId('viptemplate').innerHTML);
+                    var resultHTML = tempFn(res.rechargeType);
+                    $(".moneyList ul").html(resultHTML);
+                }
+            } else {
+
+            }
+        })
+        api.ajax({
+            url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+            method: 'post',
+            data: {
+                values: {
+                    userid: $api.getStorage('userid')
+                }
+            }
+        }, function (res, err) {
+            // console.log("GETUSERINFO")
+            // console.log(JSON.stringify(res))
+            if (res) {
+                $('.info-center p').text(res.userinfo.nickname)
+                $(".info-left img ").attr("src", res.userinfo.avatar || '../../images/focus1.png')
+                if (res.userinfo.firstRecharge == "1") {
+                    $(".moneyList ul li:nth-child(1) .right-btn").removeClass("buyBtn")
+                    $(".moneyList ul li:nth-child(1) .right-btn p").css("background", "#eee")
+                }
+            } else {
+                // console.log(JSON.stringify(err))
+            }
+        })
+    }
+
+    //返回箭头事件
+    $(".roofReturn").click(function () {
+        api.closeWin({});
+    });
+
+    function goComplain() {
+        api.openWin({
+            name: 'complain',
+            url: './complain.html',
+            pageParam: {
+
+            }
+        });
+
+    }
+</script>
+
+</html>

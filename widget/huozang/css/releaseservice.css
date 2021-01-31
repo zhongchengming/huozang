@@ -1,0 +1,387 @@
+@charset "utf-8";
+/**/
+.ActivitiesType{
+	width:85.3%;
+	height:2.5rem;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.ActivitiesTypeL{
+	line-height:2.8rem;
+	font-size:1.2rem;
+	color:#333;
+	font-weight:600;
+	float:left;
+}
+.ActivitiesTypeR{
+	width:27%;
+	height:2.5rem;
+	font-size:1.2rem;
+	color:#333;
+	font-weight:400;
+	float:left;
+	margin-left:3rem;
+	border-radius:2.5rem;
+	line-height:2.6rem;
+	text-align:center;
+	background:#f5f5f5;
+	overflow:hidden;
+}
+#ActivitiesTypeR{
+	color:#fff;
+	background:#ff9694;
+}
+.gActivitiesHr{
+	width:94.7%;
+	margin:1rem auto 0;
+	border-bottom:1px solid #f5f5f5;
+	overflow:hidden;
+}
+.DateEscort{
+	display:none;
+}
+#engagement{
+	display:block;
+}
+
+/*小标题*/
+.DateEscortTitle{
+	width:85.3%;
+	margin:1rem auto 0;
+	font-size:1rem;
+	font-weight:400;
+	color:#ff9694;
+	overflow:hidden;
+}
+/*约会内容*/
+.ActivitiesU{
+	width:85.3%;
+	margin:1rem auto 0;
+	/*overflow:hidden;*/
+}
+.ActivitiesUL{
+	width:28%;
+	height:3rem;
+	float:left;
+	line-height:3rem;
+	font-size:1.2rem;
+	color:#333;
+	font-weight:400;
+	overflow:hidden;
+}
+.ActivitiesUC{
+	width:70%;
+	float:left;
+	border-radius:3rem;
+	/*overflow:hidden;*/
+	position:relative;
+	border:1px solid #f0f0f0;
+}
+.ActivitiesUHF{
+	width:70%;
+	float:left;
+	border-radius:3rem;
+	overflow:hidden;
+	border:1px solid #f0f0f0;
+}
+.ActivitiesUHF > li{
+	width:50%;
+	height:3rem;
+	float:left;
+	text-align:center;
+	line-height:3.3rem;
+	font-size:1.3rem;
+	color:#999;
+	border-top-left-radius:3rem;
+	border-bottom-left-radius:3rem;
+	overflow:hidden;
+}
+.ActivitiesUHF > li:last-of-type{
+	width:50%;
+	height:3rem;
+	float:left;
+	border-top-left-radius:0;
+	border-bottom-left-radius:0;
+	border-top-right-radius:3rem;
+	border-bottom-right-radius:3rem;
+}
+.ActivitiesUHF > li.ActivitiesUHFL{
+	color:#fff;
+	background:#FF9694;
+}
+
+
+
+.ActivitiesUCFontSize{
+	width:85%;
+	height:3rem;
+	margin-left:5%;
+	font-size:1.1rem;
+	color:#999;
+	line-height:3.3rem;
+	font-weight:400;
+	overflow:hidden;
+}
+.ActivitiesUCUL{
+	width:85%;
+	background:#fff;
+	position:absolute;
+	z-index:3;
+	top:3rem;
+	left:6%;
+	border:1px solid #f0f0f0;
+	display:none;
+}
+.ActivitiesUCUL > li{
+	width:90%;
+	height:3rem;
+	font-size:1.1rem;
+	color:#999;
+	font-weight:400;
+	line-height:3rem;
+	margin:0 auto;
+	overflow:hidden;
+	border-bottom:1px solid #f0f0f0;
+}
+.ActivitiesUCUL > li:last-of-type{
+	border-bottom:0;
+}
+.ActivitiesUCP{
+    width: 0;
+    height: 0;
+    border-left:0.5rem solid transparent;
+    border-right:0.5rem solid transparent;
+    border-top:1rem solid #f0f0f0;
+    position:absolute;
+    right:7%;
+    top:1rem;
+}
+
+
+.select{
+	width:85%;
+	height:3rem;
+	margin-left:5%;
+	font-size:1.3rem;
+	color:#999;
+	font-weight:400;
+	overflow:hidden;
+}
+.ActivitiesUR{
+	width:70%;
+	float:left;
+	border-radius:0.5rem;
+	overflow:hidden;
+	border:1px solid #f0f0f0;
+}
+.textarea{
+	width:90%;
+	height:2rem;
+	margin:5%;
+	padding:1.5%;
+	font-size:1.1rem;
+	color:#ccc;
+	font-weight:400;
+	overflow:hidden;
+	outline:none;
+	resize:none;
+}
+
+.ActivitiesURR{
+	width:70%;
+	float:left;
+	border-radius:0.5rem;
+	overflow:hidden;
+}
+.ActivitiesURR .p1{
+	margin-top:0.8rem;
+	font-size:1.0rem;
+	color:#ff9694;
+}
+.ActivitiesURRU{
+	margin:0.5rem auto 0;
+	overflow:hidden;
+}
+.ActivitiesURRU > li{
+	width:5.45rem;
+	height:5.45rem;
+	float:left;
+	margin-top:0.5rem;
+	margin-left:0.2rem;
+	margin-right:0.2rem;
+	border-radius:0.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.ActivitiesURRU > li > img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.ActivitiesURRU > li:last-of-type{
+	background:url(../images/addRelease_03.png) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+	border-radius:0;
+}
+.ActivitiesURRU > li .p1{
+	width:1.5rem;
+	height:1.5rem;
+	border-radius:50%;
+	text-align:center;
+	line-height:1.6rem;
+	color:#222;
+	background:#CCCCCC;
+	position:absolute;
+	right:0.2rem;
+	top:-0.6rem;
+}
+.ActivitiesURRU > li .p1 img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+/*协议*/
+.Protocol{
+	width:60%;
+	margin:3rem auto 0;
+	overflow:hidden;
+}
+.ProtocolL{
+	width:1.6rem;
+	height:1.6rem;
+	float:left;
+	background:url(../images/xieyiBut_03.png);
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.checkpro{
+	width:1.6rem;
+	height:1.6rem;
+	float:left;
+	background:url(../images/xieyiButF_03.png);
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.ProtocolR{
+	height:1.6rem;
+	float:left;
+	font-size:1.1rem;
+	color:#333;
+	line-height:1.6rem;
+	margin-left:0.5rem;
+	overflow:hidden;
+}
+.ProtocolR span{
+	color:#ff9694;
+	margin-left:0.3rem;
+}
+.appointmentSub{
+	width:55%;
+	height:3rem;
+	margin:1.5rem auto 3rem;
+	text-align:center;
+	line-height:3.1rem;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#fff;
+	background:#ff9694;
+	border-radius:3rem;
+	overflow:hidden;
+}
+/*伴游礼仪*/
+.Etiquette{
+	width:70%;
+	float:left;
+	border:1px solid #f0f0f0;
+	border-radius:0.5rem;
+}
+input.input{
+	width:98%;
+	height:5rem;
+	font-size:1.1rem;
+	color:#ccc;
+	font-weight:400;
+	margin-left:1%;
+	text-indent:1em;
+	outline:none;
+	border:0;
+	overflow:hidden;
+}
+.input::-webkit-input-placeholder ,.textarea::-webkit-input-placeholder{
+  color:#ccc;
+}
+.input:-moz-placeholder ,.textarea:-moz-placeholder{
+  color:#ccc;
+}
+.input::-moz-placeholder ,.textarea::-moz-placeholder{
+  color:#ccc;
+}
+.input:-ms-input-placeholder ,.textarea:-ms-input-placeholder{
+  color:#ccc;
+}
+
+.EtiquetteU{
+	width:95%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.EtiquetteU > li{
+	height:2rem;
+	float:left;
+	margin-right:0.5rem;
+	margin-top:0.5rem;
+	text-align:center;
+	color:#fff;
+	padding-left:0.5rem;
+	padding-right:0.5rem;
+	line-height:2.3rem;
+	font-size:1.1rem;
+	border-radius:0.25rem;
+	background:#FF9694;
+	overflow:hidden;
+}
+.EtiquetteUB{
+	width:70%;
+	float:right;
+	margin-top:0.25rem;
+	overflow:hidden;
+}
+.EtiquetteUB li{
+	height:1.8rem;
+	float:left;
+	margin-right:1rem;
+	text-align:center;
+	color:#999;
+	padding-left:0.4rem;
+	padding-right:0.4rem;
+	margin-top:0.5rem;
+	line-height:2.0rem;
+	font-size:1rem;
+	border-radius:0.25rem;
+	background:#f5f5f5;
+	overflow:hidden;
+}
+.PriceSetting{
+	width:70%;
+	height: 3rem;
+	float:left;
+	border-radius:3rem;
+	overflow:hidden;
+	position:relative;
+	border:1px solid #f0f0f0;
+}
+.PriceSetting > p{
+	font-size:1.3rem;
+	color:#ccc;
+	line-height:3rem;
+	position:absolute;
+	right:1rem;
+}
+.mui-btn-blue {
+    color: #fff;
+    border: 1px solid #ff9694 !important;
+    background-color: #ff9694 !important;
+}

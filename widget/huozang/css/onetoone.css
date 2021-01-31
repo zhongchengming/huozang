@@ -1,0 +1,341 @@
+@charset "utf-8";
+body {
+    background-color: #f5f5f5;
+}
+
+.private-letter-data{
+  width:auto;
+  height: inherit;
+  background-color: #f5f5f5;
+  overflow-y:scroll;
+}
+.private-letter-data ul li {
+    margin: 24px 0;
+}
+.private-letter-data ul li img.head-portrait {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.private-letter-data ul li span {
+    display: block;
+    max-width: 65%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333333;
+    background-color: #fff;
+    -webkit-box-shadow: 8px 0 8px rgba(0, 0, 0, .05);
+    box-shadow: 8px 0 8px rgba(0, 0, 0, .05);
+}
+
+.private-letter-data ul li.li-right img {
+    float: right;
+}
+
+.private-letter-data ul li.li-right span {
+    position: relative;
+    float: right;
+    margin-right: 15px;
+}
+
+.private-letter-data ul li.li-right span::after {
+    position: absolute;
+    content: "";
+    right: -14px;
+    top: 11px;
+    width: 0px;
+    height: 0px;
+    border: 8px solid transparent;
+    border-left: 8px solid #fff;
+}
+
+.private-letter-data ul li.li-left img {
+    float: left;
+}
+
+.private-letter-data ul li.li-left span {
+    position: relative;
+    float: left;
+    margin-left: 15px;
+}
+
+.private-letter-data ul li.li-left span::after {
+    position: absolute;
+    content: "";
+    left: -14px;
+    top: 11px;
+    width: 0px;
+    height: 0px;
+    border: 8px solid transparent;
+    border-right: 8px solid #fff;
+}
+
+.time-li p {
+    font-size: 14px;
+    text-align: center;
+    color: #999999;
+}
+
+.private-letter-data ul li span.pic-span {
+    display: block;
+    max-width: 36%;
+    padding: 0;
+    border-radius: 18px;
+}
+
+.private-letter-data ul li span.pic-span img {
+    max-width: 100%;
+}
+
+.private-letter-data ul li.li-right span.pic-span::after {
+    border-left: 0px solid #fff;
+}
+
+.tool-div {
+    position: relative;
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tool-div span {
+    position: absolute;
+    display: block;
+    width: 38px;
+    height: 38px;
+    margin-top: 7px;
+    background-image: url(../images/bg-icon3.png);
+    background-size: 300px 250px;
+    background-repeat: no-repeat;
+}
+
+.tool-div span.tool-left {
+    top: 0;
+    left: 0;
+    background-position: -180px -2px;
+}
+
+.tool-div span.tool-right {
+    top: 0;
+    right: 0;
+    background-position: -89px 1px;
+}
+
+.tool-mid {
+    position: relative;
+    width: 72%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tool-mid i {
+    position: absolute;
+    top: 13px;
+    right: 9px;
+    float: right;
+    display: block;
+    width: 22px;
+    height: 24px;
+    background-image: url(../images/bg-icon3.png);
+    background-size: 300px 250px;
+    background-repeat: no-repeat;
+    background-position: -138px -5px;
+}
+
+.tool-mid input {
+    height: 34px;
+    margin-top: 8px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    border: none;
+}
+
+
+/*--------------------------------------------------------------------*/
+.ChatBox{
+	width:100%;
+	margin:0 auto;
+	background:#F0F0F0;
+	overflow-y:scroll;
+	position:relative;
+}
+.ChatBoxUS{
+	width:100%;
+	height:100%;
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.ChatBoxU{
+	width:100%;
+	margin:0 auto 50px;
+	overflow:hidden;
+}
+.ChatBoxU > li{
+	margin-top:10px;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.ChatBoxU > li.ChatBoxUL,.ChatBoxU > li.ChatBoxUR{
+	width:80%;
+	float:left;
+	overflow:hidden;
+}
+.ChatBoxU > li.ChatBoxUR{
+	float:right;
+}
+.ChatBoxUL .ChatBoxAvatar{
+	width:50px;
+	height:50px;
+	float:left;
+	margin-left:10px;
+	border-radius:100%;
+	overflow:hidden;
+}
+.ChatBoxUR .ChatBoxAvatar{
+	width:50px;
+	height:50px;
+	float:right;
+	margin-right:10px;
+	border-radius:100%;
+	overflow:hidden;
+}
+.ChatBoxAvatar img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.ChatBoxUL .ChatBoxUBox,.ChatBoxUR .ChatBoxUBox{
+	width:72%;
+	float:left;
+	margin-left:5px;
+	margin-top:8px;
+	overflow:hidden;
+	position:relative;
+}
+.ChatBoxUR .ChatBoxUBox{
+	float:right;
+	margin-right:5px;
+}
+.ChatBoxUBoxSJ{
+	width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 10px solid #fff;
+    border-bottom: 5px solid transparent;
+    position:absolute;
+    top:10px;
+    left:0;
+}
+.ChatBoxUBoxSJR{
+	width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-left: 10px solid #fff;
+    border-bottom: 5px solid transparent;
+    position:absolute;
+    top:10px;
+    right:0;
+}
+.ChatBoxUBoxFXL{
+	float:left;
+	margin-left:10px;
+	overflow:hidden;
+}
+.ChatBoxUBoxFXL span,.ChatBoxUBoxFXR span{
+	margin-right:3px;
+	padding:10px 15px;
+	line-height:20px;
+	font-size:12px;
+	color:#999;
+	background:#fff;
+	border-radius:5px;
+	overflow:hidden;
+	display:inline-block;
+	box-shadow:0 2px 1px 1px #ccc;
+}
+.ChatBoxUBoxFXR span{
+	margin-right:0;
+}
+.ChatBoxUBoxFXL span .Expression,.ChatBoxUBoxFXR span .Expression{
+	width:15px;
+	height:15px;
+	margin-top:-2px;
+	margin-left:2px;
+	margin-right:2px;
+	vertical-align:middle;
+	display:inherit;
+}
+.ChatBoxUBoxFXL span .Photos,.ChatBoxUBoxFXR span .Photos{
+	width:30px;
+	height:30px;
+	margin-bottom:5px;
+	overflow:hidden;
+}
+.ChatBoxUBoxLU,.ChatBoxUBoxRU{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.ChatBoxUBoxLU > li,.ChatBoxUBoxRU > li{
+	width:80%;
+	float:left;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.ChatBoxUBoxRU > li{
+	float:right;
+}
+.ChatBoxUBoxLU > li img,.ChatBoxUBoxRU > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.ChatBoxUBoxFXR{
+	float:right;
+	margin-right:10px;
+	overflow:hidden;
+}
+.CBUBVoiceU{
+	height:20px;
+	overflow:hidden;
+}
+.CBUBVoiceUL{
+	width:20px;
+	height:20px;
+	float:left;
+	margin-left:5px;
+	overflow:hidden;
+}
+.CBUBVoiceUL.VoiceLF{
+	background:url(../images/VoiceLF.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.CBUBVoiceUL.VoiceLD{
+	background:url(../images/VoiceLD.gif);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.CBUBVoiceUL.VoiceRF{
+	background:url(../images/VoiceRF.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.CBUBVoiceUL.VoiceRD{
+	background:url(../images/VoiceRD.gif);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.CBUBVoiceUR{
+	height:20px;
+	float:left;
+	line-height:22px;
+	font-size:11px;
+	color:#999;
+	float:left;
+	overflow:hidden;
+}

@@ -1,0 +1,883 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+    <!-- <meta name="format-detection" content="telephone=no,email=no,date=no,address=no"> -->
+    <title>动态广场</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="./css/mui.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" /> -->
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/Square.css" />
+    <style>
+        .roofReturn {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="SquareRelay">
+        <div class="SquareRelayW">
+            <div class="SquareRelayWSJS"></div>
+            <div class="SquareRelayWF">
+                <ul class="SquareRelayWFT">
+                    <li class="SquareRelayWFTL">
+                        <img src="../../images/SquareZFFX_06.png" />
+                    </li>
+                    <li class="SquareRelayWFTC">转发</li>
+                </ul>
+                <hr class="SquareRelayWFThHr" />
+                <ul class="SquareRelayWFT">
+                    <li class="SquareRelayWFTL">
+                        <img src="../../images/SquareZFFX_13.png" />
+                    </li>
+                    <li class="SquareRelayWFTC">分享</li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF5.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF4.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF3.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF2.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF.png">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="SquareRelayW">
+            <div class="SquareRelayWF">
+                <ul class="SquareRelayWFT">
+                    <li class="SquareRelayWFTL">
+                        <img src="../../images/SquareZFFX_06.png" />
+                    </li>
+                    <li class="SquareRelayWFTC">转发</li>
+                </ul>
+                <hr class="SquareRelayWFThHr" />
+                <ul class="SquareRelayWFT">
+                    <li class="SquareRelayWFTL">
+                        <img src="../../images/SquareZFFX_13.png" />
+                    </li>
+                    <li class="SquareRelayWFTC">分享</li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF5.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF4.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF3.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF2.png">
+                    </li>
+                    <li class="SquareRelayWFTR">
+                        <img src="../../images/SquareZF.png">
+                    </li>
+                </ul>
+            </div>
+            <div class="SquareRelayWSJX"></div>
+        </div>
+    </div>
+    <div class="SquareHeaderS">
+        <div class="SquareHeader">
+            <p class="p3"></p>
+            <p class="p1"></p>
+            <div class="SquareHeaderDIV">动态广场</div>
+        </div>
+    </div>
+    <img class="SquareImg" src="../../images/gct_02.jpg"> -->
+    <div class="roofS">
+        <div class="roof">
+            <div class="roofReturn">
+            </div>
+            <div class="roofSearch">
+            </div>
+            <div class="roofMessage messageU"></div>
+            <div class="roofConter">
+                动态广场
+            </div>
+        </div>
+    </div>
+    <div class="roofSDiv"></div>
+
+
+
+
+    <div class="SquareGD">
+        <img src="../../images/SquareGD_05.png">
+    </div>
+    <!--展示导航-->
+    <ul class="ShowNavigate">
+        <li class="choose">
+            <P div="zxdt" id='0'>最新动态</P>
+        </li>
+        <li>
+            <P div="jpdt" id='2'>精品动态</P>
+        </li>
+        <li>
+            <P div="rmdt" id='3'>热门动态</P>
+        </li>
+        <li>
+            <P div="gfdt" id='1'>官方动态</P>
+        </li>
+    </ul>
+    <!--展示列表-->
+    <ul id="zxdt" class="SquareUl">
+    </ul>
+    <ul id="jpdt" class="SquareUl">
+    </ul>
+    <ul id="rmdt" class="SquareUl">
+    </ul>
+    <ul id="gfdt" class="SquareUl">
+    </ul>
+</body>
+
+</html>
+<script type="text/template" id="squaretemplate">
+    {{~it:value:index}}
+    <li class="detail" userid="{{=value.userid}}" squreid="{{=value.id}}" momentid="{{=value.momentid}}">
+        <div class="SquareULT">
+            <div class="SquareULTL">
+                <img src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}" />
+            </div>
+            <div class="SquareULTC">
+                <p class="p1">{{=value.nickname}}</p>
+                <p class="p2">{{=value.createtime}}</p>
+            </div>
+            <ul class="SquareULTR">
+                {{?1== value.wellchosen * 1}}
+                <li>精</li>{{??}} {{?}} {{?1== value.hot * 1}}
+                <li>热</li>{{??}} {{?}} {{?1== value.publishtype * 1}}
+                <li>官</li>{{??}} {{?}}
+            </ul>
+        </div>
+        <hr class="SquareHr" />
+        <!--文字-->
+        <div class="SquareULC_fontSize">
+            {{=value.momentcontent}}
+        </div>
+        <!--图片-->
+        {{?value.pics}} {{?value.pics.length==1}}
+        <ul class="SquareULC_imgOne">
+            {{?value.pics[0]}}
+            <li>
+                <img src="{{=value.pics[0]}}?imageView2/1/w/300/h/300">
+            </li>
+            {{?}}
+        </ul>
+        {{?}} {{?value.pics.length==2}}
+        <ul class="SquareULC_imgTwo">
+            {{?value.pics[0]}}
+            <li>
+                <img src="{{=value.pics[0]}}?imageView2/1/w/300/h/300">
+            </li>
+            {{?}} {{?value.pics[1]}}
+            <li>
+                <img src="{{=value.pics[1]}}?imageView2/1/w/300/h/300">
+            </li>
+            {{?}}
+        </ul>
+        {{?}}
+        {{?value.pics.length>2}}
+        <ul class="SquareULC_img">
+            {{ for(var j=0, len=value.pics.length; j
+            <len; j++) { }} {{?value.pics[j]}} <li>
+                <img src="{{=value.pics[j]}}?imageView2/1/w/300/h/300">
+    </li>
+    {{?}} {{ } }}
+    </ul>
+    {{?}} {{?}}
+
+    <hr class="SquareHr2" />
+    <div class="SquareULB">
+        <!-- <div class="SquareULBW">
+            <div class="SquareULBWP">
+
+            </div>
+            <ul class="SquareULBWL">
+                <li class="SquareULBLL">
+                    <img src="../../images/SquarePL_03.png" />
+                </li>
+                <li class="SquareULBLR">{{=value.fenxiangcount}}</li>
+            </ul>
+        </div> -->
+
+        <div class="SquareULBW">
+            <ul class="SquareULBWR">
+                <li class="SquareULBLL">
+                    <img src="../../images/SquarePL_05.png" />
+                </li>
+
+                <li class="SquareULBLR">{{=value.pinluncount}}</li>
+            </ul>
+        </div>
+
+        <div class="SquareULBW">
+            <ul class="SquareULBWC">
+                <li class="SquareULBLL">
+                    <img src="../../images/SquarePL_07.png" />
+                </li>
+                <li class="SquareULBLR">{{=value.dianzancount}}</li>
+            </ul>
+        </div>
+
+    </div>
+
+    </li>
+    {{~}}
+
+
+</script>
+
+<script type="text/template" id="squaretemplate2">
+    {{~it:value:index}}
+  <li class="SquareRelayGFDT" activeId="{{=value.id}}">
+    <div class="SquareRelayGFDTLeft">
+      <img class="gfhdImg" src="{{=value.img}}"/>
+    </div>
+    <div class="SquareRelayGFDTRight">
+      <div class="SquareRelayGFDTRightOne">{{=value.activity_title}}<span class="tipBtn">官</span><span class="tipBtn">热</span></div>
+      <div class="SquareRelayGFDTRightTwo">{{=formatDuring(Date.parse(new Date())/1000-value.create_time)}}前发布</div>
+      <div class="SquareRelayGFDTRightThree">
+        <span class="textColor1">参加人数：</span>
+        <span class="textColor2">已有</span>
+        <span class="textColor3">{{=value.user_count}}人</span>
+        <span class="textColor2">参加</span>
+      </div>
+        <div class="SquareRelayGFDTRightThree">
+          <span  class="textColor1">活动时间：</span>
+          <span class="textColor3">{{=format(value.activity_begin_time)}}</span>
+        </div>
+        <div class="SquareRelayGFDTRightFour">
+          <span class="textColor1">报名剩余时间</span>
+          <span data-time="{{=value.activity_end_time}}" class="cutTime">{{=getCountDown(value.activity_end_time)}}</span>
+          <!-- {{=format(value.activity_end_time)}} -->
+          <!-- <span class="textColor3 textShadow">10</span>
+          <span class="textColor1">天</span>
+          <span  class="textColor3 textShadow">10</span>:<span  class="textColor3 textShadow">12</span>:<span  class="textColor3 textShadow">10</span> -->
+        </div>
+    </div>
+  </li>
+{{~}}
+</script>
+<script>
+    intervalId = setInterval(function () {
+        $('.cutTime').html(getCountDown($('.cutTime').attr('data-time')));
+    }, 200);
+</script>
+<script src="../../script/jquery-3.3.1.min.js"></script>
+<script src="../../script/timeChange.js"></script>
+<!-- <script type="text/javascript" src="../../script/jquery.min.js"></script> -->
+<script src="../../script/PublicCss.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/messageUtil.js"></script>
+<script type="text/javascript">
+    var zxdtpageSize = 6,
+        zxdtpageNum = 1,
+        zxdthasNext = true;
+    var jpdtpageSize = 6,
+        jpdtpageNum = 1,
+        jpdthasNext = true;
+    var rmdtpageSize = 6,
+        rmdtpageNum = 1,
+        rmdthasNext = true;
+    var gfdtpageSize = 6,
+        gfdtpageNum = 1,
+        gfdthasNext = true;
+    var type;
+    $(".ShowNavigate>li").removeClass("choose")
+    apiready = function () {
+        var typeId = api.pageParam.id
+        if (typeId == undefined) {
+            $($(".ShowNavigate li")[0]).addClass("choose");
+            type = 0
+            //默认显示最新动态
+            loadsquare("zxdt", 0, zxdtpageSize, zxdtpageNum, true);
+            $("#zxdt").show();
+        } else {
+            $(".roofReturn").css("display", "block")
+            $($(".ShowNavigate li")[3]).addClass("choose");
+            type = 1
+            loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, true);
+            $("#gfdt").show();
+        }
+        $(".roofReturn").click(function () {
+            api.closeWin({});
+
+        })
+        $api.fixStatusBar($api.dom('.roofS'));
+        // 列表距顶部距离
+        var systemType = api.systemType;
+        if (systemType == "android") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+        }
+        if (systemType == "ios") {
+            $(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+        }
+
+        //默认显示最新动态
+        api.setRefreshHeaderInfo({
+            bgColor: '#fff'
+        }, function (ret, err) {
+            // console(1)
+            //refresh event callback
+            if (type == 0) {
+                if (zxdthasNext) {
+                    loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, false);
+                }
+            } else if (type == 1) {
+                // console.log(789)
+                if (gfdthasNext) {
+                    loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, false);
+                }
+            } else if (type == 2) {
+                if (jpdthasNext) {
+                    loadsquare("jpdt", type, jpdtpageSize, jpdtpageNum, false);
+                }
+            } else if (type == 3) {
+                if (rmdthasNext) {
+                    loadsquare("rmdt", type, rmdtpageSize, rmdtpageNum, false);
+                }
+            }
+            api.refreshHeaderLoadDone();
+        });
+
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 50 //距离底部距离
+            }
+        }, function (ret, err) {
+            if (type == 0) {
+                if (zxdthasNext) {
+                    loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, false);
+                }
+            } else if (type == 1) {
+                if (gfdthasNext) {
+                    loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, false);
+                }
+            } else if (type == 2) {
+                if (jpdthasNext) {
+                    loadsquare("jpdt", type, jpdtpageSize, jpdtpageNum, false);
+                }
+            } else if (type == 3) {
+                if (rmdthasNext) {
+                    loadsquare("rmdt", type, rmdtpageSize, rmdtpageNum, false);
+                }
+            }
+        });
+        api.addEventListener({
+            name: 'refreshSquare',
+        }, function (ret, err) {
+            if (type == 0) {
+                zxdtpageNum = 1;
+                loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, true);
+            } else if (type == 1) {
+                // gfdtpageNum = 1;
+                loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, true);
+            } else if (type == 2) {
+                jpdtpageNum = 1;
+                loadsquare("jpdt", type, jpdtpageSize, jpdtpageNum, true);
+            } else if (type == 3) {
+                rmdtpageNum = 1;
+                loadsquare("rmdt", type, rmdtpageSize, rmdtpageNum, true);
+            }
+        });
+
+        //未读消息
+        api.addEventListener({
+            name: 'unreadmessages'
+        }, function (ret, err) {
+            if (ret.value.unreadmessages * 1 > 0) {
+                $(".roofMessage").addClass("messageF").removeClass("messageU");
+            } else {
+                $(".roofMessage").addClass("messageU").removeClass("messageF");
+            }
+        });
+        //消息
+        $(".roofMessage").click(function () {
+            api.openWin({
+                name: 'message',
+                url: '../mine/message.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+        //搜索
+        $(".roofSearch").click(function () {
+            api.openWin({
+                name: 'search',
+                url: '../search.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                }
+            });
+        });
+
+        //显示官方动态
+        api.addEventListener({
+            name: 'showgfdt',
+        }, function (ret, err) {
+            // console.log(2)
+            $($(".ShowNavigate li")[3]).siblings().removeClass("choose");
+            $($(".ShowNavigate li")[3]).addClass("choose");
+            $(".SquareUl").hide();
+            $("#gfdt").show();
+            // gfdtpageNum = 1;
+            loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, true);
+        });
+        //显示官方动态
+        api.addEventListener({
+            name: 'showzxdt',
+        }, function (ret, err) {
+            $($(".ShowNavigate li")[0]).siblings().removeClass("choose");
+            $($(".ShowNavigate li")[0]).addClass("choose");
+            $(".SquareUl").hide();
+            $("#zxdt").show();
+            zxdtpageNum = 1;
+            loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, true);
+        });
+
+
+        $('.ShowNavigate li').click(function () {
+            $(this).siblings().removeClass("choose");
+            $(this).addClass("choose");
+            var typetmp = $(this).find("p").prop("id");
+            var div = $(this).find("p").attr("div");
+            type = typetmp;
+            $(".SquareUl").hide();
+            $("#" + div).show();
+
+            if (type == 0 && zxdtpageNum == 1) {
+                loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, true);
+            } else if (type == 1 && gfdtpageNum == 1) {
+                loadsquare2("gfdt", gfdtpageSize, gfdtpageNum, true);
+            } else if (type == 2 && jpdtpageNum == 1) {
+                loadsquare("jpdt", type, jpdtpageSize, jpdtpageNum, true);
+            } else if (type == 3 && rmdtpageNum == 1) {
+                loadsquare("rmdt", type, rmdtpageSize, rmdtpageNum, true);
+            }
+        });
+
+
+
+        $(".SquareUl").on("click", "li.detail", function () {
+            var squreid = $(this).attr("squreid");
+            var userid = $(this).attr("userid");
+            var momentid = $(this).attr("momentid");
+            api.openWin({
+                name: 'DynamicDetails',
+                url: './DynamicDetails.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                reload: true,
+                pageParam: {
+                    squreid: squreid,
+                    userid: userid,
+                    momentid: momentid
+                }
+            });
+        });
+        // 官方活动详情页GFHDDetails
+        $(".SquareUl").on("click", ".SquareRelayGFDT", function () {
+            var squreid = $(this).attr("squreid");
+            var userid = $(this).attr("userid");
+            var momentid = $(this).attr("momentid");
+            var activeId = $(this).attr("activeId")
+            api.openWin({
+                name: 'GFHDDetails',
+                url: './GFHDDetails.html',
+                bgColor: "rgba(255, 255, 255, 0)",
+                animation: {
+                    type: "push", //动画类型（详见动画类型常量）
+                    subType: "from_right", //动画子类型（详见动画子类型常量）
+                    duration: 300 //动画过渡时间，默认300毫秒
+                },
+                reload: true,
+                pageParam: {
+                    squreid: squreid,
+                    userid: userid,
+                    momentid: activeId,
+                }
+            });
+        });
+        api.addEventListener({
+            name: 'community'
+        }, function (ret, err) {
+            zxdtpageNum = 1;
+            // gfdtpageNum = 1;
+            jpdtpageNum = 1;
+            rmdtpageNum = 1;
+            $("#zxdt").empty();
+            $("#gfdt").empty();
+            $("#jpdt").empty();
+            $("#rmdt").empty();
+            $(".SquareUl").hide();
+            $("#zxdt").show();
+
+            loadsquare("zxdt", type, zxdtpageSize, zxdtpageNum, true);
+        });
+    };
+
+    function loadsquare(div, type, pagesize, pagenum, isclear) {
+        if (isclear) {
+            $("#" + div).empty();
+        }
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GETUERNEWS,
+                method: 'post',
+                data: {
+                    values: {
+                        type: type,
+                        pagesize: pagesize,
+                        pagenum: pagenum
+                    }
+                }
+            },
+            function (data) {
+                if (data.code == "200") {
+                    if (type == 0) {
+                        zxdthasNext = data.community.hasNextPage;
+                        zxdtpageNum = data.community.nextPage;
+                    }
+
+                    // else if (type == 1) {
+                    //     gfdthasNext = data.community.hasNextPage;
+                    //     gfdtpageNum = data.community.nextPage;
+                    // }
+                    else if (type == 2) {
+                        jpdthasNext = data.community.hasNextPage;
+                        jpdtpageNum = data.community.nextPage;
+                    } else if (type == 3) {
+                        rmdthasNext = data.community.hasNextPage;
+                        rmdtpageNum = data.community.nextPage;
+                    }
+                    if(zxdtpageNum>=2){
+                      var userid = $api.getStorage('userid');
+                      if (userid == null || userid == "") {
+                          api.toast({
+                              msg: '请先登录！',
+                              duration: 1000,
+                              location: 'middle'
+                          });
+                          setTimeout(function () {
+                              api.openWin({
+                                  name: 'login',
+                                  url: '../../login.html',
+                                  bgColor: "rgba(255, 255, 255, 0)",
+                                  animation: {
+                                      type: "push", //动画类型（详见动画类型常量）
+                                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                                      duration: 300 //动画过渡时间，默认300毫秒
+                                  }
+                              });
+                          }, 1000);
+                          return false;
+                      }
+                    }
+                    if(zxdtpageNum>=3){
+                      //判断是否是会员
+                      api.ajax({
+                              url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                              method: 'post',
+                              data: {
+                                  values: {
+                                      userId: $api.getStorage('userid')
+                                  }
+                              }
+                          },
+                          function (data, err) {
+                          console.log(JSON.stringify(data))
+                              if (data.code == "200") {
+                                  if (data.userVipType.vipType != 1) {
+                                    api.toast({
+                                        msg: '您还未开通会员',
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                      setTimeout(function () {
+                                          api.openWin({
+                                              name: 'membercenter',
+                                              url: '../member/membercenter.html',
+                                              bgColor: "rgba(255, 255, 255, 0)",
+                                              animation: {
+                                                  type: "push", //动画类型（详见动画类型常量）
+                                                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                                                  duration: 300 //动画过渡时间，默认300毫秒
+                                              },
+                                              pageParam: {
+                                              },
+                                              reload: true
+                                          });
+                                        }, 1000)
+                                  }
+                              }
+                          });
+                    }
+                    if(jpdtpageNum>=2){
+                      var userid = $api.getStorage('userid');
+                      if (userid == null || userid == "") {
+                          api.toast({
+                              msg: '请先登录！',
+                              duration: 1000,
+                              location: 'middle'
+                          });
+                          setTimeout(function () {
+                              api.openWin({
+                                  name: 'login',
+                                  url: '../../login.html',
+                                  bgColor: "rgba(255, 255, 255, 0)",
+                                  animation: {
+                                      type: "push", //动画类型（详见动画类型常量）
+                                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                                      duration: 300 //动画过渡时间，默认300毫秒
+                                  }
+                              });
+                          }, 1000);
+                          return false;
+                      }
+                    }
+                    if(jpdtpageNum>=3){
+                      //判断是否是会员
+                      api.ajax({
+                              url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                              method: 'post',
+                              data: {
+                                  values: {
+                                      userId: $api.getStorage('userid')
+                                  }
+                              }
+                          },
+                          function (data, err) {
+                          console.log(JSON.stringify(data))
+                              if (data.code == "200") {
+                                  if (data.userVipType.vipType != 1) {
+                                    api.toast({
+                                        msg: '您还未开通会员',
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                      setTimeout(function () {
+                                          api.openWin({
+                                              name: 'membercenter',
+                                              url: '../member/membercenter.html',
+                                              bgColor: "rgba(255, 255, 255, 0)",
+                                              animation: {
+                                                  type: "push", //动画类型（详见动画类型常量）
+                                                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                                                  duration: 300 //动画过渡时间，默认300毫秒
+                                              },
+                                              pageParam: {
+                                              },
+                                              reload: true
+                                          });
+                                        },1000)
+                                  }
+                              }
+                          });
+                    }
+                    if(rmdtpageNum>=2){
+                      var userid = $api.getStorage('userid');
+                      if (userid == null || userid == "") {
+                          api.toast({
+                              msg: '请先登录！',
+                              duration: 1000,
+                              location: 'middle'
+                          });
+                          setTimeout(function () {
+                              api.openWin({
+                                  name: 'login',
+                                  url: '../../login.html',
+                                  bgColor: "rgba(255, 255, 255, 0)",
+                                  animation: {
+                                      type: "push", //动画类型（详见动画类型常量）
+                                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                                      duration: 300 //动画过渡时间，默认300毫秒
+                                  }
+                              });
+                          }, 1000);
+                          return false;
+                      }
+                    }
+                    if(rmdtpageNum>=3){
+                      //判断是否是会员
+                      api.ajax({
+                              url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                              method: 'post',
+                              data: {
+                                  values: {
+                                      userId: $api.getStorage('userid')
+                                  }
+                              }
+                          },
+                          function (data, err) {
+                          console.log(JSON.stringify(data))
+                              if (data.code == "200") {
+                                  if (data.userVipType.vipType != 1) {
+                                    api.toast({
+                                        msg: '您还未开通会员',
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                    setTimeout(function () {
+                                          api.openWin({
+                                              name: 'membercenter',
+                                              url: '../member/membercenter.html',
+                                              bgColor: "rgba(255, 255, 255, 0)",
+                                              animation: {
+                                                  type: "push", //动画类型（详见动画类型常量）
+                                                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                                                  duration: 300 //动画过渡时间，默认300毫秒
+                                              },
+                                              pageParam: {
+                                              },
+                                              reload: true
+                                          });
+                                        },1000)
+                                  }
+                              }
+                          });
+                    }
+                    $.each(data.community.list, function (i, n) {
+                        if (n.momentcontent.length > 100) {
+                            n.momentcontent = n.momentcontent.substring(0, 100) + "...";
+                        }
+                    });
+
+                    var tempFn = doT.template($api.byId('squaretemplate').innerHTML);
+                    var resultHTML = tempFn(data.community.list);
+                    $("#" + div).append(resultHTML);
+                }
+
+            });
+    }
+
+    function loadsquare2(div, gfdtpageSize, gfdtpageNum, isclear) {
+        if (isclear) {
+            $("#" + div).empty();
+        }
+        api.ajax({
+                url: CONFIG.ADDRURL + CONFIG.GFHDLB,
+                method: 'post',
+                data: {
+                    pagenum: gfdtpageNum,
+                    pagesize: gfdtpageSize
+                }
+            },
+            function (data) {
+                // console.log(JSON.stringify(data))
+                // console.log(JSON.stringify(data.ActivityLsit))
+
+                if (data.code == "200" && data.ActivityLsit != null) {
+                    gfdthasNext = data.hasNextPage;
+                    gfdtpageNum = data.nextPage;
+                    if(gfdtpageNum>=2){
+                      var userid = $api.getStorage('userid');
+                      if (userid == null || userid == "") {
+                          api.toast({
+                              msg: '请先登录！',
+                              duration: 1000,
+                              location: 'middle'
+                          });
+                          setTimeout(function () {
+                              api.openWin({
+                                  name: 'login',
+                                  url: '../../login.html',
+                                  bgColor: "rgba(255, 255, 255, 0)",
+                                  animation: {
+                                      type: "push", //动画类型（详见动画类型常量）
+                                      subType: "from_right", //动画子类型（详见动画子类型常量）
+                                      duration: 300 //动画过渡时间，默认300毫秒
+                                  }
+                              });
+                          }, 1000);
+                          return false;
+                      }
+                    }
+                    if(gfdtpageNum>=3){
+
+                      //判断是否是会员
+                      api.ajax({
+                              url: CONFIG.ADDRURL + CONFIG.ISMEMBER,
+                              method: 'post',
+                              data: {
+                                  values: {
+                                      userId: $api.getStorage('userid')
+                                  }
+                              }
+                          },
+                          function (data, err) {
+                          console.log(JSON.stringify(data))
+                              if (data.code == "200") {
+                                  if (data.userVipType.vipType != 1) {
+                                    api.toast({
+                                        msg: '您还未开通会员',
+                                        duration: 1000,
+                                        location: 'middle'
+                                    });
+                                    setTimeout(function () {
+                                          api.openWin({
+                                              name: 'membercenter',
+                                              url: '../member/membercenter.html',
+                                              bgColor: "rgba(255, 255, 255, 0)",
+                                              animation: {
+                                                  type: "push", //动画类型（详见动画类型常量）
+                                                  subType: "from_right", //动画子类型（详见动画子类型常量）
+                                                  duration: 300 //动画过渡时间，默认300毫秒
+                                              },
+                                              pageParam: {
+                                              },
+                                              reload: true
+                                          });
+                                        },1000)
+                                  }
+                              }
+                          });
+                    }
+                    for (var i = 0; i < data.ActivityLsit.list.length; i++) {
+                        var img = $("<div>").html(data.ActivityLsit.list[i].activity_content).find('img:eq(0)')
+                            .attr('src')
+                        if (img) {
+                            if (img.length == 0) {
+                                data.ActivityLsit.list[i].img = '../../images/gfhdImg.png'
+                            } else {
+                                data.ActivityLsit.list[i].img = img
+                            }
+                        }
+                    }
+
+                    var tempFn = doT.template($api.byId('squaretemplate2').innerHTML);
+                    var resultHTML = tempFn(data.ActivityLsit.list);
+                    $("#" + div).append(resultHTML);
+                }
+
+            });
+    }
+</script>

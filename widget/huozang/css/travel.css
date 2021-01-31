@@ -1,0 +1,661 @@
+@charset "utf-8";
+/*顶部*/
+
+body {
+    background: #fff;
+}
+.DIHead{
+	width:50.7%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.DIHead > li{
+	width:50%;
+	float:left;
+  font-size:1.3rem;
+	font-weight:bold;
+	text-align:center;
+	margin-top:4.5%;
+}
+#DIHeadLi >.DIHeadW{
+	width:35%;
+	height:2.2rem;
+	margin:0 auto 0;
+	border-bottom:0.25rem solid #ff9694;
+}
+/**/
+.travelS{
+	width:100%;
+	background:#fff;
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:99;
+	box-shadow:0 0 5px 5px #f1f1f1;
+}
+/*标签*/
+.LabelNavigationS{
+	width:97.4%;
+	height:3.5rem;
+	margin:5px 0 5px 2.6%;
+	border-top-left-radius:3.5rem;
+	border-bottom-left-radius:3.5rem;
+	box-shadow:0 0 3px 3px #f1f1f1;
+	overflow:hidden;
+	position:relative;
+}
+.LabelNavigationT{
+	width:20%;
+	height:3.5rem;
+	float:left;
+	text-align:center;
+	line-height:3.8rem;
+	font-size:1.5rem;
+	font-weight:bold;
+	color:#ff9694;
+	background:#fff;
+	border-top-left-radius:4rem;
+	border-bottom-left-radius:4rem;
+	border-right:2px solid #f1f1f1;
+	overflow:hidden;
+}
+.LabelNavigationB{
+	width:79%;
+	height:3.5rem;
+	float:left;
+	overflow:scroll;
+}
+.LabelNavigation > li{
+	width:7.5rem;
+	height:3.5rem;
+	float:left;
+	text-align:center;
+	line-height:3.8rem;
+	font-size:1.3rem;
+	color:#333;
+	background:#fff;
+	border-right:2px solid #f1f1f1;
+	overflow:hidden;
+}
+.LabelNavigation > li:last-of-type{
+	border-right:0;
+}
+.LabelNavigation > li.Selected{
+	color:#ff9694;
+}
+/**/
+.InviteRecommendation{
+	width:100%;
+	margin:0 auto 0;
+	overflow:hidden;
+	display:none;
+}
+#Hire{
+	display:block;
+}
+/*排序*/
+.DateInvitationOrder {
+  width: 100%;
+  margin: 3px auto;
+  box-shadow: 0px 0px 3px 3px #f5f5f5;
+  overflow: hidden;
+}
+.DateInvitationOrder li {
+    width: 25%;
+    height: 2rem;
+    float: left;
+    line-height: 2.4rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 400;
+    overflow: hidden;
+}
+#DateInvitationOrderLi{
+  color:#ff9694;
+}
+.DateInvitationOrderR {
+  width: 25%;
+  height: 2rem;
+  float: left;
+  line-height: 2.4rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #999;
+  font-weight: 400;
+    position: relative;
+}
+.DateInvitationOrderR .p1 {
+    width: 0;
+    height: 0;
+    border-top: 0.25rem solid transparent;
+    border-left: 0.3rem solid #999;
+    border-bottom: 0.25rem solid transparent;
+    position: absolute;
+    right: 1.2rem;
+    top: 0.75rem;
+}
+
+.DateInvitationOrderR .p2 {
+    width: 0;
+    height: 0;
+    border-left: 0.25rem solid transparent;
+    border-top: 0.3rem solid #ff9694;
+    border-right: 0.25rem solid transparent;
+    position: absolute;
+    right: 1.2rem;
+    top: 0.9rem;
+}
+/*高级筛选*/
+.DateInvitationOrderDW {
+    width: 100%;
+    background: #FFF;
+    overflow:hidden;;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top:20px;
+    display: none;
+}
+.DateInvitationOrderDN{
+  overflow:auto;
+}
+.DateIOrderDWBT {
+    width: 81.33%;
+    margin: 1rem auto 0;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    overflow: hidden;
+}
+.DateIOrderDWUL {
+    width: 90%;
+    margin: 0.5rem auto 0;
+    overflow: hidden;
+}
+.DateIOrderDWUL li {
+    width: 6.2rem;
+    height: 2.5rem;
+    float: left;
+    border-radius: 2.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 2.7rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+.DateIODWUL{
+  color: #999;
+  border: 1px solid #ccc;
+}
+.DateActive{
+  color: #ff9694;
+  border:1px solid #ff9694;
+}
+.DateIOrderDWSub {
+    width: 88%;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+.DateIOrderDWSub li {
+    width: 45%;
+    height: 3.5rem;
+    float: left;
+    line-height: 3.5rem;
+    border-radius: 3.5rem;
+    font-size: 1.4rem;
+    color: #ff9694;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #ff9694;
+    overflow: hidden;
+}
+.DateIOrderDWSub li:last-of-type {
+    float: right;
+    color: #fff;
+    background: #ff9694;
+}
+/*推荐伴游*/
+.InviteEscort,.InviteHire{
+	width:auto;
+	margin:0.5rem auto;
+	overflow:hidden;
+}
+.InviteEscort > li{
+	width:94.7%;
+	margin:1rem auto;
+	box-shadow:0 0 5px 5px #f5f3f3;
+	border-radius:0.5rem;
+	border-top-left-radius:4.4rem;
+	overflow:hidden;
+	position:relative;
+}
+.IETLAvatar{
+	width:8.6rem;
+	height:8.6rem;
+	border-radius:100%;
+	border:0.4rem solid #fff;
+	overflow:hidden;
+	box-shadow:0 0 5px 5px #f5f3f3;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.IETLAvatar img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.IETLSex{
+	width:3rem;
+	height:3rem;
+	border-radius:100%;
+	color:#fff;
+	font-size:1rem;
+	font-weight:bold;
+	text-align:center;
+	line-height:3.2rem;
+	background:#ffc6c5;
+	overflow:hidden;
+	position:absolute;
+	top:6.5rem;
+	left:6.5rem;
+}
+.InviteEscortT{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.InviteEscortTL{
+	width:32%;
+	float:left;
+	overflow:hidden;
+}
+.InviteEscortTR{
+	width:63%;
+	float:left;
+	margin-left:2%;
+	margin-top:1.5%;
+	overflow:hidden;
+}
+.IETLInformation{
+	width:100%;
+	margin-top:10rem;
+	overflow:hidden;
+}
+.IETLInformationName{
+  /*height:1.5rem;*/
+	float:left;
+	font-size:1.2rem;
+	line-height:1.5rem;
+	margin-left:5px;
+	font-weight:bold;
+	color:#333;
+  display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp:1;
+	overflow: hidden;
+
+}
+.IETLInformationSex{
+  width:15px;
+  height:15px;
+	/*width:1.2rem;
+	height:1.2rem;*/
+	float:left;
+  text-align:right;
+	margin-top:1px;
+	margin-left:3px;
+	overflow:hidden;
+}
+.IETLInformationSex img ,.IETLInformationS > li img{
+	width:100%;
+	margin:auto;
+	overflow:hidden;
+}
+.IETLInformationS{
+	width:90%;
+	margin:0.2rem auto 0;
+	overflow:hidden;
+}
+.IETLInformationS > li{
+	width:1.2rem;
+	height:1.2rem;
+	float:left;
+	margin-top:0.15rem;
+	margin-left:0.3rem;
+	overflow:hidden;
+}
+.IETLAddress{
+	width:90%;
+	margin:0.5rem auto 0;
+	overflow:hidden;
+}
+.IETLAddress > li:first-of-type{
+	width:0.75rem;
+	height:1.1rem;
+	float:left;
+	margin-left:0.3rem;
+	background:url(../images/GPSD_03.png) no-repeat;
+	background-size:100% 100%;
+}
+.IETLAddress > li:last-of-type{
+	float:left;
+	line-height:1.2;
+	margin-left:0.3rem;
+	font-size:1rem;
+	color:#b2b2b2;
+	overflow:hidden;
+}
+.InviteEscortTRU{
+	width:100%;
+	height:2.2rem;
+	line-height:2.4rem;
+	margin:0.6rem auto;
+	overflow:hidden;
+}
+.InviteEscortTRU > li:first-of-type{
+	width:6.5rem;
+	height:2rem;
+	float:left;
+	font-size:1.2rem;
+	font-weight:400;
+	color:#b2b2b2;
+	text-align:center;
+	line-height:2.3rem;
+	border-radius:2rem;
+	border:0.05rem solid #e8e8e8;
+	overflow:hidden;
+}
+.InviteEscortTRU > li:last-of-type{
+  width:52%;
+	height:2.2rem;
+	float:left;
+	margin-left:0.5rem;
+	font-size:1.2rem;
+	font-weight:400;
+	color:#333;
+	/*text-align:center;*/
+	line-height:2.4rem;
+	overflow:hidden;
+}
+.InviteEscortTRU > li:last-of-type span{
+	color:#ff9694;
+	font-weight:bold;
+}
+.InviteEscortBut{
+	width:100%;
+	margin:1rem auto;
+	overflow:hidden;
+}
+.InviteEscortBut > li{
+	width:50%;
+	float:right;
+	overflow:hidden;
+}
+.InviteEscortButSC,.InviteEscortButYY,.InviteEscortButSL{
+	width:60%;
+	height:3rem;
+	text-align:center;
+	line-height:3.3rem;
+	color:#333;
+	background:#fff;
+	font-size:1.3rem;
+	font-weight:bold;
+	margin:0.5rem auto;
+	border-radius:3rem;
+	overflow:hidden;
+	box-shadow:0 0 0.25rem 0.25rem #f3f3f3;
+}
+.InviteEscortButYY{
+	color:#fff;
+	background:#ff9694;
+}
+.InviteEscortButSL{
+	color:#fff;
+	background:#c7d9ff;
+}
+/*聘请*/
+.InviteHire > li{
+	width:94.7%;
+	margin:1rem auto;
+	box-shadow:0 0 5px 5px #f5f3f3;
+	border-radius:0.5rem;
+	overflow:hidden;
+}
+.InviteHireTitle{
+	width:91.5%;
+	height:2rem;
+	margin:1.2rem auto 0;
+	line-height:2.3rem;
+	font-size:1.3rem;
+	font-weight:400;
+	color:#333;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp:1;
+	overflow: hidden;
+}
+.InviteHireCenter{
+	width:91.5%;
+	margin:0.6rem auto 0;
+	line-height:1.5;
+	font-size:1.2rem;
+	font-weight:400;
+	color:#b2b2b2;
+	overflow:hidden;
+}
+.InviteHireList{
+	width:91.5%;
+	margin:0.6rem auto 0;
+	overflow:hidden;
+}
+.InviteHireList > li{
+	width:50%;
+	float:left;
+	margin-top:0.75rem;
+	overflow:hidden;
+}
+.InviteHireListL{
+	width:6rem;
+	height:2rem;
+	float:left;
+	border-radius:2rem;
+	font-size:1.2rem;
+	line-height:2.2rem;
+	text-align:center;
+	color:#b2b2b2;
+	border:0.05rem solid #e8e8e8;
+	overflow: hidden;
+}
+.InviteHireListR{
+  width:40%;
+	height:2rem;
+	float:left;
+	margin-left:0.5rem;
+	font-size:1.1rem;
+	color:#333;
+	line-height:2.48rem;
+	overflow:hidden;
+  display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp:1;
+	overflow: hidden;
+}
+.InviteHireListR span{
+	color:#ff9694;
+	font-weight:bold;
+}
+.ViewDetails{
+	width:28%;
+	height:3rem;
+	margin-top:0.75rem;
+	margin-left:72%;
+	font-size:1.3rem;
+	font-weight:bold;
+	color:#fff;
+	background:#ff9694;
+	text-align:center;
+	line-height:3.3rem;
+	border-top-left-radius:0.5rem;
+	border-bottom-right-radius:0.5rem;
+	overflow:hidden;
+}
+/*头部信息*/
+.InviteW{
+	width:90.4%;
+	margin:1rem auto 0;
+	overflow:hidden;
+}
+.InviteWL{
+	width:4rem;
+	height:4rem;
+	float:left;
+	border-radius:4rem;
+	border:1px solid #f9f6f6;
+	overflow:hidden;
+}
+.InviteWL img,.InviteWCBR li img{
+	width:100%;
+	margin:0 auto;
+}
+.InviteWC{
+  width:33%;
+	float:left;
+	margin-left:1rem;
+}
+.InviteWCT{
+	margin-top:0.5rem;
+	overflow: hidden;
+}
+.InviteWCTL{
+	float:left;
+	line-height:1.2;
+	font-size:1.4rem;
+	color:#333;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.InviteWCTR{
+	width:1rem;
+	height:0.9rem;
+	float:left;
+	margin-top:0.3rem;
+	margin-left:0.3rem;
+	background:url(../images/InviteWCTDJ_03.jpg) navajowhite;
+	background-size:100% 100%;
+}
+.InviteWCB{
+	height:1.2rem;
+	margin-top:0.6rem;
+	overflow:hidden;
+}
+.InviteWCBL{
+	width:2.3rem;
+	height:1.2rem;
+	float:left;
+	text-align:center;
+	font-size:0.85rem;
+	line-height:1.4rem;
+	color:#fff;
+	background:#ff9694;
+	border-radius:1.2rem;
+	position:relative;
+}
+.InviteWCBL .p1{
+	width:1rem;
+	height:1rem;
+	background:url(../images/woman-icon.png);
+	background-size:100% 100%;
+	position:absolute;
+	left:0.1rem;
+	top:0.12rem;
+}
+.InviteWCBL .p3{
+	width:1rem;
+	height:1rem;
+	background:url(../images/man-icon.png);
+	background-size:100% 100%;
+	position:absolute;
+	left:0.1rem;
+	top:0.12rem;
+}
+.InviteWCBL .p2{
+	position:absolute;
+	right:0.35rem;
+}
+.InviteWCBR{
+	float:left;
+}
+.InviteWCBR li{
+	width:1.2rem;
+	height:1.2rem;
+	float:left;
+	margin-left:0.5rem;
+	border-radius:100%;
+	overflow:hidden;
+}
+.InviteWR{
+	float:right;
+	margin-top:2.5rem;
+	overflow:hidden;
+}
+.InviteWRL{
+	float:right;
+	margin-top:0.25rem;
+	font-size:1.1rem;
+	color:#b2b2b2;
+}
+.InviteWRR{
+	width:0.75rem;
+	height:1.1rem;
+	float:right;
+	margin-top:0.2rem;
+	margin-right:0.5rem;
+	overflow:hidden;
+}
+.InviteWRR img{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+}
+/*图片*/
+.escortImg,.escortImgOne,.escortImgTwo{
+	width:91.5%;
+	margin:10px auto;
+	overflow:hidden;
+}
+.escortImgOne img{
+	width:70%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.escortImgTwo > li{
+	width:49%;
+	float:left;
+	margin-right:2%;
+}
+.escortImgTwo > li:last-of-type{
+	margin-right:0;
+}
+.escortImgTwo > li img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.escortImg > li{
+	width:33.33%;
+  height:100px;
+	float:left;
+	margin-bottom:5px;
+}
+.escortImg > li img{
+	width:95%;
+	margin:2.5% auto 0;
+	overflow:hidden;
+}

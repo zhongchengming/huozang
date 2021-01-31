@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>SOUL</title>
+    <link rel="stylesheet" type="text/css" href="./css/mui.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <style>
+        body {
+            background-color: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="footer" class="border-t">
+        <ul class="flex-wrap">
+            <li tapmode="hover" name="main" onclick="btnSwitch(this);" class="flex-con">
+                首页
+            </li>
+            <li tapmode="hover" name="video" onclick="btnSwitch(this);" class="flex-con left">
+                视频
+            </li>
+
+            <li tapmode="hover" name="community" onclick="btnSwitch(this);" class="flex-con">
+                社区
+            </li>
+            <li tapmode="hover" name="mine" onclick="btnSwitch(this);" class="flex-con">
+                我的
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        $api.fixTabBar($api.byId('footer'))
+        api.addEventListener({
+            name: 'scrollSwitch'
+        }, function (ret, err) {
+            scrollSwitch(ret.value.index);
+        });
+
+        api.addEventListener({
+            name: 'btnSwitch'
+        }, function (ret, err) {
+            btnSwitch($("#footer li")[ret.value.index]);
+
+        });
+    }
+    // 滚动切换
+    function scrollSwitch(tagindex) {
+        api.sendEvent({
+            name: 'stopmusic'
+        });
+        if (tagindex == $('#footer li.active').index()) return;
+
+        var eFootLis = $('#footer li'),
+            index = 0;
+        for (var i = 0, len = eFootLis.length; i < len; i++) {
+            if (tagindex == i) {
+                api.sendEvent({
+                    name: $("#footer li").eq(tagindex).attr("name")
+                });
+                index = i;
+            } else {
+                $(eFootLis[i]).removeClass('active');
+            }
+        }
+
+        $(eFootLis[index]).addClass('active');
+        if ($("#footer li").eq(tagindex).attr("name") != "video") {
+            //切换关闭视频
+            api.sendEvent({
+                name: 'hidevideo'
+            });
+            api.sendEvent({
+                name: 'closevideobtn'
+            });
+        } else {
+            api.sendEvent({
+                name: 'resetvideo'
+            });
+            api.sendEvent({
+                name: 'hidefooter'
+            });
+        }
+    }
+    // 切换按钮
+    function btnSwitch(tag) {
+      // api.closeFrame({
+      //     name: 'teamGroup'
+      // });
+        api.sendEvent({
+            name: 'stopmusic'
+        });
+        if (tag == $('#footer li.active')) return;
+        if ($(tag).attr('name') == "mine") {
+            var userid = $api.getStorage('userid');
+            if (userid == null || userid == "") {
+                api.toast({
+                    msg: '请先登录！',
+                    duration: 1000,
+                    location: 'middle'
+                });
+                setTimeout(function () {
+                    api.openWin({
+                        name: 'login',
+                        url: './login.html',
+                        bgColor: "rgba(255, 255, 255, 0)",
+                        animation: {
+                            type: "push", //动画类型（详见动画类型常量）
+                            subType: "from_right", //动画子类型（详见动画子类型常量）
+                            duration: 300 //动画过渡时间，默认300毫秒
+                        }
+                    });
+                }, 1000);
+                return false;
+            }
+        }
+
+        var eFootLis = $('#footer li'),
+            index = 0;
+        for (var i = 0, len = eFootLis.length; i < len; i++) {
+            if (tag == eFootLis[i]) {
+                api.sendEvent({
+                    name: $(tag).attr('name')
+                });
+                index = i;
+            } else {
+                $(eFootLis[i]).removeClass('active');
+            }
+        }
+        $(eFootLis[index]).addClass('active');
+        api.sendEvent({
+            name: "setgroupIndex",
+            extra: {
+                index: index
+            }
+        });
+
+        if ($(tag).attr('name') != "video") {
+            //切换关闭视频
+            api.sendEvent({
+                name: 'hidevideo'
+            });
+            api.sendEvent({
+                name: 'closevideobtn'
+            });
+        } else {
+            api.sendEvent({
+                name: 'resetvideo'
+            });
+            api.sendEvent({
+                name: 'hidefooter'
+            });
+        }
+    }
+</script>

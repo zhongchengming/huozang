@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>推广记录</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/public.css">
+	<link rel="stylesheet" href="../../css/MyPromotion.css" />
+	<script src="../../script/jquery-3.3.1.min.js"></script>
+	<script src="../../script/PublicCss.js"></script>
+</head>
+
+<body>
+	<!-- <div class="SquareHeader">
+		<p class="p2"></p>
+		<div class="SquareHeaderDIV">我的推广</div>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				推广记录
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+	<!-- <ul class="MyPromotion">
+		<li id="MyPromotionL" data-Promotion="QRCode">推广二维码</li>
+		<li data-Promotion="Record">推广记录</li>
+	</ul> -->
+	<ul id="Record" class="PromotionList">
+
+	</ul>
+	<!-- <div id="QRCode" class="PromotionList" style="border:1px solid red">
+		<div class="QRCodeD">
+				<div id="QRCodeDM" class="QRCodeDM"></div>
+				<div class="QRCodeDB">
+					邀请码&nbsp;:&nbsp;<span>0285</span>
+				</div>
+				<div class="QRCodeDT">立即分享&nbsp;.&nbsp;跟TA约会</div>
+		</div>
+		<img src="../../images/popularize.jpg">
+		<!-- <img src="../../images/popularize.png">
+		<!-- <div id="qrcode" class="MyQRCode">
+
+		</div>
+		<div class="MyQRCodeFS">
+			推荐好友扫二维码注册送金币
+		</div>
+	</div> -->
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script>
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+			$api.setStorage('openWin', "PromotionRecord");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({});
+			});
+
+			// var userInfo = api.pageParam.userid;
+      var userInfo =  $api.getStorage('userid');
+			//校验登录
+			if (userInfo == null || userInfo == "") {
+				api.toast({
+					msg: '请先登录！',
+					duration: 1000,
+					location: 'middle'
+				});
+				setTimeout(function() {
+					api.openWin({
+						name: 'login',
+						url: '../../login.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+				}, 1000);
+				setTimeout(function() {
+					api.closeWin({
+						name: 'PromotionRecord'
+					});
+				}, 1500);
+				return false;
+			}
+
+			// var qrcode = new QRCode(document.getElementById("QRCodeDM"), {
+			// 	width:165,
+			// 	height:165
+			// });
+			// qrcode.makeCode("souluser_" + userInfo);
+
+			//推广记录
+			api.ajax({
+				url: CONFIG.ADDRURL + CONFIG.SEARCHEXTEND,
+				method: 'post',
+				data: {
+					values: {
+						reference: userInfo,
+					}
+				}
+			}, function(data) {
+				if (data.code == "200") {
+					if (data.extendinfo != null && data.extendinfo != "") {
+						var tempFn = doT.template($api.byId('extendstemplate').innerHTML);
+						var resultHTML = tempFn(data.extendinfo);
+						$("#Record").append(resultHTML);
+					} else {
+						$("#Record").append("<div id=\"no-conent\"><img src=\"../../images/nopromotion-content.png\"/></div>");
+					}
+				}
+			});
+
+			//邀请分享
+			// $('body').on('click', '#QRCode', function() {
+			// 	var userid = $(this).attr("userid");
+			// 	var invitationid = $(this).attr("invitationid");
+			// 	var avatar = $(this).attr("avatar");
+			// 	var content = $(this).attr("content");
+      //
+			// 	api.openFrame({
+			// 		name: 'share',
+			// 		url: './share.html',
+			// 		rect: {
+			// 			x: 0,
+			// 			y: api.winHeight - 200,
+			// 			w: api.winWidth,
+			// 			h: 200
+			// 		},
+			// 		animation: {
+			// 			type: "push", //动画类型（详见动画类型常量）
+			// 			subType: "from_bottom", //动画子类型（详见动画子类型常量）
+			// 			duration: 300 //动画过渡时间，默认300毫秒
+			// 		},
+			// 		pageParam: {
+			// 			userid: userid,
+			// 			type: 1,
+			// 			invitationid: invitationid,
+			// 			avatar: avatar,
+			// 			content: content
+			// 		}
+			// 	});
+			// });
+
+
+			$("#Record").on("click", "li.otherspage", function() {
+
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: 'auto'
+					},
+					pageParam: {
+						userid: userid
+					},
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					}
+				});
+			});
+
+			// $(".MyPromotion li").click(function() {
+			// 	$(".MyPromotion li").attr("id", "");
+			// 	$(this).attr("id", "MyPromotionL");
+			// 	$(".PromotionList").css("display", "none");
+			// 	$("#" + $(this).attr("data-Promotion") + "").css("display", "block");
+			// });
+		}
+	</script>
+
+	<script type="text/template" id="extendstemplate">
+		{{~it:value:index}}
+		<li class="otherspage" userid="{{=value.userid}}">
+			<div class="PromotionL">
+				<img src="{{?value.avatar}}{{=value.avatar}}{{??}}../../images/avatar.png{{?}}">
+			</div>
+			<div class="PromotionR">
+				<ul class="PromotionRU">
+					<li>{{=value.nickname}}</li>
+					<li>
+						<P class="{{?1==value.gender}}p1{{??}}p3{{?}}"></P>
+						<P class="p2">{{=value.age}}</P>
+					</li>
+				</ul>
+				<P class="PromotionRP">{{=value.createtimestr}}</P>
+			</div>
+		</li>
+		{{~}}
+	</script>
+</body>
+
+</html>

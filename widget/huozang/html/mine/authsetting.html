@@ -1,0 +1,401 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>个人认证</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css">
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mine.css" rel="stylesheet" />
+	<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<!-- <a class="app-set-icon"></a> --
+		<h1 class="mui-title">个人认证</h1>
+	</header> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				个人认证
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+
+
+	<div class="mui-content personal-homepage-data page-bottom">
+		<form>
+			<ul class="mui-table-view data-setting">
+				<li class="mui-table-view-cell">
+					<label>手机认证</label>
+					<span id="mobile" class="mui-pull-right span-text">未认证</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell">
+					<label>微信认证</label>
+					<span id="wechat" class="mui-pull-right span-text">未认证</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell">
+					<label>邮箱认证</label>
+					<span id="email" class="mui-pull-right span-text">未认证</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell">
+					<label>身份认证</label>
+					<span id="idcard" class="mui-pull-right span-text">未认证</span>
+					<i></i>
+				</li>
+				<li class="mui-table-view-cell">
+					<label>学历认证</label>
+					<span id="education" class="mui-pull-right span-text">未认证</span>
+					<i></i>
+				</li>
+			</ul>
+		</form>
+	</div>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.md5.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript">
+		apiready = function () {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+
+			$api.setStorage('openWin', "authsetting");
+			//返回箭头事件
+			$(".roofReturn").click(function () {
+				api.closeWin({
+					name: 'authsetting'
+				});
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function (ret, err) {
+				api.closeWin({
+					name: 'authsetting'
+				});
+				api.sendEvent({
+					name: 'mine',
+				});
+			});
+
+			loadauthsetting();
+
+			api.addEventListener({
+				name: 'authsetting'
+			}, function (ret, err) {
+				loadauthsetting();
+			});
+
+			$(".mui-content").on("click", "li", function () {
+				var auth = $(this).find("span");
+				var userid = $api.getStorage('userid');
+
+				if ($(auth).prop("id") == "mobile") {
+					api.openWin({
+						name: 'updatemobile',
+						url: './updatemobile.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+				} else if ($(auth).prop("id") == "wechat") { //微信
+					var wx = api.require('wx');
+					wx.auth({
+						apiKey: ''
+					}, function (retcode, errcode) {
+						if (retcode.status) {
+							wx.getToken({
+								apiKey: '',
+								apiSecret: '',
+								code: retcode.code
+							}, function (rettoken, errtoken) {
+								if (rettoken.status) {
+									wx.getUserInfo({
+										accessToken: rettoken.accessToken,
+										openId: rettoken.openId
+									}, function (retuserinfo, erruserinfo) {
+										if (retuserinfo.status) {
+											//修改微信授权字段
+											api.ajax({
+												url: CONFIG.ADDRURL + CONFIG
+													.UPDATEUSERINFO,
+												method: 'post',
+												data: {
+													values: {
+														userid: userid,
+														wechatauth: '{"openid":"' +
+															retuserinfo.openid +
+															'","unionid":"' +
+															retuserinfo.unionid +
+															'","nickname":"' +
+															retuserinfo.nickname +
+															'"}'
+													}
+												}
+											}, function (data) {
+												if (data.code == "200") {
+													api.sendEvent({
+														name: 'authsetting'
+													});
+												} else {
+													api.toast({
+														msg: data.msg,
+														duration: 1000,
+														location: 'bottom'
+													});
+												}
+											});
+
+										} else {
+											api.toast({
+												msg: erruserinfo.code,
+												duration: 1000,
+												location: 'bottom'
+											});
+										}
+									});
+								} else {
+									api.toast({
+										msg: errtoken.code,
+										duration: 1000,
+										location: 'bottom'
+									});
+								}
+							});
+						} else {
+							api.toast({
+								msg: errcode.code,
+								duration: 1000,
+								location: 'bottom'
+							});
+						}
+					});
+				} else if ($(auth).prop("id") == "idcard") {
+					// if (systemType == "ios") {
+					// 	api.toast({
+					// 		msg: "该功能IOS系统暂未开放！",
+					// 		duration: 1000,
+					// 		location: 'center'
+					// 	});
+					// 	return false
+					// }
+
+					api.openWin({
+						name: 'idcard',
+						url: './idcard.html',
+						bgColor: "rgba(255, 255, 255, 0)",
+						animation: {
+							type: "push", //动画类型（详见动画类型常量）
+							subType: "from_right", //动画子类型（详见动画子类型常量）
+							duration: 300 //动画过渡时间，默认300毫秒
+						}
+					});
+
+				} else if ($(auth).prop("id") == "email") {
+					var btnArray = ['取消', '确认'];
+					mui.prompt("", "请填写邮箱！", "邮箱", btnArray, function (e) {
+						if (e.index == 1) {
+							var reg = new RegExp(
+								"^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"
+							); //正则表达式
+							if (!reg.test(e.value)) {
+								api.toast({
+									msg: "邮箱格式不正确！",
+									duration: 1000,
+									location: 'bottom'
+								});
+								return false;
+							}
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.SENDMAIL,
+									method: 'get',
+									data: {
+										values: {
+											userid: userid,
+											email: e.value
+										}
+									}
+								},
+								function (data, err) {
+									if (data.code == "200") {
+										api.toast({
+											msg: "请登录邮箱查看邮件，完成认证！",
+											duration: 1000,
+											location: 'bottom'
+										});
+										api.sendEvent({
+											name: 'authsetting'
+										});
+									} else {
+										api.toast({
+											msg: data.msg,
+											duration: 1000,
+											location: 'bottom'
+										});
+									}
+								});
+						}
+					}, 'div');
+				} else if ($(auth).prop("id") == "education") {
+					if ($("#education").text().indexOf("未认证") >= 0) {
+						api.toast({
+							msg: '请先完善个人资料->文化修养',
+							duration: 1000,
+							location: 'bottom'
+						});
+						setTimeout(function () {
+							api.openWin({
+								name: 'infosetting',
+								url: './infosetting.html',
+								bgColor: "rgba(255, 255, 255, 0)",
+								animation: {
+									type: "push", //动画类型（详见动画类型常量）
+									subType: "from_right", //动画子类型（详见动画子类型常量）
+									duration: 300 //动画过渡时间，默认300毫秒
+								},
+								pageParam: {
+									userid: $api.getStorage('userid')
+								}
+							});
+						}, 1000);
+						return false;
+					}
+					api.getPicture({
+						sourceType: 'camera',
+						encodingType: 'jpg',
+						mediaValue: 'pic',
+						destinationType: 'url',
+						allowEdit: false,
+						quality: 100,
+						saveToPhotoAlbum: false
+					}, function (ret, err) {
+						if (ret) {
+							if (ret.data) {
+								api.showProgress({
+									title: '正在上传认证资料...',
+									modal: true
+								});
+								var qiniuUpfile = api.require('qiniuUpfile');
+								qiniuUpfile.upfile({
+									file: ret.data,
+									name: $.md5(ret.data) + ".jpg"
+								}, function (upret, uperr) {
+									if (upret.status) {
+										if (upret.oper == "complete") {
+											api.ajax({
+												url: CONFIG.ADDRURL + CONFIG
+													.UPDATEUSERINFO,
+												method: 'post',
+												data: {
+													values: {
+														userid: $api.getStorage('userid'),
+														diploma: CONFIG.QINIUADDR + upret
+															.info.key
+													}
+												}
+											}, function (data) {
+												if (data.code == "200") {
+													api.toast({
+														msg: "资料已上传！",
+														duration: 1000,
+														location: 'bottom'
+													});
+													api.sendEvent({
+														name: 'authsetting'
+													});
+													api.hideProgress();
+												} else {
+													api.toast({
+														msg: data.msg,
+														duration: 1000,
+														location: 'bottom'
+													});
+													api.hideProgress();
+												}
+											});
+										}
+									} else {
+										api.toast({
+											msg: '图像获取失败',
+											duration: 1000,
+											location: 'bottom'
+										});
+									}
+								});
+							}
+						}
+					});
+				}
+			});
+		}
+
+		function loadauthsetting() {
+			var userid = $api.getStorage('userid');
+			//加载原始数据
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid
+						}
+					}
+				},
+				function (data, err) {
+					if (data.code == "200") {
+						if (data.userinfo.mobile != null && data.userinfo.mobile != "") {
+							$("#mobile").html(data.userinfo.mobile);
+						}
+						if (data.userinfo.wxnickname != null && data.userinfo.wxnickname != "") {
+							$("#wechat").html(data.userinfo.wxnickname);
+						}
+						if (data.userinfo.email != null && data.userinfo.email != "") {
+							$("#email").html((data.userinfo.token != "SUCCESS" && data.userinfo.token * 1 > 0) ? "请登录邮箱" +
+								data.userinfo.email + "完成认证" : data.userinfo.email);
+						}
+						if (data.userinfo.idcard != null && data.userinfo.idcard != "") {
+							$("#idcard").html(data.userinfo.idcard);
+						}
+						if (data.userinfo.education != null && data.userinfo.education != "") {
+							if (data.userinfo.diploma == null) {
+								$("#education").html(data.userinfo.education + ",请上传学历证书完成认证！");
+							} else {
+								$("#education").html("已认证：" + data.userinfo.education);
+							}
+						}
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

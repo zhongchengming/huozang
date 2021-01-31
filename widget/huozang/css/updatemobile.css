@@ -1,0 +1,118 @@
+@charset "utf-8";
+.updatemobile-data section {
+    /*width: 86%;
+	margin: 20px auto;*/
+    margin: 20px 20px 0 20px;
+}
+
+.updatemobile-data p {
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #333333;
+}
+
+.updatemobile-data i, .login-data i {
+    display: inline-block;
+    float: left;
+    width: 23px;
+    height: 26px;
+    margin-top: 13px;
+    background-image: url(../images/bg-icon3.png);
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+}
+
+.updatemobile-data i.phone-icon {
+    background-position: -2px -99px;
+}
+
+.updatemobile-data i.lock-icon, .login-data i.lock-icon {
+    background-position: -45px -99px;
+}
+
+.updatemobile-data .msg-btn {
+    position: absolute;
+    right: 7px;
+    top: 10px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0px 6px;
+    font-size: 14px;
+    color: #ff9694;
+}
+
+.updatemobile-data input[type=text], .updatemobile-data input[type=password] {
+    width: auto;
+    border: none;
+    margin-top: 7px;
+    margin-bottom: 0;
+    padding: 10px 0 10px 11px;
+    font-size: 12px;
+    color: #333333;
+}
+
+.updatemobile-data input[type=password] {
+    width: 90%;
+}
+
+.updatemobile-data p a {
+    font-size: 12px;
+    color: #ff9694;
+}
+
+.updatemobile-data p input[type=checkbox] {
+    visibility: hidden;
+}
+
+.updatemobile-data p label {
+    position: relative;
+    padding-left: 26px;
+}
+
+.updatemobile-data p label::after {
+    position: absolute;
+    content: "";
+    left: 5px;
+    top: -4px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/bg-icon3.png);
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+    background-position: -4px -130px;
+}
+
+.updatemobile-data p input[type=checkbox]:checked+label::after {
+    background-position: -85px -103px;
+}
+
+.updatemobile-data .submit-div, .login-data .submit-div {
+    width: 271px;
+    height: 88px;
+    margin: 0 auto;
+    margin-top: 31px;
+    /*background-image: url(../images/btn-icon.png);*/
+    background-repeat: no-repeat;
+    background-size: 271px 88px;
+}
+
+.updatemobile-btn {
+	display: block;
+	width: 80px;
+	height: 30px;
+	font-size: 15px;
+	font-weight: 500;
+	color: #fff;
+	background-color: #ff9694;
+	line-height: 30px;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+	float: right;
+}
+
+a.updatemobile-btn:active {
+	color: #fff;
+}

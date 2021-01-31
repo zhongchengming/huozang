@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>身份认证</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script type="text/javascript">
+		//此段内联js处理适配，必须尽早执行，请不要移动它的位置，也不要抽成外链js!
+		;
+		(function(win, lib) {
+			var doc = win.document;
+			var docEl = doc.documentElement;
+			var metaEl = doc.querySelector('meta[name="viewport"]');
+			var flexibleEl = doc.querySelector('meta[name="flexible"]');
+			var dpr = 0;
+			var scale = 0;
+			var tid;
+			var flexible = lib.flexible || (lib.flexible = {});
+
+			if (metaEl) {
+				var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+				if (match) {
+					scale = parseFloat(match[1]);
+					dpr = parseInt(1 / scale);
+				}
+			} else if (flexibleEl) {
+				var content = flexibleEl.getAttribute('content');
+				if (content) {
+					var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+					var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+					if (initialDpr) {
+						dpr = parseFloat(initialDpr[1]);
+						scale = parseFloat((1 / dpr).toFixed(2));
+					}
+					if (maximumDpr) {
+						dpr = parseFloat(maximumDpr[1]);
+						scale = parseFloat((1 / dpr).toFixed(2));
+					}
+				}
+			}
+
+			if (!dpr && !scale) {
+				var isAndroid = win.navigator.appVersion.match(/android/gi);
+				var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+				var devicePixelRatio = win.devicePixelRatio;
+				if (isIPhone) {
+					// iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+					if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+						dpr = 3;
+					} else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+						dpr = 2;
+					} else {
+						dpr = 1;
+					}
+				} else {
+					// 其他设备下，仍旧使用1倍的方案
+					dpr = 1;
+				}
+				scale = 1 / dpr;
+			}
+
+			docEl.setAttribute('data-dpr', dpr);
+			if (!metaEl) {
+				metaEl = doc.createElement('meta');
+				metaEl.setAttribute('name', 'viewport');
+				metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+				if (docEl.firstElementChild) {
+					docEl.firstElementChild.appendChild(metaEl);
+				} else {
+					var wrap = doc.createElement('div');
+					wrap.appendChild(metaEl);
+					doc.write(wrap.innerHTML);
+				}
+			}
+
+			function refreshRem() {
+				var width = docEl.getBoundingClientRect().width;
+				if (width / dpr > 540) {
+					width = 540 * dpr;
+				}
+				var rem = width / 10;
+				docEl.style.fontSize = rem + 'px';
+				flexible.rem = win.rem = rem;
+			}
+
+			win.addEventListener('resize', function() {
+				clearTimeout(tid);
+				tid = setTimeout(refreshRem, 300);
+			}, false);
+			win.addEventListener('pageshow', function(e) {
+				if (e.persisted) {
+					clearTimeout(tid);
+					tid = setTimeout(refreshRem, 300);
+				}
+			}, false);
+
+			if (doc.readyState === 'complete') {
+				doc.body.style.fontSize = 12 * dpr + 'px';
+			} else {
+				doc.addEventListener('DOMContentLoaded', function(e) {
+					doc.body.style.fontSize = 12 * dpr + 'px';
+				}, false);
+			}
+
+			refreshRem();
+
+			flexible.dpr = win.dpr = dpr;
+			flexible.refreshRem = refreshRem;
+			flexible.rem2px = function(d) {
+				var val = parseFloat(d) * this.rem;
+				if (typeof d === 'string' && d.match(/rem$/)) {
+					val += 'px';
+				}
+				return val;
+			}
+			flexible.px2rem = function(d) {
+				var val = parseFloat(d) / this.rem;
+				if (typeof d === 'string' && d.match(/px$/)) {
+					val += 'rem';
+				}
+				return val;
+			}
+
+		})(window, window['lib'] || (window['lib'] = {}));
+	</script>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/idcard.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-top mui-bar-nav">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">身份认证</h1>
+		<a href="#" class="soul-btn">开始认证</a>
+	</header> -->
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofButton">开始认证</div>
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				身份认证
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<section class="page-bottom soul-data">
+		<div class="soul-term">
+
+			<div class="upload-card-box">
+				<p class="black-color">身份证正面</p>
+				<div class="upload-card" id="pre">
+					<img src="../../images/upload-card.png" />
+				</div>
+			</div>
+			<div class="upload-card-box">
+				<p class="black-color">身份证反面</p>
+				<div class="upload-card" id="back">
+					<img src="../../images/upload-card.png" />
+				</div>
+			</div>
+			<ul class="identity-card">
+				<li class="bottom-line">
+					<input id="identity" type="text" value="" placeholder="请输入身份证号">
+				</li>
+				<li class="bottom-line">
+					<input id="identityname" type="text" value="" placeholder="请输入姓名">
+				</li>
+			</ul>
+		</div>
+	</section>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "idcard");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					
+				});
+			});
+
+
+			$("#pre").click(function() {
+				var UIBaiduOCR = api.require('UIBaiduOCR');
+				UIBaiduOCR.initAccessTokenWithAkSk({
+					apiKey: 'ZyR9zlYidWhlZzRcTUdcnFU6',
+					secretKey: 'G3kG5Tk2RmjuKHuQCumL61kbZue6Tib8'
+				}, function(ret, err) {
+					if (ret.status) {
+						UIBaiduOCR.openIDCard({
+									isCardFront: true, //正面
+									isNativeManual: false
+								}, function(openret, openerr) {
+									if (openret.status) {
+										$("#identity").val(openret.data.words_result["公民身份号码"].words);
+										$("#identityname").val(openret.data.words_result["姓名"].words);
+										var trans = api.require('trans');
+										trans.decodeImgToBase64({
+											imgPath: openret.filePath
+										}, function(base64ret, base64err) {
+											if (base64ret.status) {
+												api.ajax({
+														url: CONFIG.ADDRURL + CONFIG.UPLOADPHOTOAVATAR,
+														method: 'post',
+														data: {
+															values: {
+																userid: $api.getStorage('userid'),
+																photographs: JSON.stringify([{
+																	pic: base64ret.base64Str
+																}])     ,
+																type: "idcardfront"
+															}
+														}
+													},
+													function(uploadret, uploaderr) {
+														console.log(base64ret.base64Str);
+														$("#pre").find("img").attr("src", "data:image/jpeg;base64," + base64ret.base64Str);
+													});
+											} else {
+												api.toast({
+													msg: JSON.stringify(base64err)
+												});
+											}
+										});
+
+									} else {
+										api.toast({
+											msg: JSON.stringify(openerr)
+										});
+									}
+								});
+					} else {
+						api.toast({
+							msg: JSON.stringify(err)
+						});
+					}
+				});
+			});
+
+			$("#back").click(function() {
+				var UIBaiduOCR = api.require('UIBaiduOCR');
+				UIBaiduOCR.initAccessTokenWithAkSk({
+					apiKey: 'ZyR9zlYidWhlZzRcTUdcnFU6',
+					secretKey: 'G3kG5Tk2RmjuKHuQCumL61kbZue6Tib8'
+				}, function(ret, err) {
+					if (ret.status) {
+						UIBaiduOCR.openIDCard({
+									isCardFront: false, //正面
+									isNativeManual: false
+								}, function(openret, openerr) {
+									if (openret.status) {
+										var trans = api.require('trans');
+										trans.decodeImgToBase64({
+											imgPath: openret.filePath
+										}, function(base64ret, base64err) {
+											if (base64ret.status) {
+												api.ajax({
+														url: CONFIG.ADDRURL + CONFIG.UPLOADPHOTOAVATAR,
+														method: 'post',
+														data: {
+															values: {
+																userid: $api.getStorage('userid'),
+																photographs: JSON.stringify([{
+																	pic: base64ret.base64Str
+																}]),
+																type: "idcardback"
+															}
+														}
+													},
+													function(uploadret, uploaderr) {
+														$("#back").find("img").attr("src", "data:image/jpeg;base64," + base64ret.base64Str);
+													});
+											}
+										});
+
+									} else {
+										api.toast({
+											msg: JSON.stringify(openerr)
+										});
+									}
+								});
+					} else {
+						api.toast({
+							msg: JSON.stringify(err)
+						});
+					}
+				});
+			});
+
+			$(".roofButton").click(function() {
+				//校验身份证号码
+				if (!isCardNo($("#identity").val())) {
+					mui.alert("身份证号不合法！");
+					return false;
+				}
+				if ($("#identityname").val() == null || $("#identityname").val() == "") {
+					mui.alert("姓名不能为空！");
+					return false;
+				}
+				var hasCard = 0;
+				$(".upload-card").each(function(i) {
+					if ($(this).find("img").attr("src").indexOf("data:image/jpeg;base64,") >= 0) {
+						hasCard++;
+					}
+				});
+				if (hasCard * 1 != 2) {
+					mui.alert("请先上传身份证图片！");
+					return false;
+				} else {
+					//人脸活体检测
+					var faceLive = api.require('baiduFaceLive');
+					faceLive.openFaceDetectView({
+						rect:{
+							x:0,             //左上角x坐标，默认0
+							y:0,             //左上角y坐标，默认0
+							w:"auto",           //宽度，默认'auto'，页面从x位置开始自动充满父页面宽度
+							h:"auto"            //高度，默认'auto'，页面从y位置开始自动充满父页面高度
+
+						}
+					},function(ret) {
+						console.log(JSON.stringify(ret))
+						if (ret.evenType == 'success') {
+							api.showProgress({
+								title: '身份验证中...',
+								modal: true
+							});
+							//人脸对比
+							api.ajax({
+									url: CONFIG.ADDRURL + CONFIG.FACEVERIFY,
+									method: 'post',
+									data: {
+										values: {
+											content: ret.data.bestImage,
+											userid: $api.getStorage('userid')
+										}
+									}
+								},
+								function(data, err) {
+									if (data.code == "200" && (data.faceVerifyResult.newValue * 1 >= data.faceVerifyResult.thresholdValue * 1)) {
+										//身份证验证
+										api.ajax({
+												url: CONFIG.ADDRURL + CONFIG.IDENTITYCHECK,
+												method: 'post',
+												data: {
+													values: {
+														image: ret.data.bestImage,
+														idcardnumber: $("#identity").val(),
+														name: $("#identityname").val()
+													}
+												}
+											},
+											function(data2, err2) {
+												if (data2.code == "200" && (data2.personVerifyResult.newValue * 1 >= data2.personVerifyResult.thresholdValue * 1)) {
+													api.ajax({
+															url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+															method: 'post',
+															data: {
+																values: {
+																	userid: $api.getStorage('userid'),
+																	idcard: $("#identity").val(),
+																	realname: $("#identityname").val()
+																}
+															}
+														},
+														function(data3, err3) {
+															if (data3.code == "200") {
+																faceLive.closeFaceDetectView(function(ret, err) {
+																	api.hideProgress();
+																	api.toast({
+																		msg: "认证成功！"
+																	});
+																	api.closeWin({
+																		name: 'idcard'
+																	});
+																	api.sendEvent({
+																		name: 'authsetting'
+																	});
+																});
+															} else {
+																mui.alert(data3.code + ":" + data3.msg);
+															}
+														});
+												} else {
+													api.hideProgress();
+													faceLive.closeFaceDetectView(function(ret, err) {
+														mui.alert("身份认证不通过，请确认身份证号码、姓名、身份证是同一人！");
+													});
+												}
+											});
+									} else {
+										api.hideProgress();
+										faceLive.closeFaceDetectView(function(ret, err) {
+											mui.alert("人脸识别失败，请重试！");
+										});
+									}
+								});
+						} else {
+							if (ret.message == "检测超时") {
+								faceLive.closeFaceDetectView(function(ret, err) {
+									api.toast({
+										msg: "检测超时，请重新认证！"
+									});
+								});
+							} else {
+								api.toast({
+									msg: ret.message
+								});
+							}
+						}
+					});
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

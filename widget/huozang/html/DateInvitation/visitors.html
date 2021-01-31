@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>访客列表</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<!-- <link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" /> -->
+	<link rel="stylesheet" href="../../css/public.css">
+	<link href="../../css/mine.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/public.css">
+</head>
+
+<body>
+	<!-- <header class="mui-bar mui-bar-nav mui-bar-top">
+		<a class="app-back-icon"></a>
+		<h1 class="mui-title">访客</h1>
+	</header> -->
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				访客
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<div class="concerns">
+		<ul class="ConcernFans visitorslist">
+
+
+		</ul>
+	</div>
+	<!-- <div class="mui-content personal-homepage-data concerns page-bottom">
+		<ul class="visitorslist mui-table-view">
+
+		</ul>
+	</div> -->
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/util.js"></script>
+	<script type="text/javascript">
+		var pageSize = 8,
+			pageNum = 1,
+			hasNextPage = true,
+			userinfo = "";
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "visitors");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({
+					name: 'visitors'
+				});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({
+					name: 'visitors'
+				});
+			});
+
+			userinfo = api.pageParam.userid;
+
+			//默认加载关注列表
+			loadvisitors(userinfo, pageSize, pageNum, true);
+
+			//上拉刷新
+			api.setRefreshHeaderInfo({
+				bgColor: '#fff'
+			},function(ret, err) {
+				api.refreshHeaderLoadDone();
+			});
+			api.addEventListener({
+				name: 'scrolltobottom',
+				extra: {
+					threshold: 50 //距离底部距离
+				}
+			}, function(ret, err) {
+				var id = $(".active").prop("id");
+				var nickname = $("#nickname").val();
+				if (hasNextPage) {
+					loadvisitors(userinfo, pageSize, pageNum, false);
+				}
+			});
+			// 跳转个人主页
+			$(".visitorslist").on("click", ".otherspage", function() {
+				var userid = $(this).attr("userid");
+				api.openWin({
+					name: 'otherspage',
+					url: '../otherspage.html',
+					animation: {
+						type: "push", //动画类型（详见动画类型常量）
+						subType: "from_right", //动画子类型（详见动画子类型常量）
+						duration: 300 //动画过渡时间，默认300毫秒
+					},
+					pageParam: {
+						userid: userid
+					}
+				});
+			});
+		}
+
+
+		function loadvisitors(userid, pagesize, pagenum, isclear) {
+			if (isclear) {
+				$(".visitorslist").empty();
+			}
+			api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.GETVISITOR,
+					method: 'post',
+					data: {
+						values: {
+							userid: userid,
+							pagesize: pagesize,
+							pagenum: pagenum
+						}
+					}
+				},
+				function(data) {
+					if (data.code == "200") {
+						if (data.visitor && data.visitor.list.length != 0) {
+							$("#no-conent img").remove();
+							$("#no-conent").remove();
+							hasNextPage = data.visitor.hasNextPage;
+							pageNum = data.visitor.nextPage;
+							$.each(data.visitor.list, function(i, n) {
+
+							// 	$(".visitorslist").append("<li>" +
+							// 		"<a href=\"javascript:;\" userid=\"" + n.userid + "\" class=\"otherspage mui-table-view-cell mui-media mui-table concerns-list\">" +
+							// 		"<div class=\"mui-table-cell mui-col-xs-7\">" +
+							// 		"<img  class=\"mui-media-object mui-pull-left\" src=\"" + (n.avatar == null ? "../../images/avatar.png" : n.avatar) + "\" />" +
+							// 		"<div userid =\"" + n.userid + "\" nickname =\"" + n.nickname + "\" class=\"hello-btn mui-media-body\">" +
+							// 		"<span>" +
+							// 		"<em>" + n.nickname + "</em>" +
+							// 		"<span>" + n.age + "</span>" +
+							// 		"<i style=\"background-image: url(" + (n.gender == 0 ? "../../images/man-icon.png" : "../../images/woman-icon.png") + ")\"></i>" +
+							// 		"</span>" +
+							// 		"<p class=\"mui-ellipsis\">" + n.bio + "</p>" +
+							// 		"</div>" +
+							// 		"</div>" +
+							// 		"<p class=\"mui-ellipsis\">" + timestampToTime(n.createtime) + "</p>" +
+							// 		"</a>" +
+							// 		"</li>");
+									var html = "<li class='otherspage' userid='" + n.userid + "' fansuserid='" + n.fansuserid + "'>" +
+										"<div class='ConcernFansAvatar'>" +
+										"<img  src='" + (n.avatar == null || n.avatar == "" ? "../../images/avatar.png" : n.avatar) + "'>" +
+										"</div>" +
+										"<div class='ConcernFansCenter  hello-btn'  userid ='" + n.userid + "' fansuserid='" + n.fansuserid + "' nickname ='" + n.nickname + "'>" +
+										"<ul class='ConcernFansCU'>" +
+										"<li class='ConcernFansCUL'>" + n.nickname + "</li>" +
+										"<li class='ConcernFansCUR'>" +
+										"<p class='span1'>" + n.age + "</p>" +
+										"<p class='span2'>";
+											if(n.gender == 0){
+												html += "<img src='../../images/man-icon.png'>";
+											}else{
+												html += "<img src='../../images/woman-icon.png'>";
+											}
+										html +="</p></li>" +
+										"</ul>" +
+										"<div class='CFCSignature'>" + n.bio + "</div>" +
+										"</div>" +
+										"<div class='ConcernFansRight'>" +
+										"<div class='CFRToTime'>" + timestampToTime(n.createtime) + "";
+										// "<div class='CFRMutual gz' follow='" + n.follow + "' userid='" + n.userid + "' fansuserid='" + n.fansuserid + "'>" + timestampToTime(n.createtime) + "";
+									// if (n.follow == 0) {
+									// 	html += "<img src='../../images/already.png'>";
+									// } else if (n.follow == 2) {
+									// 	html += "<img src='../../images/add.png'>";
+									// } else {
+									// 	html += "<img src='../../images/mutual.png'>";
+									// }
+									html += "</div></div></li>";
+									$(".visitorslist").append(html);
+
+							 });
+
+						} else {
+							$(".concerns").append("<div id=\"no-conent\"><img src=\"../../images/no-content.png\"/></div>");
+						}
+					}
+				});
+		}
+	</script>
+</body>
+
+</html>

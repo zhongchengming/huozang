@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>信息修改</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<link rel="stylesheet" href="../../css/common.css" />
+	<style>
+		body {
+			background: #fff;
+		}
+
+		.save-btn {
+			width: 5rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			font-size: 1.2rem;
+			color: #fff;
+			background: #ff9694;
+			border-radius: 0.25rem;
+			overflow: hidden;
+			position: absolute;
+			top: 0.25rem;
+			right: 1.5rem;
+		}
+
+		.modifyBox {
+			width: auto;
+			margin: 2rem 1rem;
+			overflow: hidden;
+			border-radius: 0.25rem;
+			border: 1px solid #CCC;
+		}
+
+		.modifyBox textarea {
+			width: 90%;
+			height: 8rem;
+			margin: 5%;
+			line-height: 1.5;
+			font-size: 1.2rem;
+			color: #666;
+			outline: none;
+			resize: none;
+			border: 0;
+		}
+		.profession-list {
+			display: none;
+			padding:15px;
+		}
+		.profession-list span {
+			display: inline-block;
+			border: 1px solid #eee;
+			padding: 5px 10px;
+			border-radius: 3px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <div class="SquareHeaderS">
+		<div class="SquareHeader">
+			<div class="save-btn">保存</div>
+			<p class="p2"></p>
+			<div class="SquareHeaderDIV">修改信息</div>
+		</div>
+	</div>
+	<img class="SquareImg" src="../../images/gct_02.jpg"> -->
+
+
+	<div class="roofS">
+		<div class="roof">
+			<div class="roofButton">保存</div>
+			<div class="roofReturn"></div>
+			<!-- <div class="roofSearch"></div>
+			<div class="roofMessage messageU"></div> -->
+			<div class="roofConter">
+				修改信息
+			</div>
+		</div>
+	</div>
+	<div class="roofSDiv"></div>
+	<div class="modifyBox">
+		<textarea id="setting" placeholder=""></textarea>
+		<div class="profession-list">
+			<span>教师    </span>
+			<span>学生    </span>
+			<span>会计    </span>
+			<span>银行    </span>
+			<span>演员    </span>
+			<span>主持人  </span>
+			<span>医生    </span>
+			<span>空姐    </span>
+			<span>护士    </span>
+			<span>模特    </span>
+			<span>心理医生</span>
+			<span>公务员  </span>
+			<span>律师    </span>
+			<span>司机    </span>
+			<span>翻译    </span>
+			<span>军人    </span>
+			<span>发型师  </span>
+			<span>工程师  </span>
+			<span>程序员  </span>
+			<span>摄影师  </span>
+			<span>画家    </span>
+			<span>公务员  </span>
+			<span>警察    </span>
+			<span>交警    </span>
+			<span>私人教练</span>
+			
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/PublicCss.js"></script>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$api.fixStatusBar($api.dom('.roofS'));
+			// 列表距顶部距离
+			var systemType = api.systemType;
+			if (systemType == "android") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 30) + "px");
+			}
+			if (systemType == "ios") {
+				$(".roofSDiv").css("height", "" + ($(".roofS").height() + 40) + "px");
+			}
+
+			$api.setStorage('openWin', "updatesetting");
+			//返回箭头事件
+			$(".roofReturn").click(function() {
+				api.closeWin({});
+			});
+
+			//滑动关闭
+			api.addEventListener({
+				name: 'swiperight'
+			}, function(ret, err) {
+				api.closeWin({});
+			});
+
+			var userid = api.pageParam.userid;
+			var title = api.pageParam.title;
+			var vaule = api.pageParam.vaule;
+			var type = api.pageParam.type;
+			if(type=='profession'){
+				$('.profession-list').show()
+			}
+
+			$(".roofConter").html(title);
+			$("#setting").prop("placeholder", vaule);
+
+			$('.profession-list span').click(function () {
+				$('#setting').val($(this).text())
+			})
+			$("#setting").keyup(function() {
+				if (type == "weight" || type == "height") {
+					var no = $(this).val();
+					if (no != '' && no.substr(0, 1) == '.') {
+						no = "";
+					}
+					no = no.replace(/^0*(0\.|[1-9])/, '$1'); //解决 粘贴不生效
+					no = no.replace(/[^\d]/g, ""); //清除“数字”和“.”以外的字符
+					if (no.indexOf(".") < 0 && no != "") { //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+						if (no.substr(0, 1) == '0' && no.length == 2) {
+							no = no.substr(1, no.length);
+						}
+					}
+					$(this).val(no);
+				}
+			});
+			$("#setting").focus();
+
+			//提交表单
+			$(".roofButton").click(function() {
+				var setting = $("#setting").val();				
+				if (setting == null || setting == "") {
+					api.toast({
+						msg: '请输出修改的内容！',
+						duration: 1000,
+						location: 'middle'
+					});
+					return false;
+				}
+				if(type=='nickname'){
+					if(setting.length>6){
+						api.toast({
+							msg: '昵称最多支持12个字符',
+							duration: 1000,
+							location: 'middle'
+						});
+						return false;
+					}
+				}
+				if(type=='bio'){
+					if(setting.length>100){
+						api.toast({
+							msg: '自我描述最多支持100个字符',
+							duration: 1000,
+							location: 'middle'
+						});
+						return false;
+					}
+				}
+				
+				if(type=='profession'){
+					if(setting.length>16){
+						api.toast({
+							msg: '职业最多支持4个字符',
+							duration: 1000,
+							location: 'middle'
+						});
+						return false;
+					}
+				}
+				var update = {};
+				update.userid = userid;
+				update[type] = setting;
+				//提交表单
+				api.ajax({
+					url: CONFIG.ADDRURL + CONFIG.UPDATEUSERINFO,
+					method: 'post',
+					data: {
+						values: update
+					}
+				}, function(data) {
+					if (data.code == "200") {
+						if ("nickname" == type) {
+							$api.setStorage('nickname', setting);
+						}
+						api.closeWin({
+							name: 'updatesetting'
+						});
+						api.sendEvent({
+							name: 'infosetting',
+						});
+					} else {
+						api.toast({
+							msg: data.msg,
+							duration: 1000,
+							location: 'middle'
+						});
+					}
+				});
+			});
+		};
+	</script>
+</body>
+
+</html>

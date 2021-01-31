@@ -1,0 +1,181 @@
+@charset "utf-8";
+.TaskBanner{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+}
+.TaskBanner > img{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+}
+.TaskBannerP{
+	width:100%;
+	line-height:1.2;
+	font-size:18px;
+	font-weight:bold;
+	color:#ff9694;
+	text-align:center;
+	position:absolute;
+	top:75px;
+	left:0;
+}
+
+.NoviceTaskS{
+	width:100%;
+	margin:0 auto;
+	padding-bottom:50px;
+	background:#ff8e8c;
+	overflow:hidden;
+}
+.NoviceTask{
+	width:85.4%;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+}
+.NoviceTaskB{
+	width:10px;
+	height:380px;
+	border-left:1px dashed #fff;
+	margin-left:32px;
+	overflow:hidden;
+}
+.NoviceTaskT{
+	width:100%;
+	margin:15px auto;
+	overflow:hidden;
+	position:absolute;
+	left:0;
+	top:0;
+}
+.NoviceTaskTUS{
+	width:100%;
+	height:64px;
+	margin:5px auto;
+	position:relative;
+	overflow:hidden;
+}
+.NoviceTaskTU{
+	width:100%;
+	height:54px;
+	margin:5px auto;
+	background:rgba(255,255,255,0.3);
+	border-radius:54px;
+	overflow:hidden;
+}
+.NTaskTUImg{
+	width:64px;
+	height:64px;
+	border-radius:100%;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.NTaskTUImg.data{
+	background:url(../images/task_05.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NTaskTUImg.certify{
+	background:url(../images/task_12.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NTaskTUImg.trends{
+	background:url(../images/task_16.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NTaskTUImg.Release{
+	background:url(../images/task_18.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NTaskTUImg.participate{
+	background:url(../images/task_20.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NoviceTaskTUL{
+	float:left;
+	height:54px;
+	margin-left:75px;
+	font-size:17px;
+	font-weight:bold;
+	color:#fff;
+	line-height:56px;
+	overflow:hidden;
+}
+.NoviceTaskTUR{
+	width:19px;
+	height:23px;
+	float:right;
+	margin-right:20px;
+	margin-top:15.5px;
+	background:url(../images/task_13.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+}
+.NoviceTaskTUR.Complete{
+	background:url(../images/task_15.png);
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.NoviceTaskTUC{
+	float:right;
+	height:54px;
+	margin-right:10px;
+	font-size:16px;
+	color:#fff;
+	line-height:56px;
+	overflow:hidden;
+}
+.NoviceTaskBT{
+	width:85.4%;
+	margin:25px auto 10px;
+	font-size:19px;
+	font-weight:bold;
+	color:#fff;
+	overflow:hidden;
+}
+.NoviceTaskList{
+	width:94.7%;
+	margin:5px auto;
+	font-size:13px;
+	color: #fff;
+	overflow:hidden;
+}
+.NoviceTaskList li:first-of-type{
+    width:15px;
+    font-weight:bold;
+    text-align: center;
+    float: left;
+    line-height:1.5;
+    margin-top:4px;
+    font-size:8px;
+    margin-right:5px;
+    overflow:hidden;
+}
+.NoviceTaskList li:last-of-type{
+	width:92%;
+	float:left;
+	font-weight:400;
+	line-height:1.5;
+	overflow:hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

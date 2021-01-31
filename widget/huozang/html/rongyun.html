@@ -1,0 +1,421 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/api.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/util.js"></script>
+	<script type="text/javascript" src="../script/messageUtil.js"></script>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<script type="text/javascript" src="../script/jquery.min.js"></script>
+	<script type="text/javascript">
+		var rong=0;
+		apiready = function() {
+			//增加监听获取聊天的token
+			api.addEventListener({
+				name: 'rongyunToken'
+			}, function(ret, err) {
+				var userinfo = $api.getStorage('userid');
+				if (userinfo == null || userinfo == "") {
+					return false;
+				}
+				var rongyunToken = $api.getStorage('rongyunToken');
+			
+					console.log(rongyunToken);
+				var userid = $api.getStorage('userid');
+				if ((rongyunToken == null || rongyunToken == "") && userid != null && userid != "") {
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.RONGYUN,
+							method: 'post',
+							data: {
+								values: {
+									userid: userid
+								}
+							}
+						},
+						function(data, err) {
+							if (data.code == "200") {
+								$api.setStorage("rongyunToken", data.rongyun.token);
+								api.sendEvent({
+									name: 'initRongyun',
+								});
+							}
+						});
+				} else {
+					api.sendEvent({
+						name: 'initRongyun',
+					});
+				}
+			});
+
+			var rongyunToken = $api.getStorage('rongyunToken');
+			if (rongyunToken == null || rongyunToken == "") {
+				api.sendEvent({
+					name: "rongyunToken"
+				});
+			}
+
+			initRongyun();
+
+			api.addEventListener({
+				name: 'initRongyun'
+			}, function(ret, err) {
+				initRongyun();
+			});
+
+			//发送文本消息监听
+			api.addEventListener({
+				name: 'sendTextMessageListener'
+			}, function(ret, err) {
+				sendTextMessageListener(ret.value.touserid, ret.value.message);
+			});
+
+			//发送语音消息监听
+			api.addEventListener({
+				name: 'sendVoiceMessageListener'
+			}, function(ret, err) {
+				sendVoiceMessageListener(ret.value.touserid, ret.value.message);
+			});
+		};
+
+		function initRongyun() {
+			//获取token
+			var token = $api.getStorage('rongyunToken');
+			if (token == null || token == "") {
+				api.sendEvent({
+					name: "rongyunToken"
+				});
+				return false;
+			}
+			rong = api.require('rongCloud2');
+			//初始化
+			rong.init(function(ret, err) {
+				console.log(rong);
+				return;
+				if (ret.status == 'error') {
+					api.toast({
+						msg: err.code
+					});
+				}
+			});
+			//监听接收在线消息
+			receiveMessageListener();
+			//连接
+			rong.connect({
+				token: '' + token + ''
+			}, function(ret, err) {
+				if (ret.status == 'success') {
+					//获取列表中未读消息保存到本地
+					var msg = new messageUtil();
+					var list = msg.showMessageLists($api.getStorage('userid'));
+					if (list.length > 0) {
+						$.each(list, function(i, n) {
+							rong.getUnreadCount({
+								conversationType: 'PRIVATE',
+								targetId: n.frienduserid
+							}, function(unreadret, unreaderr) {
+								$(".unreadcount").text($(".unreadcount").text() * 1 + unreadret.result * 1);
+								rong.getHistoryMessages({
+									conversationType: 'PRIVATE',
+									targetId: n.frienduserid,
+									oldestMessageId: n.msgid,
+									count: unreadret.result
+								}, function(ret, err) {
+									if (ret.result.length > 0) {
+										$.each(list, function(index, message) {
+											if (message.objectName == "RC:TxtMsg") {
+												var message = {
+													id: message.messageId,
+													userid: $api.getStorage('userid'),
+													frienduserid: message.targetId,
+													content: message.content.text,
+													sendtime: message.sentTime,
+													direction: message.messageDirection,
+													status: "Y",
+													nickname: n.nickname,
+													avatar: n.avatar,
+													isread: "N"
+												};
+												var msg = new messageUtil();
+												msg.saveTxtMessages(message);
+											} else if (message.objectName == "RC:ImgMsg") {
+
+											} else if (message.objectName == "RC:VcMsg") {
+												var message = {
+													id: message.messageId,
+													userid: $api.getStorage('userid'),
+													frienduserid: message.targetId,
+													voice: message.content.voicePath,
+													duration: message.content.duration,
+													sendtime: message.sentTime,
+													direction: message.messageDirection,
+													status: "Y",
+													nickname: n.nickname,
+													avatar: n.avatar,
+													isread: "N"
+												};
+												var msg = new messageUtil();
+												msg.saveVcMessages(message);
+											}
+										});
+									}
+								});
+							})
+						});
+					}
+
+					//未读消息数
+					var msg = new messageUtil();
+					var unReadMessages = msg.unReadMessages($api.getStorage('userid'));
+					api.sendEvent({
+						name: "unreadmessages",
+						extra: {
+							unreadmessages: unReadMessages[0].unreadmessages
+						}
+					});
+				}
+			});
+		};
+
+		function sendVoiceMessageListener(targetId, msg) {
+			rong.sendVoiceMessage({
+				conversationType: 'PRIVATE',
+				targetId: targetId,
+				voicePath: msg.path,
+				duration: msg.duration,
+				extra: ''
+			}, function(msgret, msgerr) {
+				if (msgret.status == 'prepare') {
+					//保存本地
+					// 查询昵称和头像
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+							method: 'post',
+							data: {
+								values: {
+									userid: msgret.result.message.targetId
+								}
+							}
+						},
+						function(data, err) {
+							if (data.code == "200") {
+								var message = {
+									id: msgret.result.message.messageId,
+									userid: $api.getStorage('userid'),
+									frienduserid: msgret.result.message.targetId,
+									voice: msgret.result.message.content.voicePath,
+									duration: msgret.result.message.content.duration,
+									sendtime: msgret.result.message.sentTime,
+									direction: msgret.result.message.messageDirection,
+									status: "Y",
+									nickname: data.userinfo.nickname,
+									avatar: (data.userinfo.avatar == null || data.userinfo.avatar == "" ? "http://95youhe.com/avatar.png" : data.userinfo.avatar),
+									isread: "Y"
+								};
+								var msg = new messageUtil();
+								msg.saveVcMessages(message);
+							}
+						});
+					//准备发送
+					api.sendEvent({
+						name: "appendsendmsg",
+						extra: {
+							message: msgret.result.message
+						}
+					});
+					//刷新消息列表页面
+					api.sendEvent({
+						name: "initmessage"
+					});
+				} else if (msgret.status == 'success') {
+					//更新消息状态
+					var msg = new messageUtil();
+					msg.updateMessages(msgret.result.message.messageId, "Y");
+				} else if (msgret.status == 'error') {
+					//发送失败后的护理，一般讲loading图片变为 “！”；
+					// var msg = new messageUtil();
+					// msg.updateMessages(msgret.result.message.messageId, "N");
+				}
+			});
+		}
+
+		function sendTextMessageListener(targetId, msg) {
+          rong = api.require('rongCloud2');
+					console.log(JSON.stringify(rong));
+			rong.sendTextMessage({
+				conversationType: '' + "PRIVATE" + '',
+				targetId: '' + targetId + '',
+				text: '' + msg + '',
+				extra: '' + "" + ''
+			}, function(msgret, msgerr) {
+				if (msgret.result != null) {
+					if (msgret.status == 'prepare') {
+						//保存消息到本地数据库
+						// 查询昵称和头像
+						api.ajax({
+								url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+								method: 'post',
+								data: {
+									values: {
+										userid: msgret.result.message.targetId
+									}
+								}
+							},
+							function(data, err) {
+								if (data.code == "200") {
+									var message = {
+										id: msgret.result.message.messageId,
+										userid: $api.getStorage('userid'),
+										frienduserid: msgret.result.message.targetId,
+										content: msgret.result.message.content.text,
+										sendtime: msgret.result.message.sentTime,
+										direction: msgret.result.message.messageDirection,
+										status: "Y",
+										nickname: data.userinfo.nickname,
+										avatar: (data.userinfo.avatar == null || data.userinfo.avatar == "" ? "http://95youhe.com/avatar.png" : data.userinfo.avatar),
+										isread: "Y"
+									};
+									var msg = new messageUtil();
+									msg.saveTxtMessages(message);
+								}
+							});
+						//准备发送
+						api.sendEvent({
+							name: "appendsendmsg",
+							extra: {
+								message: msgret.result.message
+							}
+						});
+						//刷新消息列表页面
+						api.sendEvent({
+							name: "initmessage"
+						});
+					} else if (msgret.status == 'success') {
+						//发送成功后移除loading
+						var msg = new messageUtil();
+						msg.updateMessages(msgret.result.message.messageId, "Y");
+					} else if (msgret.status == 'error') {
+						//发送失败后的护理，一般讲loading图片变为 “！”；
+						// var msg = new messageUtil();
+						// msg.updateMessages(msgret.result.message.messageId, "N");
+					}
+				}
+			});
+		}
+
+		function receiveMessageListener() {
+			rong.setOnReceiveMessageListener(function(ret, err) {
+				if (ret.result) {
+					// 查询昵称和头像
+					api.ajax({
+							url: CONFIG.ADDRURL + CONFIG.GETUSERINFO,
+							method: 'post',
+							data: {
+								values: {
+									userid: ret.result.message.targetId
+								}
+							}
+						},
+						function(data) {
+							if (data.code == "200") {
+								var sound = "widget://res/notice/girl.mp3";
+								if ($api.getStorage('gender') * 1 == 0) {
+									sound = "widget://res/notice/boy.mp3";
+								}
+								var notifycontent = ret.result.message.content.text;
+								if (ret.result.message.objectName == "RC:TxtMsg" && ret.result.message.content.text.indexOf("img") >= 0) {
+									notifycontent = "[表情]";
+								} else if (ret.result.message.objectName == "RC:VcMsg") {
+									notifycontent = "[语音]";
+								}
+								// 消息提醒
+								api.notification({
+									sound: sound,
+									notify: {
+										title: data.userinfo.nickname,
+										content: notifycontent,
+										extra: "CHATMESSAGE"
+									}
+								});
+
+								//保存消息到本地数据库
+								if (ret.result.message.objectName == "RC:TxtMsg") {
+									var message = {
+										id: ret.result.message.messageId,
+										userid: $api.getStorage('userid'),
+										frienduserid: ret.result.message.targetId,
+										content: ret.result.message.content.text,
+										sendtime: ret.result.message.sentTime,
+										direction: ret.result.message.messageDirection,
+										status: "Y",
+										nickname: data.userinfo.nickname,
+										avatar: (data.userinfo.avatar == null || data.userinfo.avatar == "" ? "http://95youhe.com/avatar.png" : data.userinfo.avatar),
+										isread: "N"
+									};
+									var msg = new messageUtil();
+									msg.saveTxtMessages(message);
+								} else if (ret.result.message.objectName == "RC:ImgMsg") {
+
+								} else if (ret.result.message.objectName == "RC:VcMsg") {
+									var message = {
+										id: ret.result.message.messageId,
+										userid: $api.getStorage('userid'),
+										frienduserid: ret.result.message.targetId,
+										voice: ret.result.message.content.voicePath,
+										duration: ret.result.message.content.duration,
+										sendtime: ret.result.message.sentTime,
+										direction: ret.result.message.messageDirection,
+										status: "Y",
+										nickname: data.userinfo.nickname,
+										avatar: data.userinfo.avatar,
+										isread: "N"
+									};
+									var msg = new messageUtil();
+									msg.saveVcMessages(message);
+								}
+
+								//消息添加到聊天页面
+								ret.result.message.avatar = data.userinfo.avatar;
+								api.sendEvent({
+									name: "appendrecivemsg",
+									extra: {
+										message: ret.result.message
+									}
+								});
+
+								//刷新消息列表页面
+								api.sendEvent({
+									name: "initmessage"
+								});
+								//更新个人中心未读消息，更新个人中心我的约会和我的伴游，更新粉丝金币
+								api.sendEvent({
+									name: "mine"
+								});
+
+								//消息图标更新
+								var msg = new messageUtil();
+								var unReadMessages = msg.unReadMessages($api.getStorage('userid'));
+								if (unReadMessages.length > 0) {
+									api.sendEvent({
+										name: "unreadmessages",
+										extra: {
+											unreadmessages: unReadMessages[0].unreadmessages
+										}
+									});
+								}
+
+							}
+						});
+				}
+			});
+		};
+	</script>
+</body>
+
+</html>

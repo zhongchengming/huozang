@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Module Develop</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<style type="text/css">
+			html, body {
+				height: 100%
+			}
+			body {
+				background-color: #fff;
+				margin: 0;
+			}
+			#wrap {
+				height: 100%;
+				position: relative;
+			}
+			#header {
+				padding-top: 20px;
+				background-color: #5082c2;
+				height: 44px;
+				position: relative;
+			}
+			#header h1 {
+				font-size: 20px;
+				height: 44px;
+				line-height: 44px;
+				margin: 0em;
+				color: #fff;
+				margin-left: 100px;
+				margin-right: 100px;
+				text-align: center;
+			}
+			#main {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-box-pack: center;
+			}
+			a.button {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				height: 32px;
+				margin: 8px;
+				background-color: rgba(240,240,240,1.0);
+				border-color: rgba(220,220,220,1.0);
+				border-width: 2px;
+				border-style: solid;
+			}
+			a.active {
+				background-color: rgba(240,240,240,0.7);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<a class="button" tapmode="active" onclick="initAccessTokenWithAkSk()" >sdk初始化</a>
+				<a class="button" tapmode="active" onclick="initCameraNative()" >本地能力初始化(仅安卓)</a>
+				<a class="button" tapmode="active" onclick="openIDCard1()" >身份证正面识别</a>
+				<a class="button" tapmode="active" onclick="openIDCard2()" >身份证反面识别</a>
+				<a class="button" tapmode="active" onclick="openBankCard()" > 银行卡识别 </a>
+				<br/>
+				<br/>
+				<img id="path" width="200"/>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		var demo = null;
+		apiready = function() {
+			demo = api.require('UIBaiduOCR');
+			if (!demo) {
+				alert("请添加模块后编译");
+				return;
+			}
+		}
+		function initAccessTokenWithAkSk() {
+			demo.initAccessTokenWithAkSk({
+				apiKey : 'Qxm9SrHVcBUVUT9rIUtp8uly',
+				secretKey : 'Kjygp9p7TLjNnGyYx0ZVpXU8oXueGQF1'
+			}, function(ret, err) {
+				alert(JSON.stringify(ret) + "  " + JSON.stringify(err));
+			});
+		}
+
+		function initCameraNative() {
+			demo.initCameraNative(function(ret, err) {
+				alert(JSON.stringify(ret) + "  " + JSON.stringify(err));
+			});
+		}
+
+		function openIDCard1() {
+			demo.openIDCard({
+				isCardFront : true,
+				isNativeManual : false
+			}, function(ret, err) {
+				alert(JSON.stringify(ret) + "  " + JSON.stringify(err));
+				$api.attr($api.byId('path'), 'src', ret.filePath);
+			});
+		}
+
+		function openIDCard2() {
+			demo.openIDCard({
+				isCardFront : false,
+				isNativeManual : false
+			}, function(ret, err) {
+				alert(JSON.stringify(ret) + "  " + JSON.stringify(err));
+				$api.attr($api.byId('path'), 'src', ret.filePath);
+			});
+		}
+
+		function openBankCard() {
+			demo.openBankCard(function(ret, err) {
+				alert(JSON.stringify(ret) + "  " + JSON.stringify(err));
+				$api.attr($api.byId('path'), 'src', ret.filePath);
+			});
+		}
+	</script>
+</html>
